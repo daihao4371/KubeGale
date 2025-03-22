@@ -1,0 +1,62 @@
+system:
+  db-type: mysql
+  oss-type: local
+  router-prefix: ""
+  addr: 8888
+  iplimit-count: 15000
+  iplimit-time: 3600
+  use-multipoint: false
+  use-redis: true
+  use-strict-auth: false
+
+jwt:
+  key1: "ebe3vxIP7sblVvUHXb7ZaiMPuz4oXo0l"
+  key2: "ebe3vxIP7sblVvUHXb7ZaiMPuz4oXo0z"
+  issuer: "K5mBPBYNQeNWEBvCTE5msog3KSGTdhmx"
+  expiration: 3600
+
+zap:
+  level: info
+  prefix: '[KUBEGALE]'
+  format: console
+  director: log
+  encode-level: LowercaseColorLevelEncoder
+  stacktrace-key: stacktrace
+  show-line: true
+  log-in-console: true
+  retention-day: -1
+
+mysql:
+  prefix: ""
+  port: "3306"
+  config: charset=utf8mb4&parseTime=True&loc=Local
+  db-name: cmdb
+  username: root
+  password: "123456"
+  path: 127.0.0.1
+  engine: ""
+  log-mode: error
+  max-idle-conns: 10
+  max-open-conns: 100
+  singular: false
+  log-zap: false
+redis:
+  name: ""
+  addr: 127.0.0.1:6379
+  password: ""
+  db: 0
+  useCluster: false
+  clusterAddrs:
+    - 172.21.0.3:7000
+    - 172.21.0.4:7001
+    - 172.21.0.2:7002
+redis-list:
+  - name: cache
+    addr: 127.0.0.1:6379
+    password: ""
+    db: 0
+    useCluster: false
+    clusterAddrs:
+      - 172.21.0.3:7000
+      - 172.21.0.4:7001
+      - 172.21.0.2:7002
