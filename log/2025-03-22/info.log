@@ -39,3 +39,28 @@
 [KUBEGALE]2025-03-22 21:30:02.528	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
 [KUBEGALE]2025-03-22 21:30:02.529	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
 [KUBEGALE]2025-03-22 21:30:02.534	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	server run success on 	{"address": ":8888"}
+[KUBEGALE]2025-03-22 21:46:45.083	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:50	register table success
+[KUBEGALE]2025-03-22 21:46:45.091	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:46:45.092	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:47:21.486	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:50	register table success
+[KUBEGALE]2025-03-22 21:47:21.487	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:47:21.488	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:48:16.580	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:50	register table success
+[KUBEGALE]2025-03-22 21:48:16.581	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:48:16.582	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:49:30.386	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:50	register table success
+[KUBEGALE]2025-03-22 21:49:30.387	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:49:30.388	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:50:21.114	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:50	register table success
+[KUBEGALE]2025-03-22 21:50:21.116	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:50:21.116	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:51:20.896	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:50	register table success
+[KUBEGALE]2025-03-22 21:51:20.903	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:51:20.904	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:51:44.546	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:50	register table success
+[KUBEGALE]2025-03-22 21:51:44.548	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:51:44.548	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:54:01.359	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:50	register table success
+[KUBEGALE]2025-03-22 21:54:01.361	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:54:01.361	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-03-22 21:54:01.366	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	server run success on 	{"address": ":8888"}

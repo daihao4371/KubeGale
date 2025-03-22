@@ -8,19 +8,19 @@ type UserRouter struct{}
 
 func (s *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 	// 创建用户路由组
-	//userGroup := Router.Group("/api/user")
+	userGroup := Router.Group("user") // 注意这里不要加前导斜杠
 
 	// 需要记录操作日志的路由
-	//userRouterWithRecord := userGroup.Use(middleware.OperationRecord())
+	// userRouterWithRecord := userGroup.Use(middleware.OperationRecord())
 
 	// 不需要记录操作日志的路由
-	//userRouterWithoutRecord := userGroup
+	userRouterWithoutRecord := userGroup
 
 	// 获取API控制器
 
 	// 不需要记录操作日志的接口
 	{
-		//userRouterWithoutRecord.POST("/signup", baseApi.SignUp)              // 注册
+		userRouterWithoutRecord.POST("/signup", baseApi.SignUp) // 注册
 		//userRouterWithoutRecord.POST("/login", baseApi.Login)                // 登录
 		//userRouterWithoutRecord.POST("/refresh_token", baseApi.RefreshToken) // 刷新token
 		//userRouterWithoutRecord.POST("/logout", baseApi.Logout)              // 退出登录

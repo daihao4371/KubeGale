@@ -6,8 +6,9 @@ import (
 	"time"
 )
 
+// 这里只展示需要修改的部分
 func Routers() *gin.Engine {
-	Router := gin.New()
+	Router := gin.Default()
 	Router.Use(gin.Recovery())
 	if gin.Mode() == gin.DebugMode {
 		Router.Use(gin.Logger())
@@ -16,17 +17,18 @@ func Routers() *gin.Engine {
 	PublicGroup := Router.Group("/api")
 
 	// 初始化需要认证的路由组
-	PrivateGroup := Router.Group("/api")
+	//PrivateGroup := Router.Group("/api")
 
 	// 注册系统路由
 	systemRouter := router.RouterGroupApp.System
 	{
-		// 初始化用户相关路由
+		// 初始化用户相关路由 - 只在一个路由组中注册
 		systemRouter.InitUserRouter(PublicGroup)
-		systemRouter.InitUserRouter(PrivateGroup)
-		// 用户路由包含了登录等公共接口
+		// 不要在 PrivateGroup 中重复注册相同的路由
+		// systemRouter.InitUserRouter(PrivateGroup)
 	}
 
+	// 用户路由包含了登录等公共接口
 	// 添加健康检查路由
 	Router.GET("/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{
