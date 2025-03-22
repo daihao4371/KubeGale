@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"KubeGale/global"
+	"KubeGale/model/system"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"os"
@@ -15,27 +16,25 @@ func Gorm() *gorm.DB {
 func RegisterTables() {
 	db := global.KUBEGALE_DB
 	err := db.AutoMigrate(
-
-	//system.SysApi{},
-	//system.SysIgnoreApi{},
-	//system.SysUser{},
-	//system.SysBaseMenu{},
-	//system.JwtBlacklist{},
-	//system.SysAuthority{},
-	//system.SysDictionary{},
-	//system.SysOperationRecord{},
-	//system.SysDictionaryDetail{},
-	//system.SysBaseMenuParameter{},
-	//system.SysBaseMenuBtn{},
-	//system.SysAuthorityBtn{},
-	//system.SysExportTemplate{},
-	//system.Condition{},
-	//system.JoinTemplate{},
-	//
-	//example.ExaFile{},
-	//example.ExaCustomer{},
-	//example.ExaFileChunk{},
-	//example.ExaFileUploadAndDownload{},
+		system.Api{},
+		system.Menu{},
+		system.User{},
+		system.Role{},
+		//system.SysApi{},
+		//system.SysIgnoreApi{},
+		//system.SysUser{},
+		//system.SysBaseMenu{},
+		//system.JwtBlacklist{},
+		//system.SysAuthority{},
+		//system.SysDictionary{},
+		//system.SysOperationRecord{},
+		//system.SysDictionaryDetail{},
+		//system.SysBaseMenuParameter{},
+		//system.SysBaseMenuBtn{},
+		//system.SysAuthorityBtn{},
+		//system.SysExportTemplate{},
+		//system.Condition{},
+		//system.JoinTemplate{},
 	)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("register table failed", zap.Error(err))
