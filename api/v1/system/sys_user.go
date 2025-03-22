@@ -17,7 +17,7 @@ import (
 
 type BaseApi struct{}
 
-// 用户注册
+// SignUp 用户注册
 func (b *BaseApi) SignUp(c *gin.Context) {
 	var user system.User
 	err := c.ShouldBindJSON(&user)
@@ -66,7 +66,7 @@ func (b *BaseApi) SignUp(c *gin.Context) {
 	response.OkWithMessage("注册成功", c)
 }
 
-// 用户登录
+// Login 用户登录
 func (b *BaseApi) Login(c *gin.Context) {
 	var user system.User
 
@@ -124,7 +124,7 @@ func (b *BaseApi) Login(c *gin.Context) {
 	}, "登录成功", c)
 }
 
-// 注销登录逻辑
+// Logout 注销登录逻辑
 func (b *BaseApi) Logout(c *gin.Context) {
 	// 创建JWT处理器
 	jwtHandler := utils.NewJWTHandler(global.KUBEGALE_REDIS)
@@ -143,7 +143,7 @@ func (b *BaseApi) Logout(c *gin.Context) {
 	response.OkWithMessage("注销成功", c)
 }
 
-// 获取用户信息
+// GetProfile 获取用户信息
 func (b *BaseApi) GetProfile(c *gin.Context) {
 	// 从上下文中获取用户信息
 	userClaims, exists := c.Get("user")
@@ -185,7 +185,7 @@ func (b *BaseApi) GetProfile(c *gin.Context) {
 	}, "获取用户信息成功", c)
 }
 
-// 刷新token
+// RefreshToken 刷新token
 func (b *BaseApi) RefreshToken(c *gin.Context) {
 	var req system.TokenRequest
 
@@ -260,7 +260,7 @@ func (b *BaseApi) RefreshToken(c *gin.Context) {
 	}, "刷新令牌成功", c)
 }
 
-// 获取用户权限码
+// GetPermCode 获取用户权限码
 func (b *BaseApi) GetPermCode(c *gin.Context) {
 	// 从上下文中获取用户信息
 	userClaims, exists := c.Get("user")
@@ -290,7 +290,7 @@ func (b *BaseApi) GetPermCode(c *gin.Context) {
 	response.OkWithData(codes, c)
 }
 
-// 获取用户列表
+// GetUserList 获取用户列表
 func (b *BaseApi) GetUserList(c *gin.Context) {
 	// 获取分页参数
 	page := c.DefaultQuery("page", "1")
@@ -328,7 +328,7 @@ func (b *BaseApi) GetUserList(c *gin.Context) {
 	}, "获取用户列表成功", c)
 }
 
-// 修改用户密码
+// ChangePassword 修改用户密码
 func (b *BaseApi) ChangePassword(c *gin.Context) {
 	var req system.ChangePasswordRequest
 
@@ -387,7 +387,7 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 	response.OkWithMessage("密码修改成功", c)
 }
 
-// 注销用户
+// WriteOff 注销用户
 func (b *BaseApi) WriteOff(c *gin.Context) {
 	var req system.WriteOffRequest
 
@@ -434,7 +434,7 @@ func (b *BaseApi) WriteOff(c *gin.Context) {
 	response.OkWithMessage("账号注销成功", c)
 }
 
-// 修改用户信息
+// UpdateProfile 修改用户信息
 func (b *BaseApi) UpdateProfile(c *gin.Context) {
 	var req system.UpdateProfileRequest
 
@@ -489,7 +489,7 @@ func (b *BaseApi) UpdateProfile(c *gin.Context) {
 	response.OkWithMessage("用户信息更新成功", c)
 }
 
-// 删除用户
+// DeleteUser 删除用户
 func (b *BaseApi) DeleteUser(c *gin.Context) {
 	// 获取路径参数中的用户ID
 	id := c.Param("id")
