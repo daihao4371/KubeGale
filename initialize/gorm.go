@@ -20,6 +20,7 @@ func RegisterTables() {
 		system.Menu{},
 		system.User{},
 		system.Role{},
+		system.SysOperationRecord{},
 		//system.SysApi{},
 		//system.SysIgnoreApi{},
 		//system.SysUser{},

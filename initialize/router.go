@@ -17,13 +17,19 @@ func Routers() *gin.Engine {
 	PublicGroup := Router.Group("/api")
 
 	// 初始化需要认证的路由组
-	//PrivateGroup := Router.Group("/api")
+	PrivateGroup := Router.Group("/api")
 
 	// 注册系统路由
 	systemRouter := router.RouterGroupApp.System
 	{
 		// 初始化用户相关路由 - 只在一个路由组中注册
 		systemRouter.InitUserRouter(PublicGroup)
+		systemRouter.InitMenuRouter(PrivateGroup)               // 注册menu路由
+		systemRouter.InitApiRouter(PrivateGroup, PublicGroup)   // 注册功能api路由
+		systemRouter.InitSysOperationRecordRouter(PrivateGroup) // 操作记录
+		systemRouter.InitAuthorityRouter(PrivateGroup)          // 权限分配
+		systemRouter.InitRoleRouter(PrivateGroup)               // 权限分配
+
 		// 不要在 PrivateGroup 中重复注册相同的路由
 		// systemRouter.InitUserRouter(PrivateGroup)
 	}

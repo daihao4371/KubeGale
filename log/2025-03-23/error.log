@@ -1,0 +1,26 @@
+[KUBEGALE]2025-03-23 00:32:54.888	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 00:33:05.469	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 09:38:10.450	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 09:55:31.727	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 09:56:37.704	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 09:58:31.727	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 10:49:45.064	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 13:13:00.443	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 15:01:08.007	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 15:02:05.502	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 15:02:35.783	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 15:04:18.364	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 15:05:48.292	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 16:22:57.811	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 16:23:34.086	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 16:25:01.924	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 16:27:09.115	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 16:27:57.366	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 16:28:29.025	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 16:42:45.631	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 16:51:22.235	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 16:52:16.203	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 17:19:31.754	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 17:23:33.090	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-23 17:36:03.450	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	net.Listen error: listen tcp :8888: bind: address already in use
+[KUBEGALE]2025-03-23 17:36:37.087	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection

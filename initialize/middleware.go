@@ -11,8 +11,6 @@ import (
 	"time"
 )
 
-// InitMiddlewares 初始化中间件
-
 func InitMiddlewares(ih ijwt.Handler, l *zap.Logger, enforcer *casbin.Enforcer) []gin.HandlerFunc {
 	return []gin.HandlerFunc{
 		cors.New(cors.Config{

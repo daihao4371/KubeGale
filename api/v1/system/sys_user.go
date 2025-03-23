@@ -4,7 +4,6 @@ import (
 	"KubeGale/global"
 	"KubeGale/model/common/response"
 	"KubeGale/model/system"
-	"KubeGale/service"
 	"KubeGale/utils"
 	ijwt "KubeGale/utils"
 	"errors"
@@ -37,10 +36,8 @@ func (b *BaseApi) SignUp(c *gin.Context) {
 	}
 
 	// 调用服务层方法
-	userService := service.ServiceGroupApp.SystemServiceGroup.UserService
-	if err := userService.SignUp(&user); err != nil {
-		// 处理特定错误
-		// 使用自定义错误类型进行比较，而不是直接比较错误码
+	err = userService.SignUp(&user)
+	if err != nil {
 		var sysErr *global.SysError
 		if errors.As(err, &sysErr) {
 			switch sysErr.Code {
@@ -55,7 +52,6 @@ func (b *BaseApi) SignUp(c *gin.Context) {
 				return
 			}
 		}
-
 		// 记录未预期的错误
 		global.KUBEGALE_LOG.Error("用户注册失败", zap.Error(err))
 		response.FailWithMessage("注册失败: "+err.Error(), c)
@@ -71,12 +67,21 @@ func (b *BaseApi) Login(c *gin.Context) {
 	var user system.User
 
 	if err := c.ShouldBindJSON(&user); err != nil {
-		response.FailWithMessage(err.Error(), c)
+		response.FailWithMessage("请求参数错误: "+err.Error(), c)
+		return
+	}
+
+	// 参数基本验证
+	if user.Username == "" {
+		response.FailWithMessage("用户名不能为空", c)
+		return
+	}
+	if user.Password == "" {
+		response.FailWithMessage("密码不能为空", c)
 		return
 	}
 
 	// 调用服务层方法
-	userService := service.ServiceGroupApp.SystemServiceGroup.UserService
 	ur, err := userService.Login(&user)
 	if err != nil {
 		// 处理特定错误
@@ -84,7 +89,6 @@ func (b *BaseApi) Login(c *gin.Context) {
 		if errors.As(err, &sysErr) {
 			switch sysErr.Code {
 			case global.ERROR_USER_NOT_EXIST:
-				global.KUBEGALE_LOG.Error("登录失败", zap.Error(err))
 				response.FailWithMessage("用户不存在", c)
 				return
 			case global.ERROR_PASSWORD_WRONG:
@@ -161,7 +165,6 @@ func (b *BaseApi) GetProfile(c *gin.Context) {
 	}
 
 	// 调用服务层获取用户详细信息
-	userService := service.ServiceGroupApp.SystemServiceGroup.UserService
 	user, err := userService.GetProfile(claims.Uid)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("获取用户信息失败", zap.Error(err))
@@ -239,7 +242,6 @@ func (b *BaseApi) RefreshToken(c *gin.Context) {
 	}
 
 	// 获取用户信息
-	userService := service.ServiceGroupApp.SystemServiceGroup.UserService
 	user, err := userService.GetProfile(rc.Uid)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("获取用户信息失败", zap.Error(err))
@@ -278,7 +280,6 @@ func (b *BaseApi) GetPermCode(c *gin.Context) {
 	}
 
 	// 调用服务层获取用户权限码
-	userService := service.ServiceGroupApp.SystemServiceGroup.UserService
 	codes, err := userService.GetPermCode(claims.Uid)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("获取用户权限码失败", zap.Error(err))
@@ -311,7 +312,6 @@ func (b *BaseApi) GetUserList(c *gin.Context) {
 	}
 
 	// 调用服务层获取用户列表
-	userService := service.ServiceGroupApp.SystemServiceGroup.UserService
 	users, total, err := userService.GetUserList(pageNum, pageSizeNum, keyword)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("获取用户列表失败", zap.Error(err))
@@ -359,7 +359,6 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 	}
 
 	// 调用服务层修改密码
-	userService := service.ServiceGroupApp.SystemServiceGroup.UserService
 	if err := userService.ChangePassword(claims.Uid, req.Password, req.NewPassword); err != nil {
 		// 处理特定错误
 		var sysErr *global.SysError
@@ -409,7 +408,6 @@ func (b *BaseApi) WriteOff(c *gin.Context) {
 	}
 
 	// 调用服务层注销用户
-	userService := service.ServiceGroupApp.SystemServiceGroup.UserService
 	if err := userService.WriteOff(req.Username, req.Password); err != nil {
 		// 处理特定错误
 		var sysErr *global.SysError
@@ -461,7 +459,6 @@ func (b *BaseApi) UpdateProfile(c *gin.Context) {
 	}
 
 	// 调用服务层更新用户信息
-	userService := service.ServiceGroupApp.SystemServiceGroup.UserService
 	if err := userService.UpdateProfile(req.UserId, user); err != nil {
 		// 处理特定错误
 		var sysErr *global.SysError
@@ -508,7 +505,6 @@ func (b *BaseApi) DeleteUser(c *gin.Context) {
 	}
 
 	// 调用服务层删除用户
-	userService := service.ServiceGroupApp.SystemServiceGroup.UserService
 	if err := userService.DeleteUser(idInt); err != nil {
 		// 处理特定错误
 		var sysErr *global.SysError
