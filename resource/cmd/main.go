@@ -46,8 +46,9 @@ func main() {
 	initialize.RegisterTables()
 
 	// 调用API初始化函数
-	system.InitApiData()
-	system.InitMenuData()
+	system.InitApiData()  // 初始化api数据
+	system.InitMenuData() // 初始化menu数据
+	system.InitUserData() // 初始化用户数据
 
 	// 根据命令行参数决定是否自动退出
 	if *autoExit {
