@@ -96,7 +96,7 @@ func (cm *CasbinMiddleware) CheckCasbin() gin.HandlerFunc {
 		if !ok {
 			c.JSON(http.StatusForbidden, gin.H{
 				"code":    1,
-				"message": "You don't have permission to access this resource",
+				"message": "You don't have permission to access this system",
 			})
 			c.Abort()
 			return

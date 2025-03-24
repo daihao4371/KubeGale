@@ -1,0 +1,1 @@
+[KUBEGALE]2025-03-24 21:02:08.780	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
