@@ -24,12 +24,12 @@ func main() {
 	// 获取项目根目录的配置文件路径
 	rootDir := getRootDir()
 	configPath := filepath.Join(rootDir, "config.yaml")
-	
+
 	// 检查配置文件是否存在
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		log.Fatalf("配置文件不存在: %s", configPath)
 	}
-	
+
 	// 初始化配置，显式指定配置文件路径
 	global.KUBEGALE_VP = core.Viper(configPath)
 	global.KUBEGALE_LOG = core.Zap()
@@ -47,6 +47,7 @@ func main() {
 
 	// 调用API初始化函数
 	system.InitApiData()
+	system.InitMenuData()
 
 	// 根据命令行参数决定是否自动退出
 	if *autoExit {
@@ -66,7 +67,7 @@ func getRootDir() string {
 	if err != nil {
 		log.Fatalf("获取当前工作目录失败: %v", err)
 	}
-	
+
 	// 向上查找直到找到包含config.yaml的目录
 	for {
 		// 检查当前目录是否包含config.yaml
@@ -74,7 +75,7 @@ func getRootDir() string {
 		if _, err := os.Stat(configPath); err == nil {
 			return currentDir
 		}
-		
+
 		// 获取父目录
 		parentDir := filepath.Dir(currentDir)
 		if parentDir == currentDir {
