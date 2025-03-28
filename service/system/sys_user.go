@@ -113,7 +113,7 @@ func (us *UserService) Login(user *system.User) (*system.User, error) {
 
 	// 查询用户
 	var u system.User
-	if err := global.KUBEGALE_DB.Where("username = ? AND is_deleted = 0", user.Username).First(&u).Error; err != nil {
+	if err := global.KUBEGALE_DB.Where("username = ?", user.Username).First(&u).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, NewError(ERROR_USER_NOT_EXIST)
 		}
@@ -131,11 +131,6 @@ func (us *UserService) Login(user *system.User) (*system.User, error) {
 		return nil, NewError(ERROR_PASSWORD_WRONG)
 	}
 
-	// 更新最后登录时间
-	if err := global.KUBEGALE_DB.Model(&u).Update("last_login_time", time.Now().Unix()).Error; err != nil {
-		global.KUBEGALE_LOG.Warn("更新用户最后登录时间失败", zap.Error(err))
-	}
-
 	// 预加载用户关联的角色、菜单和API权限
 	if err := global.KUBEGALE_DB.Preload("Roles").Preload("Menus").Preload("Apis").Where("id = ?", u.ID).First(&u).Error; err != nil {
 		global.KUBEGALE_LOG.Warn("加载用户权限信息失败", zap.Error(err))
@@ -144,24 +139,58 @@ func (us *UserService) Login(user *system.User) (*system.User, error) {
 	return &u, nil
 }
 
-// 获取用户信息
+// GetProfile 获取用户信息
 func (us *UserService) GetProfile(uid int) (*system.User, error) {
 	if uid <= 0 {
 		return nil, NewError(ERROR_USER_ID_INVALID)
 	}
 
 	var user system.User
-	if err := global.KUBEGALE_DB.Where("id = ? AND is_deleted = 0", uid).First(&user).Error; err != nil {
+	if err := global.KUBEGALE_DB.Where("id = ?", uid).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, NewError(ERROR_USER_NOT_EXIST)
 		}
 		return nil, fmt.Errorf("获取用户信息失败: %w", err)
 	}
 
-	// 预加载用户关联的角色、菜单和API权限
-	if err := global.KUBEGALE_DB.Preload("Roles").Preload("Menus").Preload("Apis").Where("id = ?", uid).First(&user).Error; err != nil {
+	// 预加载用户关联的角色和API权限
+	if err := global.KUBEGALE_DB.Preload("Roles").Preload("Apis").Where("id = ?", uid).First(&user).Error; err != nil {
 		global.KUBEGALE_LOG.Warn("加载用户权限信息失败", zap.Error(err))
 	}
+
+	// 获取用户的菜单并构建树状结构
+	var menus []*system.Menu
+	if err := global.KUBEGALE_DB.
+		Table("menus").
+		Joins("LEFT JOIN user_menus ON menus.id = user_menus.menu_id").
+		Where("user_menus.user_id = ? AND menus.is_deleted = ?", uid, 0).
+		Order("menus.parent_id, menus.id").
+		Find(&menus).Error; err != nil {
+		global.KUBEGALE_LOG.Error("获取用户菜单失败", zap.Int("id", uid), zap.Error(err))
+		return nil, fmt.Errorf("获取用户菜单失败: %w", err)
+	}
+
+	// 构建菜单树
+	menuMap := make(map[int]*system.Menu)
+	var rootMenus []*system.Menu
+
+	// 第一次遍历,建立id->menu的映射
+	for _, menu := range menus {
+		menuMap[menu.ID] = menu
+	}
+
+	// 第二次遍历,构建父子关系
+	for _, menu := range menus {
+		if menu.ParentID == 0 {
+			rootMenus = append(rootMenus, menu)
+		} else {
+			if parent, ok := menuMap[menu.ParentID]; ok {
+				parent.Children = append(parent.Children, menu)
+			}
+		}
+	}
+
+	user.Menus = rootMenus
 
 	// 出于安全考虑，不返回密码
 	user.Password = ""
@@ -177,7 +206,7 @@ func (us *UserService) GetPermCode(uid int) ([]string, error) {
 
 	// 查询用户是否存在
 	var count int64
-	if err := global.KUBEGALE_DB.Model(&system.User{}).Where("id = ? AND is_deleted = 0", uid).Count(&count).Error; err != nil {
+	if err := global.KUBEGALE_DB.Model(&system.User{}).Where("id = ?", uid).Count(&count).Error; err != nil {
 		return nil, fmt.Errorf("查询用户失败: %w", err)
 	}
 	if count == 0 {
@@ -249,7 +278,7 @@ func getMethodName(methodID int) string {
 // GetUserList 获取用户列表
 func (us *UserService) GetUserList(page, pageSize int, keyword string) (users []*system.User, total int64, err error) {
 	// 创建查询构建器
-	query := global.KUBEGALE_DB.Model(&system.User{}).Where("is_deleted = ?", 0)
+	query := global.KUBEGALE_DB.Model(&system.User{}).Where("id = ?")
 
 	// 如果有关键字，添加搜索条件
 	if keyword != "" {
@@ -306,7 +335,7 @@ func (us *UserService) ChangePassword(uid int, oldPassword string, newPassword s
 
 	// 查询用户
 	var user system.User
-	if err := global.KUBEGALE_DB.Where("id = ? AND is_deleted = 0", uid).First(&user).Error; err != nil {
+	if err := global.KUBEGALE_DB.Where("id = ?", uid).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return NewError(ERROR_USER_NOT_EXIST)
 		}

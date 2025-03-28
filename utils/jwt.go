@@ -148,18 +148,21 @@ func (h *handler) ExtractToken(ctx *gin.Context) string {
 }
 
 // CheckSession 检查会话状态
+// CheckSession 检查会话状态
 func (h *handler) CheckSession(ctx *gin.Context, ssid string) error {
-	// 判断缓存中是否存在指定键
-	c, err := h.client.Exists(ctx, fmt.Sprintf("linkme:user:ssid:%s", ssid)).Result()
-	if err != nil {
-		return err
-	}
+    // 判断缓存中是否存在指定键（黑名单检查）
+    blacklistKey := fmt.Sprintf("blacklist:ssid:%s", ssid)
+    c, err := h.client.Exists(ctx, blacklistKey).Result()
+    if err != nil {
+        return err
+    }
 
-	if c != 0 {
-		return errors.New("token失效")
-	}
+    // 如果会话ID在黑名单中，则返回错误
+    if c != 0 {
+        return errors.New("token失效")
+    }
 
-	return nil
+    return nil
 }
 
 // ClearToken 清空 token，让 Authorization 中的用于验证的 token 失效

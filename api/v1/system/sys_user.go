@@ -164,7 +164,7 @@ func (b *BaseApi) GetProfile(c *gin.Context) {
 		return
 	}
 
-	// 调用服务层获取用户详细信息
+	// 调用服务层获取用户详细信息，传递上下文
 	user, err := userService.GetProfile(claims.Uid)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("获取用户信息失败", zap.Error(err))
@@ -185,6 +185,7 @@ func (b *BaseApi) GetProfile(c *gin.Context) {
 		"feiShuUserId": user.FeiShuUserId,
 		"menus":        user.Menus,
 		"apis":         user.Apis,
+		"Roles":        user.Roles, // 添加大写的Roles字段，与您的实现保持一致
 	}, "获取用户信息成功", c)
 }
 

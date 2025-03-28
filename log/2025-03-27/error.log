@@ -1,0 +1,11 @@
+[KUBEGALE]2025-03-27 22:57:50.860	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-27 23:07:26.494	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:104	登录失败	{"error": "查询用户失败: Error 1054 (42S22): Unknown column 'is_deleted' in 'where clause'"}
+[KUBEGALE]2025-03-27 23:08:01.525	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:104	登录失败	{"error": "查询用户失败: Error 1054 (42S22): Unknown column 'is_deleted' in 'where clause'"}
+[KUBEGALE]2025-03-27 23:08:53.212	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:104	登录失败	{"error": "查询用户失败: Error 1054 (42S22): Unknown column 'is_deleted' in 'where clause'"}
+[KUBEGALE]2025-03-27 23:09:27.307	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:104	登录失败	{"error": "查询用户失败: Error 1054 (42S22): Unknown column 'is_deleted' in 'where clause'"}
+[KUBEGALE]2025-03-27 23:10:09.198	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:104	登录失败	{"error": "查询用户失败: Error 1054 (42S22): Unknown column 'is_deleted' in 'where clause'"}
+[KUBEGALE]2025-03-27 23:10:26.912	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:104	登录失败	{"error": "查询用户失败: Error 1054 (42S22): Unknown column 'is_deleted' in 'where clause'"}
+[KUBEGALE]2025-03-27 23:13:14.493	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8888: use of closed network connection
+[KUBEGALE]2025-03-27 23:16:37.413	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:104	登录失败	{"error": "查询用户失败: Error 1054 (42S22): Unknown column 'is_deleted' in 'where clause'"}
+[KUBEGALE]2025-03-27 23:18:04.217	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-27 23:33:36.040	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection

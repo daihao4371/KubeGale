@@ -1,0 +1,1 @@
+[KUBEGALE]2025-03-24 22:06:40.493	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/system/sys_user.go:208	初始化casbin enforcer失败	{"error": "open ./model.conf: no such file or directory"}

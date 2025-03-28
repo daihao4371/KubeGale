@@ -1,0 +1,11 @@
+[KUBEGALE]2025-03-28 20:25:28.422	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-28 20:39:03.788	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-28 22:18:45.554	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	net.Listen error: listen tcp :8080: bind: address already in use
+[KUBEGALE]2025-03-28 22:18:46.262	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-28 22:23:49.013	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-28 22:24:53.515	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-28 23:33:30.782	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-28 23:39:08.408	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-28 23:40:37.267	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	net.Listen error: listen tcp :8080: bind: address already in use
+[KUBEGALE]2025-03-28 23:41:32.311	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	net.Listen error: listen tcp :8080: bind: address already in use
+[KUBEGALE]2025-03-28 23:59:29.795	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection

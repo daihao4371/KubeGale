@@ -1,10 +1,12 @@
 package middleware
 
 import (
+	"KubeGale/global"
 	ijwt "KubeGale/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
 	"strings"
 )
 
@@ -22,6 +24,9 @@ func NewJWTMiddleware(hdl ijwt.Handler) *JWTMiddleware {
 func (m *JWTMiddleware) CheckLogin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		path := ctx.Request.URL.Path
+		// 添加调试日志
+		global.KUBEGALE_LOG.Info("请求路径", zap.String("path", path))
+
 		// 如果请求的路径是下述路径，则不进行token验证
 		if path == "/api/user/login" ||
 			//path == "/api/user/signup" ||   // 不允许用户自己注册账号
@@ -46,15 +51,19 @@ func (m *JWTMiddleware) CheckLogin() gin.HandlerFunc {
 		} else {
 			// 从请求中提取token
 			tokenStr = m.ExtractToken(ctx)
+			global.KUBEGALE_LOG.Info("提取的token", zap.String("token", tokenStr))
 		}
 
+		// 在CheckLogin函数中
 		key := []byte(viper.GetString("jwt.key1"))
+		// 解析token
 		token, err := jwt.ParseWithClaims(tokenStr, &uc, func(token *jwt.Token) (interface{}, error) {
 			return key, nil
 		})
 
 		if err != nil {
 			// token 错误
+			global.KUBEGALE_LOG.Error("token解析错误", zap.Error(err))
 			ctx.AbortWithStatus(401)
 			return
 		}
