@@ -141,17 +141,7 @@ func (us *UserService) Login(user *system.User) (*system.User, error) {
 
 // GetProfile 获取用户信息
 func (us *UserService) GetProfile(uid int) (*system.User, error) {
-	if uid <= 0 {
-		return nil, NewError(ERROR_USER_ID_INVALID)
-	}
-
 	var user system.User
-	if err := global.KUBEGALE_DB.Where("id = ?", uid).First(&user).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, NewError(ERROR_USER_NOT_EXIST)
-		}
-		return nil, fmt.Errorf("获取用户信息失败: %w", err)
-	}
 
 	// 预加载用户关联的角色和API权限
 	if err := global.KUBEGALE_DB.Preload("Roles").Preload("Apis").Where("id = ?", uid).First(&user).Error; err != nil {
@@ -161,10 +151,10 @@ func (us *UserService) GetProfile(uid int) (*system.User, error) {
 	// 获取用户的菜单并构建树状结构
 	var menus []*system.Menu
 	if err := global.KUBEGALE_DB.
-		Table("menus").
-		Joins("LEFT JOIN user_menus ON menus.id = user_menus.menu_id").
-		Where("user_menus.user_id = ? AND menus.is_deleted = ?", uid, 0).
-		Order("menus.parent_id, menus.id").
+		Table("sys_base_menus").
+		Joins("LEFT JOIN user_menus ON sys_base_menus.id = user_menus.menu_id").
+		Where("user_menus.user_id = ? AND sys_base_menus.is_deleted = ?", uid, 0).
+		Order("sys_base_menus.parent_id, sys_base_menus.id").
 		Find(&menus).Error; err != nil {
 		global.KUBEGALE_LOG.Error("获取用户菜单失败", zap.Int("id", uid), zap.Error(err))
 		return nil, fmt.Errorf("获取用户菜单失败: %w", err)

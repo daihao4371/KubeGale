@@ -1,1 +1,0 @@
-[KUBEGALE]2025-03-28 20:24:19.944	[33mwarn[0m	/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_user.go:136	更新用户最后登录时间失败	{"error": "Error 1054 (42S22): Unknown column 'last_login_time' in 'field list'"}

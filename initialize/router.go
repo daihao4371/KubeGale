@@ -1,18 +1,23 @@
 package initialize
 
 import (
+	"KubeGale/middleware"
 	"KubeGale/router"
 	"github.com/gin-gonic/gin"
 	"time"
 )
 
-// 这里只展示需要修改的部分
+// Routers 初始化路由
 func Routers() *gin.Engine {
 	Router := gin.Default()
 	Router.Use(gin.Recovery())
 	if gin.Mode() == gin.DebugMode {
 		Router.Use(gin.Logger())
 	}
+
+	// 添加SQL日志中间件
+	Router.Use(middleware.SQLLogMiddleware())
+
 	// 初始化公共路由组
 	PublicGroup := Router.Group("/api")
 
