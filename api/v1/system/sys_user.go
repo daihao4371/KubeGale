@@ -159,19 +159,19 @@ func (b *BaseApi) GetProfile(c *gin.Context) {
 	userClaims, exists := c.Get("user")
 	if !exists {
 		global.KUBEGALE_LOG.Error("上下文中未找到用户信息")
-
+		
 		// 尝试从请求头中直接解析token
 		tokenStr := c.GetHeader("Authorization")
 		if tokenStr != "" {
 			global.KUBEGALE_LOG.Info("尝试从请求头直接解析token", zap.String("token", tokenStr))
-
+			
 			// 提取实际的token字符串（去掉Bearer前缀）
 			if strings.HasPrefix(tokenStr, "Bearer ") {
 				tokenStr = tokenStr[7:]
 			} else if strings.HasPrefix(tokenStr, "bearer ") {
 				tokenStr = tokenStr[7:]
 			}
-
+			
 			if tokenStr != "" {
 				// 解析token
 				var uc ijwt.UserClaims
@@ -179,7 +179,7 @@ func (b *BaseApi) GetProfile(c *gin.Context) {
 				token, err := jwt.ParseWithClaims(tokenStr, &uc, func(token *jwt.Token) (interface{}, error) {
 					return key, nil
 				})
-
+				
 				if err == nil && token != nil && token.Valid {
 					// 检查会话是否有效
 					jwtHandler := utils.NewJWTHandler(global.KUBEGALE_REDIS)
@@ -198,7 +198,7 @@ func (b *BaseApi) GetProfile(c *gin.Context) {
 				}
 			}
 		}
-
+		
 		// 如果仍然无法获取用户信息，返回错误
 		if !exists {
 			response.FailWithMessage("用户未登录", c)
@@ -497,20 +497,113 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 	// 从上下文中获取用户信息
 	userClaims, exists := c.Get("user")
 	if !exists {
-		response.FailWithMessage("用户未登录", c)
-		return
+		global.KUBEGALE_LOG.Error("上下文中未找到用户信息")
+		
+		// 尝试从请求头中直接解析token
+		tokenStr := c.GetHeader("Authorization")
+		if tokenStr != "" {
+			global.KUBEGALE_LOG.Info("尝试从请求头直接解析token", zap.String("token", tokenStr))
+			
+			// 提取实际的token字符串（去掉Bearer前缀）
+			if strings.HasPrefix(tokenStr, "Bearer ") {
+				tokenStr = tokenStr[7:]
+			} else if strings.HasPrefix(tokenStr, "bearer ") {
+				tokenStr = tokenStr[7:]
+			}
+			
+			if tokenStr != "" {
+				// 解析token
+				var uc ijwt.UserClaims
+				key := []byte(viper.GetString("jwt.key1"))
+				token, err := jwt.ParseWithClaims(tokenStr, &uc, func(token *jwt.Token) (interface{}, error) {
+					return key, nil
+				})
+				
+				if err == nil && token != nil && token.Valid {
+					// 检查会话是否有效
+					jwtHandler := utils.NewJWTHandler(global.KUBEGALE_REDIS)
+					err = jwtHandler.CheckSession(c, uc.Ssid)
+					if err == nil {
+						// 设置用户信息到上下文
+						c.Set("user", uc)
+						global.KUBEGALE_LOG.Info("从请求头解析token成功，已设置用户信息", zap.Int("uid", uc.Uid))
+						userClaims = uc
+						exists = true
+					} else {
+						global.KUBEGALE_LOG.Error("会话检查失败", zap.Error(err))
+					}
+				} else {
+					global.KUBEGALE_LOG.Error("token解析失败", zap.Error(err))
+				}
+			}
+		}
+		
+		// 如果仍然无法获取用户信息，返回错误
+		if !exists {
+			response.FailWithMessage("用户未登录", c)
+			return
+		}
 	}
 
-	// 类型断言获取用户ID
-	claims, ok := userClaims.(utils.UserClaims)
-	if !ok {
-		global.KUBEGALE_LOG.Error("用户信息类型错误")
+	global.KUBEGALE_LOG.Info("获取到用户上下文", zap.Any("userClaims", userClaims))
+
+	// 尝试多种类型断言方式
+	var uid int
+	var found bool
+
+	// 尝试直接断言为UserClaims
+	if claims, ok := userClaims.(ijwt.UserClaims); ok {
+		uid = claims.Uid
+		found = true
+		global.KUBEGALE_LOG.Info("从UserClaims中获取到用户ID", zap.Int("uid", uid))
+	}
+
+	// 尝试断言为指针类型
+	if !found {
+		if claims, ok := userClaims.(*ijwt.UserClaims); ok {
+			uid = claims.Uid
+			found = true
+			global.KUBEGALE_LOG.Info("从*UserClaims中获取到用户ID", zap.Int("uid", uid))
+		}
+	}
+
+	// 尝试断言为map
+	if !found {
+		if claimsMap, mapOk := userClaims.(map[string]interface{}); mapOk {
+			// 尝试从map中获取uid
+			if uidVal, exists := claimsMap["Uid"]; exists {
+				// 尝试不同类型的转换
+				switch v := uidVal.(type) {
+				case int:
+					uid = v
+					found = true
+				case float64:
+					uid = int(v)
+					found = true
+				case string:
+					if id, err := strconv.Atoi(v); err == nil {
+						uid = id
+						found = true
+					}
+				}
+				if found {
+					global.KUBEGALE_LOG.Info("从map中获取到用户ID", zap.Int("uid", uid))
+				}
+			}
+		}
+	}
+
+	// 如果仍未找到，记录详细信息并返回错误
+	if !found {
+		global.KUBEGALE_LOG.Error("用户信息类型错误",
+			zap.String("actualType", fmt.Sprintf("%T", userClaims)),
+			zap.Any("value", userClaims))
 		response.FailWithMessage("用户信息类型错误", c)
 		return
 	}
 
 	// 调用服务层修改密码
-	if err := userService.ChangePassword(claims.Uid, req.Password, req.NewPassword); err != nil {
+	if err := userService.ChangePassword(uid, req.Password, req.NewPassword); err != nil {
 		// 处理特定错误
 		var sysErr *global.SysError
 		if errors.As(err, &sysErr) {
