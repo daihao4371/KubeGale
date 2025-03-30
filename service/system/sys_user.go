@@ -461,8 +461,8 @@ func (us *UserService) WriteOff(username string, password string) error {
 	})
 }
 
-// DeleteUser 删除用户
-func (us *UserService) Disable(uid int) error {
+// DeleteUser 真正删除用户（从数据库中移除）
+func (us *UserService) DeleteUser(uid int) error {
 	// 参数验证
 	if uid <= 0 {
 		return NewError(ERROR_USER_ID_INVALID)
@@ -479,17 +479,7 @@ func (us *UserService) Disable(uid int) error {
 
 	// 使用事务进行删除操作
 	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		// 更新用户状态为禁用
-		if err := tx.Model(&user).Update("enable", 0).Error; err != nil {
-			return fmt.Errorf("禁用用户失败: %w", err)
-		}
-
-		// 更新时间
-		if err := tx.Model(&user).Update("updated_at", time.Now()).Error; err != nil {
-			return fmt.Errorf("更新时间失败: %w", err)
-		}
-
-		// 清除用户关联的角色、菜单和API权限
+		// 先清除用户关联的角色、菜单和API权限
 		if err := tx.Exec("DELETE FROM user_roles WHERE user_id = ?", uid).Error; err != nil {
 			return fmt.Errorf("清除用户角色关联失败: %w", err)
 		}
@@ -502,8 +492,13 @@ func (us *UserService) Disable(uid int) error {
 			return fmt.Errorf("清除用户API关联失败: %w", err)
 		}
 
+		// 真正删除用户记录
+		if err := tx.Unscoped().Delete(&user).Error; err != nil {
+			return fmt.Errorf("删除用户失败: %w", err)
+		}
+
 		// 记录日志
-		global.KUBEGALE_LOG.Info("用户已删除", zap.Int("user_id", uid))
+		global.KUBEGALE_LOG.Info("用户已永久删除", zap.Int("user_id", uid))
 
 		return nil
 	})
