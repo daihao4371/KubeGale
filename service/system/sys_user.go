@@ -266,18 +266,13 @@ func getMethodName(methodID int) string {
 }
 
 // GetUserList 获取用户列表
-func (us *UserService) GetUserList(page, pageSize int, keyword string) (users []*system.User, total int64, err error) {
+func (us *UserService) GetUserList(page, pageSize int) (users []*system.User, total int64, err error) {
 	// 创建查询构建器
-	query := global.KUBEGALE_DB.Model(&system.User{}).Where("id = ?")
-
-	// 如果有关键字，添加搜索条件
-	if keyword != "" {
-		query = query.Where("username LIKE ? OR real_name LIKE ? OR mobile LIKE ?",
-			"%"+keyword+"%", "%"+keyword+"%", "%"+keyword+"%")
-	}
+	query := global.KUBEGALE_DB.Model(&system.User{})
 
 	// 获取总记录数
 	if err = query.Count(&total).Error; err != nil {
+		global.KUBEGALE_LOG.Error("获取用户总数失败", zap.Error(err))
 		return nil, 0, fmt.Errorf("获取用户总数失败: %w", err)
 	}
 
@@ -291,11 +286,12 @@ func (us *UserService) GetUserList(page, pageSize int, keyword string) (users []
 	query = query.Order("id DESC")
 
 	// 预加载关联数据
-	query = query.Preload("Roles")
+	query = query.Preload("Roles").Preload("Menus").Preload("Apis")
 
 	// 执行查询
 	var userList []*system.User
 	if err = query.Find(&userList).Error; err != nil {
+		global.KUBEGALE_LOG.Error("查询用户列表失败", zap.Error(err))
 		return nil, 0, fmt.Errorf("查询用户列表失败: %w", err)
 	}
 

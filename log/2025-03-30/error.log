@@ -1,0 +1,26 @@
+[KUBEGALE]2025-03-30 11:57:09.410	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:532	token解析失败	{"error": "token has invalid claims: token is expired"}
+[KUBEGALE]2025-03-30 12:01:50.762	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:107	登录失败	{"error": "密码不正确"}
+[KUBEGALE]2025-03-30 12:04:48.210	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:107	登录失败	{"error": "密码不正确"}
+[KUBEGALE]2025-03-30 12:04:59.810	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:107	登录失败	{"error": "密码不正确"}
+[KUBEGALE]2025-03-30 12:06:02.591	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:107	登录失败	{"error": "密码不正确"}
+[KUBEGALE]2025-03-30 12:06:03.598	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:107	登录失败	{"error": "密码不正确"}
+[KUBEGALE]2025-03-30 12:06:12.884	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:107	登录失败	{"error": "密码不正确"}
+[KUBEGALE]2025-03-30 12:19:46.089	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:620	修改密码失败	{"error": "旧密码不正确"}
+[KUBEGALE]2025-03-30 12:41:29.589	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:107	登录失败	{"error": "密码不正确"}
+[KUBEGALE]2025-03-30 13:14:51.613	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-30 13:18:14.462	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:195	token解析失败	{"error": "token has invalid claims: token is expired"}
+[KUBEGALE]2025-03-30 13:19:21.005	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-30 13:19:31.860	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:195	token解析失败	{"error": "token has invalid claims: token is expired"}
+[KUBEGALE]2025-03-30 13:25:09.115	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:466	获取用户列表失败	{"error": "获取用户总数失败: sql: expected 2 arguments, got 1"}
+[KUBEGALE]2025-03-30 13:27:12.971	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:466	获取用户列表失败	{"error": "获取用户总数失败: sql: expected 2 arguments, got 1"}
+[KUBEGALE]2025-03-30 13:32:26.053	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:466	获取用户列表失败	{"error": "获取用户总数失败: sql: expected 2 arguments, got 1"}
+[KUBEGALE]2025-03-30 13:32:52.393	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:466	获取用户列表失败	{"error": "获取用户总数失败: sql: expected 2 arguments, got 1"}
+[KUBEGALE]2025-03-30 13:33:02.763	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:466	获取用户列表失败	{"error": "获取用户总数失败: sql: expected 2 arguments, got 1"}
+[KUBEGALE]2025-03-30 13:39:53.200	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-30 13:40:06.538	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:466	获取用户列表失败	{"error": "获取用户总数失败: sql: expected 2 arguments, got 1"}
+[KUBEGALE]2025-03-30 13:40:24.082	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:466	获取用户列表失败	{"error": "获取用户总数失败: sql: expected 2 arguments, got 1"}
+[KUBEGALE]2025-03-30 13:40:49.062	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-30 13:40:57.498	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:466	获取用户列表失败	{"error": "获取用户总数失败: sql: expected 2 arguments, got 1"}
+[KUBEGALE]2025-03-30 13:40:58.305	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:466	获取用户列表失败	{"error": "获取用户总数失败: sql: expected 2 arguments, got 1"}
+[KUBEGALE]2025-03-30 14:33:53.642	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-30 14:43:28.041	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection

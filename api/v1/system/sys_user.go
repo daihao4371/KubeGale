@@ -158,20 +158,18 @@ func (b *BaseApi) GetProfile(c *gin.Context) {
 	// 从上下文中获取用户信息
 	userClaims, exists := c.Get("user")
 	if !exists {
-		global.KUBEGALE_LOG.Error("上下文中未找到用户信息")
-		
 		// 尝试从请求头中直接解析token
 		tokenStr := c.GetHeader("Authorization")
 		if tokenStr != "" {
 			global.KUBEGALE_LOG.Info("尝试从请求头直接解析token", zap.String("token", tokenStr))
-			
+
 			// 提取实际的token字符串（去掉Bearer前缀）
 			if strings.HasPrefix(tokenStr, "Bearer ") {
 				tokenStr = tokenStr[7:]
 			} else if strings.HasPrefix(tokenStr, "bearer ") {
 				tokenStr = tokenStr[7:]
 			}
-			
+
 			if tokenStr != "" {
 				// 解析token
 				var uc ijwt.UserClaims
@@ -179,7 +177,7 @@ func (b *BaseApi) GetProfile(c *gin.Context) {
 				token, err := jwt.ParseWithClaims(tokenStr, &uc, func(token *jwt.Token) (interface{}, error) {
 					return key, nil
 				})
-				
+
 				if err == nil && token != nil && token.Valid {
 					// 检查会话是否有效
 					jwtHandler := utils.NewJWTHandler(global.KUBEGALE_REDIS)
@@ -198,7 +196,7 @@ func (b *BaseApi) GetProfile(c *gin.Context) {
 				}
 			}
 		}
-		
+
 		// 如果仍然无法获取用户信息，返回错误
 		if !exists {
 			response.FailWithMessage("用户未登录", c)
@@ -447,7 +445,6 @@ func (b *BaseApi) GetUserList(c *gin.Context) {
 	// 获取分页参数
 	page := c.DefaultQuery("page", "1")
 	pageSize := c.DefaultQuery("pageSize", "10")
-	keyword := c.DefaultQuery("keyword", "")
 
 	// 转换为整数
 	pageNum, err := strconv.Atoi(page)
@@ -455,7 +452,6 @@ func (b *BaseApi) GetUserList(c *gin.Context) {
 		response.FailWithMessage("页码参数错误", c)
 		return
 	}
-
 	pageSizeNum, err := strconv.Atoi(pageSize)
 	if err != nil {
 		response.FailWithMessage("每页数量参数错误", c)
@@ -463,7 +459,7 @@ func (b *BaseApi) GetUserList(c *gin.Context) {
 	}
 
 	// 调用服务层获取用户列表
-	users, total, err := userService.GetUserList(pageNum, pageSizeNum, keyword)
+	users, total, err := userService.GetUserList(pageNum, pageSizeNum)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("获取用户列表失败", zap.Error(err))
 		response.FailWithMessage("获取用户列表失败: "+err.Error(), c)
@@ -497,20 +493,18 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 	// 从上下文中获取用户信息
 	userClaims, exists := c.Get("user")
 	if !exists {
-		global.KUBEGALE_LOG.Error("上下文中未找到用户信息")
-		
 		// 尝试从请求头中直接解析token
 		tokenStr := c.GetHeader("Authorization")
 		if tokenStr != "" {
 			global.KUBEGALE_LOG.Info("尝试从请求头直接解析token", zap.String("token", tokenStr))
-			
+
 			// 提取实际的token字符串（去掉Bearer前缀）
 			if strings.HasPrefix(tokenStr, "Bearer ") {
 				tokenStr = tokenStr[7:]
 			} else if strings.HasPrefix(tokenStr, "bearer ") {
 				tokenStr = tokenStr[7:]
 			}
-			
+
 			if tokenStr != "" {
 				// 解析token
 				var uc ijwt.UserClaims
@@ -518,7 +512,7 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 				token, err := jwt.ParseWithClaims(tokenStr, &uc, func(token *jwt.Token) (interface{}, error) {
 					return key, nil
 				})
-				
+
 				if err == nil && token != nil && token.Valid {
 					// 检查会话是否有效
 					jwtHandler := utils.NewJWTHandler(global.KUBEGALE_REDIS)
@@ -537,7 +531,7 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 				}
 			}
 		}
-		
+
 		// 如果仍然无法获取用户信息，返回错误
 		if !exists {
 			response.FailWithMessage("用户未登录", c)
