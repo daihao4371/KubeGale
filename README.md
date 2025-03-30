@@ -1,7 +1,7 @@
 # KubeGale
 
 <div align="center">
-  <img src="https://your-logo-url-here.png" alt="KubeGale Logo" width="200">
+  <img src="./image/kubegale.png" alt="KubeGale Logo" width="200">
   <p>强大的 Kubernetes 多集群管理平台</p>
 </div>
 
