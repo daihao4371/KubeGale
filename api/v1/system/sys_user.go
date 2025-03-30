@@ -801,8 +801,8 @@ func (b *BaseApi) Disable(c *gin.Context) {
 		}
 
 		// 记录未预期的错误
-		global.KUBEGALE_LOG.Error("删除用户失败", zap.Error(err))
-		response.FailWithMessage("删除用户失败: "+err.Error(), c)
+		global.KUBEGALE_LOG.Error("禁用用户失败", zap.Error(err))
+		response.FailWithMessage("禁用用户失败: "+err.Error(), c)
 		return
 	}
 
