@@ -364,9 +364,9 @@ func (us *UserService) UpdateProfile(uid int, req *system.User) error {
 			return NewError(ERROR_MOBILE_INVALID)
 		}
 
-		// 检查手机号是否已被其他用户使用
+		// 检查手机号是否已被其他用户使用 - 修复查询条件，移除is_deleted字段
 		var mobileCount int64
-		if err := global.KUBEGALE_DB.Model(&system.User{}).Where("mobile = ? AND id != ? AND is_deleted = 0", req.Mobile, uid).Count(&mobileCount).Error; err != nil {
+		if err := global.KUBEGALE_DB.Model(&system.User{}).Where("mobile = ? AND id != ?", req.Mobile, uid).Count(&mobileCount).Error; err != nil {
 			return fmt.Errorf("检查手机号失败: %w", err)
 		}
 		if mobileCount > 0 {
@@ -374,9 +374,9 @@ func (us *UserService) UpdateProfile(uid int, req *system.User) error {
 		}
 	}
 
-	// 查询用户是否存在
+	// 查询用户是否存在 - 修复查询条件，移除is_deleted字段
 	var user system.User
-	if err := global.KUBEGALE_DB.Where("id = ? AND is_deleted = 0", uid).First(&user).Error; err != nil {
+	if err := global.KUBEGALE_DB.Where("id = ?", uid).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return NewError(ERROR_USER_NOT_EXIST)
 		}

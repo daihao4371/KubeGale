@@ -27,3 +27,12 @@
 [KUBEGALE]2025-03-30 15:02:19.748	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:141	注销登录失败	{"error": "invalid authorization token"}
 [KUBEGALE]2025-03-30 15:32:24.507	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:107	登录失败	{"error": "密码不正确"}
 [KUBEGALE]2025-03-30 16:33:49.451	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-30 16:42:38.714	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-30 16:45:01.706	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:718	更新用户信息失败	{"error": "手机号格式不正确"}
+[KUBEGALE]2025-03-30 16:45:16.085	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:718	更新用户信息失败	{"error": "检查手机号失败: Error 1054 (42S22): Unknown column 'is_deleted' in 'where clause'"}
+[KUBEGALE]2025-03-30 16:46:06.967	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-30 16:46:20.969	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:718	更新用户信息失败	{"error": "检查手机号失败: Error 1054 (42S22): Unknown column 'is_deleted' in 'where clause'"}
+[KUBEGALE]2025-03-30 16:46:22.755	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:718	更新用户信息失败	{"error": "检查手机号失败: Error 1054 (42S22): Unknown column 'is_deleted' in 'where clause'"}
+[KUBEGALE]2025-03-30 16:48:41.236	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-30 17:26:11.741	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-30 17:27:52.919	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
