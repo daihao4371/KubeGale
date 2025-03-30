@@ -24,3 +24,6 @@
 [KUBEGALE]2025-03-30 13:40:58.305	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:466	获取用户列表失败	{"error": "获取用户总数失败: sql: expected 2 arguments, got 1"}
 [KUBEGALE]2025-03-30 14:33:53.642	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
 [KUBEGALE]2025-03-30 14:43:28.041	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-03-30 15:02:19.748	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:141	注销登录失败	{"error": "invalid authorization token"}
+[KUBEGALE]2025-03-30 15:32:24.507	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:107	登录失败	{"error": "密码不正确"}
+[KUBEGALE]2025-03-30 16:33:49.451	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection

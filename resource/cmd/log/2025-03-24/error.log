@@ -1,2 +1,0 @@
-[KUBEGALE]2025-03-24 22:02:46.777	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/system/sys_user.go:207	初始化casbin enforcer失败	{"error": "open config/rbac_model.conf: no such file or directory"}
-[KUBEGALE]2025-03-24 22:03:56.734	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/system/sys_user.go:207	初始化casbin enforcer失败	{"error": "open ./model.conf: no such file or directory"}
