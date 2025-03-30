@@ -36,13 +36,13 @@ func (s *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 		userRouterWithRecord.POST("/change_password", baseApi.ChangePassword) // 修改密码
 		userRouterWithRecord.POST("/write_off", baseApi.WriteOff)             // 注销账号
 		userRouterWithRecord.POST("/profile/update", baseApi.UpdateProfile)   // 更新用户信息
-		
+
 		// 修复拼写错误并使用正确的函数名
-		userRouterWithRecord.DELETE("/:id", baseApi.DeleteUser)               // 永久删除用户
-		userRouterWithRecord.POST("/:id", baseApi.Disable)                    // 禁用用户
-		
+		userRouterWithRecord.DELETE("/:id", baseApi.DeleteUser) // 永久删除用户
+		userRouterWithRecord.POST("/:id", baseApi.Disable)      // 禁用用户
+
 		// 保留原有路由，以便兼容可能的其他调用
-		userRouterWithRecord.POST("/disable_user/:id", baseApi.Disable)       // 禁用用户（兼容）
-		userRouterWithRecord.POST("/enable/:id", baseApi.EnableUser)          // 启用用户
+		userRouterWithRecord.POST("/disable_user/:id", baseApi.Disable) // 禁用用户（兼容）
+		userRouterWithRecord.POST("/enable/:id", baseApi.EnableUser)    // 启用用户
 	}
 }
