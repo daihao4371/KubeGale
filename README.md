@@ -1,7 +1,10 @@
 # KubeGale
-## 项目简介
 
-此项目是一个基于Go+Vue开发的Kubernetes多集群管理平台，平台还集成CMDB资产管理、容器平台、CICD功能等。
+<div align="center">
+  <img src="https://your-logo-url-here.png" alt="KubeGale Logo" width="200">
+  <p>强大的 Kubernetes 多集群管理平台</p>
+</div>
+
 <p align="center">
   <a href="https://golang.google.cn/">
     <img src="https://img.shields.io/badge/Golang-1.23-green.svg" alt="golang">
@@ -23,10 +26,36 @@
   </a>
 </p>
 
-> DYCLOUD运维平台， 本项目使用Go、 Gin、Gorm开发， 前端使用的是Vue3+Element Plus框架。
+## 项目简介
 
+KubeGale 是一个基于 Go + Vue 开发的 Kubernetes 多集群管理平台，集成了 CMDB 资产管理、容器平台、CICD 功能等。本项目后端使用 Go、Gin、Gorm 开发，前端使用 Vue3 + Element Plus 框架。
 
+## 功能特点
 
+- 🚀 **多集群管理**：统一管理多个 Kubernetes 集群
+- 📊 **资源可视化**：直观展示集群资源使用情况
+- 🔐 **权限控制**：细粒度的用户权限管理
+- 🔄 **CI/CD 集成**：支持自动化部署流程
+- 📝 **CMDB 资产管理**：全面的 IT 资产管理
+- 🌐 **容器平台**：简化容器应用的部署和管理
+
+## 快速开始
+
+### 环境要求
+
+- Go 1.23+
+- MySQL 5.7+
+- Redis 5.0+
+- Node.js 14+
+
+### 后端部署
+
+1. 克隆仓库
+
+```bash
+git clone https://github.com/daihao4371/KubeGale.git
+cd KubeGale
+```
 
 | 文件夹       | 说明                    | 描述                        |
 | ------------ | ----------------------- | --------------------------- |
@@ -48,5 +77,30 @@
 | `utils`      | 工具包                  | 工具函数封装            |
 | `--timer` | timer | 定时器接口封装 |
 
+## 开发指南
+### 添加新功能
+1. 在 model 目录下创建数据模型
+2. 在 service 目录下实现业务逻辑
+3. 在 api 目录下创建接口处理函数
+4. 在 router 目录下注册路由
+### 代码规范
+- 遵循 Go 官方推荐的代码规范
+- 使用 gofmt 格式化代码
+- 添加适当的注释和文档
+## 贡献指南
+1. Fork 本仓库
+2. 创建您的特性分支 ( git checkout -b feature/amazing-feature )
+3. 提交您的更改 ( git commit -m 'Add some amazing feature' )
+4. 推送到分支 ( git push origin feature/amazing-feature )
+5. 打开一个 Pull Request
+## 相关项目
+- KubeGale-web - 前端项目
 
-前端服务地址： 
+## 许可证
+本项目采用 MIT 许可证 。
+
+前端服务地址： https://github.com/daihao4371/KubeGale-web.git
+
+## 联系我们
+如果您有任何问题或建议，请随时联系我们。
+邮箱: daihao5887@gamil.com
