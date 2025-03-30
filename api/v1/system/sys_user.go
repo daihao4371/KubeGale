@@ -724,8 +724,52 @@ func (b *BaseApi) UpdateProfile(c *gin.Context) {
 	response.OkWithMessage("用户信息更新成功", c)
 }
 
+// EnableUser 启用用户
+func (b *BaseApi) EnableUser(c *gin.Context) {
+	// 获取路径参数中的用户ID
+	id := c.Param("id")
+
+	// 转换为整数
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		response.FailWithMessage("用户ID参数错误", c)
+		return
+	}
+
+	// 验证用户ID
+	if idInt <= 0 {
+		response.FailWithMessage("无效的用户ID", c)
+		return
+	}
+
+	// 调用服务层启用用户
+	if err := userService.EnableUser(idInt); err != nil {
+		// 处理特定错误
+		var sysErr *global.SysError
+		if errors.As(err, &sysErr) {
+			switch sysErr.Code {
+			case global.ERROR_USER_NOT_EXIST:
+				response.FailWithMessage("用户不存在", c)
+				return
+			case global.ERROR_USER_ID_INVALID:
+				response.FailWithMessage("用户ID无效", c)
+				return
+			}
+		}
+
+		// 记录未预期的错误
+		global.KUBEGALE_LOG.Error("启用用户失败", zap.Error(err))
+		response.FailWithMessage("启用用户失败: "+err.Error(), c)
+		return
+	}
+
+	// 返回成功响应
+	response.OkWithMessage("用户启用成功", c)
+}
+
 // DeleteUser 删除用户
-func (b *BaseApi) DeleteUser(c *gin.Context) {
+// 将函数名从Disable改为DisableUser
+func (b *BaseApi) Disable(c *gin.Context) {
 	// 获取路径参数中的用户ID
 	id := c.Param("id")
 
@@ -743,7 +787,7 @@ func (b *BaseApi) DeleteUser(c *gin.Context) {
 	}
 
 	// 调用服务层删除用户
-	if err := userService.DeleteUser(idInt); err != nil {
+	if err := userService.Disable(idInt); err != nil {
 		// 处理特定错误
 		var sysErr *global.SysError
 		if errors.As(err, &sysErr) {

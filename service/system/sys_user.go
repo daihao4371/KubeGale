@@ -390,7 +390,6 @@ func (us *UserService) UpdateProfile(uid int, req *system.User) error {
 		"mobile":          req.Mobile,
 		"fei_shu_user_id": req.FeiShuUserId,
 		"account_type":    req.AccountType,
-		"home_path":       req.HomePath,
 		"enable":          req.Enable,
 		"updated_at":      time.Now(),
 	}
@@ -416,9 +415,9 @@ func (us *UserService) WriteOff(username string, password string) error {
 		return NewErrorWithMsg(ERROR_PARAM_INVALID, "密码不能为空")
 	}
 
-	// 验证用户是否存在
+	// 验证用户是否存在 - 移除is_deleted字段
 	var user system.User
-	if err := global.KUBEGALE_DB.Where("username = ? AND is_deleted = 0", username).First(&user).Error; err != nil {
+	if err := global.KUBEGALE_DB.Where("username = ?", username).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return NewError(ERROR_USER_NOT_EXIST)
 		}
@@ -432,21 +431,17 @@ func (us *UserService) WriteOff(username string, password string) error {
 
 	// 使用事务进行注销操作
 	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		// 软删除用户记录
-		if err := tx.Model(&user).Update("is_deleted", 1).Error; err != nil {
+		// 更新用户状态为禁用 - 替代软删除
+		if err := tx.Model(&user).Update("enable", 0).Error; err != nil {
 			return fmt.Errorf("注销用户失败: %w", err)
 		}
 
-		// 记录注销时间
-		if err := tx.Model(&user).Updates(map[string]interface{}{
-			"deleted_at": time.Now(),
-			"updated_at": time.Now(),
-		}).Error; err != nil {
-			return fmt.Errorf("更新注销时间失败: %w", err)
+		// 更新时间
+		if err := tx.Model(&user).Update("updated_at", time.Now()).Error; err != nil {
+			return fmt.Errorf("更新时间失败: %w", err)
 		}
 
-		// 可选：清除用户关联的角色、菜单和API权限
-		// 如果需要保留历史记录，可以不执行这些操作
+		// 清除用户关联的角色、菜单和API权限
 		if err := tx.Exec("DELETE FROM user_roles WHERE user_id = ?", user.ID).Error; err != nil {
 			return fmt.Errorf("清除用户角色关联失败: %w", err)
 		}
@@ -467,7 +462,7 @@ func (us *UserService) WriteOff(username string, password string) error {
 }
 
 // DeleteUser 删除用户
-func (us *UserService) DeleteUser(uid int) error {
+func (us *UserService) Disable(uid int) error {
 	// 参数验证
 	if uid <= 0 {
 		return NewError(ERROR_USER_ID_INVALID)
@@ -475,7 +470,7 @@ func (us *UserService) DeleteUser(uid int) error {
 
 	// 查询用户是否存在
 	var user system.User
-	if err := global.KUBEGALE_DB.Where("id = ? AND is_deleted = 0", uid).First(&user).Error; err != nil {
+	if err := global.KUBEGALE_DB.Where("id = ?", uid).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return NewError(ERROR_USER_NOT_EXIST)
 		}
@@ -484,17 +479,14 @@ func (us *UserService) DeleteUser(uid int) error {
 
 	// 使用事务进行删除操作
 	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		// 软删除用户记录
-		if err := tx.Model(&user).Update("is_deleted", 1).Error; err != nil {
-			return fmt.Errorf("删除用户失败: %w", err)
+		// 更新用户状态为禁用
+		if err := tx.Model(&user).Update("enable", 0).Error; err != nil {
+			return fmt.Errorf("禁用用户失败: %w", err)
 		}
 
-		// 记录删除时间
-		if err := tx.Model(&user).Updates(map[string]interface{}{
-			"deleted_at": time.Now(),
-			"updated_at": time.Now(),
-		}).Error; err != nil {
-			return fmt.Errorf("更新删除时间失败: %w", err)
+		// 更新时间
+		if err := tx.Model(&user).Update("updated_at", time.Now()).Error; err != nil {
+			return fmt.Errorf("更新时间失败: %w", err)
 		}
 
 		// 清除用户关联的角色、菜单和API权限
@@ -512,6 +504,86 @@ func (us *UserService) DeleteUser(uid int) error {
 
 		// 记录日志
 		global.KUBEGALE_LOG.Info("用户已删除", zap.Int("user_id", uid))
+
+		return nil
+	})
+}
+
+// EnableUser 启用用户
+func (us *UserService) EnableUser(uid int) error {
+	// 参数验证
+	if uid <= 0 {
+		return NewError(ERROR_USER_ID_INVALID)
+	}
+
+	// 查询用户是否存在
+	var user system.User
+	if err := global.KUBEGALE_DB.Where("id = ?", uid).First(&user).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return NewError(ERROR_USER_NOT_EXIST)
+		}
+		return fmt.Errorf("查询用户失败: %w", err)
+	}
+
+	// 检查用户是否已经是启用状态
+	if user.Enable == 1 {
+		return fmt.Errorf("用户已经是启用状态")
+	}
+
+	// 使用事务进行启用操作
+	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
+		// 更新用户状态为启用
+		if err := tx.Model(&user).Update("enable", 1).Error; err != nil {
+			return fmt.Errorf("启用用户失败: %w", err)
+		}
+
+		// 更新时间
+		if err := tx.Model(&user).Update("updated_at", time.Now()).Error; err != nil {
+			return fmt.Errorf("更新时间失败: %w", err)
+		}
+
+		// 记录日志
+		global.KUBEGALE_LOG.Info("用户已启用", zap.Int("user_id", uid))
+
+		return nil
+	})
+}
+
+// Disable 禁用用户
+func (us *UserService) DisableUser(uid int) error {
+	// 参数验证
+	if uid <= 0 {
+		return NewError(ERROR_USER_ID_INVALID)
+	}
+
+	// 查询用户是否存在
+	var user system.User
+	if err := global.KUBEGALE_DB.Where("id = ?", uid).First(&user).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return NewError(ERROR_USER_NOT_EXIST)
+		}
+		return fmt.Errorf("查询用户失败: %w", err)
+	}
+
+	// 检查用户是否已经是禁用状态
+	if user.Enable == 0 {
+		return fmt.Errorf("用户已经是禁用状态")
+	}
+
+	// 使用事务进行禁用操作
+	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
+		// 更新用户状态为禁用
+		if err := tx.Model(&user).Update("enable", 0).Error; err != nil {
+			return fmt.Errorf("禁用用户失败: %w", err)
+		}
+
+		// 更新时间
+		if err := tx.Model(&user).Update("updated_at", time.Now()).Error; err != nil {
+			return fmt.Errorf("更新时间失败: %w", err)
+		}
+
+		// 记录日志
+		global.KUBEGALE_LOG.Info("用户已禁用", zap.Int("user_id", uid))
 
 		return nil
 	})

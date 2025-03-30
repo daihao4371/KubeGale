@@ -36,6 +36,12 @@ func (s *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 		userRouterWithRecord.POST("/change_password", baseApi.ChangePassword) // 修改密码
 		userRouterWithRecord.POST("/write_off", baseApi.WriteOff)             // 注销账号
 		userRouterWithRecord.POST("/profile/update", baseApi.UpdateProfile)   // 更新用户信息
-		userRouterWithRecord.DELETE("/:id", baseApi.DeleteUser)               // 删除用户
+		
+		// 修改这里：添加直接处理 POST /api/user/:id 的路由
+		userRouterWithRecord.POST("/:id", baseApi.Disable)                    // 禁用用户
+		
+		// 保留原有路由，以便兼容可能的其他调用
+		userRouterWithRecord.POST("/disable_user/:id", baseApi.Disable)       // 禁用用户（兼容）
+		userRouterWithRecord.POST("/enable/:id", baseApi.EnableUser)          // 启用用户
 	}
 }
