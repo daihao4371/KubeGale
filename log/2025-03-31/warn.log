@@ -1,1 +1,0 @@
-[KUBEGALE]2025-03-31 20:22:07.886	[33mwarn[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/casbin_rbac.go:14	数据库连接为空，Casbin 初始化跳过
