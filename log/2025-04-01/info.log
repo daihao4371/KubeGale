@@ -801,3 +801,286 @@ ORDER BY
   "HomePath": "",
   "Enable": 1
 }','{"code":0,"data":{"list":[],"total":0},"msg":"获取角色列表成功"}',0)
+[KUBEGALE]2025-04-01 21:48:54.095	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.128ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.097	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[1.205ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.097	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.514ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'kubegale' AND table_name = 'sys_apis' AND table_type = 'BASE TABLE'
+[KUBEGALE]2025-04-01 21:48:54.098	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.079ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.098	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.650ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.100	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[1.080ms] [34;1m[rows:-][0m SELECT * FROM `sys_apis` LIMIT 1
+[KUBEGALE]2025-04-01 21:48:54.103	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[3.063ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'kubegale' AND table_name = 'sys_apis' ORDER BY ORDINAL_POSITION
+[KUBEGALE]2025-04-01 21:48:54.104	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.215ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.106	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.829ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.107	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.814ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'kubegale' AND table_name = 'sys_base_menus' AND table_type = 'BASE TABLE'
+[KUBEGALE]2025-04-01 21:48:54.107	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.462ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.109	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[1.151ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.110	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.780ms] [34;1m[rows:-][0m SELECT * FROM `sys_base_menus` LIMIT 1
+[KUBEGALE]2025-04-01 21:48:54.112	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[1.356ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'kubegale' AND table_name = 'sys_base_menus' ORDER BY ORDINAL_POSITION
+[KUBEGALE]2025-04-01 21:48:54.112	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.136ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.113	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[1.060ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.114	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.537ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'kubegale' AND table_name = 'sys_users' AND table_type = 'BASE TABLE'
+[KUBEGALE]2025-04-01 21:48:54.115	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.134ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.115	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.629ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.116	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.492ms] [34;1m[rows:-][0m SELECT * FROM `sys_users` LIMIT 1
+[KUBEGALE]2025-04-01 21:48:54.117	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[1.117ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'kubegale' AND table_name = 'sys_users' ORDER BY ORDINAL_POSITION
+[KUBEGALE]2025-04-01 21:48:54.118	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.130ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.119	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.782ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.120	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[1.409ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'kubegale' AND table_name = 'sys_users' AND index_name = 'idx_sys_users_deleted_at'
+[KUBEGALE]2025-04-01 21:48:54.121	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.189ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.122	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.887ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.124	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[1.093ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'kubegale' AND table_name = 'user_apis' AND table_type = 'BASE TABLE'
+[KUBEGALE]2025-04-01 21:48:54.125	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.852ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.126	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.900ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.127	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.611ms] [34;1m[rows:-][0m SELECT * FROM `user_apis` LIMIT 1
+[KUBEGALE]2025-04-01 21:48:54.129	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[1.159ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'kubegale' AND table_name = 'user_apis' ORDER BY ORDINAL_POSITION
+[KUBEGALE]2025-04-01 21:48:54.129	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.183ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.130	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.685ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.131	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.709ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'kubegale' AND table_name = 'user_menus' AND table_type = 'BASE TABLE'
+[KUBEGALE]2025-04-01 21:48:54.134	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[2.861ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.138	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[4.015ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.139	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.798ms] [34;1m[rows:-][0m SELECT * FROM `user_menus` LIMIT 1
+[KUBEGALE]2025-04-01 21:48:54.140	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.843ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'kubegale' AND table_name = 'user_menus' ORDER BY ORDINAL_POSITION
+[KUBEGALE]2025-04-01 21:48:54.141	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.177ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.142	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.744ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.143	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[1.222ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'kubegale' AND table_name = 'sys_roles' AND table_type = 'BASE TABLE'
+[KUBEGALE]2025-04-01 21:48:54.143	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.194ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.144	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.784ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.146	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[1.200ms] [34;1m[rows:-][0m SELECT * FROM `sys_roles` LIMIT 1
+[KUBEGALE]2025-04-01 21:48:54.147	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.805ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'kubegale' AND table_name = 'sys_roles' ORDER BY ORDINAL_POSITION
+[KUBEGALE]2025-04-01 21:48:54.147	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m
+[0m[33m[0.100ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.148	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m
+[0m[33m[0.833ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.149	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.482ms] [34;1m[rows:2][0m 
+SELECT
+	TABLE_NAME,
+	COLUMN_NAME,
+	INDEX_NAME,
+	NON_UNIQUE 
+FROM
+	information_schema.STATISTICS 
+WHERE
+	TABLE_SCHEMA = 'kubegale' 
+	AND TABLE_NAME = 'sys_roles' 
+ORDER BY
+	INDEX_NAME,
+	SEQ_IN_INDEX
+[KUBEGALE]2025-04-01 21:48:54.149	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m
+[0m[33m[0.086ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.149	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m
+[0m[33m[0.461ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.150	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m
+[0m[33m[0.843ms] [34;1m[rows:-][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'kubegale' AND table_name = 'sys_roles' AND constraint_name = 'uni_sys_roles_name'
+[KUBEGALE]2025-04-01 21:48:54.151	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.122ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.152	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.924ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.152	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.404ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'kubegale' AND table_name = 'user_roles' AND table_type = 'BASE TABLE'
+[KUBEGALE]2025-04-01 21:48:54.153	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.095ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.153	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.476ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.154	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.550ms] [34;1m[rows:-][0m SELECT * FROM `user_roles` LIMIT 1
+[KUBEGALE]2025-04-01 21:48:54.155	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.754ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'kubegale' AND table_name = 'user_roles' ORDER BY ORDINAL_POSITION
+[KUBEGALE]2025-04-01 21:48:54.155	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.084ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.156	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.631ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.156	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.393ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'kubegale' AND table_name = 'sys_operation_records' AND table_type = 'BASE TABLE'
+[KUBEGALE]2025-04-01 21:48:54.157	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.098ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.157	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.456ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.158	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.626ms] [34;1m[rows:-][0m SELECT * FROM `sys_operation_records` LIMIT 1
+[KUBEGALE]2025-04-01 21:48:54.159	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.907ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'kubegale' AND table_name = 'sys_operation_records' ORDER BY ORDINAL_POSITION
+[KUBEGALE]2025-04-01 21:48:54.159	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.108ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.160	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.738ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.160	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:18
+[0m[33m[0.447ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'kubegale' AND table_name = 'sys_operation_records' AND index_name = 'idx_sys_operation_records_deleted_at'
+[KUBEGALE]2025-04-01 21:48:54.160	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:51	register table success
+[KUBEGALE]2025-04-01 21:48:54.163	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-04-01 21:48:54.164	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-04-01 21:48:54.165	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/goWork/pkg/mod/github.com/casbin/gorm-adapter/v3@v3.32.0/adapter.go:423
+[0m[33m[0.206ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.166	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/goWork/pkg/mod/github.com/casbin/gorm-adapter/v3@v3.32.0/adapter.go:423
+[0m[33m[0.948ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.166	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/goWork/pkg/mod/github.com/casbin/gorm-adapter/v3@v3.32.0/adapter.go:423
+[0m[33m[0.372ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'kubegale' AND table_name = 'casbin_rule' AND table_type = 'BASE TABLE'
+[KUBEGALE]2025-04-01 21:48:54.167	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/goWork/pkg/mod/github.com/casbin/gorm-adapter/v3@v3.32.0/adapter.go:423
+[0m[33m[0.157ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.167	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/goWork/pkg/mod/github.com/casbin/gorm-adapter/v3@v3.32.0/adapter.go:423
+[0m[33m[0.520ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.168	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/goWork/pkg/mod/github.com/casbin/gorm-adapter/v3@v3.32.0/adapter.go:423
+[0m[33m[0.413ms] [34;1m[rows:-][0m SELECT * FROM `casbin_rule` LIMIT 1
+[KUBEGALE]2025-04-01 21:48:54.169	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/goWork/pkg/mod/github.com/casbin/gorm-adapter/v3@v3.32.0/adapter.go:423
+[0m[33m[0.805ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'kubegale' AND table_name = 'casbin_rule' ORDER BY ORDINAL_POSITION
+[KUBEGALE]2025-04-01 21:48:54.169	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/goWork/pkg/mod/github.com/casbin/gorm-adapter/v3@v3.32.0/adapter.go:429
+[0m[33m[0.088ms] [34;1m[rows:-][0m SELECT DATABASE()
+[KUBEGALE]2025-04-01 21:48:54.170	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/goWork/pkg/mod/github.com/casbin/gorm-adapter/v3@v3.32.0/adapter.go:429
+[0m[33m[0.556ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'kubegale%' ORDER BY SCHEMA_NAME='kubegale' DESC,SCHEMA_NAME limit 1
+[KUBEGALE]2025-04-01 21:48:54.170	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/goWork/pkg/mod/github.com/casbin/gorm-adapter/v3@v3.32.0/adapter.go:429
+[0m[33m[0.357ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'kubegale' AND table_name = 'casbin_rule' AND index_name = 'idx_casbin_rule'
+[KUBEGALE]2025-04-01 21:48:54.171	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/goWork/pkg/mod/github.com/casbin/gorm-adapter/v3@v3.32.0/adapter.go:492
+[0m[33m[0.322ms] [34;1m[rows:7][0m SELECT * FROM `casbin_rule` ORDER BY ID
+[KUBEGALE]2025-04-01 21:48:54.171	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-04-01 21:48:59.721	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:48:59.713','2025-04-01 21:48:59.713',0,'127.0.0.1','POST','/api/roles/create',200,606250,'PostmanRuntime/7.43.3','','{\n  \"Name\": \"dev\",\n  \"Description\": \"开发\",\n  \"RoleType\": \"RoleType1\",\n  \"IsDefault\": 0\n}','{\"code\":7,\"data\":{},\"msg\":\"Key: ''CreateRoleRequest.RoleType'' Error:Field validation for ''RoleType'' failed on the ''required'' tag\"}',0)", "rows": 1, "elapsed": 0.089347708}
+[KUBEGALE]2025-04-01 21:48:59.723	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[91.660ms] [34;1m[rows:1][0m INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:48:59.713','2025-04-01 21:48:59.713',0,'127.0.0.1','POST','/api/roles/create',200,606250,'PostmanRuntime/7.43.3','','{
+  "Name": "dev",
+  "Description": "开发",
+  "RoleType": "RoleType1",
+  "IsDefault": 0
+}','{"code":7,"data":{},"msg":"Key: ''CreateRoleRequest.RoleType'' Error:Field validation for ''RoleType'' failed on the ''required'' tag"}',0)
+[KUBEGALE]2025-04-01 21:49:53.008	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:49:53.005','2025-04-01 21:49:53.005',0,'127.0.0.1','POST','/api/roles/create',200,159125,'PostmanRuntime/7.43.3','','{\n  \"name\": \"dev\",\n  \"description\": \"开发\",\n  \"role_type\": \"RoleType1\",\n  \"is_default\": 0\n}','{\"code\":7,\"data\":{},\"msg\":\"json: cannot unmarshal string into Go struct field CreateRoleRequest.role_type of type int\"}',0)", "rows": 1, "elapsed": 0.003381209}
+[KUBEGALE]2025-04-01 21:49:53.009	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[4.641ms] [34;1m[rows:1][0m INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:49:53.005','2025-04-01 21:49:53.005',0,'127.0.0.1','POST','/api/roles/create',200,159125,'PostmanRuntime/7.43.3','','{
+  "name": "dev",
+  "description": "开发",
+  "role_type": "RoleType1",
+  "is_default": 0
+}','{"code":7,"data":{},"msg":"json: cannot unmarshal string into Go struct field CreateRoleRequest.role_type of type int"}',0)
+[KUBEGALE]2025-04-01 21:50:04.360	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:50:04.359','2025-04-01 21:50:04.359',0,'127.0.0.1','POST','/api/roles/create',200,27042,'PostmanRuntime/7.43.3','','{\n  \"name\": \"dev\",\n  \"description\": \"开发\",\n  \"role_type\": \"1\",\n  \"is_default\": 0\n}','{\"code\":7,\"data\":{},\"msg\":\"json: cannot unmarshal string into Go struct field CreateRoleRequest.role_type of type int\"}',0)", "rows": 1, "elapsed": 0.00149525}
+[KUBEGALE]2025-04-01 21:50:04.360	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[2.012ms] [34;1m[rows:1][0m INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:50:04.359','2025-04-01 21:50:04.359',0,'127.0.0.1','POST','/api/roles/create',200,27042,'PostmanRuntime/7.43.3','','{
+  "name": "dev",
+  "description": "开发",
+  "role_type": "1",
+  "is_default": 0
+}','{"code":7,"data":{},"msg":"json: cannot unmarshal string into Go struct field CreateRoleRequest.role_type of type int"}',0)
+[KUBEGALE]2025-04-01 21:50:11.032	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "SELECT count(*) FROM `sys_roles` WHERE name = 'dev' AND is_deleted = 0", "rows": 1, "elapsed": 0.00363225}
+[KUBEGALE]2025-04-01 21:50:11.032	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[4.075ms] [34;1m[rows:1][0m SELECT count(*) FROM `sys_roles` WHERE name = 'dev' AND is_deleted = 0
+[KUBEGALE]2025-04-01 21:50:11.033	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "INSERT INTO `sys_roles` (`name`,`description`,`role_type`,`is_default`,`create_time`,`update_time`,`is_deleted`) VALUES ('dev','开发',1,0,1743515411,1743515411,0)", "rows": 1, "elapsed": 0.000863125}
+[KUBEGALE]2025-04-01 21:50:11.034	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[1.043ms] [34;1m[rows:1][0m INSERT INTO `sys_roles` (`name`,`description`,`role_type`,`is_default`,`create_time`,`update_time`,`is_deleted`) VALUES ('dev','开发',1,0,1743515411,1743515411,0)
+[KUBEGALE]2025-04-01 21:50:11.034	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_role.go:80	角色创建成功	{"id": 1, "name": "dev"}
+[KUBEGALE]2025-04-01 21:50:11.035	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:50:11.035','2025-04-01 21:50:11.035',0,'127.0.0.1','POST','/api/roles/create',200,6150958,'PostmanRuntime/7.43.3','','{\n  \"name\": \"dev\",\n  \"description\": \"开发\",\n  \"role_type\": 1,\n  \"is_default\": 0\n}','{\"code\":0,\"data\":{},\"msg\":\"创建角色并分配权限成功\"}',0)", "rows": 1, "elapsed": 0.000635042}
+[KUBEGALE]2025-04-01 21:50:11.035	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[1.061ms] [34;1m[rows:1][0m INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:50:11.035','2025-04-01 21:50:11.035',0,'127.0.0.1','POST','/api/roles/create',200,6150958,'PostmanRuntime/7.43.3','','{
+  "name": "dev",
+  "description": "开发",
+  "role_type": 1,
+  "is_default": 0
+}','{"code":0,"data":{},"msg":"创建角色并分配权限成功"}',0)
+[KUBEGALE]2025-04-01 21:50:49.134	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:50:49.133','2025-04-01 21:50:49.133',0,'127.0.0.1','GET','/api/roles/list',200,18458,'PostmanRuntime/7.43.3','','{}','{\"code\":7,\"data\":{},\"msg\":\"strconv.Atoi: parsing \\\"list\\\": invalid syntax\"}',0)", "rows": 1, "elapsed": 0.001877666}
+[KUBEGALE]2025-04-01 21:50:49.134	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[2.529ms] [34;1m[rows:1][0m INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:50:49.133','2025-04-01 21:50:49.133',0,'127.0.0.1','GET','/api/roles/list',200,18458,'PostmanRuntime/7.43.3','','{}','{"code":7,"data":{},"msg":"strconv.Atoi: parsing \"list\": invalid syntax"}',0)
+[KUBEGALE]2025-04-01 21:50:56.688	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "SELECT count(*) FROM `sys_roles` WHERE is_deleted = 0", "rows": 1, "elapsed": 0.000798125}
+[KUBEGALE]2025-04-01 21:50:56.689	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[1.202ms] [34;1m[rows:1][0m SELECT count(*) FROM `sys_roles` WHERE is_deleted = 0
+[KUBEGALE]2025-04-01 21:50:56.689	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "SELECT * FROM `sys_roles` WHERE is_deleted = 0 ORDER BY id ASC LIMIT 10", "rows": 1, "elapsed": 0.000450916}
+[KUBEGALE]2025-04-01 21:50:56.689	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[0.558ms] [34;1m[rows:1][0m SELECT * FROM `sys_roles` WHERE is_deleted = 0 ORDER BY id ASC LIMIT 10
+[KUBEGALE]2025-04-01 21:50:56.690	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_role.go:407	获取角色列表成功	{"page": 1, "pageSize": 10, "count": 1, "total": 1}
+[KUBEGALE]2025-04-01 21:50:56.691	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:50:56.69','2025-04-01 21:50:56.69',0,'127.0.0.1','POST','/api/roles/list',200,3687292,'PostmanRuntime/7.43.3','','{\n    username: \"admin\"\n    passwored: \"123456\"\n}','{\"code\":0,\"data\":{\"list\":[{\"id\":1,\"name\":\"dev\",\"description\":\"开发\",\"role_type\":1,\"is_default\":0,\"create_time\":1743515411,\"update_time\":1743515411,\"is_deleted\":0,\"apis\":null}],\"total\":1},\"msg\":\"获取角色列表成功\"}',0)", "rows": 1, "elapsed": 0.000899292}
+[KUBEGALE]2025-04-01 21:50:56.691	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[0.992ms] [34;1m[rows:1][0m INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:50:56.69','2025-04-01 21:50:56.69',0,'127.0.0.1','POST','/api/roles/list',200,3687292,'PostmanRuntime/7.43.3','','{
+    username: "admin"
+    passwored: "123456"
+}','{"code":0,"data":{"list":[{"id":1,"name":"dev","description":"开发","role_type":1,"is_default":0,"create_time":1743515411,"update_time":1743515411,"is_deleted":0,"apis":null}],"total":1},"msg":"获取角色列表成功"}',0)
+[KUBEGALE]2025-04-01 21:56:48.992	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "SELECT count(*) FROM `sys_roles` WHERE is_deleted = 0", "rows": 1, "elapsed": 0.001507208}
+[KUBEGALE]2025-04-01 21:56:48.993	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[1.824ms] [34;1m[rows:1][0m SELECT count(*) FROM `sys_roles` WHERE is_deleted = 0
+[KUBEGALE]2025-04-01 21:56:48.993	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "SELECT * FROM `sys_roles` WHERE is_deleted = 0 ORDER BY id ASC LIMIT 10", "rows": 1, "elapsed": 0.000470125}
+[KUBEGALE]2025-04-01 21:56:48.993	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[0.541ms] [34;1m[rows:1][0m SELECT * FROM `sys_roles` WHERE is_deleted = 0 ORDER BY id ASC LIMIT 10
+[KUBEGALE]2025-04-01 21:56:48.993	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_role.go:407	获取角色列表成功	{"page": 1, "pageSize": 10, "count": 1, "total": 1}
+[KUBEGALE]2025-04-01 21:56:48.995	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:56:48.994','2025-04-01 21:56:48.994',0,'127.0.0.1','POST','/api/roles/list',200,4053708,'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36','','{\"page\":1,\"pageSize\":10}','{\"code\":0,\"data\":{\"list\":[{\"id\":1,\"name\":\"dev\",\"description\":\"开发\",\"role_type\":1,\"is_default\":0,\"create_time\":1743515411,\"update_time\":1743515411,\"is_deleted\":0,\"apis\":null}],\"total\":1},\"msg\":\"获取角色列表成功\"}',0)", "rows": 1, "elapsed": 0.001690125}
+[KUBEGALE]2025-04-01 21:56:48.995	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[1.924ms] [34;1m[rows:1][0m INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 21:56:48.994','2025-04-01 21:56:48.994',0,'127.0.0.1','POST','/api/roles/list',200,4053708,'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36','','{"page":1,"pageSize":10}','{"code":0,"data":{"list":[{"id":1,"name":"dev","description":"开发","role_type":1,"is_default":0,"create_time":1743515411,"update_time":1743515411,"is_deleted":0,"apis":null}],"total":1},"msg":"获取角色列表成功"}',0)
+[KUBEGALE]2025-04-01 22:11:19.662	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "SELECT count(*) FROM `sys_roles` WHERE is_deleted = 0", "rows": 1, "elapsed": 0.001724}
+[KUBEGALE]2025-04-01 22:11:19.663	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[2.301ms] [34;1m[rows:1][0m SELECT count(*) FROM `sys_roles` WHERE is_deleted = 0
+[KUBEGALE]2025-04-01 22:11:19.664	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "SELECT * FROM `sys_roles` WHERE is_deleted = 0 ORDER BY id ASC LIMIT 10", "rows": 1, "elapsed": 0.000939917}
+[KUBEGALE]2025-04-01 22:11:19.664	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[1.182ms] [34;1m[rows:1][0m SELECT * FROM `sys_roles` WHERE is_deleted = 0 ORDER BY id ASC LIMIT 10
+[KUBEGALE]2025-04-01 22:11:19.664	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_role.go:407	获取角色列表成功	{"page": 1, "pageSize": 10, "count": 1, "total": 1}
+[KUBEGALE]2025-04-01 22:11:19.671	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 22:11:19.666','2025-04-01 22:11:19.666',0,'127.0.0.1','POST','/api/roles/list',200,7002875,'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36','','{\"page\":1,\"pageSize\":10}','{\"code\":0,\"data\":{\"list\":[{\"id\":1,\"name\":\"dev\",\"description\":\"开发\",\"role_type\":1,\"is_default\":0,\"create_time\":1743515411,\"update_time\":1743515411,\"is_deleted\":0,\"apis\":null}],\"total\":1},\"msg\":\"获取角色列表成功\"}',0)", "rows": 1, "elapsed": 0.005367333}
+[KUBEGALE]2025-04-01 22:11:19.671	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[6.352ms] [34;1m[rows:1][0m INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 22:11:19.666','2025-04-01 22:11:19.666',0,'127.0.0.1','POST','/api/roles/list',200,7002875,'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36','','{"page":1,"pageSize":10}','{"code":0,"data":{"list":[{"id":1,"name":"dev","description":"开发","role_type":1,"is_default":0,"create_time":1743515411,"update_time":1743515411,"is_deleted":0,"apis":null}],"total":1},"msg":"获取角色列表成功"}',0)
+[KUBEGALE]2025-04-01 22:11:39.471	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "SELECT count(*) FROM `sys_roles` WHERE is_deleted = 0", "rows": 1, "elapsed": 0.0035015}
+[KUBEGALE]2025-04-01 22:11:39.471	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[3.940ms] [34;1m[rows:1][0m SELECT count(*) FROM `sys_roles` WHERE is_deleted = 0
+[KUBEGALE]2025-04-01 22:11:39.473	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "SELECT * FROM `sys_roles` WHERE is_deleted = 0 ORDER BY id ASC LIMIT 10", "rows": 1, "elapsed": 0.00189275}
+[KUBEGALE]2025-04-01 22:11:39.473	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[2.036ms] [34;1m[rows:1][0m SELECT * FROM `sys_roles` WHERE is_deleted = 0 ORDER BY id ASC LIMIT 10
+[KUBEGALE]2025-04-01 22:11:39.473	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_role.go:407	获取角色列表成功	{"page": 1, "pageSize": 10, "count": 1, "total": 1}
+[KUBEGALE]2025-04-01 22:11:39.477	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 22:11:39.476','2025-04-01 22:11:39.476',0,'127.0.0.1','POST','/api/roles/list',200,7343000,'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36','','{\"page\":1,\"pageSize\":10}','{\"code\":0,\"data\":{\"list\":[{\"id\":1,\"name\":\"dev\",\"description\":\"开发\",\"role_type\":1,\"is_default\":0,\"create_time\":1743515411,\"update_time\":1743515411,\"is_deleted\":0,\"apis\":null}],\"total\":1},\"msg\":\"获取角色列表成功\"}',0)", "rows": 1, "elapsed": 0.003608208}
+[KUBEGALE]2025-04-01 22:11:39.478	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[4.069ms] [34;1m[rows:1][0m INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 22:11:39.476','2025-04-01 22:11:39.476',0,'127.0.0.1','POST','/api/roles/list',200,7343000,'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36','','{"page":1,"pageSize":10}','{"code":0,"data":{"list":[{"id":1,"name":"dev","description":"开发","role_type":1,"is_default":0,"create_time":1743515411,"update_time":1743515411,"is_deleted":0,"apis":null}],"total":1},"msg":"获取角色列表成功"}',0)
+[KUBEGALE]2025-04-01 22:12:49.701	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "SELECT count(*) FROM `sys_roles` WHERE name = 'qa' AND is_deleted = 0", "rows": 1, "elapsed": 0.0024135}
+[KUBEGALE]2025-04-01 22:12:49.702	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[3.374ms] [34;1m[rows:1][0m SELECT count(*) FROM `sys_roles` WHERE name = 'qa' AND is_deleted = 0
+[KUBEGALE]2025-04-01 22:12:49.704	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "SELECT count(*) FROM `sys_roles` WHERE is_default = 1 AND is_deleted = 0", "rows": 1, "elapsed": 0.001090833}
+[KUBEGALE]2025-04-01 22:12:49.704	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[1.276ms] [34;1m[rows:1][0m SELECT count(*) FROM `sys_roles` WHERE is_default = 1 AND is_deleted = 0
+[KUBEGALE]2025-04-01 22:12:49.710	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "INSERT INTO `sys_roles` (`name`,`description`,`role_type`,`is_default`,`create_time`,`update_time`,`is_deleted`) VALUES ('qa','测试',1,1,1743516769,1743516769,0)", "rows": 1, "elapsed": 0.005140125}
+[KUBEGALE]2025-04-01 22:12:49.710	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[5.363ms] [34;1m[rows:1][0m INSERT INTO `sys_roles` (`name`,`description`,`role_type`,`is_default`,`create_time`,`update_time`,`is_deleted`) VALUES ('qa','测试',1,1,1743516769,1743516769,0)
+[KUBEGALE]2025-04-01 22:12:49.710	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_role.go:80	角色创建成功	{"id": 2, "name": "qa"}
+[KUBEGALE]2025-04-01 22:12:49.715	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 22:12:49.712','2025-04-01 22:12:49.712',0,'127.0.0.1','POST','/api/roles/create',200,17793375,'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36','','{\"name\":\"qa\",\"description\":\"测试\",\"role_type\":1,\"is_default\":1,\"apis\":[]}','{\"code\":0,\"data\":{},\"msg\":\"创建角色并分配权限成功\"}',0)", "rows": 1, "elapsed": 0.003502667}
+[KUBEGALE]2025-04-01 22:12:49.715	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[3.694ms] [34;1m[rows:1][0m INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 22:12:49.712','2025-04-01 22:12:49.712',0,'127.0.0.1','POST','/api/roles/create',200,17793375,'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36','','{"name":"qa","description":"测试","role_type":1,"is_default":1,"apis":[]}','{"code":0,"data":{},"msg":"创建角色并分配权限成功"}',0)
+[KUBEGALE]2025-04-01 22:12:49.738	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "SELECT count(*) FROM `sys_roles` WHERE is_deleted = 0", "rows": 1, "elapsed": 0.001082709}
+[KUBEGALE]2025-04-01 22:12:49.738	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[1.369ms] [34;1m[rows:1][0m SELECT count(*) FROM `sys_roles` WHERE is_deleted = 0
+[KUBEGALE]2025-04-01 22:12:49.743	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "SELECT * FROM `sys_roles` WHERE is_deleted = 0 ORDER BY id ASC LIMIT 10", "rows": 2, "elapsed": 0.004770917}
+[KUBEGALE]2025-04-01 22:12:49.744	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[4.968ms] [34;1m[rows:2][0m SELECT * FROM `sys_roles` WHERE is_deleted = 0 ORDER BY id ASC LIMIT 10
+[KUBEGALE]2025-04-01 22:12:49.744	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_role.go:407	获取角色列表成功	{"page": 1, "pageSize": 10, "count": 2, "total": 2}
+[KUBEGALE]2025-04-01 22:12:49.748	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:31	SQL执行	{"sql": "INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 22:12:49.747','2025-04-01 22:12:49.747',0,'127.0.0.1','POST','/api/roles/list',200,8223625,'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36','','{\"page\":1,\"pageSize\":10}','{\"code\":0,\"data\":{\"list\":[{\"id\":1,\"name\":\"dev\",\"description\":\"开发\",\"role_type\":1,\"is_default\":0,\"create_time\":1743515411,\"update_time\":1743515411,\"is_deleted\":0,\"apis\":null},{\"id\":2,\"name\":\"qa\",\"description\":\"测试\",\"role_type\":1,\"is_default\":1,\"create_time\":1743516769,\"update_time\":1743516769,\"is_deleted\":0,\"apis\":null}],\"total\":2},\"msg\":\"获取角色列表成功\"}',0)", "rows": 1, "elapsed": 0.002061959}
+[KUBEGALE]2025-04-01 22:12:49.748	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[32m/Users/daihao/Downloads/gocode/KubeGale/middleware/sql_log.go:39
+[0m[33m[2.357ms] [34;1m[rows:1][0m INSERT INTO `sys_operation_records` (`created_at`,`updated_at`,`deleted_at`,`ip`,`method`,`path`,`status`,`latency`,`agent`,`error_message`,`body`,`resp`,`user_id`) VALUES ('2025-04-01 22:12:49.747','2025-04-01 22:12:49.747',0,'127.0.0.1','POST','/api/roles/list',200,8223625,'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36','','{"page":1,"pageSize":10}','{"code":0,"data":{"list":[{"id":1,"name":"dev","description":"开发","role_type":1,"is_default":0,"create_time":1743515411,"update_time":1743515411,"is_deleted":0,"apis":null},{"id":2,"name":"qa","description":"测试","role_type":1,"is_default":1,"create_time":1743516769,"update_time":1743516769,"is_deleted":0,"apis":null}],"total":2},"msg":"获取角色列表成功"}',0)
