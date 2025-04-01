@@ -6,11 +6,12 @@ import (
 	"KubeGale/model/system"
 	"errors"
 	"fmt"
-	"go.uber.org/zap"
-	"gorm.io/gorm"
 	"strconv"
 	"strings"
 	"time"
+
+	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
 type RoleService struct{}
@@ -154,7 +155,7 @@ func (r *RoleService) UpdateRole(role *system.Role, apiIds []int) error {
 	// 检查角色名是否已被其他角色使用
 	var count int64
 	if err := global.KUBEGALE_DB.Model(&system.Role{}).
-		Where("name = ? AND id != ? AND is_deleted = ?", role.Name, role.ID, 0).
+		Where("name = ? AND id != ?", role.Name, role.ID).
 		Count(&count).Error; err != nil {
 		global.KUBEGALE_LOG.Error("检查角色名称失败", zap.Error(err), zap.String("name", role.Name))
 		return fmt.Errorf("检查角色名称失败: %w", err)
@@ -168,7 +169,7 @@ func (r *RoleService) UpdateRole(role *system.Role, apiIds []int) error {
 	if role.IsDefault == 1 && oldRole.IsDefault != 1 {
 		var defaultCount int64
 		if err := global.KUBEGALE_DB.Model(&system.Role{}).
-			Where("is_default = ? AND id != ? AND is_deleted = ?", 1, role.ID, 0).
+			Where("is_default = ? AND id != ? ", 1, role.ID).
 			Count(&defaultCount).Error; err != nil {
 			global.KUBEGALE_LOG.Error("检查默认角色失败", zap.Error(err))
 			return fmt.Errorf("检查默认角色失败: %w", err)
@@ -208,84 +209,34 @@ func (r *RoleService) UpdateRole(role *system.Role, apiIds []int) error {
 			return errors.New("角色不存在或已被删除")
 		}
 
-		// 如果提供了API权限列表，更新角色的API权限
-		if apiIds != nil {
-			if err := AuthorityServiceApp.AssignRole(role.ID, apiIds); err != nil {
-				global.KUBEGALE_LOG.Error("更新角色API权限失败", zap.Error(err), zap.Int("roleId", role.ID))
-				return fmt.Errorf("更新角色API权限失败: %w", err)
-			}
-		}
-
 		// 如果角色名发生变化，需要更新Casbin中的权限
 		if oldRole.Name != role.Name {
 			global.KUBEGALE_LOG.Info("角色名称已变更，更新Casbin策略",
 				zap.String("oldName", oldRole.Name),
 				zap.String("newName", role.Name))
 
-			// 获取角色关联的所有用户
-			var userIds []int
-			if err := tx.Table("user_roles").Where("role_id = ?", role.ID).Pluck("user_id", &userIds).Error; err != nil {
-				global.KUBEGALE_LOG.Error("获取角色关联用户失败", zap.Error(err), zap.Int("roleId", role.ID))
-				return fmt.Errorf("获取角色关联用户失败: %w", err)
+			policies, err := enforcer.GetFilteredPolicy(0, oldRole.Name)
+			if err != nil {
+				global.KUBEGALE_LOG.Error("获取原角色权限失败", zap.Error(err), zap.String("role", oldRole.Name))
+				return fmt.Errorf("获取原角色权限失败: %w", err)
 			}
 
-			// 获取角色关联的所有API
-			var apis []system.Api
-			if err := tx.Table("sys_apis").
-				Joins("JOIN role_apis ON role_apis.api_id = sys_apis.id").
-				Where("role_apis.role_id = ? AND sys_apis.is_deleted = 0", role.ID).
-				Find(&apis).Error; err != nil {
-				global.KUBEGALE_LOG.Error("获取角色API权限失败", zap.Error(err), zap.Int("roleId", role.ID))
-				return fmt.Errorf("获取角色API权限失败: %w", err)
+			if _, err := enforcer.DeleteRole(oldRole.Name); err != nil {
+				global.KUBEGALE_LOG.Error("删除原角色权限失败", zap.Error(err), zap.String("role", oldRole.Name))
+				return fmt.Errorf("删除原角色权限失败: %w", err)
 			}
 
-			// 为每个用户更新Casbin策略
-			for _, userId := range userIds {
-				userIdStr := fmt.Sprintf("%d", userId)
-
-				// 直接获取所有策略，然后在代码中进行过滤
-				allPolicies, _ := enforcer.GetPolicy()
-
-				// 手动过滤与当前用户相关的策略
-				var userPolicies [][]string
-				for _, policy := range allPolicies {
-					if len(policy) > 0 && policy[0] == userIdStr {
-						userPolicies = append(userPolicies, policy)
-					}
-				}
-
-				// 更新与当前角色相关的API权限策略
-				for _, api := range apis {
-					methodName := casbin.GetMethodName(api.Method)
-
-					// 检查策略是否存在
-					hasPolicy := false
-					for _, policy := range userPolicies {
-						if len(policy) >= 3 && policy[1] == api.Path && policy[2] == methodName {
-							hasPolicy = true
-							break
-						}
-					}
-
-					// 如果策略不存在，添加新策略
-					if !hasPolicy {
-						_, err := enforcer.AddPolicy(userIdStr, api.Path, methodName)
-						if err != nil {
-							global.KUBEGALE_LOG.Error("添加Casbin策略失败",
-								zap.Error(err),
-								zap.String("user", userIdStr),
-								zap.String("path", api.Path),
-								zap.String("method", methodName))
-							return fmt.Errorf("添加Casbin策略失败: %w", err)
-						}
-					}
+			for _, policy := range policies {
+				policy[0] = role.Name
+				if _, err := enforcer.AddPolicy(policy); err != nil {
+					global.KUBEGALE_LOG.Error("添加新角色权限失败", zap.Error(err), zap.Strings("policy", policy))
+					return fmt.Errorf("添加新角色权限失败: %w", err)
 				}
 			}
 
-			// 保存策略更改
 			if err := enforcer.SavePolicy(); err != nil {
-				global.KUBEGALE_LOG.Error("保存Casbin策略失败", zap.Error(err))
-				return fmt.Errorf("保存Casbin策略失败: %w", err)
+				global.KUBEGALE_LOG.Error("保存权限策略失败", zap.Error(err))
+				return fmt.Errorf("保存权限策略失败: %w", err)
 			}
 		}
 
@@ -404,10 +355,10 @@ func (r *RoleService) ListRoles(page, pageSize int) ([]*system.Role, int, error)
 		return nil, 0, fmt.Errorf("获取角色列表失败: %w", err)
 	}
 
-	global.KUBEGALE_LOG.Info("获取角色列表成功", 
-		zap.Int("page", page), 
-		zap.Int("pageSize", pageSize), 
-		zap.Int("count", len(roles)), 
+	global.KUBEGALE_LOG.Info("获取角色列表成功",
+		zap.Int("page", page),
+		zap.Int("pageSize", pageSize),
+		zap.Int("count", len(roles)),
 		zap.Int64("total", total))
 
 	return roles, int(total), nil

@@ -4,9 +4,10 @@ import (
 	"KubeGale/global"
 	"KubeGale/model/common/response"
 	"KubeGale/model/system"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"strconv"
 )
 
 type RoleApi struct{}
@@ -14,7 +15,7 @@ type RoleApi struct{}
 // ListRoles 获取角色列表
 func (r *RoleApi) ListRoles(c *gin.Context) {
 	var req system.ListRolesRequest
-	
+
 	// 尝试绑定JSON，如果失败则使用默认值
 	if err := c.ShouldBindJSON(&req); err != nil {
 		global.KUBEGALE_LOG.Warn("请求参数绑定失败，将使用默认分页参数", zap.Error(err))
@@ -22,7 +23,7 @@ func (r *RoleApi) ListRoles(c *gin.Context) {
 		req.PageNumber = 1
 		req.PageSize = 10
 	}
-	
+
 	// 确保分页参数有效
 	if req.PageNumber <= 0 {
 		req.PageNumber = 1
@@ -89,17 +90,10 @@ func (r *RoleApi) UpdateRole(c *gin.Context) {
 		IsDefault:   req.IsDefault,
 	}
 
-	// 更新角色基本信息
+	// 更新角色基本信息和权限（在service层已经处理了权限分配）
 	if err := roleService.UpdateRole(role, req.ApiIds); err != nil {
 		global.KUBEGALE_LOG.Error("更新角色信息失败", zap.Error(err), zap.Int("roleId", req.Id))
 		response.FailWithMessage("更新角色信息失败: "+err.Error(), c)
-		return
-	}
-
-	// 更新角色权限
-	if err := authorityService.AssignRole(req.Id, req.ApiIds); err != nil {
-		global.KUBEGALE_LOG.Error("更新角色权限失败", zap.Error(err), zap.Int("roleId", req.Id))
-		response.FailWithMessage("更新角色权限失败: "+err.Error(), c)
 		return
 	}
 
