@@ -375,25 +375,40 @@ func (r *RoleService) DeleteRole(id int) error {
 
 // ListRoles 获取角色列表
 func (r *RoleService) ListRoles(page, pageSize int) ([]*system.Role, int, error) {
-	if page <= 0 || pageSize <= 0 {
-		return nil, 0, errors.New("无效的分页参数")
+	// 添加默认分页参数
+	if page <= 0 {
+		page = 1
+		global.KUBEGALE_LOG.Warn("使用默认页码", zap.Int("page", page))
+	}
+	if pageSize <= 0 {
+		pageSize = 10
+		global.KUBEGALE_LOG.Warn("使用默认每页数量", zap.Int("pageSize", pageSize))
 	}
 
 	var roles []*system.Role
 	var total int64
 
+	// 构建查询，只查询未删除的角色
 	db := global.KUBEGALE_DB.Model(&system.Role{}).Where("is_deleted = ?", 0)
 
 	// 获取总数
 	if err := db.Count(&total).Error; err != nil {
-		return nil, 0, fmt.Errorf("获取角色总数失败: %v", err)
+		global.KUBEGALE_LOG.Error("获取角色总数失败", zap.Error(err))
+		return nil, 0, fmt.Errorf("获取角色总数失败: %w", err)
 	}
 
 	// 获取分页数据
 	offset := (page - 1) * pageSize
 	if err := db.Offset(offset).Limit(pageSize).Order("id ASC").Find(&roles).Error; err != nil {
-		return nil, 0, fmt.Errorf("获取角色列表失败: %v", err)
+		global.KUBEGALE_LOG.Error("获取角色列表失败", zap.Error(err))
+		return nil, 0, fmt.Errorf("获取角色列表失败: %w", err)
 	}
+
+	global.KUBEGALE_LOG.Info("获取角色列表成功", 
+		zap.Int("page", page), 
+		zap.Int("pageSize", pageSize), 
+		zap.Int("count", len(roles)), 
+		zap.Int64("total", total))
 
 	return roles, int(total), nil
 }

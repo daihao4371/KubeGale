@@ -1,2 +1,0 @@
-[KUBEGALE]2025-03-31 20:22:07.882	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_mysql.go:29	MySQL连接失败	{"error": "dial tcp 127.0.0.1:3306: connect: connection refused"}
-[KUBEGALE]2025-03-31 20:22:17.187	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection

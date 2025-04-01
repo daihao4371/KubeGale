@@ -14,16 +14,28 @@ type RoleApi struct{}
 // ListRoles 获取角色列表
 func (r *RoleApi) ListRoles(c *gin.Context) {
 	var req system.ListRolesRequest
+	
+	// 尝试绑定JSON，如果失败则使用默认值
 	if err := c.ShouldBindJSON(&req); err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
+		global.KUBEGALE_LOG.Warn("请求参数绑定失败，将使用默认分页参数", zap.Error(err))
+		// 使用默认值
+		req.PageNumber = 1
+		req.PageSize = 10
+	}
+	
+	// 确保分页参数有效
+	if req.PageNumber <= 0 {
+		req.PageNumber = 1
+	}
+	if req.PageSize <= 0 {
+		req.PageSize = 10
 	}
 
 	// 调用service获取角色列表
 	roles, total, err := roleService.ListRoles(req.PageNumber, req.PageSize)
 	if err != nil {
-		response.OkWithMessage("获取角色列表失败", c)
-		global.KUBEGALE_LOG.Error("获取角色列表失败")
+		global.KUBEGALE_LOG.Error("获取角色列表失败", zap.Error(err))
+		response.FailWithMessage("获取角色列表失败: "+err.Error(), c)
 		return
 	}
 
