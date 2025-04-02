@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
-	"strings"
 	"time"
 
 	"go.uber.org/zap"
@@ -127,7 +126,7 @@ func (r *RoleService) GetRoleById(id int) (*system.Role, error) {
 }
 
 // UpdateRole 更新角色信息
-func (r *RoleService) UpdateRole(role *system.Role, apiIds []int) error {
+func (r *RoleService) UpdateRole(role *system.Role) error {
 	if role == nil {
 		global.KUBEGALE_LOG.Warn("角色对象不能为空")
 		return errors.New("角色对象不能为空")
@@ -277,51 +276,18 @@ func (r *RoleService) DeleteRole(id int) error {
 		return fmt.Errorf("获取Casbin强制器失败: %w", err)
 	}
 
-	// 使用事务保证数据一致性
-	err = global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		// 1. 软删除角色
-		updates := map[string]interface{}{
-			"is_deleted":  1,
-			"update_time": time.Now().Unix(),
-		}
+	// 删除关联的角色
+	if _, err := enforcer.DeleteRole(role.Name); err != nil {
+		return fmt.Errorf("删除角色权限失败: %w", err)
+	}
+	
+	// 从数据库中物理删除角色
+	if err := global.KUBEGALE_DB.Unscoped().Delete(&role).Error; err != nil {
+		global.KUBEGALE_LOG.Error("删除角色记录失败", zap.Error(err), zap.Int("id", id))
+		return fmt.Errorf("删除角色记录失败: %w", err)
+	}
 
-		result := tx.Model(&system.Role{}).Where("id = ? AND is_deleted = ?", id, 0).Updates(updates)
-		if result.Error != nil {
-			global.KUBEGALE_LOG.Error("删除角色失败", zap.Error(result.Error), zap.Int("id", id))
-			return fmt.Errorf("删除角色失败: %w", result.Error)
-		}
-		if result.RowsAffected == 0 {
-			global.KUBEGALE_LOG.Warn("角色不存在或已被删除", zap.Int("id", id))
-			return errors.New("角色不存在或已被删除")
-		}
-
-		// 获取所有策略
-		allPolicies, _ := enforcer.GetPolicy()
-
-		// 删除与角色关联的API权限策略
-		for _, policy := range allPolicies {
-			if len(policy) >= 3 && strings.HasPrefix(policy[0], fmt.Sprintf("role_%d_", id)) {
-				_, err := enforcer.RemovePolicy(policy)
-				if err != nil {
-					global.KUBEGALE_LOG.Error("删除Casbin策略失败",
-						zap.Error(err),
-						zap.Strings("policy", policy))
-					return fmt.Errorf("删除Casbin策略失败: %w", err)
-				}
-			}
-		}
-
-		// 保存Casbin策略更改
-		if err := enforcer.SavePolicy(); err != nil {
-			global.KUBEGALE_LOG.Error("保存Casbin策略失败", zap.Error(err))
-			return fmt.Errorf("保存Casbin策略失败: %w", err)
-		}
-
-		global.KUBEGALE_LOG.Info("角色删除成功", zap.Int("id", id), zap.String("name", role.Name))
-		return nil
-	})
-
-	return err
+	return nil
 }
 
 // ListRoles 获取角色列表

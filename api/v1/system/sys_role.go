@@ -90,10 +90,17 @@ func (r *RoleApi) UpdateRole(c *gin.Context) {
 		IsDefault:   req.IsDefault,
 	}
 
-	// 更新角色基本信息和权限（在service层已经处理了权限分配）
-	if err := roleService.UpdateRole(role, req.ApiIds); err != nil {
+	// 更新角色基本信息 - 修复参数传递，传入空的API ID列表
+	if err := roleService.UpdateRole(role); err != nil {
 		global.KUBEGALE_LOG.Error("更新角色信息失败", zap.Error(err), zap.Int("roleId", req.Id))
 		response.FailWithMessage("更新角色信息失败: "+err.Error(), c)
+		return
+	}
+
+	// 单独更新角色权限
+	if err := authorityService.AssignRole(role.ID, req.ApiIds); err != nil {
+		global.KUBEGALE_LOG.Error("更新角色权限失败", zap.Error(err), zap.Int("roleId", req.Id))
+		response.FailWithMessage("更新角色权限失败: "+err.Error(), c)
 		return
 	}
 
@@ -113,10 +120,34 @@ func (r *RoleApi) DeleteRole(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
+	
+	// 直接查询角色基本信息，不加载关联的API
+	var role system.Role
+	if err := global.KUBEGALE_DB.Where("id = ? AND is_deleted = ?", id, 0).First(&role).Error; err != nil {
+		response.FailWithMessage("获取角色信息失败: "+err.Error(), c)
+		global.KUBEGALE_LOG.Error("获取角色信息失败", zap.Error(err))
+		return
+	}
+	
+	// 检查是否为系统角色（RoleType == 1）
+	if role.RoleType == 1 {
+		response.FailWithMessage("系统角色不能删除", c)
+		global.KUBEGALE_LOG.Warn("尝试删除系统角色被拒绝", zap.Int("roleId", id))
+		return
+	}
+	
+	// 检查是否为默认角色
+	if role.IsDefault == 1 {
+		response.FailWithMessage("默认角色不能删除", c)
+		global.KUBEGALE_LOG.Warn("尝试删除默认角色被拒绝", zap.Int("roleId", id))
+		return
+	}
+	
+	// 调用服务删除角色
 	err = roleService.DeleteRole(id)
 	if err != nil {
-		response.FailWithMessage("删除角色失败", c)
-		global.KUBEGALE_LOG.Error("删除角色失败")
+		response.FailWithMessage("删除角色失败: "+err.Error(), c)
+		global.KUBEGALE_LOG.Error("删除角色失败", zap.Error(err))
 		return
 	}
 	response.OkWithMessage("删除角色成功", c)
