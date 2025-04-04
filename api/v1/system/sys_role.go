@@ -121,27 +121,6 @@ func (r *RoleApi) DeleteRole(c *gin.Context) {
 		return
 	}
 	
-	// 直接查询角色基本信息，不加载关联的API
-	var role system.Role
-	if err := global.KUBEGALE_DB.Where("id = ? AND is_deleted = ?", id, 0).First(&role).Error; err != nil {
-		response.FailWithMessage("获取角色信息失败: "+err.Error(), c)
-		global.KUBEGALE_LOG.Error("获取角色信息失败", zap.Error(err))
-		return
-	}
-	
-	// 检查是否为系统角色（RoleType == 1）
-	if role.RoleType == 1 {
-		response.FailWithMessage("系统角色不能删除", c)
-		global.KUBEGALE_LOG.Warn("尝试删除系统角色被拒绝", zap.Int("roleId", id))
-		return
-	}
-	
-	// 检查是否为默认角色
-	if role.IsDefault == 1 {
-		response.FailWithMessage("默认角色不能删除", c)
-		global.KUBEGALE_LOG.Warn("尝试删除默认角色被拒绝", zap.Int("roleId", id))
-		return
-	}
 	
 	// 调用服务删除角色
 	err = roleService.DeleteRole(id)

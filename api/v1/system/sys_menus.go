@@ -13,10 +13,20 @@ type AuthorityMenuApi struct{}
 
 func (m *AuthorityMenuApi) ListMenus(c *gin.Context) {
 	var req system.ListMenusRequest
+	// 尝试从JSON绑定参数
 	if err := c.ShouldBindJSON(&req); err != nil {
-		response.FailWithMessage("请求参数错误: "+err.Error(), c)
-		return
+		// 如果JSON绑定失败，尝试从查询参数或表单绑定
+		if err := c.ShouldBind(&req); err != nil {
+			// 如果参数为空，设置默认值
+			if req.PageNumber <= 0 {
+				req.PageNumber = 1
+			}
+			if req.PageSize <= 0 {
+				req.PageSize = 10
+			}
+		}
 	}
+	
 	// 调用service层获取菜单列表
 	menus, total, err := menuService.GetMenus(req.PageNumber, req.PageSize)
 	if err != nil {
