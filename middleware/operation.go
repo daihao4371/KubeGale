@@ -31,6 +31,49 @@ func OperationRecord() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var body []byte
 		var userId int
+		var userName string
+		var userRealName string
+		
+		// 从上下文中获取当前用户ID和用户信息
+		userIdInterface, exists := c.Get("user_id")
+		if exists {
+			// 如果存在用户ID，则设置到操作记录中
+			if userIdInt, ok := userIdInterface.(int); ok {
+				userId = userIdInt
+				
+				// 尝试获取用户名和真实姓名
+				if userNameInterface, ok := c.Get("user_name"); ok {
+					if name, ok := userNameInterface.(string); ok {
+						userName = name
+					}
+				}
+				
+				if userRealNameInterface, ok := c.Get("real_name"); ok {
+					if realName, ok := userRealNameInterface.(string); ok {
+						userRealName = realName
+					}
+				}
+				
+				// 如果上下文中没有用户名和真实姓名，尝试从数据库获取
+				if userName == "" || userRealName == "" {
+					var user system.User
+					if err := global.KUBEGALE_DB.Where("id = ?", userId).First(&user).Error; err == nil {
+						userName = user.Username
+						userRealName = user.RealName
+					}
+				}
+			} else if userIdUint, ok := userIdInterface.(uint); ok {
+				userId = int(userIdUint)
+				// 同样尝试获取用户信息...
+			} else if userIdFloat, ok := userIdInterface.(float64); ok {
+				userId = int(userIdFloat)
+				// 同样尝试获取用户信息...
+			} else {
+				// 尝试其他可能的类型转换
+				global.KUBEGALE_LOG.Warn("无法将用户ID转换为整数类型")
+			}
+		}
+		
 		if c.Request.Method != http.MethodGet {
 			var err error
 			body, err = io.ReadAll(c.Request.Body)
@@ -59,7 +102,7 @@ func OperationRecord() gin.HandlerFunc {
 			Path:   c.Request.URL.Path,
 			Agent:  c.Request.UserAgent(),
 			Body:   "",
-			UserID: userId,
+			UserID: userId, // 设置用户ID
 		}
 
 		// 上传文件时候 中间件日志进行裁断操作
