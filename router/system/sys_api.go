@@ -8,18 +8,26 @@ import (
 type ApiRouter struct{}
 
 func (s *ApiRouter) InitApiRouter(Router *gin.RouterGroup, RouterPub *gin.RouterGroup) {
-	// API相关路由组
-	apiRouter := Router.Group("apis").Use(middleware.OperationRecord())
-	apiRouterWithoutRecord := RouterPub.Group("apis")
+	apiRouter := Router.Group("api").Use(middleware.OperationRecord())
+	apiRouterWithoutRecord := Router.Group("api")
 
-	// API管理相关路由
+	apiPublicRouterWithoutRecord := RouterPub.Group("api")
 	{
-		// 需要记录操作日志的API路由
-		apiRouter.POST("/create", apiRouterApi.CreateAPI) // 创建API
-		apiRouter.POST("/update", apiRouterApi.UpdateAPI) // 更新API
-		apiRouter.DELETE("/:id", apiRouterApi.DeleteAPI)  // 删除API
-
-		// 不需要记录操作日志的API路由
-		apiRouterWithoutRecord.GET("/list", apiRouterApi.ListApis) // API列表
+		apiRouter.GET("getApiGroups", apiRouterApi.GetApiGroups)          // 获取路由组
+		apiRouter.GET("syncApi", apiRouterApi.SyncApi)                    // 同步Api
+		apiRouter.POST("ignoreApi", apiRouterApi.IgnoreApi)               // 忽略Api
+		apiRouter.POST("enterSyncApi", apiRouterApi.EnterSyncApi)         // 确认同步Api
+		apiRouter.POST("createApi", apiRouterApi.CreateApi)               // 创建Api
+		apiRouter.POST("deleteApi", apiRouterApi.DeleteApi)               // 删除Api
+		apiRouter.POST("getApiById", apiRouterApi.GetApiById)             // 获取单条Api消息
+		apiRouter.POST("updateApi", apiRouterApi.UpdateApi)               // 更新api
+		apiRouter.DELETE("deleteApisByIds", apiRouterApi.DeleteApisByIds) // 删除选中api
+	}
+	{
+		apiRouterWithoutRecord.POST("getAllApis", apiRouterApi.GetAllApis) // 获取所有api
+		apiRouterWithoutRecord.POST("getApiList", apiRouterApi.GetApiList) // 获取Api列表
+	}
+	{
+		apiPublicRouterWithoutRecord.GET("freshCasbin", apiRouterApi.FreshCasbin) // 刷新casbin权限
 	}
 }

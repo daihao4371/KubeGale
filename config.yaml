@@ -9,11 +9,18 @@ system:
   use-redis: true
   use-strict-auth: false
 
+captcha:
+  key-long: 6
+  img-width: 240
+  img-height: 80
+  open-captcha: 0
+  open-captcha-timeout: 3600
+
 jwt:
-  key1: "ebe3vxIP7sblVvUHXb7ZaiMPuz4oXo0l"
-  key2: "ebe3vxIP7sblVvUHXb7ZaiMPuz4oXo0z"
-  issuer: "K5mBPBYNQeNWEBvCTE5msog3KSGTdhmx"
-  expiration: 3600
+  signing-key: 3e68ba3c-bae0-476f-9d11-a698f91866fe
+  expires-time: 7d
+  buffer-time: 1d
+  issuer: kubegale
 
 zap:
   level: info

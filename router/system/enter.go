@@ -5,19 +5,24 @@ import (
 )
 
 type RouterGroup struct {
-	UserRouter
-	MenuRouter
 	ApiRouter
-	OperationRecordRouter
+	JwtRouter
+	BaseRouter
+	MenuRouter
+	UserRouter
+	CasbinRouter
 	AuthorityRouter
-	RoleRouter
+	OperationRecordRouter
+	AuthorityBtnRouter
 }
 
 var (
+	jwtApi             = api.ApiGroupApp.SystemApiGroup.JwtApi
 	baseApi            = api.ApiGroupApp.SystemApiGroup.BaseApi
-	apiRouterApi       = api.ApiGroupApp.SystemApiGroup.SystemApiApi
+	casbinApi          = api.ApiGroupApp.SystemApiGroup.CasbinApi
 	authorityApi       = api.ApiGroupApp.SystemApiGroup.AuthorityApi
-	roleApi            = api.ApiGroupApp.SystemApiGroup.RoleApi
+	apiRouterApi       = api.ApiGroupApp.SystemApiGroup.SystemApiApi
+	authorityBtnApi    = api.ApiGroupApp.SystemApiGroup.AuthorityBtnApi
 	authorityMenuApi   = api.ApiGroupApp.SystemApiGroup.AuthorityMenuApi
 	operationRecordApi = api.ApiGroupApp.SystemApiGroup.OperationRecordApi
 )

@@ -1,10 +1,13 @@
 package system
 
 type ServiceGroup struct {
-	UserService
-	OperationRecordService
+	JwtService
 	ApiService
-	AuthorityService
 	MenuService
-	RoleService
+	UserService
+	CasbinService
+	BaseMenuService
+	AuthorityService
+	OperationRecordService
+	AuthorityBtnService
 }

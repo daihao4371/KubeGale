@@ -2,584 +2,229 @@ package system
 
 import (
 	"KubeGale/global"
+	"KubeGale/model/common/request"
 	"KubeGale/model/system"
+	"KubeGale/utils"
 	"errors"
 	"fmt"
-	"time"
-
-	"go.uber.org/zap"
-	"golang.org/x/crypto/bcrypt"
+	"github.com/gofrs/uuid/v5"
+	"gorm.io/datatypes"
 	"gorm.io/gorm"
-)
-
-// 使用全局常量
-var (
-	NewError                 = global.NewError
-	NewErrorWithMsg          = global.NewErrorWithMsg
-	ERROR_USER_ID_INVALID    = global.ERROR_USER_ID_INVALID
-	ERROR_PARAM_INVALID      = global.ERROR_PARAM_INVALID
-	ERROR_SAME_PASSWORD      = global.ERROR_SAME_PASSWORD
-	ERROR_USER_NOT_EXIST     = global.ERROR_USER_NOT_EXIST
-	ERROR_OLD_PASSWORD_WRONG = global.ERROR_OLD_PASSWORD_WRONG
-	ERROR_USER_ALREADY_EXIST = global.ERROR_USER_ALREADY_EXIST
-	ERROR_MOBILE_INVALID     = global.ERROR_MOBILE_INVALID
-	ERROR_MOBILE_USED        = global.ERROR_MOBILE_USED
-	ERROR_USER_DISABLED      = global.ERROR_USER_DISABLED
-	ERROR_PASSWORD_WRONG     = global.ERROR_PASSWORD_WRONG
+	"time"
 )
 
 type UserService struct{}
 
 var UserServiceApp = new(UserService)
 
-// SignUp 用户注册
-func (us *UserService) SignUp(user *system.User) error {
-	// 检查用户名是否已存在
-	var count int64
-	if err := global.KUBEGALE_DB.Model(&system.User{}).Where("username = ?", user.Username).Count(&count).Error; err != nil {
-		return fmt.Errorf("检查用户名失败: %w", err)
+// Register 用户注册
+func (userService *UserService) Register(u system.SysUser) (userInter system.SysUser, err error) {
+	var user system.SysUser
+	if !errors.Is(global.KUBEGALE_DB.Where("username = ?", u.Username).First(&user).Error, gorm.ErrRecordNotFound) { // 判断用户名是否注册
+		return userInter, errors.New("用户名已注册")
 	}
-	if count > 0 {
-		return NewError(ERROR_USER_ALREADY_EXIST)
-	}
-
-	// 验证手机号格式（如果提供）
-	if user.Mobile != "" {
-		// 简单的手机号验证，可以根据需求调整
-		if len(user.Mobile) != 11 {
-			return NewError(ERROR_MOBILE_INVALID)
-		}
-
-		// 检查手机号是否已被使用
-		var mobileCount int64
-		if err := global.KUBEGALE_DB.Model(&system.User{}).Where("mobile = ?", user.Mobile).Count(&mobileCount).Error; err != nil {
-			return fmt.Errorf("检查手机号失败: %w", err)
-		}
-		if mobileCount > 0 {
-			return NewError(ERROR_MOBILE_USED)
-		}
-	}
-
-	// 密码加密
-	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return fmt.Errorf("密码加密失败: %w", err)
-	}
-	user.Password = string(hash)
-
-	// 设置默认值
-	if user.AccountType == 0 {
-		user.AccountType = 1 // 默认为普通用户
-	}
-	if user.Enable == 0 {
-		user.Enable = 1 // 默认启用
-	}
-
-	// 使用事务创建用户
-	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		// 创建用户
-		if err := tx.Create(user).Error; err != nil {
-			return fmt.Errorf("创建用户失败: %w", err)
-		}
-
-		// 分配默认角色
-		var defaultRole system.Role
-		if err := tx.Where("is_default = ?", 1).First(&defaultRole).Error; err != nil {
-			if errors.Is(err, gorm.ErrRecordNotFound) {
-				// 如果没有默认角色，可以跳过或创建一个基本角色
-				return nil
-			}
-			return fmt.Errorf("查询默认角色失败: %w", err)
-		}
-
-		// 创建用户-角色关联
-		if err := tx.Exec("INSERT INTO user_roles (user_id, role_id) VALUES (?, ?)", user.ID, defaultRole.ID).Error; err != nil {
-			return fmt.Errorf("分配默认角色失败: %w", err)
-		}
-
-		return nil
-	})
+	// 否则 附加uuid 密码hash加密 注册
+	u.Password = utils.BcryptHash(u.Password)
+	u.UUID = uuid.Must(uuid.NewV4())
+	err = global.KUBEGALE_DB.Create(&u).Error
+	return u, err
 }
 
 // Login 用户登录
-func (us *UserService) Login(user *system.User) (*system.User, error) {
-	// 参数验证
-	if user.Username == "" {
-		return nil, NewErrorWithMsg(ERROR_PARAM_INVALID, "用户名不能为空")
-	}
-	if user.Password == "" {
-		return nil, NewErrorWithMsg(ERROR_PARAM_INVALID, "密码不能为空")
+func (userService *UserService) Login(u *system.SysUser) (userInter *system.SysUser, err error) {
+	if nil == global.KUBEGALE_DB {
+		return nil, fmt.Errorf("db not init")
 	}
 
-	// 查询用户
-	var u system.User
-	if err := global.KUBEGALE_DB.Where("username = ?", user.Username).First(&u).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, NewError(ERROR_USER_NOT_EXIST)
+	var user system.SysUser
+	err = global.KUBEGALE_DB.Where("username = ?", u.Username).Preload("Authorities").Preload("Authority").First(&user).Error
+	if err == nil {
+		if ok := utils.BcryptCheck(u.Password, user.Password); !ok {
+			return nil, errors.New("密码错误")
 		}
-		return nil, fmt.Errorf("查询用户失败: %w", err)
+		MenuServiceApp.UserAuthorityDefaultRouter(&user)
 	}
+	return &user, err
+}
 
-	// 检查用户状态
-	if u.Enable != 1 {
-		return nil, NewError(ERROR_USER_DISABLED)
+// ChangePassword   修改用户密码
+func (userService *UserService) ChangePassword(u *system.SysUser, newPassword string) (userInter *system.SysUser, err error) {
+	var user system.SysUser
+	if err = global.KUBEGALE_DB.Where("id = ?", u.ID).First(&user).Error; err != nil {
+		return nil, err
 	}
+	if ok := utils.BcryptCheck(u.Password, user.Password); !ok {
+		return nil, errors.New("原密码错误")
+	}
+	user.Password = utils.BcryptHash(newPassword)
+	err = global.KUBEGALE_DB.Save(&user).Error
+	return &user, err
 
-	// 验证密码
-	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(user.Password))
+}
+
+// GetUserInfoList 分页获取数据
+func (userService *UserService) GetUserInfoList(info request.PageInfo) (list interface{}, total int64, err error) {
+	limit := info.PageSize
+	offset := info.PageSize * (info.Page - 1)
+	db := global.KUBEGALE_DB.Model(&system.SysUser{})
+	var userList []system.SysUser
+	err = db.Count(&total).Error
 	if err != nil {
-		return nil, NewError(ERROR_PASSWORD_WRONG)
+		return
+	}
+	err = db.Limit(limit).Offset(offset).Preload("Authorities").Preload("Authority").Find(&userList).Error
+	return userList, total, err
+}
+
+// SetUserAuthority 设置一个用户的权限
+func (userService *UserService) SetUserAuthority(id uint, authorityId uint) (err error) {
+
+	assignErr := global.KUBEGALE_DB.Where("sys_user_id = ? AND sys_authority_authority_id = ?", id, authorityId).First(&system.SysUserAuthority{}).Error
+	if errors.Is(assignErr, gorm.ErrRecordNotFound) {
+		return errors.New("该用户无此角色")
 	}
 
-	// 预加载用户关联的角色、菜单和API权限
-	if err := global.KUBEGALE_DB.Preload("Roles").Preload("Menus").Preload("Apis").Where("id = ?", u.ID).First(&u).Error; err != nil {
-		global.KUBEGALE_LOG.Warn("加载用户权限信息失败", zap.Error(err))
+	var authority system.SysAuthority
+	err = global.KUBEGALE_DB.Where("authority_id = ?", authorityId).First(&authority).Error
+	if err != nil {
+		return err
+	}
+	var authorityMenu []system.SysAuthorityMenu
+	var authorityMenuIDs []string
+	err = global.KUBEGALE_DB.Where("sys_authority_authority_id = ?", authorityId).Find(&authorityMenu).Error
+	if err != nil {
+		return err
 	}
 
+	for i := range authorityMenu {
+		authorityMenuIDs = append(authorityMenuIDs, authorityMenu[i].MenuId)
+	}
+
+	var authorityMenus []system.SysBaseMenu
+	err = global.KUBEGALE_DB.Preload("Parameters").Where("id in (?)", authorityMenuIDs).Find(&authorityMenus).Error
+	if err != nil {
+		return err
+	}
+	hasMenu := false
+	for i := range authorityMenus {
+		if authorityMenus[i].Name == authority.DefaultRouter {
+			hasMenu = true
+			break
+		}
+	}
+	if !hasMenu {
+		return errors.New("找不到默认路由,无法切换本角色")
+	}
+
+	err = global.KUBEGALE_DB.Model(&system.SysUser{}).Where("id = ?", id).Update("authority_id", authorityId).Error
+	return err
+}
+
+// SetUserAuthorities 设置一个用户的权限
+func (userService *UserService) SetUserAuthorities(adminAuthorityID, id uint, authorityIds []uint) (err error) {
+	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
+		var user system.SysUser
+		TxErr := tx.Where("id = ?", id).First(&user).Error
+		if TxErr != nil {
+			global.KUBEGALE_LOG.Debug(TxErr.Error())
+			return errors.New("查询用户数据失败")
+		}
+		TxErr = tx.Delete(&[]system.SysUserAuthority{}, "sys_user_id = ?", id).Error
+		if TxErr != nil {
+			return TxErr
+		}
+		var useAuthority []system.SysUserAuthority
+		for _, v := range authorityIds {
+			e := AuthorityServiceApp.CheckAuthorityIDAuth(adminAuthorityID, v)
+			if e != nil {
+				return e
+			}
+			useAuthority = append(useAuthority, system.SysUserAuthority{
+				SysUserId: id, SysAuthorityAuthorityId: v,
+			})
+		}
+		TxErr = tx.Create(&useAuthority).Error
+		if TxErr != nil {
+			return TxErr
+		}
+		TxErr = tx.Model(&user).Update("authority_id", authorityIds[0]).Error
+		if TxErr != nil {
+			return TxErr
+		}
+		// 返回 nil 提交事务
+		return nil
+	})
+}
+
+// DeleteUser 删除用户
+func (userService *UserService) DeleteUser(id int) (err error) {
+	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Where("id = ?", id).Delete(&system.SysUser{}).Error; err != nil {
+			return err
+		}
+		if err := tx.Delete(&[]system.SysUserAuthority{}, "sys_user_id = ?", id).Error; err != nil {
+			return err
+		}
+		return nil
+	})
+}
+
+// SetUserInfo 设置用户信息
+func (userService *UserService) SetUserInfo(req system.SysUser) error {
+	return global.KUBEGALE_DB.Model(&system.SysUser{}).
+		Select("updated_at", "nick_name", "header_img", "phone", "email", "enable").
+		Where("id=?", req.ID).
+		Updates(map[string]interface{}{
+			"updated_at": time.Now(),
+			"nick_name":  req.NickName,
+			"header_img": req.HeaderImg,
+			"phone":      req.Phone,
+			"email":      req.Email,
+			"enable":     req.Enable,
+		}).Error
+}
+
+// SetSelfInfo 设置用户信息
+func (userService *UserService) SetSelfInfo(req system.SysUser) error {
+	return global.KUBEGALE_DB.Model(&system.SysUser{}).
+		Where("id=?", req.ID).
+		Updates(req).Error
+}
+
+// 设置用户配置
+func (userService *UserService) SetSelfSetting(req *datatypes.JSON, uid uint) error {
+	return global.KUBEGALE_DB.Model(&system.SysUser{}).Where("id = ?", uid).Update("origin_setting", req).Error
+}
+
+// GetUserInfo 获取用户信息
+func (userService *UserService) GetUserInfo(uuid uuid.UUID) (user system.SysUser, err error) {
+	var reqUser system.SysUser
+	err = global.KUBEGALE_DB.Preload("Authorities").Preload("Authority").First(&reqUser, "uuid = ?", uuid).Error
+	if err != nil {
+		return reqUser, err
+	}
+	MenuServiceApp.UserAuthorityDefaultRouter(&reqUser)
+	return reqUser, err
+}
+
+// FindUserById 通过id获取用户信息
+func (userService *UserService) FindUserById(id int) (user *system.SysUser, err error) {
+	var u system.SysUser
+	err = global.KUBEGALE_DB.Where("id = ?", id).First(&u).Error
+	return &u, err
+}
+
+// FindUserByUuid 通过uuid获取用户信息
+func (userService *UserService) FindUserByUuid(uuid string) (user *system.SysUser, err error) {
+	var u system.SysUser
+	if err = global.KUBEGALE_DB.Where("uuid = ?", uuid).First(&u).Error; err != nil {
+		return &u, errors.New("用户不存在")
+	}
 	return &u, nil
 }
 
-// GetProfile 获取用户信息
-func (us *UserService) GetProfile(uid int) (*system.User, error) {
-	var user system.User
-
-	// 预加载用户关联的角色和API权限
-	if err := global.KUBEGALE_DB.Preload("Roles").Preload("Apis").Where("id = ?", uid).First(&user).Error; err != nil {
-		global.KUBEGALE_LOG.Warn("加载用户权限信息失败", zap.Error(err))
-	}
-
-	// 获取用户的菜单并构建树状结构
-	var menus []*system.Menu
-	if err := global.KUBEGALE_DB.
-		Table("sys_base_menus").
-		Joins("LEFT JOIN user_menus ON sys_base_menus.id = user_menus.menu_id").
-		Where("user_menus.user_id = ? AND sys_base_menus.is_deleted = ?", uid, 0).
-		Order("sys_base_menus.parent_id, sys_base_menus.id").
-		Find(&menus).Error; err != nil {
-		global.KUBEGALE_LOG.Error("获取用户菜单失败", zap.Int("id", uid), zap.Error(err))
-		return nil, fmt.Errorf("获取用户菜单失败: %w", err)
-	}
-
-	// 构建菜单树
-	menuMap := make(map[int]*system.Menu)
-	var rootMenus []*system.Menu
-
-	// 第一次遍历,建立id->menu的映射
-	for _, menu := range menus {
-		menuMap[menu.ID] = menu
-	}
-
-	// 第二次遍历,构建父子关系
-	for _, menu := range menus {
-		if menu.ParentID == 0 {
-			rootMenus = append(rootMenus, menu)
-		} else {
-			if parent, ok := menuMap[menu.ParentID]; ok {
-				parent.Children = append(parent.Children, menu)
-			}
-		}
-	}
-
-	user.Menus = rootMenus
-
-	// 出于安全考虑，不返回密码
-	user.Password = ""
-
-	return &user, nil
-}
-
-// GetPermCode 获取用户权限
-func (us *UserService) GetPermCode(uid int) ([]string, error) {
-	if uid <= 0 {
-		return nil, NewError(ERROR_USER_ID_INVALID)
-	}
-
-	// 查询用户是否存在
-	var count int64
-	if err := global.KUBEGALE_DB.Model(&system.User{}).Where("id = ?", uid).Count(&count).Error; err != nil {
-		return nil, fmt.Errorf("查询用户失败: %w", err)
-	}
-	if count == 0 {
-		return nil, NewError(ERROR_USER_NOT_EXIST)
-	}
-
-	var permCodes []string
-
-	// 1. 获取用户直接关联的API权限
-	var userApis []system.Api
-	if err := global.KUBEGALE_DB.Table("sys_apis").
-		Joins("JOIN user_apis ON user_apis.api_id = sys_apis.id").
-		Where("user_apis.user_id = ? AND sys_apis.is_deleted = 0", uid).
-		Find(&userApis).Error; err != nil {
-		global.KUBEGALE_LOG.Error("获取用户API权限失败", zap.Error(err))
-		return nil, fmt.Errorf("获取用户API权限失败: %w", err)
-	}
-
-	// 2. 获取用户通过角色关联的API权限
-	var roleApis []system.Api
-	if err := global.KUBEGALE_DB.Table("sys_apis").
-		Joins("JOIN role_apis ON role_apis.api_id = sys_apis.id").
-		Joins("JOIN user_roles ON user_roles.role_id = role_apis.role_id").
-		Where("user_roles.user_id = ? AND sys_apis.is_deleted = 0", uid).
-		Find(&roleApis).Error; err != nil {
-		global.KUBEGALE_LOG.Error("获取角色API权限失败", zap.Error(err))
-		return nil, fmt.Errorf("获取角色API权限失败: %w", err)
-	}
-
-	// 合并权限并去重
-	apiMap := make(map[string]bool)
-
-	// 添加用户直接关联的API权限
-	for _, api := range userApis {
-		permCode := fmt.Sprintf("%s:%s", api.Path, getMethodName(api.Method))
-		apiMap[permCode] = true
-	}
-
-	// 添加用户通过角色关联的API权限
-	for _, api := range roleApis {
-		permCode := fmt.Sprintf("%s:%s", api.Path, getMethodName(api.Method))
-		apiMap[permCode] = true
-	}
-
-	// 将map转换为切片
-	for code := range apiMap {
-		permCodes = append(permCodes, code)
-	}
-
-	return permCodes, nil
-}
-
-// getMethodName 根据方法ID获取方法名称
-func getMethodName(methodID int) string {
-	switch methodID {
-	case 1:
-		return "GET"
-	case 2:
-		return "POST"
-	case 3:
-		return "PUT"
-	case 4:
-		return "DELETE"
-	default:
-		return "UNKNOWN"
-	}
-}
-
-// GetUserList 获取用户列表
-func (us *UserService) GetUserList(page, pageSize int) (users []*system.User, total int64, err error) {
-	// 创建查询构建器
-	query := global.KUBEGALE_DB.Model(&system.User{})
-
-	// 获取总记录数
-	if err = query.Count(&total).Error; err != nil {
-		global.KUBEGALE_LOG.Error("获取用户总数失败", zap.Error(err))
-		return nil, 0, fmt.Errorf("获取用户总数失败: %w", err)
-	}
-
-	// 分页查询
-	if page > 0 && pageSize > 0 {
-		offset := (page - 1) * pageSize
-		query = query.Offset(offset).Limit(pageSize)
-	}
-
-	// 排序
-	query = query.Order("id DESC")
-
-	// 预加载关联数据
-	query = query.Preload("Roles").Preload("Menus").Preload("Apis")
-
-	// 执行查询
-	var userList []*system.User
-	if err = query.Find(&userList).Error; err != nil {
-		global.KUBEGALE_LOG.Error("查询用户列表失败", zap.Error(err))
-		return nil, 0, fmt.Errorf("查询用户列表失败: %w", err)
-	}
-
-	// 出于安全考虑，清除密码字段
-	for _, user := range userList {
-		user.Password = ""
-	}
-
-	return userList, total, nil
-}
-
-// ChangePassword 修改密码
-func (us *UserService) ChangePassword(uid int, oldPassword string, newPassword string) error {
-	// 参数验证
-	if uid <= 0 {
-		return NewError(ERROR_USER_ID_INVALID)
-	}
-	if oldPassword == "" {
-		return NewErrorWithMsg(ERROR_PARAM_INVALID, "旧密码不能为空")
-	}
-	if newPassword == "" {
-		return NewErrorWithMsg(ERROR_PARAM_INVALID, "新密码不能为空")
-	}
-	if oldPassword == newPassword {
-		return NewError(ERROR_SAME_PASSWORD)
-	}
-
-	// 查询用户
-	var user system.User
-	if err := global.KUBEGALE_DB.Where("id = ?", uid).First(&user).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return NewError(ERROR_USER_NOT_EXIST)
-		}
-		return fmt.Errorf("查询用户失败: %w", err)
-	}
-
-	// 验证旧密码是否正确
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(oldPassword)); err != nil {
-		return NewError(ERROR_OLD_PASSWORD_WRONG)
-	}
-
-	// 生成新密码的哈希值
-	hash, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
-	if err != nil {
-		return fmt.Errorf("密码加密失败: %w", err)
-	}
-
-	// 更新密码
-	if err := global.KUBEGALE_DB.Model(&user).Update("password", string(hash)).Error; err != nil {
-		return fmt.Errorf("更新密码失败: %w", err)
-	}
-
-	// 记录密码修改日志
-	global.KUBEGALE_LOG.Info("用户密码已修改", zap.Int("user_id", uid))
-
-	return nil
-}
-
-// UpdateProfile 修改用户信息
-func (us *UserService) UpdateProfile(uid int, req *system.User) error {
-	// 参数验证
-	if uid <= 0 {
-		return NewError(ERROR_USER_ID_INVALID)
-	}
-
-	// 验证手机号格式（如果提供）
-	if req.Mobile != "" {
-		// 简单的手机号验证
-		if len(req.Mobile) != 11 {
-			return NewError(ERROR_MOBILE_INVALID)
-		}
-
-		// 检查手机号是否已被其他用户使用 - 修复查询条件，移除is_deleted字段
-		var mobileCount int64
-		if err := global.KUBEGALE_DB.Model(&system.User{}).Where("mobile = ? AND id != ?", req.Mobile, uid).Count(&mobileCount).Error; err != nil {
-			return fmt.Errorf("检查手机号失败: %w", err)
-		}
-		if mobileCount > 0 {
-			return NewError(ERROR_MOBILE_USED)
-		}
-	}
-
-	// 查询用户是否存在 - 修复查询条件，移除is_deleted字段
-	var user system.User
-	if err := global.KUBEGALE_DB.Where("id = ?", uid).First(&user).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return NewError(ERROR_USER_NOT_EXIST)
-		}
-		return fmt.Errorf("查询用户失败: %w", err)
-	}
-
-	// 准备更新的字段
-	updates := map[string]interface{}{
-		"real_name":       req.RealName,
-		"desc":            req.Desc,
-		"mobile":          req.Mobile,
-		"fei_shu_user_id": req.FeiShuUserId,
-		"account_type":    req.AccountType,
-		"enable":          req.Enable,
-		"updated_at":      time.Now(),
-	}
-
-	// 更新用户信息
-	if err := global.KUBEGALE_DB.Model(&user).Updates(updates).Error; err != nil {
-		return fmt.Errorf("更新用户信息失败: %w", err)
-	}
-
-	// 记录日志
-	global.KUBEGALE_LOG.Info("用户信息已更新", zap.Int("user_id", uid))
-
-	return nil
-}
-
-// WriteOff 注销账号
-func (us *UserService) WriteOff(username string, password string) error {
-	// 参数验证
-	if username == "" {
-		return NewErrorWithMsg(ERROR_PARAM_INVALID, "用户名不能为空")
-	}
-	if password == "" {
-		return NewErrorWithMsg(ERROR_PARAM_INVALID, "密码不能为空")
-	}
-
-	// 验证用户是否存在 - 移除is_deleted字段
-	var user system.User
-	if err := global.KUBEGALE_DB.Where("username = ?", username).First(&user).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return NewError(ERROR_USER_NOT_EXIST)
-		}
-		return fmt.Errorf("查询用户失败: %w", err)
-	}
-
-	// 验证密码是否正确
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
-		return NewError(ERROR_PASSWORD_WRONG)
-	}
-
-	// 使用事务进行注销操作
-	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		// 更新用户状态为禁用 - 替代软删除
-		if err := tx.Model(&user).Update("enable", 0).Error; err != nil {
-			return fmt.Errorf("注销用户失败: %w", err)
-		}
-
-		// 更新时间
-		if err := tx.Model(&user).Update("updated_at", time.Now()).Error; err != nil {
-			return fmt.Errorf("更新时间失败: %w", err)
-		}
-
-		// 清除用户关联的角色、菜单和API权限
-		if err := tx.Exec("DELETE FROM user_roles WHERE user_id = ?", user.ID).Error; err != nil {
-			return fmt.Errorf("清除用户角色关联失败: %w", err)
-		}
-
-		if err := tx.Exec("DELETE FROM user_menus WHERE user_id = ?", user.ID).Error; err != nil {
-			return fmt.Errorf("清除用户菜单关联失败: %w", err)
-		}
-
-		if err := tx.Exec("DELETE FROM user_apis WHERE user_id = ?", user.ID).Error; err != nil {
-			return fmt.Errorf("清除用户API关联失败: %w", err)
-		}
-
-		// 记录日志
-		global.KUBEGALE_LOG.Info("用户已注销", zap.String("username", username), zap.Int("user_id", user.ID))
-
-		return nil
-	})
-}
-
-// DeleteUser 真正删除用户（从数据库中移除）
-func (us *UserService) DeleteUser(uid int) error {
-	// 参数验证
-	if uid <= 0 {
-		return NewError(ERROR_USER_ID_INVALID)
-	}
-
-	// 查询用户是否存在
-	var user system.User
-	if err := global.KUBEGALE_DB.Where("id = ?", uid).First(&user).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return NewError(ERROR_USER_NOT_EXIST)
-		}
-		return fmt.Errorf("查询用户失败: %w", err)
-	}
-
-	// 使用事务进行删除操作
-	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		// 先清除用户关联的角色、菜单和API权限
-		if err := tx.Exec("DELETE FROM user_roles WHERE user_id = ?", uid).Error; err != nil {
-			return fmt.Errorf("清除用户角色关联失败: %w", err)
-		}
-
-		if err := tx.Exec("DELETE FROM user_menus WHERE user_id = ?", uid).Error; err != nil {
-			return fmt.Errorf("清除用户菜单关联失败: %w", err)
-		}
-
-		if err := tx.Exec("DELETE FROM user_apis WHERE user_id = ?", uid).Error; err != nil {
-			return fmt.Errorf("清除用户API关联失败: %w", err)
-		}
-
-		// 真正删除用户记录
-		if err := tx.Unscoped().Delete(&user).Error; err != nil {
-			return fmt.Errorf("删除用户失败: %w", err)
-		}
-
-		// 记录日志
-		global.KUBEGALE_LOG.Info("用户已永久删除", zap.Int("user_id", uid))
-
-		return nil
-	})
-}
-
-// EnableUser 启用用户
-func (us *UserService) EnableUser(uid int) error {
-	// 参数验证
-	if uid <= 0 {
-		return NewError(ERROR_USER_ID_INVALID)
-	}
-
-	// 查询用户是否存在
-	var user system.User
-	if err := global.KUBEGALE_DB.Where("id = ?", uid).First(&user).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return NewError(ERROR_USER_NOT_EXIST)
-		}
-		return fmt.Errorf("查询用户失败: %w", err)
-	}
-
-	// 检查用户是否已经是启用状态
-	if user.Enable == 1 {
-		return fmt.Errorf("用户已经是启用状态")
-	}
-
-	// 使用事务进行启用操作
-	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		// 更新用户状态为启用
-		if err := tx.Model(&user).Update("enable", 1).Error; err != nil {
-			return fmt.Errorf("启用用户失败: %w", err)
-		}
-
-		// 更新时间
-		if err := tx.Model(&user).Update("updated_at", time.Now()).Error; err != nil {
-			return fmt.Errorf("更新时间失败: %w", err)
-		}
-
-		// 记录日志
-		global.KUBEGALE_LOG.Info("用户已启用", zap.Int("user_id", uid))
-
-		return nil
-	})
-}
-
-// Disable 禁用用户
-func (us *UserService) DisableUser(uid int) error {
-	// 参数验证
-	if uid <= 0 {
-		return NewError(ERROR_USER_ID_INVALID)
-	}
-
-	// 查询用户是否存在
-	var user system.User
-	if err := global.KUBEGALE_DB.Where("id = ?", uid).First(&user).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return NewError(ERROR_USER_NOT_EXIST)
-		}
-		return fmt.Errorf("查询用户失败: %w", err)
-	}
-
-	// 检查用户是否已经是禁用状态
-	if user.Enable == 0 {
-		return fmt.Errorf("用户已经是禁用状态")
-	}
-
-	// 使用事务进行禁用操作
-	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		// 更新用户状态为禁用
-		if err := tx.Model(&user).Update("enable", 0).Error; err != nil {
-			return fmt.Errorf("禁用用户失败: %w", err)
-		}
-
-		// 更新时间
-		if err := tx.Model(&user).Update("updated_at", time.Now()).Error; err != nil {
-			return fmt.Errorf("更新时间失败: %w", err)
-		}
-
-		// 记录日志
-		global.KUBEGALE_LOG.Info("用户已禁用", zap.Int("user_id", uid))
-
-		return nil
-	})
+// ResetPassword 修改用户密码
+func (userService *UserService) ResetPassword(ID uint) (err error) {
+	err = global.KUBEGALE_DB.Model(&system.SysUser{}).Where("id = ?", ID).Update("password", utils.BcryptHash("123456")).Error
+	return err
 }

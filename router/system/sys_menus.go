@@ -9,22 +9,20 @@ import (
 type MenuRouter struct{}
 
 func (s *MenuRouter) InitMenuRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
-	// 创建路由组
-	menuRouter := Router.Group("menus").Use(middleware.OperationRecord())
-	menuRouterWithoutRecord := Router.Group("menus")
-
-	// 需要记录操作日志的路由
+	menuRouter := Router.Group("menu").Use(middleware.OperationRecord())
+	menuRouterWithoutRecord := Router.Group("menu")
 	{
-		menuRouter.POST("/create", authorityMenuApi.CreateMenu)             // 创建菜单
-		menuRouter.POST("/update", authorityMenuApi.UpdateMenu)             // 更新菜单
-		menuRouter.DELETE("/:id", authorityMenuApi.DeleteMenu)              // 删除菜单
-		menuRouter.POST("/update_related", authorityMenuApi.UpdateUserMenu) // 更新用户菜单关联
+		menuRouter.POST("addBaseMenu", authorityMenuApi.AddBaseMenu)           // 新增菜单
+		menuRouter.POST("addMenuAuthority", authorityMenuApi.AddMenuAuthority) //	增加menu和角色关联关系
+		menuRouter.POST("deleteBaseMenu", authorityMenuApi.DeleteBaseMenu)     // 删除菜单
+		menuRouter.POST("updateBaseMenu", authorityMenuApi.UpdateBaseMenu)     // 更新菜单
 	}
-
-	// 不需要记录操作日志的路由
 	{
-		menuRouterWithoutRecord.POST("/list", authorityMenuApi.ListMenus) // 获取菜单列表
+		menuRouterWithoutRecord.GET("getMenu", authorityMenuApi.GetMenu)                    // 获取菜单树
+		menuRouterWithoutRecord.POST("getMenuList", authorityMenuApi.GetMenuList)           // 分页获取基础menu列表
+		menuRouterWithoutRecord.POST("getBaseMenuTree", authorityMenuApi.GetBaseMenuTree)   // 获取用户动态路由
+		menuRouterWithoutRecord.POST("getMenuAuthority", authorityMenuApi.GetMenuAuthority) // 获取指定角色menu
+		menuRouterWithoutRecord.POST("getBaseMenuById", authorityMenuApi.GetBaseMenuById)   // 根据id获取菜单
 	}
-
 	return menuRouter
 }

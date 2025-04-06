@@ -3,19 +3,24 @@ package system
 import "KubeGale/service"
 
 type ApiGroup struct {
+	JwtApi
 	BaseApi
+	CasbinApi
 	SystemApiApi
+	AuthorityApi
 	AuthorityMenuApi
 	OperationRecordApi
-	AuthorityApi
-	RoleApi
+	AuthorityBtnApi
 }
 
 var (
 	apiService             = service.ServiceGroupApp.SystemServiceGroup.ApiService
-	userService            = service.ServiceGroupApp.SystemServiceGroup.UserService
-	operationRecordService = service.ServiceGroupApp.SystemServiceGroup.OperationRecordService
+	jwtService             = service.ServiceGroupApp.SystemServiceGroup.JwtService
 	menuService            = service.ServiceGroupApp.SystemServiceGroup.MenuService
+	userService            = service.ServiceGroupApp.SystemServiceGroup.UserService
+	casbinService          = service.ServiceGroupApp.SystemServiceGroup.CasbinService
+	baseMenuService        = service.ServiceGroupApp.SystemServiceGroup.BaseMenuService
 	authorityService       = service.ServiceGroupApp.SystemServiceGroup.AuthorityService
-	roleService            = service.ServiceGroupApp.SystemServiceGroup.RoleService
+	authorityBtnService    = service.ServiceGroupApp.SystemServiceGroup.AuthorityBtnService
+	operationRecordService = service.ServiceGroupApp.SystemServiceGroup.OperationRecordService
 )

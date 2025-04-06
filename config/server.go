@@ -6,8 +6,8 @@ type Server struct {
 	Redis     Redis   `mapstructure:"redis" json:"redis" yaml:"redis"`
 	RedisList []Redis `mapstructure:"redis-list" json:"redis-list" yaml:"redis-list"`
 	//Mongo     Mongo   `mapstructure:"mongo" json:"mongo" yaml:"mongo"`
-	System System `mapstructure:"system" json:"system" yaml:"system"`
-	//Captcha   Captcha `mapstructure:"captcha" json:"captcha" yaml:"captcha"`
+	System  System  `mapstructure:"system" json:"system" yaml:"system"`
+	Captcha Captcha `mapstructure:"captcha" json:"captcha" yaml:"captcha"`
 	//// auto
 	//AutoCode Autocode `mapstructure:"autocode" json:"autocode" yaml:"autocode"`
 	//// gorm
@@ -29,5 +29,5 @@ type Server struct {
 	//DiskList []DiskList `mapstructure:"disk-list" json:"disk-list" yaml:"disk-list"`
 	//
 	//// 跨域配置
-	//Cors CORS `mapstructure:"cors" json:"cors" yaml:"cors"`
+	Cors CORS `mapstructure:"cors" json:"cors" yaml:"cors"`
 }

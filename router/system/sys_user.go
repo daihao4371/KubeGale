@@ -9,40 +9,21 @@ import (
 type UserRouter struct{}
 
 func (s *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
-	// 创建用户路由组
-	userGroup := Router.Group("user") // 注意这里不要加前导斜杠
-
-	// 需要记录操作日志的路由
-	userRouterWithRecord := userGroup.Use(middleware.OperationRecord())
-
-	// 不需要记录操作日志的路由
-	userRouterWithoutRecord := userGroup
-
-	// 获取API控制器
-
-	// 不需要记录操作日志的接口
+	userRouter := Router.Group("user").Use(middleware.OperationRecord())
+	userRouterWithoutRecord := Router.Group("user")
 	{
-		userRouterWithoutRecord.POST("/signup", baseApi.SignUp)              // 注册
-		userRouterWithoutRecord.POST("/login", baseApi.Login)                // 登录
-		userRouterWithoutRecord.POST("/refresh_token", baseApi.RefreshToken) // 刷新token
-		userRouterWithoutRecord.POST("/logout", baseApi.Logout)              // 退出登录
-		userRouterWithoutRecord.GET("/profile", baseApi.GetProfile)          // 用户信息
-		userRouterWithoutRecord.GET("/codes", baseApi.GetPermCode)           // 前端所需状态码
+		userRouter.POST("admin_register", baseApi.Register)               // 管理员注册账号
+		userRouter.POST("changePassword", baseApi.ChangePassword)         // 用户修改密码
+		userRouter.POST("setUserAuthority", baseApi.SetUserAuthority)     // 设置用户权限
+		userRouter.DELETE("deleteUser", baseApi.DeleteUser)               // 删除用户
+		userRouter.PUT("setUserInfo", baseApi.SetUserInfo)                // 设置用户信息
+		userRouter.PUT("setSelfInfo", baseApi.SetSelfInfo)                // 设置自身信息
+		userRouter.POST("setUserAuthorities", baseApi.SetUserAuthorities) // 设置用户权限组
+		userRouter.POST("resetPassword", baseApi.ResetPassword)           // 设置用户权限组
+		userRouter.PUT("setSelfSetting", baseApi.SetSelfSetting)          // 用户界面配置
 	}
-
-	// 需要记录操作日志的接口
 	{
-		userRouterWithRecord.GET("/list", baseApi.GetUserList)                // 用户列表
-		userRouterWithRecord.POST("/change_password", baseApi.ChangePassword) // 修改密码
-		userRouterWithRecord.POST("/write_off", baseApi.WriteOff)             // 注销账号
-		userRouterWithRecord.POST("/profile/update", baseApi.UpdateProfile)   // 更新用户信息
-
-		// 修复拼写错误并使用正确的函数名
-		userRouterWithRecord.DELETE("/:id", baseApi.DeleteUser) // 永久删除用户
-		userRouterWithRecord.POST("/:id", baseApi.Disable)      // 禁用用户
-
-		// 保留原有路由，以便兼容可能的其他调用
-		userRouterWithRecord.POST("/disable_user/:id", baseApi.Disable) // 禁用用户（兼容）
-		userRouterWithRecord.POST("/enable/:id", baseApi.EnableUser)    // 启用用户
+		userRouterWithoutRecord.POST("getUserList", baseApi.GetUserList) // 分页获取用户列表
+		userRouterWithoutRecord.GET("getUserInfo", baseApi.GetUserInfo)  // 获取自身信息
 	}
 }

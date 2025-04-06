@@ -6,9 +6,8 @@ import (
 )
 
 // 如果含有time.Time 请自行import time包
-// 在SysOperationRecord结构体中添加以下字段
 type SysOperationRecord struct {
-	global.Model
+	global.KUBEGALE_MODEL
 	Ip           string        `json:"ip" form:"ip" gorm:"column:ip;comment:请求ip"`                                   // 请求ip
 	Method       string        `json:"method" form:"method" gorm:"column:method;comment:请求方法"`                       // 请求方法
 	Path         string        `json:"path" form:"path" gorm:"column:path;comment:请求路径"`                             // 请求路径
@@ -19,7 +18,5 @@ type SysOperationRecord struct {
 	Body         string        `json:"body" form:"body" gorm:"type:text;column:body;comment:请求Body"`                 // 请求Body
 	Resp         string        `json:"resp" form:"resp" gorm:"type:text;column:resp;comment:响应Body"`                 // 响应Body
 	UserID       int           `json:"user_id" form:"user_id" gorm:"column:user_id;comment:用户id"`                    // 用户id
-	User         User          `json:"user"`
-	OperatorName   string `json:"operator_name" gorm:"-"` // 操作人用户名，不映射到数据库
-	OperatorRealName string `json:"operator_real_name" gorm:"-"` // 操作人真实姓名，不映射到数据库
+	User         SysUser       `json:"user"`
 }
