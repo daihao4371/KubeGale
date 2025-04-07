@@ -4,7 +4,6 @@ import (
 	"KubeGale/core"
 	"KubeGale/global"
 	"KubeGale/initialize"
-	"KubeGale/resource/system"
 	"flag"
 	"fmt"
 	"log"
@@ -44,11 +43,6 @@ func main() {
 
 	// 确保表结构存在
 	initialize.RegisterTables()
-
-	// 调用API初始化函数
-	system.InitApiData()  // 初始化api数据
-	system.InitMenuData() // 初始化menu数据
-	system.InitUserData() // 初始化用户数据
 
 	// 根据命令行参数决定是否自动退出
 	if *autoExit {

@@ -14,6 +14,7 @@ func Routers() *gin.Engine {
 	if gin.Mode() == gin.DebugMode {
 		Router.Use(gin.Logger())
 	}
+	systemRouter := router.RouterGroupApp.System
 
 	// 添加SQL日志中间件
 	Router.Use(middleware.SQLLogMiddleware())
@@ -24,8 +25,12 @@ func Routers() *gin.Engine {
 	// 初始化需要认证的路由组
 	PrivateGroup := Router.Group("/api")
 
+	{
+		systemRouter.InitBaseRouter(PublicGroup) // 注册基础功能路由 不做鉴权
+		//systemRouter.InitInitRouter(PublicGroup) // 自动初始化相关
+	}
+
 	// 注册系统路由
-	systemRouter := router.RouterGroupApp.System
 	{
 		// 初始化用户相关路由 - 只在一个路由组中注册
 		systemRouter.InitApiRouter(PrivateGroup, PublicGroup)   // 注册功能api路由

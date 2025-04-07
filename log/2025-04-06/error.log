@@ -1,3 +1,0 @@
-[KUBEGALE]2025-04-06 13:44:37.633	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:69	accept tcp [::]:8080: use of closed network connection
-[KUBEGALE]2025-04-06 20:45:07.894	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:31	register table failed	{"error": "Error 1292 (22007): Incorrect datetime value: '0' for column 'deleted_at' at row 1"}
-[KUBEGALE]2025-04-06 20:47:31.783	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:57	accept tcp [::]:8080: use of closed network connection

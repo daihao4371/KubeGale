@@ -1,22 +1,16 @@
 package global
 
 import (
-	"github.com/redis/go-redis/v9"
-	"sync"
-
+	"KubeGale/config"
 	"github.com/gin-gonic/gin"
 	"github.com/qiniu/qmgo"
-
+	"github.com/redis/go-redis/v9"
 	"github.com/songzhibin97/gkit/cache/local_cache"
-
-	"golang.org/x/sync/singleflight"
-
-	"go.uber.org/zap"
-
-	"KubeGale/config"
-
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
+	"golang.org/x/sync/singleflight"
 	"gorm.io/gorm"
+	"sync"
 )
 
 var (
