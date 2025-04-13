@@ -243,6 +243,7 @@ func (apiService *ApiService) GetApiById(id int) (api system.SysApi, err error) 
 }
 
 // 根据id更新api UpdateApi
+// 根据id更新api UpdateApi
 func (apiService *ApiService) UpdateApi(api system.SysApi) (err error) {
 	var oldA system.SysApi
 	err = global.KUBEGALE_DB.First(&oldA, "id = ?", api.ID).Error
@@ -257,7 +258,6 @@ func (apiService *ApiService) UpdateApi(api system.SysApi) (err error) {
 				return errors.New("存在相同api路径")
 			}
 		}
-
 	}
 	if err != nil {
 		return err
@@ -268,7 +268,13 @@ func (apiService *ApiService) UpdateApi(api system.SysApi) (err error) {
 		return err
 	}
 
-	return global.KUBEGALE_DB.Save(&api).Error
+	// 只更新需要的字段，保留原有的created_at
+	return global.KUBEGALE_DB.Model(&oldA).Updates(map[string]interface{}{
+		"path":        api.Path,
+		"description": api.Description,
+		"api_group":   api.ApiGroup,
+		"method":      api.Method,
+	}).Error
 }
 
 // DeleteApisByIds 删除选中API
