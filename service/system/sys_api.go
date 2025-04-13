@@ -21,6 +21,12 @@ func (apiService *ApiService) CreateApi(api system.SysApi) (err error) {
 	if !errors.Is(global.KUBEGALE_DB.Where("path = ? AND method = ?", api.Path, api.Method).First(&system.SysApi{}).Error, gorm.ErrRecordNotFound) {
 		return errors.New("存在相同api")
 	}
+	
+	// 如果name字段为空，则使用path作为默认值
+	if api.Name == "" {
+		api.Name = api.Path
+	}
+	
 	return global.KUBEGALE_DB.Create(&api).Error
 }
 
@@ -95,12 +101,14 @@ func (apiService *ApiService) SyncApi() (newApis, deleteApis, ignoreApis []syste
 				flag = true
 			}
 		}
+		// 在SyncApi方法中修改newApis的创建部分
 		if !flag {
 			newApis = append(newApis, system.SysApi{
 				Path:        cacheApis[i].Path,
 				Description: "",
 				ApiGroup:    "",
 				Method:      cacheApis[i].Method,
+				Name:        cacheApis[i].Path, // 使用Path作为默认的Name
 			})
 		}
 	}
@@ -263,6 +271,11 @@ func (apiService *ApiService) UpdateApi(api system.SysApi) (err error) {
 		return err
 	}
 
+	// 如果name字段为空，则使用path作为默认值
+	if api.Name == "" {
+		api.Name = api.Path
+	}
+
 	err = CasbinServiceApp.UpdateCasbinApi(oldA.Path, api.Path, oldA.Method, api.Method)
 	if err != nil {
 		return err
@@ -274,8 +287,11 @@ func (apiService *ApiService) UpdateApi(api system.SysApi) (err error) {
 		"description": api.Description,
 		"api_group":   api.ApiGroup,
 		"method":      api.Method,
+		"name":        api.Name,
 	}).Error
 }
+
+
 
 // DeleteApisByIds 删除选中API
 func (apiService *ApiService) DeleteApisByIds(ids request.IdsReq) (err error) {

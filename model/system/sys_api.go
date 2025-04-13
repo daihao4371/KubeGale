@@ -10,6 +10,7 @@ type SysApi struct {
 	Description string `json:"description" gorm:"comment:api中文描述"`  // api中文描述
 	ApiGroup    string `json:"apiGroup" gorm:"comment:api组"`           // api组
 	Method      string `json:"method" gorm:"default:POST;comment:方法"` // 方法:创建POST(默认)|查看GET|更新PUT|删除DELETE
+	Name        string `json:"name" gorm:"comment:api名称"`             // api名称
 }
 
 func (SysApi) TableName() string {
