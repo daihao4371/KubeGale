@@ -16,26 +16,16 @@ func Gorm() *gorm.DB {
 func RegisterTables() {
 	db := global.KUBEGALE_DB
 	err := db.AutoMigrate(
-		system.Api{},
-		system.Menu{},
-		system.User{},
-		system.Role{},
+		system.SysApi{},
+		system.SysIgnoreApi{},
+		system.SysUser{},
+		system.SysBaseMenu{},
+		system.JwtBlacklist{},
+		system.SysAuthority{},
 		system.SysOperationRecord{},
-		//system.SysApi{},
-		//system.SysIgnoreApi{},
-		//system.SysUser{},
-		//system.SysBaseMenu{},
-		//system.JwtBlacklist{},
-		//system.SysAuthority{},
-		//system.SysDictionary{},
-		//system.SysOperationRecord{},
-		//system.SysDictionaryDetail{},
-		//system.SysBaseMenuParameter{},
-		//system.SysBaseMenuBtn{},
-		//system.SysAuthorityBtn{},
-		//system.SysExportTemplate{},
-		//system.Condition{},
-		//system.JoinTemplate{},
+		system.SysBaseMenuParameter{},
+		system.SysBaseMenuBtn{},
+		system.SysAuthorityBtn{},
 	)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("register table failed", zap.Error(err))

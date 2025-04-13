@@ -3,10 +3,7 @@ package core
 import (
 	"KubeGale/global"
 	"KubeGale/initialize"
-	"KubeGale/middleware"
-	"KubeGale/utils"
 	"fmt"
-	"github.com/redis/go-redis/v9"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 )
@@ -45,15 +42,6 @@ func (s Server) Init() {
 		initialize.Redis()
 		initialize.RedisList()
 	}
-
-	// 获取Redis客户端并传递给JWT处理器
-	var redisClient redis.Cmdable
-	if global.KUBEGALE_CONFIG.System.UseRedis {
-		redisClient = global.KUBEGALE_REDIS
-	}
-	handler := utils.NewJWTHandler(redisClient)
-	enforcer := middleware.InitCasbin(global.KUBEGALE_DB)
-	initialize.InitMiddlewares(handler, global.KUBEGALE_LOG, enforcer)
 
 	// 初始化服务器组件
 	RunServer()

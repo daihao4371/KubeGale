@@ -1,19 +1,23 @@
 package middleware
 
 import (
-	"KubeGale/global"
-	"KubeGale/model/system"
-	"KubeGale/service"
 	"bytes"
 	"encoding/json"
-	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 	"io"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
+
+	"KubeGale/utils"
+
+	"KubeGale/global"
+	"KubeGale/model/system"
+	"KubeGale/service"
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 var operationRecordService = service.ServiceGroupApp.SystemServiceGroup.OperationRecordService
@@ -52,7 +56,16 @@ func OperationRecord() gin.HandlerFunc {
 			}
 			body, _ = json.Marshal(&m)
 		}
-
+		claims, _ := utils.GetClaims(c)
+		if claims != nil && claims.BaseClaims.ID != 0 {
+			userId = int(claims.BaseClaims.ID)
+		} else {
+			id, err := strconv.Atoi(c.Request.Header.Get("x-user-id"))
+			if err != nil {
+				userId = 0
+			}
+			userId = id
+		}
 		record := system.SysOperationRecord{
 			Ip:     c.ClientIP(),
 			Method: c.Request.Method,
@@ -63,7 +76,7 @@ func OperationRecord() gin.HandlerFunc {
 		}
 
 		// 上传文件时候 中间件日志进行裁断操作
-		if strings.Contains(c.GetHeader("Content-Type"), "multipart/form-system") {
+		if strings.Contains(c.GetHeader("Content-Type"), "multipart/form-data") {
 			record.Body = "[文件]"
 		} else {
 			if len(body) > bufferSize {

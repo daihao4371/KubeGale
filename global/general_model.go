@@ -1,13 +1,13 @@
 package global
 
 import (
-	"gorm.io/plugin/soft_delete"
+	"gorm.io/gorm"
 	"time"
 )
 
-type Model struct {
-	ID        int                   `json:"id" gorm:"primaryKey;autoIncrement;comment:主键ID"` // 主键ID，自增
-	CreatedAt time.Time             `json:"created_at" gorm:"autoCreateTime;comment:创建时间"`   // 创建时间，自动记录
-	UpdatedAt time.Time             `json:"updated_at" gorm:"autoUpdateTime;comment:更新时间"`   // 更新时间，自动记录
-	DeletedAt soft_delete.DeletedAt `json:"deleted_at" gorm:"index;comment:删除时间"`            // 软删除时间，使用普通索引
+type KUBEGALE_MODEL struct {
+	ID        uint           `gorm:"primarykey" json:"ID"` // 主键ID
+	CreatedAt time.Time      // 创建时间
+	UpdatedAt time.Time      // 更新时间
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"` // 删除时间
 }

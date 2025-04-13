@@ -2,30 +2,34 @@ package middleware
 
 import (
 	"KubeGale/global"
-	"github.com/casbin/casbin/v2"
-	gormadapter "github.com/casbin/gorm-adapter/v3"
-	"go.uber.org/zap"
-	"gorm.io/gorm"
+	"KubeGale/model/common/response"
+	"KubeGale/service"
+	"KubeGale/utils"
+	"github.com/gin-gonic/gin"
+	"strconv"
+	"strings"
 )
 
-func InitCasbin(db *gorm.DB) *casbin.Enforcer {
-	// 检查数据库连接是否为空
-	if db == nil {
-		global.KUBEGALE_LOG.Warn("数据库连接为空，Casbin 初始化跳过")
-		return nil
-	}
+var casbinService = service.ServiceGroupApp.SystemServiceGroup.CasbinService
 
-	adapter, err := gormadapter.NewAdapterByDB(db)
-	if err != nil {
-		global.KUBEGALE_LOG.Error("Casbin适配器初始化失败", zap.Error(err))
-		return nil
+// CasbinHandler 拦截器
+func CasbinHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		waitUse, _ := utils.GetClaims(c)
+		//获取请求的PATH
+		path := c.Request.URL.Path
+		obj := strings.TrimPrefix(path, global.KUBEGALE_CONFIG.System.RouterPrefix)
+		// 获取请求方法
+		act := c.Request.Method
+		// 获取用户的角色
+		sub := strconv.Itoa(int(waitUse.AuthorityId))
+		e := casbinService.Casbin() // 判断策略中是否存在
+		success, _ := e.Enforce(sub, obj, act)
+		if !success {
+			response.FailWithDetailed(gin.H{}, "权限不足", c)
+			c.Abort()
+			return
+		}
+		c.Next()
 	}
-	
-	e, err := casbin.NewEnforcer("model.conf", adapter)
-	if err != nil {
-		global.KUBEGALE_LOG.Error("Casbin初始化失败", zap.Error(err))
-		return nil
-	}
-	
-	return e
 }

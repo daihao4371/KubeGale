@@ -2,134 +2,231 @@ package system
 
 import (
 	"KubeGale/global"
+	"KubeGale/model/common/request"
 	"KubeGale/model/common/response"
 	"KubeGale/model/system"
+	systemReq "KubeGale/model/system/request"
+	systemRes "KubeGale/model/system/response"
+	"KubeGale/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"strconv"
 )
 
 type SystemApiApi struct{}
 
-func (s *SystemApiApi) CreateAPI(c *gin.Context) {
-	var req system.CreateApiRequest
-	err := c.ShouldBindJSON(&req)
+// 创建基础api
+func (s *SystemApiApi) CreateApi(c *gin.Context) {
+	var api system.SysApi
+	err := c.ShouldBindJSON(&api)
 	if err != nil {
-		response.FailWithMessage("请求参数错误: "+err.Error(), c)
-		return
-	}
-
-	// 参数基本验证
-	if req.Name == "" {
-		response.FailWithMessage("API名称不能为空", c)
-		return
-	}
-	if req.Path == "" {
-		response.FailWithMessage("API路径不能为空", c)
-		return
-	}
-	if req.Method <= 0 || req.Method > 7 {
-		response.FailWithMessage("无效的HTTP方法", c)
-		return
-	}
-
-	// 构建API对象
-	api := &system.Api{
-		Name:        req.Name,
-		Path:        req.Path,
-		Method:      req.Method,
-		Description: req.Description,
-		Version:     req.Version,
-		Category:    req.Category,
-		IsPublic:    req.IsPublic,
-	}
-
-	// 调用service层创建API
-	err = apiService.CreateApi(api)
-	if err != nil {
-		global.KUBEGALE_LOG.Error("创建API失败", zap.Error(err))
-		response.FailWithMessage("创建API失败: "+err.Error(), c)
-		return
-	}
-	// 返回成功响应
-	response.OkWithDetailed(gin.H{
-		"id": api.ID,
-	}, "创建API成功", c)
-}
-
-func (a *SystemApiApi) ListApis(c *gin.Context) {
-	var req system.ListApisRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
-		response.FailWithMessage("请求参数错误: "+err.Error(), c)
-		return
-	}
-
-	// 调用service层获取API列表
-	apis, total, err := apiService.ListApis(req.PageNumber, req.PageSize)
-	if err != nil {
-		global.KUBEGALE_LOG.Error("获取API列表失败", zap.Error(err))
-		response.FailWithMessage("获取API列表失败: "+err.Error(), c)
-		return
-	}
-	// 返回API列表和总数
-	response.OkWithDetailed(gin.H{
-		"list":     apis,
-		"total":    total,
-		"page":     req.PageNumber,
-		"pageSize": req.PageSize,
-	}, "获取API列表成功", c)
-}
-
-// UpdateAPI 更新API信息
-func (a *SystemApiApi) UpdateAPI(c *gin.Context) {
-	var req system.UpdateApiRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-
-	// 构建更新的API对象
-	api := &system.Api{
-		ID:          req.ID,
-		Name:        req.Name,
-		Path:        req.Path,
-		Method:      req.Method,
-		Description: req.Description,
-		Version:     req.Version,
-		Category:    req.Category,
-		IsPublic:    req.IsPublic,
-	}
-	err := apiService.UpdateApi(api)
+	err = utils.Verify(api, utils.ApiVerify)
 	if err != nil {
-		response.FailWithMessage("更新API失败", c)
-		global.KUBEGALE_LOG.Error("更新API失败", zap.Error(err))
+		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	response.OkWithMessage("更新API成功", c)
+	err = apiService.CreateApi(api)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
+		response.FailWithMessage("创建失败", c)
+		return
+	}
+	response.OkWithMessage("创建成功", c)
 }
 
-// DeleteAPI 删除API
-func (a *SystemApiApi) DeleteAPI(c *gin.Context) {
-	// 从URL参数中获取API ID
-	id, err := strconv.Atoi(c.Param("id"))
+// SyncApi 同步API
+func (s *SystemApiApi) SyncApi(c *gin.Context) {
+	newApis, deleteApis, ignoreApis, err := apiService.SyncApi()
 	if err != nil {
-		response.FailWithMessage("无效的API ID参数", c)
+		global.KUBEGALE_LOG.Error("同步失败!", zap.Error(err))
+		response.FailWithMessage("同步失败", c)
 		return
 	}
+	response.OkWithData(gin.H{
+		"newApis":    newApis,
+		"deleteApis": deleteApis,
+		"ignoreApis": ignoreApis,
+	}, c)
+}
 
-	// 验证ID
-	if id <= 0 {
-		response.FailWithMessage("API ID必须大于0", c)
+// GetApiGroups 获取API分组
+func (s *SystemApiApi) GetApiGroups(c *gin.Context) {
+	groups, apiGroupMap, err := apiService.GetApiGroups()
+	if err != nil {
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
 		return
 	}
+	response.OkWithData(gin.H{
+		"groups":      groups,
+		"apiGroupMap": apiGroupMap,
+	}, c)
+}
 
-	// 调用service层删除API
-	if err := apiService.DeleteApi(id); err != nil {
-		global.KUBEGALE_LOG.Error("删除API失败", zap.Error(err), zap.Int("id", id))
-		response.FailWithMessage("删除API失败: "+err.Error(), c)
+// IgnoreApi 忽略API
+func (s *SystemApiApi) IgnoreApi(c *gin.Context) {
+	var ignoreApi system.SysIgnoreApi
+	err := c.ShouldBindJSON(&ignoreApi)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
 		return
 	}
+	err = apiService.IgnoreApi(ignoreApi)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("忽略失败!", zap.Error(err))
+		response.FailWithMessage("忽略失败", c)
+		return
+	}
+	response.Ok(c)
+}
 
-	// 返回成功响应
-	response.OkWithMessage("删除API成功", c)
+// EnterSyncApi 确认同步API
+func (s *SystemApiApi) EnterSyncApi(c *gin.Context) {
+	var syncApi systemRes.SysSyncApis
+	err := c.ShouldBindJSON(&syncApi)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = apiService.EnterSyncApi(syncApi)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("忽略失败!", zap.Error(err))
+		response.FailWithMessage("忽略失败", c)
+		return
+	}
+	response.Ok(c)
+}
+
+// DeleteApi 删除api
+func (s *SystemApiApi) DeleteApi(c *gin.Context) {
+	var api system.SysApi
+	err := c.ShouldBindJSON(&api)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = utils.Verify(api.KUBEGALE_MODEL, utils.IdVerify)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = apiService.DeleteApi(api)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
+		response.FailWithMessage("删除失败", c)
+		return
+	}
+	response.OkWithMessage("删除成功", c)
+}
+
+// GetApiList 分页获取API列表
+func (s *SystemApiApi) GetApiList(c *gin.Context) {
+	var pageInfo systemReq.SearchApiParams
+	err := c.ShouldBindJSON(&pageInfo)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = utils.Verify(pageInfo.PageInfo, utils.PageInfoVerify)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	list, total, err := apiService.GetAPIInfoList(pageInfo.SysApi, pageInfo.PageInfo, pageInfo.OrderKey, pageInfo.Desc)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+		return
+	}
+	response.OkWithDetailed(response.PageResult{
+		List:     list,
+		Total:    total,
+		Page:     pageInfo.Page,
+		PageSize: pageInfo.PageSize,
+	}, "获取成功", c)
+}
+
+// GetApiById 根据id获取api
+func (s *SystemApiApi) GetApiById(c *gin.Context) {
+	var idInfo request.GetById
+	err := c.ShouldBindJSON(&idInfo)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = utils.Verify(idInfo, utils.IdVerify)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	api, err := apiService.GetApiById(idInfo.ID)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+		return
+	}
+	response.OkWithDetailed(systemRes.SysAPIResponse{Api: api}, "获取成功", c)
+}
+
+func (s *SystemApiApi) UpdateApi(c *gin.Context) {
+	var api system.SysApi
+	err := c.ShouldBindJSON(&api)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = utils.Verify(api, utils.ApiVerify)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = apiService.UpdateApi(api)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("修改失败!", zap.Error(err))
+		response.FailWithMessage("修改失败", c)
+		return
+	}
+	response.OkWithMessage("修改成功", c)
+}
+
+// GetAllApis 获取所有的Api 不分页
+func (s *SystemApiApi) GetAllApis(c *gin.Context) {
+	authorityID := utils.GetUserAuthorityId(c)
+	apis, err := apiService.GetAllApis(authorityID)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败", c)
+		return
+	}
+	response.OkWithDetailed(systemRes.SysAPIListResponse{Apis: apis}, "获取成功", c)
+}
+
+// DeleteApisByIds 删除选中Api
+func (s *SystemApiApi) DeleteApisByIds(c *gin.Context) {
+	var ids request.IdsReq
+	err := c.ShouldBindJSON(&ids)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = apiService.DeleteApisByIds(ids)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
+		response.FailWithMessage("删除失败", c)
+		return
+	}
+	response.OkWithMessage("删除成功", c)
+}
+
+// FreshCasbin 刷新casbin缓存
+func (s *SystemApiApi) FreshCasbin(c *gin.Context) {
+	err := casbinService.FreshCasbin()
+	if err != nil {
+		global.KUBEGALE_LOG.Error("刷新失败!", zap.Error(err))
+		response.FailWithMessage("刷新失败", c)
+		return
+	}
+	response.OkWithMessage("刷新成功", c)
 }

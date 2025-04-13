@@ -1,9 +1,0 @@
-[KUBEGALE]2025-03-31 20:16:08.452	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[35m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_mysql.go:23
-[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:3306: connect: connection refused
-[KUBEGALE]2025-03-31 20:16:08.465	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
-[KUBEGALE]2025-03-31 20:16:08.466	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
-[KUBEGALE]2025-03-31 20:22:07.881	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:30	[35m/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_mysql.go:28
-[0m[31m[error] [0mfailed to initialize database, got error dial tcp 127.0.0.1:3306: connect: connection refused
-[KUBEGALE]2025-03-31 20:22:07.885	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
-[KUBEGALE]2025-03-31 20:22:07.886	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
-[KUBEGALE]2025-03-31 20:22:07.886	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	server run success on 	{"address": ":8080"}
