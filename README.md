@@ -106,11 +106,13 @@ go run main.go
 5. 打开一个 Pull Request
 ## 相关项目
 - KubeGale-web - 前端项目
+[前端服务地址](https://github.com/daihao4371/KubeGale-web.git)  
+[开发设计文档](https://c057jlmw2q.feishu.cn/wiki/X1gQwMh2OicpYSk4XN1caH2Dntc?fromTtSwitch=1)
 
 ## 许可证
 本项目采用 MIT 许可证 。
 
-前端服务地址： https://github.com/daihao4371/KubeGale-web.git
+
 
 ## 联系我们
 如果您有任何问题或建议，请随时联系我们。
