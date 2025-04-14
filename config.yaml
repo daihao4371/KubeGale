@@ -37,16 +37,16 @@ mysql:
   prefix: ""
   port: "3306"
   config: charset=utf8mb4&parseTime=True&loc=Local
-  db-name: cmdb
+  db-name: kubegale
   username: root
   password: "123456"
   path: 127.0.0.1
   engine: ""
-  log-mode: info
+  log-mode: silent  #  将 "info" 改为 "silent" 或 "error" 来关闭日志记录
   max-idle-conns: 10
   max-open-conns: 100
   singular: false
-  log-zap: true
+  log-zap: true  # 将 true 改为 false 以关闭通过 zap 写入日志
 
 redis:
   name: ""

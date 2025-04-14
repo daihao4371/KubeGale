@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"KubeGale/global"
+	"KubeGale/model/cmdb"
 	"KubeGale/model/system"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -26,6 +27,10 @@ func RegisterTables() {
 		system.SysBaseMenuParameter{},
 		system.SysBaseMenuBtn{},
 		system.SysAuthorityBtn{},
+
+		// 资产管理平台
+		cmdb.CmdbProjects{},
+		cmdb.CmdbHosts{},
 	)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("register table failed", zap.Error(err))
