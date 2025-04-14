@@ -1,1 +1,9 @@
 [KUBEGALE]2025-04-14 09:23:46.633	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:57	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-14 21:44:27.099	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:57	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-14 21:48:26.223	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:57	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-14 21:49:15.053	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:57	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-14 21:53:01.282	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:57	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-14 21:56:00.927	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:57	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-14 22:09:45.477	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:57	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-14 22:10:11.396	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:56	登陆失败! 用户名不存在或者密码错误!	{"error": "record not found"}
+[KUBEGALE]2025-04-14 22:10:12.170	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:56	登陆失败! 用户名不存在或者密码错误!	{"error": "record not found"}
