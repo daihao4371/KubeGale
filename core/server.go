@@ -3,7 +3,9 @@ package core
 import (
 	"KubeGale/global"
 	"KubeGale/initialize"
+	"KubeGale/service/system"
 	"fmt"
+	"github.com/songzhibin97/gkit/cache/local_cache" // 添加这一行
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 )
@@ -47,6 +49,14 @@ func (s Server) Init() {
 	RunServer()
 }
 func RunServer() {
+	// 初始化本地缓存  // 将 global.BlackCache 初始化为 local_cache.NewCache()
+	global.BlackCache = local_cache.NewCache()
+	global.KUBEGALE_LOG.Info("initialize local cache")
+	// 从db加载jwt数据
+	if global.KUBEGALE_DB != nil {
+		system.LoadAll()
+	}
+
 	Router := initialize.Routers()
 
 	address := fmt.Sprintf(":%d", global.KUBEGALE_CONFIG.System.Addr)
