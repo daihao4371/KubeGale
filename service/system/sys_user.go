@@ -7,10 +7,12 @@ import (
 	"KubeGale/utils"
 	"errors"
 	"fmt"
+	"time"
+
 	"github.com/gofrs/uuid/v5"
+	"go.uber.org/zap" // 添加 zap 包的导入
 	"gorm.io/datatypes"
 	"gorm.io/gorm"
-	"time"
 )
 
 type UserService struct{}
@@ -31,20 +33,62 @@ func (userService *UserService) Register(u system.SysUser) (userInter system.Sys
 }
 
 // Login 用户登录
-func (userService *UserService) Login(u *system.SysUser) (userInter *system.SysUser, err error) {
+func (userService *UserService) Login(u *system.SysUser) (map[string]interface{}, error) {
 	if nil == global.KUBEGALE_DB {
 		return nil, fmt.Errorf("db not init")
 	}
 
 	var user system.SysUser
-	err = global.KUBEGALE_DB.Where("username = ?", u.Username).Preload("Authorities").Preload("Authority").First(&user).Error
-	if err == nil {
-		if ok := utils.BcryptCheck(u.Password, user.Password); !ok {
-			return nil, errors.New("密码错误")
-		}
-		MenuServiceApp.UserAuthorityDefaultRouter(&user)
+	err := global.KUBEGALE_DB.Where("username = ?", u.Username).Preload("Authorities").Preload("Authority").First(&user).Error
+	if err != nil {
+		return nil, err
 	}
-	return &user, err
+	
+	if ok := utils.BcryptCheck(u.Password, user.Password); !ok {
+		return nil, errors.New("密码错误")
+	}
+	
+	MenuServiceApp.UserAuthorityDefaultRouter(&user)
+	
+	// 获取用户角色ID列表
+	var authorityIds []uint
+	for _, authority := range user.Authorities {
+		authorityIds = append(authorityIds, authority.AuthorityId)
+	}
+	
+	// 添加日志输出
+	global.KUBEGALE_LOG.Info(fmt.Sprintf("用户角色ID: %v", authorityIds))
+	
+	// 获取按钮权限
+	var authorityBtns []system.SysAuthorityBtn
+	err = global.KUBEGALE_DB.Where("authority_id IN ?", authorityIds).
+		Preload("SysBaseMenuBtn").Find(&authorityBtns).Error
+	if err != nil {
+		global.KUBEGALE_LOG.Error("获取按钮权限失败", zap.Error(err)) // 修复 zap.Error 的使用
+		return nil, err
+	}
+	
+	// 添加日志输出
+	global.KUBEGALE_LOG.Info(fmt.Sprintf("获取到的按钮权限数量: %d", len(authorityBtns)))
+	
+	// 构建按钮权限映射
+	btnPermissions := make(map[string]map[string]bool)
+	for _, btn := range authorityBtns {
+		menuID := fmt.Sprintf("%d", btn.SysMenuID)
+		if _, ok := btnPermissions[menuID]; !ok {
+			btnPermissions[menuID] = make(map[string]bool)
+		}
+		btnPermissions[menuID][btn.SysBaseMenuBtn.Name] = true
+	}
+	
+	// 添加日志输出
+	global.KUBEGALE_LOG.Info(fmt.Sprintf("按钮权限映射: %v", btnPermissions))
+	
+	// 返回用户信息和按钮权限
+	return map[string]interface{}{
+		"user": user,
+		"btnPermissions": btnPermissions,
+	}, nil
 }
 
 // ChangePassword   修改用户密码
@@ -207,6 +251,45 @@ func (userService *UserService) GetUserInfo(uuid uuid.UUID) (user system.SysUser
 	return reqUser, err
 }
 
+// 新增方法：获取用户信息及按钮权限
+func (userService *UserService) GetUserInfoWithBtnPermissions(uuid uuid.UUID) (map[string]interface{}, error) {
+	// 获取用户基本信息
+	reqUser, err := userService.GetUserInfo(uuid)
+	if err != nil {
+		return nil, err
+	}
+	
+	// 获取用户角色ID列表
+	var authorityIds []uint
+	for _, authority := range reqUser.Authorities {
+		authorityIds = append(authorityIds, authority.AuthorityId)
+	}
+	
+	// 获取按钮权限
+	var authorityBtns []system.SysAuthorityBtn
+	err = global.KUBEGALE_DB.Where("authority_id IN ?", authorityIds).
+		Preload("SysBaseMenuBtn").Find(&authorityBtns).Error
+	if err != nil {
+		return nil, err
+	}
+	
+	// 构建按钮权限映射 {menuID: {btnName: true}}
+	btnPermissions := make(map[string]map[string]bool)
+	for _, btn := range authorityBtns {
+		menuID := fmt.Sprintf("%d", btn.SysMenuID)
+		if _, ok := btnPermissions[menuID]; !ok {
+			btnPermissions[menuID] = make(map[string]bool)
+		}
+		btnPermissions[menuID][btn.SysBaseMenuBtn.Name] = true
+	}
+	
+	// 返回用户信息和按钮权限
+	return map[string]interface{}{
+		"user": reqUser,
+		"btnPermissions": btnPermissions,
+	}, nil
+}
+
 // FindUserById 通过id获取用户信息
 func (userService *UserService) FindUserById(id int) (user *system.SysUser, err error) {
 	var u system.SysUser
@@ -227,4 +310,107 @@ func (userService *UserService) FindUserByUuid(uuid string) (user *system.SysUse
 func (userService *UserService) ResetPassword(ID uint) (err error) {
 	err = global.KUBEGALE_DB.Model(&system.SysUser{}).Where("id = ?", ID).Update("password", utils.BcryptHash("123456")).Error
 	return err
+}
+
+// LoginWithPermissions 用户登录并返回权限数据
+func (userService *UserService) LoginWithPermissions(u *system.SysUser) (map[string]interface{}, error) {
+	if nil == global.KUBEGALE_DB {
+		return nil, fmt.Errorf("db not init")
+	}
+
+	var user system.SysUser
+	err := global.KUBEGALE_DB.Where("username = ?", u.Username).Preload("Authorities").Preload("Authority").First(&user).Error
+	if err != nil {
+		return nil, err
+	}
+	
+	if ok := utils.BcryptCheck(u.Password, user.Password); !ok {
+		return nil, errors.New("密码错误")
+	}
+	
+	MenuServiceApp.UserAuthorityDefaultRouter(&user)
+	
+	// 获取用户角色ID列表
+	var authorityIds []uint
+	for _, authority := range user.Authorities {
+		authorityIds = append(authorityIds, authority.AuthorityId)
+	}
+	
+	// 获取按钮权限
+	var authorityBtns []system.SysAuthorityBtn
+	err = global.KUBEGALE_DB.Where("authority_id IN ?", authorityIds).
+		Preload("SysBaseMenuBtn").Find(&authorityBtns).Error
+	if err != nil {
+		return nil, err
+	}
+	
+	// 构建按钮权限映射
+	btnPermissions := make(map[string]map[string]bool)
+	for _, btn := range authorityBtns {
+		menuID := fmt.Sprintf("%d", btn.SysMenuID)
+		if _, ok := btnPermissions[menuID]; !ok {
+			btnPermissions[menuID] = make(map[string]bool)
+		}
+		btnPermissions[menuID][btn.SysBaseMenuBtn.Name] = true
+	}
+	
+	// 返回用户信息和按钮权限
+	return map[string]interface{}{
+		"user": &user,
+		"btnPermissions": btnPermissions,
+	}, nil
+}
+
+// GetUserButtonPermissions 获取用户按钮权限
+func (userService *UserService) GetUserButtonPermissions(uuid uuid.UUID) (map[string]map[string]bool, error) {
+	// 获取用户信息
+	user, err := userService.GetUserInfo(uuid)
+	if err != nil {
+		return nil, err
+	}
+	
+	// 获取用户角色ID列表
+	var authorityIds []uint
+	for _, authority := range user.Authorities {
+		authorityIds = append(authorityIds, authority.AuthorityId)
+	}
+	
+	// 获取按钮权限
+	var authorityBtns []system.SysAuthorityBtn
+	err = global.KUBEGALE_DB.Where("authority_id IN ?", authorityIds).
+		Preload("SysBaseMenuBtn").Find(&authorityBtns).Error
+	if err != nil {
+		return nil, err
+	}
+	
+	// 构建按钮权限映射
+	btnPermissions := make(map[string]map[string]bool)
+	for _, btn := range authorityBtns {
+		menuID := fmt.Sprintf("%d", btn.SysMenuID)
+		if _, ok := btnPermissions[menuID]; !ok {
+			btnPermissions[menuID] = make(map[string]bool)
+		}
+		btnPermissions[menuID][btn.SysBaseMenuBtn.Name] = true
+	}
+	
+	return btnPermissions, nil
+}
+
+// GetUserMenuPermissions 获取用户菜单权限
+func (userService *UserService) GetUserMenuPermissions(uuid uuid.UUID) ([]system.SysMenu, error) {
+	// 获取用户信息
+	user, err := userService.GetUserInfo(uuid)
+	if err != nil {
+		return nil, err
+	}
+	
+	// 获取用户菜单
+	var menus []system.SysMenu
+	err = global.KUBEGALE_DB.Where("authority_id = ?", user.AuthorityId).
+		Order("sort").Find(&menus).Error
+	if err != nil {
+		return nil, err
+	}
+	
+	return menus, nil
 }

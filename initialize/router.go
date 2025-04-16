@@ -25,6 +25,8 @@ func Routers() *gin.Engine {
 	// 初始化需要认证的路由组
 	PrivateGroup := Router.Group("/api")
 
+	PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
+
 	{
 		systemRouter.InitBaseRouter(PublicGroup) // 注册基础功能路由 不做鉴权
 		//systemRouter.InitInitRouter(PublicGroup) // 自动初始化相关

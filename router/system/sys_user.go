@@ -23,7 +23,8 @@ func (s *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 		userRouter.PUT("setSelfSetting", baseApi.SetSelfSetting)          // 用户界面配置
 	}
 	{
-		userRouterWithoutRecord.POST("getUserList", baseApi.GetUserList) // 分页获取用户列表
-		userRouterWithoutRecord.GET("getUserInfo", baseApi.GetUserInfo)  // 获取自身信息
+		userRouterWithoutRecord.POST("getUserList", baseApi.GetUserList)                           // 分页获取用户列表
+		userRouterWithoutRecord.GET("getUserInfo", baseApi.GetUserInfo)                            // 获取自身信息
+		userRouterWithoutRecord.POST("getUserButtonPermissions", baseApi.GetUserButtonPermissions) // 获取用户按钮权限
 	}
 }

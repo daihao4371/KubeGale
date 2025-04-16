@@ -1,0 +1,76 @@
+[KUBEGALE]2025-04-16 00:02:35.444	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 00:12:05.479	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 09:27:04.807	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 09:35:13.145	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 09:36:05.158	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:36:10.890	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:36:10.894	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:36:22.212	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:36:22.211	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:36:38.709	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:36:38.711	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:36:39.161	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:36:39.161	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:36:41.498	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:36:41.498	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:36:55.447	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 09:38:15.871	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:38:15.874	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:38:26.522	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:38:26.523	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:38:28.612	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:38:28.612	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:38:30.007	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:38:30.009	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:38:36.725	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:38:36.727	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:38:47.061	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:38:47.062	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:40:11.528	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 09:40:30.709	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:40:32.444	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:40:33.273	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:40:33.880	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:40:35.974	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:40:53.735	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:41:28.253	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:41:28.995	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:41:35.688	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:43:37.261	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:43:42.351	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:43:43.778	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:43:48.584	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:45:38.396	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:286	修改失败!	{"error": "empty slice found"}
+[KUBEGALE]2025-04-16 09:50:30.769	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 09:50:49.695	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:50:49.702	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:50:56.830	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:50:56.831	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:51:18.335	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:51:18.337	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:51:28.091	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:51:28.091	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:51:37.897	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:51:51.509	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:35	创建失败!	{"error": "Error 1146 (42S02): Table 'kubegale.casbin_rule' doesn't exist"}
+[KUBEGALE]2025-04-16 09:51:55.290	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:35	创建失败!	{"error": "Error 1146 (42S02): Table 'kubegale.casbin_rule' doesn't exist"}
+[KUBEGALE]2025-04-16 09:51:58.940	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:35	创建失败!	{"error": "Error 1146 (42S02): Table 'kubegale.casbin_rule' doesn't exist"}
+[KUBEGALE]2025-04-16 09:52:02.494	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:35	创建失败!	{"error": "Error 1146 (42S02): Table 'kubegale.casbin_rule' doesn't exist"}
+[KUBEGALE]2025-04-16 09:54:39.988	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:35	创建失败!	{"error": "Error 1146 (42S02): Table 'kubegale.casbin_rule' doesn't exist"}
+[KUBEGALE]2025-04-16 09:57:44.475	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:57:46.896	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:57:48.371	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 09:59:08.164	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 10:00:24.072	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 10:00:33.935	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:35	创建失败!	{"error": "存在相同角色id"}
+[KUBEGALE]2025-04-16 10:00:42.402	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:35	创建失败!	{"error": "存在相同角色id"}
+[KUBEGALE]2025-04-16 10:00:46.966	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 10:00:48.397	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 10:00:56.877	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 10:01:28.552	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_authority.go:125	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-16 10:03:13.027	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 10:03:33.859	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 10:08:49.620	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 10:09:56.834	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 10:12:22.383	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 22:30:17.232	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:79	net.Listen error: listen tcp :8080: bind: address already in use
+[KUBEGALE]2025-04-16 22:35:23.469	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:79	accept tcp [::]:8080: use of closed network connection

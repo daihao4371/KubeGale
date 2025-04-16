@@ -4,8 +4,9 @@ import (
 	"KubeGale/global"
 	"KubeGale/initialize"
 	"KubeGale/service/system"
+	"context"  // 添加这一行
 	"fmt"
-	"github.com/songzhibin97/gkit/cache/local_cache" // 添加这一行
+	"github.com/songzhibin97/gkit/cache/local_cache"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 )
@@ -36,6 +37,17 @@ func (s Server) Init() {
 	global.KUBEGALE_DB = initialize.Gorm()  // 初始化gorm数据库连接
 	if global.KUBEGALE_DB != nil {
 		initialize.RegisterTables() //初始化表结构
+		
+		// 初始化 Casbin 表
+		casbinInitializer := initialize.NewInitCasbin()
+		ctx := context.WithValue(context.Background(), "db", global.KUBEGALE_DB)
+		_, err := casbinInitializer.MigrateTable(ctx)
+		if err != nil {
+			global.KUBEGALE_LOG.Error("initialize casbin table failed", zap.Error(err))
+		} else {
+			global.KUBEGALE_LOG.Info("initialize casbin table success")
+		}
+		
 		db, _ := global.KUBEGALE_DB.DB()
 		defer db.Close()
 	}

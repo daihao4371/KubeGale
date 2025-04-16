@@ -51,7 +51,7 @@ func (b *BaseApi) Login(c *gin.Context) {
 
 	// 直接进行登录验证
 	u := &system.SysUser{Username: l.Username, Password: l.Password}
-	user, err := userService.Login(u)
+	userInfo, err := userService.LoginWithPermissions(u) // 修改为调用新方法
 	if err != nil {
 		global.KUBEGALE_LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
 		// 验证码次数+1
@@ -59,14 +59,17 @@ func (b *BaseApi) Login(c *gin.Context) {
 		response.FailWithMessage("用户名不存在或者密码错误", c)
 		return
 	}
-	if user.Enable != 1 {
+	
+	user, ok := userInfo["user"].(*system.SysUser)
+	if !ok || user.Enable != 1 {
 		global.KUBEGALE_LOG.Error("登陆失败! 用户被禁止登录!")
 		// 验证码次数+1
 		// global.BlackCache.Increment(key, 1)
 		response.FailWithMessage("用户被禁止登录", c)
 		return
 	}
-	b.TokenNext(c, *user)
+	
+	b.TokenNextWithPermissions(c, *user, userInfo["btnPermissions"]) // 修改为传递权限数据
 	return
 	/*
 		}
@@ -76,8 +79,8 @@ func (b *BaseApi) Login(c *gin.Context) {
 	*/
 }
 
-// TokenNext 登录以后签发jwt
-func (b *BaseApi) TokenNext(c *gin.Context, user system.SysUser) {
+// TokenNextWithPermissions 登录以后签发jwt并返回权限数据
+func (b *BaseApi) TokenNextWithPermissions(c *gin.Context, user system.SysUser, btnPermissions interface{}) {
 	token, claims, err := utils.LoginToken(&user)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("获取token失败!", zap.Error(err))
@@ -87,9 +90,10 @@ func (b *BaseApi) TokenNext(c *gin.Context, user system.SysUser) {
 	if !global.KUBEGALE_CONFIG.System.UseMultipoint {
 		utils.SetToken(c, token, int(claims.RegisteredClaims.ExpiresAt.Unix()-time.Now().Unix()))
 		response.OkWithDetailed(systemRes.LoginResponse{
-			User:      user,
-			Token:     token,
-			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix() * 1000,
+			User:          user,
+			Token:         token,
+			ExpiresAt:     claims.RegisteredClaims.ExpiresAt.Unix() * 1000,
+			BtnPermissions: btnPermissions, // 添加按钮权限数据
 		}, "登录成功", c)
 		return
 	}
@@ -102,9 +106,10 @@ func (b *BaseApi) TokenNext(c *gin.Context, user system.SysUser) {
 		}
 		utils.SetToken(c, token, int(claims.RegisteredClaims.ExpiresAt.Unix()-time.Now().Unix()))
 		response.OkWithDetailed(systemRes.LoginResponse{
-			User:      user,
-			Token:     token,
-			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix() * 1000,
+			User:          user,
+			Token:         token,
+			ExpiresAt:     claims.RegisteredClaims.ExpiresAt.Unix() * 1000,
+			BtnPermissions: btnPermissions, // 添加按钮权限数据
 		}, "登录成功", c)
 	} else if err != nil {
 		global.KUBEGALE_LOG.Error("设置登录状态失败!", zap.Error(err))
@@ -122,11 +127,36 @@ func (b *BaseApi) TokenNext(c *gin.Context, user system.SysUser) {
 		}
 		utils.SetToken(c, token, int(claims.RegisteredClaims.ExpiresAt.Unix()-time.Now().Unix()))
 		response.OkWithDetailed(systemRes.LoginResponse{
-			User:      user,
-			Token:     token,
-			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix() * 1000,
+			User:          user,
+			Token:         token,
+			ExpiresAt:     claims.RegisteredClaims.ExpiresAt.Unix() * 1000,
+			BtnPermissions: btnPermissions, // 添加按钮权限数据
 		}, "登录成功", c)
 	}
+}
+
+// 新增API: GetUserButtonPermissions 获取用户按钮权限
+func (b *BaseApi) GetUserButtonPermissions(c *gin.Context) {
+	uuid := utils.GetUserUuid(c)
+	permissions, err := userService.GetUserButtonPermissions(uuid)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("获取按钮权限失败!", zap.Error(err))
+		response.FailWithMessage("获取按钮权限失败", c)
+		return
+	}
+	response.OkWithDetailed(gin.H{"permissions": permissions}, "获取成功", c)
+}
+
+// 新增API: GetUserMenuPermissions 获取用户菜单权限
+func (b *BaseApi) GetUserMenuPermissions(c *gin.Context) {
+	uuid := utils.GetUserUuid(c)
+	menus, err := userService.GetUserMenuPermissions(uuid)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("获取菜单权限失败!", zap.Error(err))
+		response.FailWithMessage("获取菜单权限失败", c)
+		return
+	}
+	response.OkWithDetailed(gin.H{"menus": menus}, "获取成功", c)
 }
 
 // Register 用户注册账号
