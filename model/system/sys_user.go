@@ -23,7 +23,7 @@ type SysUser struct {
 	Username      string         `json:"userName" gorm:"index;comment:用户登录名"`                                                                // 用户登录名
 	Password      string         `json:"-"  gorm:"comment:用户登录密码"`                                                                           // 用户登录密码
 	NickName      string         `json:"nickName" gorm:"default:系统用户;comment:用户昵称"`                                                          // 用户昵称
-	HeaderImg     string         `json:"headerImg" gorm:"default:https://pic.cnblogs.com/avatar/2399534/20220419203643.png;comment:用户头像"`    // 用户头像
+	HeaderImg     string         `json:"headerImg" gorm:"default:https://qmplusimg.henrongyi.top/DYCLOUD_header.jpg;comment:用户头像"`           // 用户头像
 	AuthorityId   uint           `json:"authorityId" gorm:"default:888;comment:用户角色ID"`                                                      // 用户角色ID
 	Authority     SysAuthority   `json:"authority" gorm:"foreignKey:AuthorityId;references:AuthorityId;comment:用户角色"`                        // 用户角色
 	Authorities   []SysAuthority `json:"authorities" gorm:"many2many:sys_user_authority;"`                                                   // 多用户角色

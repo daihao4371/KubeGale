@@ -74,3 +74,15 @@
 [KUBEGALE]2025-04-16 10:12:22.383	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
 [KUBEGALE]2025-04-16 22:30:17.232	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:79	net.Listen error: listen tcp :8080: bind: address already in use
 [KUBEGALE]2025-04-16 22:35:23.469	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:79	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 23:16:49.659	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:46	initialize casbin table failed	{"error": "Error 1061 (42000): Duplicate key name 'idx_casbin_rule'"}
+[KUBEGALE]2025-04-16 23:16:49.669	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:79	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 23:31:47.819	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:46	initialize casbin table failed	{"error": "Error 1061 (42000): Duplicate key name 'idx_casbin_rule'"}
+[KUBEGALE]2025-04-16 23:31:47.827	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:79	net.Listen error: listen tcp :8080: bind: address already in use
+[KUBEGALE]2025-04-16 23:32:15.874	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:46	initialize casbin table failed	{"error": "Error 1061 (42000): Duplicate key name 'idx_casbin_rule'"}
+[KUBEGALE]2025-04-16 23:33:12.940	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:79	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 23:33:14.315	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:46	initialize casbin table failed	{"error": "Error 1061 (42000): Duplicate key name 'idx_casbin_rule'"}
+[KUBEGALE]2025-04-16 23:34:25.495	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:79	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 23:34:27.064	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:46	initialize casbin table failed	{"error": "Error 1061 (42000): Duplicate key name 'idx_casbin_rule'"}
+[KUBEGALE]2025-04-16 23:35:54.247	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:79	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-16 23:36:14.245	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:46	initialize casbin table failed	{"error": "Error 1061 (42000): Duplicate key name 'idx_casbin_rule'"}
+[KUBEGALE]2025-04-16 23:36:20.334	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:79	accept tcp [::]:8080: use of closed network connection
