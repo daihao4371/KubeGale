@@ -11,13 +11,29 @@ import (
 
 const initOrderAuthority = initOrderCasbin + 1
 
-type initAuthority struct{}
+type InitAuthority struct{}
 
-func (i initAuthority) InitializerName() string {
+func (i *InitAuthority) MigrateTable(ctx context.Context) (context.Context, error) {
+	db, ok := ctx.Value("db").(*gorm.DB)
+	if !ok {
+		return ctx, common.ErrMissingDBContext
+	}
+	return ctx, db.AutoMigrate(&sysModel.SysAuthority{})
+}
+
+func (i *InitAuthority) TableCreated(ctx context.Context) bool {
+	db, ok := ctx.Value("db").(*gorm.DB)
+	if !ok {
+		return false
+	}
+	return db.Migrator().HasTable(&sysModel.SysAuthority{})
+}
+
+func (i InitAuthority) InitializerName() string {
 	return sysModel.SysAuthority{}.TableName()
 }
 
-func (i *initAuthority) InitializeData(ctx context.Context) (context.Context, error) {
+func (i *InitAuthority) InitializeData(ctx context.Context) (context.Context, error) {
 	db, ok := ctx.Value("db").(*gorm.DB)
 	if !ok {
 		return ctx, common.ErrMissingDBContext

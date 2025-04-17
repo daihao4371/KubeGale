@@ -10,13 +10,29 @@ import (
 
 const initOrderApi = common.InitOrderSystem + 1
 
-type initApi struct{}
+type InitApi struct{}
 
-func (i initApi) InitializerName() string {
+func (i InitApi) InitializerName() string {
 	return sysModel.SysApi{}.TableName()
 }
 
-func (i *initApi) InitializeData(ctx context.Context) (context.Context, error) {
+func (i *InitApi) MigrateTable(ctx context.Context) (context.Context, error) {
+	db, ok := ctx.Value("db").(*gorm.DB)
+	if !ok {
+		return ctx, common.ErrMissingDBContext
+	}
+	return ctx, db.AutoMigrate(&sysModel.SysApi{})
+}
+
+func (i *InitApi) TableCreated(ctx context.Context) bool {
+	db, ok := ctx.Value("db").(*gorm.DB)
+	if !ok {
+		return false
+	}
+	return db.Migrator().HasTable(&sysModel.SysApi{})
+}
+
+func (i *InitApi) InitializeData(ctx context.Context) (context.Context, error) {
 	db, ok := ctx.Value("db").(*gorm.DB)
 	if !ok {
 		return ctx, common.ErrMissingDBContext
@@ -73,9 +89,6 @@ func (i *initApi) InitializeData(ctx context.Context) (context.Context, error) {
 		{ApiGroup: "操作记录", Method: "GET", Path: "/sysOperationRecord/getSysOperationRecordList", Description: "获取操作记录列表"},
 		{ApiGroup: "操作记录", Method: "DELETE", Path: "/sysOperationRecord/deleteSysOperationRecord", Description: "删除操作记录"},
 		{ApiGroup: "操作记录", Method: "DELETE", Path: "/sysOperationRecord/deleteSysOperationRecordByIds", Description: "批量删除操作历史"},
-
-		{ApiGroup: "email", Method: "POST", Path: "/email/emailTest", Description: "发送测试邮件"},
-		{ApiGroup: "email", Method: "POST", Path: "/email/sendEmail", Description: "发送邮件"},
 
 		{ApiGroup: "按钮权限", Method: "POST", Path: "/authorityBtn/setAuthorityBtn", Description: "设置按钮权限"},
 		{ApiGroup: "按钮权限", Method: "POST", Path: "/authorityBtn/getAuthorityBtn", Description: "获取已有按钮权限"},
