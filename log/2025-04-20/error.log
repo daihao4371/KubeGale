@@ -30,3 +30,7 @@
 [KUBEGALE]2025-04-20 22:16:12.549	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
 [KUBEGALE]2025-04-20 22:52:26.124	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
 [KUBEGALE]2025-04-20 22:54:18.673	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-20 23:05:10.423	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-20 23:11:52.841	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-20 23:14:41.195	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-20 23:15:45.082	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	accept tcp [::]:8080: use of closed network connection
