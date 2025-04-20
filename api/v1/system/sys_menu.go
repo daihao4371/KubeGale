@@ -8,13 +8,15 @@ import (
 	systemReq "KubeGale/model/system/request"
 	systemRes "KubeGale/model/system/response"
 	"KubeGale/utils"
+
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
 type AuthorityMenuApi struct{}
 
-// AuthorityMenu 获取用户动态路由
+// GetMenu
+// @Summary   获取用户动态路由
 func (a *AuthorityMenuApi) GetMenu(c *gin.Context) {
 	menus, err := menuService.GetMenuTree(utils.GetUserAuthorityId(c))
 	if err != nil {
@@ -28,7 +30,8 @@ func (a *AuthorityMenuApi) GetMenu(c *gin.Context) {
 	response.OkWithDetailed(systemRes.SysMenusResponse{Menus: menus}, "获取成功", c)
 }
 
-// GetBaseMenuTree 获取用户动态路由
+// GetBaseMenuTree
+// @Summary   获取用户动态路由
 func (a *AuthorityMenuApi) GetBaseMenuTree(c *gin.Context) {
 	authority := utils.GetUserAuthorityId(c)
 	menus, err := menuService.GetBaseMenuTree(authority)
@@ -40,7 +43,8 @@ func (a *AuthorityMenuApi) GetBaseMenuTree(c *gin.Context) {
 	response.OkWithDetailed(systemRes.SysBaseMenusResponse{Menus: menus}, "获取成功", c)
 }
 
-// AddMenuAuthority 增加menu和角色关联关系
+// AddMenuAuthority
+// @Summary   增加menu和角色关联关系
 func (a *AuthorityMenuApi) AddMenuAuthority(c *gin.Context) {
 	var authorityMenu systemReq.AddMenuAuthorityInfo
 	err := c.ShouldBindJSON(&authorityMenu)
@@ -61,7 +65,8 @@ func (a *AuthorityMenuApi) AddMenuAuthority(c *gin.Context) {
 	}
 }
 
-// GetMenuAuthority 获取指定角色menu
+// GetMenuAuthority
+// @Summary   获取指定角色menu
 func (a *AuthorityMenuApi) GetMenuAuthority(c *gin.Context) {
 	var param request.GetAuthorityId
 	err := c.ShouldBindJSON(&param)
@@ -83,7 +88,8 @@ func (a *AuthorityMenuApi) GetMenuAuthority(c *gin.Context) {
 	response.OkWithDetailed(gin.H{"menus": menus}, "获取成功", c)
 }
 
-// AddBaseMenu 新增菜单
+// AddBaseMenu
+// @Summary   新增菜单
 func (a *AuthorityMenuApi) AddBaseMenu(c *gin.Context) {
 	var menu system.SysBaseMenu
 	err := c.ShouldBindJSON(&menu)
@@ -110,7 +116,8 @@ func (a *AuthorityMenuApi) AddBaseMenu(c *gin.Context) {
 	response.OkWithMessage("添加成功", c)
 }
 
-// DeleteBaseMenu 删除菜单
+// DeleteBaseMenu
+// @Summary   删除菜单
 func (a *AuthorityMenuApi) DeleteBaseMenu(c *gin.Context) {
 	var menu request.GetById
 	err := c.ShouldBindJSON(&menu)
@@ -132,7 +139,8 @@ func (a *AuthorityMenuApi) DeleteBaseMenu(c *gin.Context) {
 	response.OkWithMessage("删除成功", c)
 }
 
-// UpdateBaseMenu  更新菜单
+// UpdateBaseMenu
+// @Summary   更新菜单
 func (a *AuthorityMenuApi) UpdateBaseMenu(c *gin.Context) {
 	var menu system.SysBaseMenu
 	err := c.ShouldBindJSON(&menu)
@@ -159,7 +167,8 @@ func (a *AuthorityMenuApi) UpdateBaseMenu(c *gin.Context) {
 	response.OkWithMessage("更新成功", c)
 }
 
-// GetBaseMenuById 根据id获取菜单
+// GetBaseMenuById
+// @Summary   根据id获取菜单
 func (a *AuthorityMenuApi) GetBaseMenuById(c *gin.Context) {
 	var idInfo request.GetById
 	err := c.ShouldBindJSON(&idInfo)
@@ -181,7 +190,8 @@ func (a *AuthorityMenuApi) GetBaseMenuById(c *gin.Context) {
 	response.OkWithDetailed(systemRes.SysBaseMenuResponse{Menu: menu}, "获取成功", c)
 }
 
-// GetMenuList 分页获取基础menu列表
+// GetMenuList
+// @Summary   分页获取基础menu列表
 func (a *AuthorityMenuApi) GetMenuList(c *gin.Context) {
 	authorityID := utils.GetUserAuthorityId(c)
 	menuList, err := menuService.GetInfoList(authorityID)

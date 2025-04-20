@@ -194,3 +194,13 @@
 [KUBEGALE]2025-04-20 20:47:58.429	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
 [KUBEGALE]2025-04-20 20:47:58.430	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:54	initialize local cache
 [KUBEGALE]2025-04-20 20:47:58.431	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:65	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-04-20 20:57:45.364	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:46	register table success
+[KUBEGALE]2025-04-20 20:57:45.366	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-04-20 20:57:45.366	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-04-20 20:57:45.366	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:54	initialize local cache
+[KUBEGALE]2025-04-20 20:57:45.367	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:65	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-04-20 22:38:54.590	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:46	register table success
+[KUBEGALE]2025-04-20 22:38:54.596	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-04-20 22:38:54.597	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-04-20 22:38:54.597	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:54	initialize local cache
+[KUBEGALE]2025-04-20 22:38:54.598	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:65	server run success on 	{"address": ":8080"}

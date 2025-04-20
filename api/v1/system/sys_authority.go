@@ -6,13 +6,16 @@ import (
 	"KubeGale/model/system"
 	systemRes "KubeGale/model/system/response"
 	"KubeGale/utils"
+
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
 type AuthorityApi struct{}
 
-// CreateAuthority 创建角色
+// CreateAuthority
+// @Tags      Authority
+// @Summary   创建角色
 func (a *AuthorityApi) CreateAuthority(c *gin.Context) {
 	var authority, authBack system.SysAuthority
 	var err error
@@ -45,7 +48,9 @@ func (a *AuthorityApi) CreateAuthority(c *gin.Context) {
 	response.OkWithDetailed(systemRes.SysAuthorityResponse{Authority: authBack}, "创建成功", c)
 }
 
-// CopyAuthority 拷贝角色
+// CopyAuthority
+// @Tags      Authority
+// @Summary   拷贝角色
 func (a *AuthorityApi) CopyAuthority(c *gin.Context) {
 	var copyInfo systemRes.SysAuthorityCopyResponse
 	err := c.ShouldBindJSON(&copyInfo)
@@ -73,7 +78,8 @@ func (a *AuthorityApi) CopyAuthority(c *gin.Context) {
 	response.OkWithDetailed(systemRes.SysAuthorityResponse{Authority: authBack}, "拷贝成功", c)
 }
 
-// DeleteAuthority 删除角色
+// DeleteAuthority
+// @Summary   删除角色
 func (a *AuthorityApi) DeleteAuthority(c *gin.Context) {
 	var authority system.SysAuthority
 	var err error
@@ -95,7 +101,8 @@ func (a *AuthorityApi) DeleteAuthority(c *gin.Context) {
 	response.OkWithMessage("删除成功", c)
 }
 
-// UpdateAuthority 更新角色信息
+// UpdateAuthority
+// @Summary   更新角色信息
 func (a *AuthorityApi) UpdateAuthority(c *gin.Context) {
 	var auth system.SysAuthority
 	err := c.ShouldBindJSON(&auth)
@@ -117,7 +124,8 @@ func (a *AuthorityApi) UpdateAuthority(c *gin.Context) {
 	response.OkWithDetailed(systemRes.SysAuthorityResponse{Authority: authority}, "更新成功", c)
 }
 
-// GetAuthorityList 分页获取角色列表
+// GetAuthorityList
+// @Summary   分页获取角色列表
 func (a *AuthorityApi) GetAuthorityList(c *gin.Context) {
 	authorityID := utils.GetUserAuthorityId(c)
 	list, err := authorityService.GetAuthorityInfoList(authorityID)
@@ -129,7 +137,8 @@ func (a *AuthorityApi) GetAuthorityList(c *gin.Context) {
 	response.OkWithDetailed(list, "获取成功", c)
 }
 
-// SetDataAuthority 设置角色资源权限
+// SetDataAuthority
+// @Summary   设置角色资源权限
 func (a *AuthorityApi) SetDataAuthority(c *gin.Context) {
 	var auth system.SysAuthority
 	err := c.ShouldBindJSON(&auth)

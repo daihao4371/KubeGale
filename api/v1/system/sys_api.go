@@ -8,13 +8,15 @@ import (
 	systemReq "KubeGale/model/system/request"
 	systemRes "KubeGale/model/system/response"
 	"KubeGale/utils"
+
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
 type SystemApiApi struct{}
 
-// 创建基础api
+// CreateApi
+// @Summary   创建基础api
 func (s *SystemApiApi) CreateApi(c *gin.Context) {
 	var api system.SysApi
 	err := c.ShouldBindJSON(&api)
@@ -36,7 +38,8 @@ func (s *SystemApiApi) CreateApi(c *gin.Context) {
 	response.OkWithMessage("创建成功", c)
 }
 
-// SyncApi 同步API
+// SyncApi
+// @Summary   同步API
 func (s *SystemApiApi) SyncApi(c *gin.Context) {
 	newApis, deleteApis, ignoreApis, err := apiService.SyncApi()
 	if err != nil {
@@ -51,7 +54,8 @@ func (s *SystemApiApi) SyncApi(c *gin.Context) {
 	}, c)
 }
 
-// GetApiGroups 获取API分组
+// GetApiGroups
+// @Summary   获取API分组
 func (s *SystemApiApi) GetApiGroups(c *gin.Context) {
 	groups, apiGroupMap, err := apiService.GetApiGroups()
 	if err != nil {
@@ -65,7 +69,8 @@ func (s *SystemApiApi) GetApiGroups(c *gin.Context) {
 	}, c)
 }
 
-// IgnoreApi 忽略API
+// IgnoreApi
+// @Summary   忽略API
 func (s *SystemApiApi) IgnoreApi(c *gin.Context) {
 	var ignoreApi system.SysIgnoreApi
 	err := c.ShouldBindJSON(&ignoreApi)
@@ -82,7 +87,8 @@ func (s *SystemApiApi) IgnoreApi(c *gin.Context) {
 	response.Ok(c)
 }
 
-// EnterSyncApi 确认同步API
+// EnterSyncApi
+// @Summary   确认同步API
 func (s *SystemApiApi) EnterSyncApi(c *gin.Context) {
 	var syncApi systemRes.SysSyncApis
 	err := c.ShouldBindJSON(&syncApi)
@@ -99,7 +105,8 @@ func (s *SystemApiApi) EnterSyncApi(c *gin.Context) {
 	response.Ok(c)
 }
 
-// DeleteApi 删除api
+// DeleteApi
+// @Summary   删除api
 func (s *SystemApiApi) DeleteApi(c *gin.Context) {
 	var api system.SysApi
 	err := c.ShouldBindJSON(&api)
@@ -121,7 +128,8 @@ func (s *SystemApiApi) DeleteApi(c *gin.Context) {
 	response.OkWithMessage("删除成功", c)
 }
 
-// GetApiList 分页获取API列表
+// GetApiList
+// @Summary   分页获取API列表
 func (s *SystemApiApi) GetApiList(c *gin.Context) {
 	var pageInfo systemReq.SearchApiParams
 	err := c.ShouldBindJSON(&pageInfo)
@@ -148,7 +156,8 @@ func (s *SystemApiApi) GetApiList(c *gin.Context) {
 	}, "获取成功", c)
 }
 
-// GetApiById 根据id获取api
+// GetApiById
+// @Summary   根据id获取api
 func (s *SystemApiApi) GetApiById(c *gin.Context) {
 	var idInfo request.GetById
 	err := c.ShouldBindJSON(&idInfo)
@@ -170,6 +179,8 @@ func (s *SystemApiApi) GetApiById(c *gin.Context) {
 	response.OkWithDetailed(systemRes.SysAPIResponse{Api: api}, "获取成功", c)
 }
 
+// UpdateApi
+// @Summary   修改基础api
 func (s *SystemApiApi) UpdateApi(c *gin.Context) {
 	var api system.SysApi
 	err := c.ShouldBindJSON(&api)
@@ -191,7 +202,8 @@ func (s *SystemApiApi) UpdateApi(c *gin.Context) {
 	response.OkWithMessage("修改成功", c)
 }
 
-// GetAllApis 获取所有的Api 不分页
+// GetAllApis
+// @Summary   获取所有的Api 不分页
 func (s *SystemApiApi) GetAllApis(c *gin.Context) {
 	authorityID := utils.GetUserAuthorityId(c)
 	apis, err := apiService.GetAllApis(authorityID)
@@ -203,7 +215,8 @@ func (s *SystemApiApi) GetAllApis(c *gin.Context) {
 	response.OkWithDetailed(systemRes.SysAPIListResponse{Apis: apis}, "获取成功", c)
 }
 
-// DeleteApisByIds 删除选中Api
+// DeleteApisByIds
+// @Summary   删除选中Api
 func (s *SystemApiApi) DeleteApisByIds(c *gin.Context) {
 	var ids request.IdsReq
 	err := c.ShouldBindJSON(&ids)
@@ -220,8 +233,9 @@ func (s *SystemApiApi) DeleteApisByIds(c *gin.Context) {
 	response.OkWithMessage("删除成功", c)
 }
 
-// FreshCasbin 刷新casbin缓存
-func (s *SystemApiApi) FreshCasbin (c *gin.Context) {
+// FreshCasbin
+// @Summary   刷新casbin缓存
+func (s *SystemApiApi) FreshCasbin(c *gin.Context) {
 	err := casbinService.FreshCasbin()
 	if err != nil {
 		global.KUBEGALE_LOG.Error("刷新失败!", zap.Error(err))
