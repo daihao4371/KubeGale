@@ -40,10 +40,10 @@ func (i *InitApiIgnore) InitializeData(ctx context.Context) (context.Context, er
 	}
 	entities := []sysModel.SysIgnoreApi{
 		{Method: "GET", Path: "/api/swagger/*any"},
-		{Method: "GET", Path: "/api/api/freshCasbin"},
+		{Method: "GET", Path: "/api/freshCasbin"},
 		{Method: "GET", Path: "/health"},
-		{Method: "POST", Path: "/api/base/login"},
-		{Method: "POST", Path: "/api/base/captcha"},
+		{Method: "POST", Path: "/base/login"},
+		{Method: "POST", Path: "/base/captcha"},
 	}
 	if err := db.Create(&entities).Error; err != nil {
 		return ctx, errors.Wrap(err, sysModel.SysIgnoreApi{}.TableName()+"表数据初始化失败!")

@@ -72,34 +72,34 @@ func (i *initCasbin) InitializeData(ctx context.Context) (context.Context, error
 	// 只保留基本权限，其他权限通过管理界面分配
 	entities := []adapter.CasbinRule{
 		// 超级管理员权限
-		{Ptype: "p", V0: "888", V1: "/api/user/admin_register", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/api/createApi", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/api/getApiList", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/api/getApiById", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/api/deleteApi", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/api/updateApi", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/api/getAllApis", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/api/deleteApisByIds", V2: "DELETE"},
-		{Ptype: "p", V0: "888", V1: "/api/api/syncApi", V2: "GET"},
-		{Ptype: "p", V0: "888", V1: "/api/api/getApiGroups", V2: "GET"},
-		{Ptype: "p", V0: "888", V1: "/api/api/enterSyncApi", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/api/ignoreApi", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/user/admin_register", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/api/createApi", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/api/getApiList", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/api/getApiById", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/api/deleteApi", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/api/updateApi", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/api/getAllApis", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/api/deleteApisByIds", V2: "DELETE"},
+		{Ptype: "p", V0: "888", V1: "/api/syncApi", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/api/getApiGroups", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/api/enterSyncApi", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/api/ignoreApi", V2: "POST"},
 
 		// 以下是所有角色都需要的基本权限
-		{Ptype: "p", V0: "888", V1: "/api/menu/getMenu", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/jwt/jsonInBlacklist", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/menu/getMenu", V2: "POST"},
+		{Ptype: "p", V0: "888", V1: "/jwt/jsonInBlacklist", V2: "POST"},
 		{Ptype: "p", V0: "888", V1: "/api/user/getUserInfo", V2: "GET"},
 
-		{Ptype: "p", V0: "9528", V1: "/api/menu/getMenu", V2: "POST"},
-		{Ptype: "p", V0: "9528", V1: "/api/jwt/jsonInBlacklist", V2: "POST"},
-		{Ptype: "p", V0: "9528", V1: "/api/user/getUserInfo", V2: "GET"},
+		{Ptype: "p", V0: "9528", V1: "/menu/getMenu", V2: "POST"},
+		{Ptype: "p", V0: "9528", V1: "/jwt/jsonInBlacklist", V2: "POST"},
+		{Ptype: "p", V0: "9528", V1: "/user/getUserInfo", V2: "GET"},
 
-		{Ptype: "p", V0: "8881", V1: "/api/menu/getMenu", V2: "POST"},
-		{Ptype: "p", V0: "8881", V1: "/api/jwt/jsonInBlacklist", V2: "POST"},
-		{Ptype: "p", V0: "8881", V1: "/api/user/getUserInfo", V2: "GET"},
+		{Ptype: "p", V0: "8881", V1: "/menu/getMenu", V2: "POST"},
+		{Ptype: "p", V0: "8881", V1: "/jwt/jsonInBlacklist", V2: "POST"},
+		{Ptype: "p", V0: "8881", V1: "/user/getUserInfo", V2: "GET"},
 
 		// 添加刷新Casbin的权限，仅超级管理员可用
-		{Ptype: "p", V0: "888", V1: "/api/api/freshCasbin", V2: "GET"},
+		{Ptype: "p", V0: "888", V1: "/api/freshCasbin", V2: "GET"},
 	}
 
 	if err := db.Create(&entities).Error; err != nil {
