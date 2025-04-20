@@ -1,8 +1,10 @@
+// 自动生成模板SysOperationRecord
 package system
 
 import (
-	"KubeGale/global"
 	"time"
+
+	"KubeGale/global"
 )
 
 // 如果含有time.Time 请自行import time包

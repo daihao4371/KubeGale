@@ -8,9 +8,6 @@ var (
 	LoginVerify            = Rules{"Username": {NotEmpty()}, "Password": {NotEmpty()}}
 	RegisterVerify         = Rules{"Username": {NotEmpty()}, "NickName": {NotEmpty()}, "Password": {NotEmpty()}, "AuthorityId": {NotEmpty()}}
 	PageInfoVerify         = Rules{"Page": {NotEmpty()}, "PageSize": {NotEmpty()}}
-	CustomerVerify         = Rules{"CustomerName": {NotEmpty()}, "CustomerPhoneData": {NotEmpty()}}
-	AutoCodeVerify         = Rules{"Abbreviation": {NotEmpty()}, "StructName": {NotEmpty()}, "PackageName": {NotEmpty()}, "Fields": {NotEmpty()}}
-	AutoPackageVerify      = Rules{"PackageName": {NotEmpty()}}
 	AuthorityVerify        = Rules{"AuthorityId": {NotEmpty()}, "AuthorityName": {NotEmpty()}}
 	AuthorityIdVerify      = Rules{"AuthorityId": {NotEmpty()}}
 	OldAuthorityVerify     = Rules{"OldAuthorityId": {NotEmpty()}}

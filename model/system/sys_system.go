@@ -1,6 +1,8 @@
 package system
 
-import "KubeGale/config"
+import (
+	"KubeGale/config"
+)
 
 // 配置文件结构体
 type System struct {

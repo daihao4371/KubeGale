@@ -1,6 +1,8 @@
 package system
 
-import "time"
+import (
+	"time"
+)
 
 type SysAuthority struct {
 	CreatedAt       time.Time       // 创建时间
