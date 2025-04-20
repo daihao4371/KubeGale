@@ -1,23 +1,25 @@
 package system
 
 import (
+	"errors"
+	"fmt"
+	"gorm.io/datatypes"
+	"time"
+
 	"KubeGale/global"
 	"KubeGale/model/common/request"
 	"KubeGale/model/system"
 	"KubeGale/utils"
-	"errors"
-	"fmt"
 	"github.com/gofrs/uuid/v5"
-	"gorm.io/datatypes"
 	"gorm.io/gorm"
-	"time"
 )
 
+// @function: Register
+// @description: 用户注册
 type UserService struct{}
 
 var UserServiceApp = new(UserService)
 
-// Register 用户注册
 func (userService *UserService) Register(u system.SysUser) (userInter system.SysUser, err error) {
 	var user system.SysUser
 	if !errors.Is(global.KUBEGALE_DB.Where("username = ?", u.Username).First(&user).Error, gorm.ErrRecordNotFound) { // 判断用户名是否注册
@@ -30,7 +32,9 @@ func (userService *UserService) Register(u system.SysUser) (userInter system.Sys
 	return u, err
 }
 
-// Login 用户登录
+//@function: Login
+//@description: 用户登录
+
 func (userService *UserService) Login(u *system.SysUser) (userInter *system.SysUser, err error) {
 	if nil == global.KUBEGALE_DB {
 		return nil, fmt.Errorf("db not init")
@@ -47,7 +51,9 @@ func (userService *UserService) Login(u *system.SysUser) (userInter *system.SysU
 	return &user, err
 }
 
-// ChangePassword   修改用户密码
+//@function: ChangePassword
+//@description: 修改用户密码
+
 func (userService *UserService) ChangePassword(u *system.SysUser, newPassword string) (userInter *system.SysUser, err error) {
 	var user system.SysUser
 	if err = global.KUBEGALE_DB.Where("id = ?", u.ID).First(&user).Error; err != nil {
@@ -62,7 +68,9 @@ func (userService *UserService) ChangePassword(u *system.SysUser, newPassword st
 
 }
 
-// GetUserInfoList 分页获取数据
+//@function: GetUserInfoList
+//@description: 分页获取数据
+
 func (userService *UserService) GetUserInfoList(info request.PageInfo) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
@@ -76,7 +84,9 @@ func (userService *UserService) GetUserInfoList(info request.PageInfo) (list int
 	return userList, total, err
 }
 
-// SetUserAuthority 设置一个用户的权限
+//@function: SetUserAuthority
+//@description: 设置一个用户的权限
+
 func (userService *UserService) SetUserAuthority(id uint, authorityId uint) (err error) {
 
 	assignErr := global.KUBEGALE_DB.Where("sys_user_id = ? AND sys_authority_authority_id = ?", id, authorityId).First(&system.SysUserAuthority{}).Error
@@ -120,7 +130,9 @@ func (userService *UserService) SetUserAuthority(id uint, authorityId uint) (err
 	return err
 }
 
-// SetUserAuthorities 设置一个用户的权限
+//@function: SetUserAuthorities
+//@description: 设置一个用户的权限
+
 func (userService *UserService) SetUserAuthorities(adminAuthorityID, id uint, authorityIds []uint) (err error) {
 	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
 		var user system.SysUser
@@ -156,7 +168,9 @@ func (userService *UserService) SetUserAuthorities(adminAuthorityID, id uint, au
 	})
 }
 
-// DeleteUser 删除用户
+//@function: DeleteUser
+//@description: 删除用户
+
 func (userService *UserService) DeleteUser(id int) (err error) {
 	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
 		if err := tx.Where("id = ?", id).Delete(&system.SysUser{}).Error; err != nil {
@@ -169,7 +183,10 @@ func (userService *UserService) DeleteUser(id int) (err error) {
 	})
 }
 
-// SetUserInfo 设置用户信息
+//@function: SetUserInfo
+//@description: 设置用户信息
+//@param: reqUser model.SysUser
+
 func (userService *UserService) SetUserInfo(req system.SysUser) error {
 	return global.KUBEGALE_DB.Model(&system.SysUser{}).
 		Select("updated_at", "nick_name", "header_img", "phone", "email", "enable").
@@ -184,19 +201,25 @@ func (userService *UserService) SetUserInfo(req system.SysUser) error {
 		}).Error
 }
 
-// SetSelfInfo 设置用户信息
+//@function: SetSelfInfo
+//@description: 设置用户信息
+
 func (userService *UserService) SetSelfInfo(req system.SysUser) error {
 	return global.KUBEGALE_DB.Model(&system.SysUser{}).
 		Where("id=?", req.ID).
 		Updates(req).Error
 }
 
-// 设置用户配置
+//@function: SetSelfSetting
+//@description: 设置用户配置
+
 func (userService *UserService) SetSelfSetting(req *datatypes.JSON, uid uint) error {
 	return global.KUBEGALE_DB.Model(&system.SysUser{}).Where("id = ?", uid).Update("origin_setting", req).Error
 }
 
-// GetUserInfo 获取用户信息
+//@function: GetUserInfo
+//@description: 获取用户信息
+
 func (userService *UserService) GetUserInfo(uuid uuid.UUID) (user system.SysUser, err error) {
 	var reqUser system.SysUser
 	err = global.KUBEGALE_DB.Preload("Authorities").Preload("Authority").First(&reqUser, "uuid = ?", uuid).Error
@@ -207,14 +230,18 @@ func (userService *UserService) GetUserInfo(uuid uuid.UUID) (user system.SysUser
 	return reqUser, err
 }
 
-// FindUserById 通过id获取用户信息
+//@function: FindUserById
+//@description: 通过id获取用户信息
+
 func (userService *UserService) FindUserById(id int) (user *system.SysUser, err error) {
 	var u system.SysUser
 	err = global.KUBEGALE_DB.Where("id = ?", id).First(&u).Error
 	return &u, err
 }
 
-// FindUserByUuid 通过uuid获取用户信息
+//@function: FindUserByUuid
+//@description: 通过uuid获取用户信息
+
 func (userService *UserService) FindUserByUuid(uuid string) (user *system.SysUser, err error) {
 	var u system.SysUser
 	if err = global.KUBEGALE_DB.Where("uuid = ?", uuid).First(&u).Error; err != nil {
@@ -223,7 +250,8 @@ func (userService *UserService) FindUserByUuid(uuid string) (user *system.SysUse
 	return &u, nil
 }
 
-// ResetPassword 修改用户密码
+// @function: ResetPassword
+// @description: 修改用户密码
 func (userService *UserService) ResetPassword(ID uint) (err error) {
 	err = global.KUBEGALE_DB.Model(&system.SysUser{}).Where("id = ?", ID).Update("password", utils.BcryptHash("123456")).Error
 	return err

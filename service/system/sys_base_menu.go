@@ -1,17 +1,19 @@
 package system
 
 import (
+	"errors"
+
 	"KubeGale/global"
 	"KubeGale/model/system"
-	"errors"
 	"gorm.io/gorm"
 )
 
 type BaseMenuService struct{}
 
+// @function: DeleteBaseMenu
+// @description: 删除基础路由
 var BaseMenuServiceApp = new(BaseMenuService)
 
-// DeleteBaseMenu  删除基础路由
 func (baseMenuService *BaseMenuService) DeleteBaseMenu(id int) (err error) {
 	err = global.KUBEGALE_DB.First(&system.SysBaseMenu{}, "parent_id = ?", id).Error
 	if err == nil {
@@ -56,7 +58,8 @@ func (baseMenuService *BaseMenuService) DeleteBaseMenu(id int) (err error) {
 
 }
 
-// UpdateBaseMenu 更新路由
+// @function: UpdateBaseMenu
+// @description: 更新路由
 func (baseMenuService *BaseMenuService) UpdateBaseMenu(menu system.SysBaseMenu) (err error) {
 	var oldMenu system.SysBaseMenu
 	upDateMap := make(map[string]interface{})
@@ -123,7 +126,8 @@ func (baseMenuService *BaseMenuService) UpdateBaseMenu(menu system.SysBaseMenu) 
 	return err
 }
 
-// GetBaseMenuById 返回当前选中menu
+// @function: GetBaseMenuById
+// @description: 返回当前选中menu
 func (baseMenuService *BaseMenuService) GetBaseMenuById(id int) (menu system.SysBaseMenu, err error) {
 	err = global.KUBEGALE_DB.Preload("MenuBtn").Preload("Parameters").Where("id = ?", id).First(&menu).Error
 	return

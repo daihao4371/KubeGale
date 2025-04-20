@@ -1,29 +1,27 @@
 package system
 
 import (
-	"KubeGale/global"
-	"KubeGale/model/system/request"
 	"errors"
 	"strconv"
 	"sync"
 
+	"gorm.io/gorm"
+
+	"KubeGale/global"
+	"KubeGale/model/system/request"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/model"
 	gormadapter "github.com/casbin/gorm-adapter/v3"
+	_ "github.com/go-sql-driver/mysql"
 	"go.uber.org/zap"
-	"gorm.io/gorm"
 )
 
 type CasbinService struct{}
 
 var CasbinServiceApp = new(CasbinService)
 
-var (
-	syncedCachedEnforcer *casbin.SyncedCachedEnforcer
-	once                 sync.Once
-)
-
-// 更新casbin权限
+// @function: UpdateCasbin
+// @description: 更新casbin权限
 func (casbinService *CasbinService) UpdateCasbin(adminAuthorityID, AuthorityID uint, casbinInfos []request.CasbinInfo) error {
 
 	err := AuthorityServiceApp.CheckAuthorityIDAuth(adminAuthorityID, AuthorityID)
@@ -74,7 +72,8 @@ func (casbinService *CasbinService) UpdateCasbin(adminAuthorityID, AuthorityID u
 	return nil
 }
 
-// UpdateCasbinApi API更新随动
+// @function: UpdateCasbinApi
+// @description: API更新随动
 func (casbinService *CasbinService) UpdateCasbinApi(oldPath string, newPath string, oldMethod string, newMethod string) error {
 	err := global.KUBEGALE_DB.Model(&gormadapter.CasbinRule{}).Where("v1 = ? AND v2 = ?", oldPath, oldMethod).Updates(map[string]interface{}{
 		"v1": newPath,
@@ -88,7 +87,8 @@ func (casbinService *CasbinService) UpdateCasbinApi(oldPath string, newPath stri
 	return err
 }
 
-// GetPolicyPathByAuthorityId 获取权限列表
+// @function: GetPolicyPathByAuthorityId
+// @description: 获取权限列表
 func (casbinService *CasbinService) GetPolicyPathByAuthorityId(AuthorityID uint) (pathMaps []request.CasbinInfo) {
 	e := casbinService.Casbin()
 	authorityId := strconv.Itoa(int(AuthorityID))
@@ -102,19 +102,22 @@ func (casbinService *CasbinService) GetPolicyPathByAuthorityId(AuthorityID uint)
 	return pathMaps
 }
 
-// ClearCasbin 清除匹配的权限
+// @function: ClearCasbin
+// @description: 清除匹配的权限
 func (casbinService *CasbinService) ClearCasbin(v int, p ...string) bool {
 	e := casbinService.Casbin()
 	success, _ := e.RemoveFilteredPolicy(v, p...)
 	return success
 }
 
-// RemoveFilteredPolicy 使用数据库方法清理筛选的politicy 此方法需要调用FreshCasbin方法才可以在系统中即刻生效
+// @function: RemoveFilteredPolicy
+// @description: 使用数据库方法清理筛选的politicy 此方法需要调用FreshCasbin方法才可以在系统中即刻生效
 func (casbinService *CasbinService) RemoveFilteredPolicy(db *gorm.DB, authorityId string) error {
 	return db.Delete(&gormadapter.CasbinRule{}, "v0 = ?", authorityId).Error
 }
 
-// SyncPolicy  同步目前数据库的policy 此方法需要调用FreshCasbin方法才可以在系统中即刻生效
+// @function: SyncPolicy
+// @description: 同步目前数据库的policy 此方法需要调用FreshCasbin方法才可以在系统中即刻生效
 func (casbinService *CasbinService) SyncPolicy(db *gorm.DB, authorityId string, rules [][]string) error {
 	err := casbinService.RemoveFilteredPolicy(db, authorityId)
 	if err != nil {
@@ -123,7 +126,8 @@ func (casbinService *CasbinService) SyncPolicy(db *gorm.DB, authorityId string, 
 	return casbinService.AddPolicies(db, rules)
 }
 
-// AddPolicies 添加匹配的权限
+// @function: AddPolicies
+// @description: 添加匹配的权限
 func (casbinService *CasbinService) AddPolicies(db *gorm.DB, rules [][]string) error {
 	var casbinRules []gormadapter.CasbinRule
 	for i := range rules {
@@ -142,6 +146,13 @@ func (CasbinService *CasbinService) FreshCasbin() (err error) {
 	err = e.LoadPolicy()
 	return err
 }
+
+// @function: Casbin
+// @description: 持久化到数据库  引入自定义规则
+var (
+	syncedCachedEnforcer *casbin.SyncedCachedEnforcer
+	once                 sync.Once
+)
 
 func (casbinService *CasbinService) Casbin() *casbin.SyncedCachedEnforcer {
 	once.Do(func() {

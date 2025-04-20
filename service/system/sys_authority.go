@@ -15,11 +15,12 @@ import (
 
 var ErrRoleExistence = errors.New("存在相同角色id")
 
+// @function: CreateAuthority
+// @description: 创建一个角色
 type AuthorityService struct{}
 
 var AuthorityServiceApp = new(AuthorityService)
 
-// CreateAuthority 创建一个角色
 func (authorityService *AuthorityService) CreateAuthority(auth system.SysAuthority) (authority system.SysAuthority, err error) {
 
 	if err = global.KUBEGALE_DB.Where("authority_id = ?", auth.AuthorityId).First(&system.SysAuthority{}).Error; !errors.Is(err, gorm.ErrRecordNotFound) {
@@ -48,7 +49,8 @@ func (authorityService *AuthorityService) CreateAuthority(auth system.SysAuthori
 	return auth, e
 }
 
-// CopyAuthority 复制一个角色
+// @function: CopyAuthority
+// @description: 复制一个角色
 func (authorityService *AuthorityService) CopyAuthority(adminAuthorityID uint, copyInfo response.SysAuthorityCopyResponse) (authority system.SysAuthority, err error) {
 	var authorityBox system.SysAuthority
 	if !errors.Is(global.KUBEGALE_DB.Where("authority_id = ?", copyInfo.Authority.AuthorityId).First(&authorityBox).Error, gorm.ErrRecordNotFound) {
@@ -95,7 +97,8 @@ func (authorityService *AuthorityService) CopyAuthority(adminAuthorityID uint, c
 	return copyInfo.Authority, err
 }
 
-// UpdateAuthority 更改一个角色
+// @function: UpdateAuthority
+// @description: 更改一个角色
 func (authorityService *AuthorityService) UpdateAuthority(auth system.SysAuthority) (authority system.SysAuthority, err error) {
 	var oldAuthority system.SysAuthority
 	err = global.KUBEGALE_DB.Where("authority_id = ?", auth.AuthorityId).First(&oldAuthority).Error
@@ -107,7 +110,8 @@ func (authorityService *AuthorityService) UpdateAuthority(auth system.SysAuthori
 	return auth, err
 }
 
-// DeleteAuthority 删除角色
+// @function: DeleteAuthority
+// @description: 删除角色
 func (authorityService *AuthorityService) DeleteAuthority(auth *system.SysAuthority) error {
 	if errors.Is(global.KUBEGALE_DB.Debug().Preload("Users").First(&auth).Error, gorm.ErrRecordNotFound) {
 		return errors.New("该角色不存在")
@@ -157,7 +161,8 @@ func (authorityService *AuthorityService) DeleteAuthority(auth *system.SysAuthor
 	})
 }
 
-// GetAuthorityInfoList 分页获取数据
+// @function: GetAuthorityInfoList
+// @description: 分页获取数据
 func (authorityService *AuthorityService) GetAuthorityInfoList(authorityID uint) (list []system.SysAuthority, err error) {
 	var authority system.SysAuthority
 	err = global.KUBEGALE_DB.Where("authority_id = ?", authorityID).First(&authority).Error
@@ -185,7 +190,8 @@ func (authorityService *AuthorityService) GetAuthorityInfoList(authorityID uint)
 	return authorities, err
 }
 
-// GetAuthorityInfoList 分页获取数据
+// @function: GetAuthorityInfoList
+// @description: 分页获取数据
 func (authorityService *AuthorityService) GetStructAuthorityList(authorityID uint) (list []uint, err error) {
 	var auth system.SysAuthority
 	_ = global.KUBEGALE_DB.First(&auth, "authority_id = ?", authorityID).Error
@@ -224,13 +230,15 @@ func (authorityService *AuthorityService) CheckAuthorityIDAuth(authorityID, targ
 	return nil
 }
 
-// GetAuthorityInfo 获取所有角色信息
+// @function: GetAuthorityInfo
+// @description: 获取所有角色信息
 func (authorityService *AuthorityService) GetAuthorityInfo(auth system.SysAuthority) (sa system.SysAuthority, err error) {
 	err = global.KUBEGALE_DB.Preload("DataAuthorityId").Where("authority_id = ?", auth.AuthorityId).First(&sa).Error
 	return sa, err
 }
 
-// SetDataAuthority 设置角色资源权限
+// @function: SetDataAuthority
+// @description: 设置角色资源权限
 func (authorityService *AuthorityService) SetDataAuthority(adminAuthorityID uint, auth system.SysAuthority) error {
 	var checkIDs []uint
 	checkIDs = append(checkIDs, auth.AuthorityId)
@@ -251,7 +259,8 @@ func (authorityService *AuthorityService) SetDataAuthority(adminAuthorityID uint
 	return err
 }
 
-// SetMenuAuthority 菜单与角色绑定
+// @function: SetMenuAuthority
+// @description: 菜单与角色绑定
 func (authorityService *AuthorityService) SetMenuAuthority(auth *system.SysAuthority) error {
 	var s system.SysAuthority
 	global.KUBEGALE_DB.Preload("SysBaseMenus").First(&s, "authority_id = ?", auth.AuthorityId)
@@ -259,7 +268,8 @@ func (authorityService *AuthorityService) SetMenuAuthority(auth *system.SysAutho
 	return err
 }
 
-// findChildrenAuthority 查询子角色
+// @function: findChildrenAuthority
+// @description: 查询子角色
 func (authorityService *AuthorityService) findChildrenAuthority(authority *system.SysAuthority) (err error) {
 	err = global.KUBEGALE_DB.Preload("DataAuthorityId").Where("parent_id = ?", authority.AuthorityId).Find(&authority.Children).Error
 	if len(authority.Children) > 0 {

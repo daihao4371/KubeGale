@@ -5,9 +5,8 @@ import (
 	"KubeGale/model/common/request"
 	"KubeGale/model/system"
 	systemRes "KubeGale/model/system/response"
-	"fmt"
-
 	"errors"
+	"fmt"
 	"gorm.io/gorm"
 	"strings"
 )
@@ -16,7 +15,8 @@ type ApiService struct{}
 
 var ApiServiceApp = new(ApiService)
 
-// CreateApi 新增基础api
+// @function: CreateApi
+// @description: 新增基础api
 func (apiService *ApiService) CreateApi(api system.SysApi) (err error) {
 	if !errors.Is(global.KUBEGALE_DB.Where("path = ? AND method = ?", api.Path, api.Method).First(&system.SysApi{}).Error, gorm.ErrRecordNotFound) {
 		return errors.New("存在相同api")
@@ -70,6 +70,7 @@ func (apiService *ApiService) SyncApi() (newApis, deleteApis, ignoreApis []syste
 			Method:      ignores[i].Method,
 		})
 	}
+
 	var cacheApis []system.SysApi
 	for i := range global.KUBEGALE_ROUTERS {
 		ignoresFlag := false
@@ -95,7 +96,6 @@ func (apiService *ApiService) SyncApi() (newApis, deleteApis, ignoreApis []syste
 				flag = true
 			}
 		}
-		// 在SyncApi方法中修改newApis的创建部分
 		if !flag {
 			newApis = append(newApis, system.SysApi{
 				Path:        cacheApis[i].Path,
@@ -148,7 +148,8 @@ func (apiService *ApiService) EnterSyncApi(syncApis systemRes.SysSyncApis) (err 
 	})
 }
 
-// DeleteApi  删除基础api
+// @function: DeleteApi
+// @description: 删除基础api
 func (apiService *ApiService) DeleteApi(api system.SysApi) (err error) {
 	var entity system.SysApi
 	err = global.KUBEGALE_DB.First(&entity, "id = ?", api.ID).Error // 根据id查询api记录
@@ -163,7 +164,8 @@ func (apiService *ApiService) DeleteApi(api system.SysApi) (err error) {
 	return nil
 }
 
-// 分页获取数据 GetAPIInfoList
+// @function: GetAPIInfoList
+// @description: 分页获取数据,
 func (apiService *ApiService) GetAPIInfoList(api system.SysApi, info request.PageInfo, order string, desc bool) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
@@ -214,7 +216,8 @@ func (apiService *ApiService) GetAPIInfoList(api system.SysApi, info request.Pag
 	return apiList, total, err
 }
 
-// 获取所有的api GetAllApis
+// @function: GetAllApis
+// @description: 获取所有的api
 func (apiService *ApiService) GetAllApis(authorityID uint) (apis []system.SysApi, err error) {
 	parentAuthorityID, err := AuthorityServiceApp.GetParentAuthorityID(authorityID)
 	if err != nil {
@@ -237,14 +240,15 @@ func (apiService *ApiService) GetAllApis(authorityID uint) (apis []system.SysApi
 	return authApis, err
 }
 
-// 根据id获取api GetApiById
+// @function: GetApiById
+// @description: 根据id获取api
 func (apiService *ApiService) GetApiById(id int) (api system.SysApi, err error) {
 	err = global.KUBEGALE_DB.First(&api, "id = ?", id).Error
 	return
 }
 
-// 根据id更新api UpdateApi
-// 根据id更新api UpdateApi
+// @function: UpdateApi
+// @description: 根据id更新api
 func (apiService *ApiService) UpdateApi(api system.SysApi) (err error) {
 	var oldA system.SysApi
 	err = global.KUBEGALE_DB.First(&oldA, "id = ?", api.ID).Error
@@ -259,6 +263,7 @@ func (apiService *ApiService) UpdateApi(api system.SysApi) (err error) {
 				return errors.New("存在相同api路径")
 			}
 		}
+
 	}
 	if err != nil {
 		return err
@@ -269,16 +274,11 @@ func (apiService *ApiService) UpdateApi(api system.SysApi) (err error) {
 		return err
 	}
 
-	// 只更新需要的字段，保留原有的created_at
-	return global.KUBEGALE_DB.Model(&oldA).Updates(map[string]interface{}{
-		"path":        api.Path,
-		"description": api.Description,
-		"api_group":   api.ApiGroup,
-		"method":      api.Method,
-	}).Error
+	return global.KUBEGALE_DB.Save(&api).Error
 }
 
-// DeleteApisByIds 删除选中API
+// @function: DeleteApisByIds
+// @description: 删除选中API
 func (apiService *ApiService) DeleteApisByIds(ids request.IdsReq) (err error) {
 	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
 		var apis []system.SysApi
