@@ -221,7 +221,7 @@ func (s *SystemApiApi) DeleteApisByIds(c *gin.Context) {
 }
 
 // FreshCasbin 刷新casbin缓存
-func (s *SystemApiApi) FreshCasbin(c *gin.Context) {
+func (s *SystemApiApi) FreshCasbin (c *gin.Context) {
 	err := casbinService.FreshCasbin()
 	if err != nil {
 		global.KUBEGALE_LOG.Error("刷新失败!", zap.Error(err))

@@ -28,11 +28,11 @@ func (b *BaseApi) Login(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	/*	err = utils.Verify(l, utils.LoginVerify)
-		if err != nil {
-			response.FailWithMessage(err.Error(), c)
-			return
-		}*/
+	err = utils.Verify(l, utils.LoginVerify)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
 
 	// 暂时注释验证码逻辑
 	/*

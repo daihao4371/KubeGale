@@ -4,13 +4,14 @@ import (
 	"KubeGale/global"
 	"KubeGale/model/system/request"
 	"errors"
+	"strconv"
+	"sync"
+
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/model"
 	gormadapter "github.com/casbin/gorm-adapter/v3"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
-	"strconv"
-	"sync"
 )
 
 type CasbinService struct{}
@@ -142,7 +143,6 @@ func (CasbinService *CasbinService) FreshCasbin() (err error) {
 	return err
 }
 
-// Casbin  持久化到数据库  引入自定义规则
 func (casbinService *CasbinService) Casbin() *casbin.SyncedCachedEnforcer {
 	once.Do(func() {
 		a, err := gormadapter.NewAdapterByDB(global.KUBEGALE_DB)
