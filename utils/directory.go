@@ -11,7 +11,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// PathExists 文件目录是否存在
+// @description: 文件目录是否存在
 func PathExists(path string) (bool, error) {
 	fi, err := os.Stat(path)
 	if err == nil {
@@ -26,7 +26,8 @@ func PathExists(path string) (bool, error) {
 	return false, err
 }
 
-// CreateDir 批量创建文件夹
+// @function: CreateDir
+// @description: 批量创建文件夹
 func CreateDir(dirs ...string) (err error) {
 	for _, v := range dirs {
 		exist, err := PathExists(v)
@@ -44,7 +45,8 @@ func CreateDir(dirs ...string) (err error) {
 	return err
 }
 
-// 文件移动供外部调用
+// @function: FileMove
+// @description: 文件移动供外部调用
 func FileMove(src string, dst string) (err error) {
 	if dst == "" {
 		return nil
@@ -78,7 +80,8 @@ func DeLFile(filePath string) error {
 	return os.RemoveAll(filePath)
 }
 
-// 去除结构体空格
+// @function: TrimSpace
+// @description: 去除结构体空格
 func TrimSpace(target interface{}) {
 	t := reflect.TypeOf(target)
 	if t.Kind() != reflect.Ptr {

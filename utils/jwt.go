@@ -1,12 +1,13 @@
 package utils
 
 import (
-	"KubeGale/global"
-	"KubeGale/model/system/request"
 	"errors"
 	"time"
 
 	jwt "github.com/golang-jwt/jwt/v4"
+
+	"KubeGale/global"
+	"KubeGale/model/system/request"
 )
 
 type JWT struct {
