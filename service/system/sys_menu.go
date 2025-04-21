@@ -13,7 +13,8 @@ type MenuService struct{}
 
 var MenuServiceApp = new(MenuService)
 
-// getMenuTreeMap 获取路由总树map
+// @function: getMenuTreeMap
+// @description: 获取路由总树map
 func (menuService *MenuService) getMenuTreeMap(authorityId uint) (treeMap map[uint][]system.SysMenu, err error) {
 	var allMenus []system.SysMenu
 	var baseMenu []system.SysBaseMenu
@@ -64,7 +65,8 @@ func (menuService *MenuService) getMenuTreeMap(authorityId uint) (treeMap map[ui
 	return treeMap, err
 }
 
-// GetMenuTree 获取动态菜单树
+// @function: GetMenuTree
+// @description: 获取动态菜单树
 func (menuService *MenuService) GetMenuTree(authorityId uint) (menus []system.SysMenu, err error) {
 	menuTree, err := menuService.getMenuTreeMap(authorityId)
 	menus = menuTree[0]
@@ -74,7 +76,8 @@ func (menuService *MenuService) GetMenuTree(authorityId uint) (menus []system.Sy
 	return menus, err
 }
 
-// getChildrenList 获取子菜单
+// @function: getChildrenList
+// @description: 获取子菜单
 func (menuService *MenuService) getChildrenList(menu *system.SysMenu, treeMap map[uint][]system.SysMenu) (err error) {
 	menu.Children = treeMap[menu.MenuId]
 	for i := 0; i < len(menu.Children); i++ {
@@ -83,7 +86,8 @@ func (menuService *MenuService) getChildrenList(menu *system.SysMenu, treeMap ma
 	return err
 }
 
-// GetInfoList 获取路由分页
+// @function: GetInfoList
+// @description: 获取路由分页
 func (menuService *MenuService) GetInfoList(authorityID uint) (list interface{}, err error) {
 	var menuList []system.SysBaseMenu
 	treeMap, err := menuService.getBaseMenuTreeMap(authorityID)
@@ -94,7 +98,8 @@ func (menuService *MenuService) GetInfoList(authorityID uint) (list interface{},
 	return menuList, err
 }
 
-// getBaseChildrenList 获取菜单的子菜单
+// @function: getBaseChildrenList
+// @description: 获取菜单的子菜单
 func (menuService *MenuService) getBaseChildrenList(menu *system.SysBaseMenu, treeMap map[uint][]system.SysBaseMenu) (err error) {
 	menu.Children = treeMap[menu.ID]
 	for i := 0; i < len(menu.Children); i++ {
@@ -103,7 +108,8 @@ func (menuService *MenuService) getBaseChildrenList(menu *system.SysBaseMenu, tr
 	return err
 }
 
-// AddBaseMenu 添加基础路由
+// @function: AddBaseMenu
+// @description: 添加基础路由
 func (menuService *MenuService) AddBaseMenu(menu system.SysBaseMenu) error {
 	if !errors.Is(global.KUBEGALE_DB.Where("name = ?", menu.Name).First(&system.SysBaseMenu{}).Error, gorm.ErrRecordNotFound) {
 		return errors.New("存在重复name，请修改name")
@@ -111,7 +117,8 @@ func (menuService *MenuService) AddBaseMenu(menu system.SysBaseMenu) error {
 	return global.KUBEGALE_DB.Create(&menu).Error
 }
 
-// getBaseMenuTreeMap 获取路由总树map
+// @function: getBaseMenuTreeMap
+// @description: 获取路由总树map
 func (menuService *MenuService) getBaseMenuTreeMap(authorityID uint) (treeMap map[uint][]system.SysBaseMenu, err error) {
 	parentAuthorityID, err := AuthorityServiceApp.GetParentAuthorityID(authorityID)
 	if err != nil {
@@ -143,7 +150,8 @@ func (menuService *MenuService) getBaseMenuTreeMap(authorityID uint) (treeMap ma
 	return treeMap, err
 }
 
-// GetBaseMenuTree 获取基础路由树
+// @function: GetBaseMenuTree
+// @description: 获取基础路由树
 func (menuService *MenuService) GetBaseMenuTree(authorityID uint) (menus []system.SysBaseMenu, err error) {
 	treeMap, err := menuService.getBaseMenuTreeMap(authorityID)
 	menus = treeMap[0]
@@ -153,7 +161,8 @@ func (menuService *MenuService) GetBaseMenuTree(authorityID uint) (menus []syste
 	return menus, err
 }
 
-// AddMenuAuthority 为角色增加menu树
+// @function: AddMenuAuthority
+// @description: 为角色增加menu树
 func (menuService *MenuService) AddMenuAuthority(menus []system.SysBaseMenu, adminAuthorityID, authorityId uint) (err error) {
 	var auth system.SysAuthority
 	auth.AuthorityId = authorityId
@@ -197,7 +206,8 @@ func (menuService *MenuService) AddMenuAuthority(menus []system.SysBaseMenu, adm
 	return err
 }
 
-// GetMenuAuthority 查看当前角色树
+// @function: GetMenuAuthority
+// @description: 查看当前角色树
 func (menuService *MenuService) GetMenuAuthority(info *request.GetAuthorityId) (menus []system.SysMenu, err error) {
 	var baseMenu []system.SysBaseMenu
 	var SysAuthorityMenus []system.SysAuthorityMenu
@@ -225,7 +235,7 @@ func (menuService *MenuService) GetMenuAuthority(info *request.GetAuthorityId) (
 	return menus, err
 }
 
-// 用户角色默认路由检查 UserAuthorityDefaultRouter
+// UserAuthorityDefaultRouter 用户角色默认路由检查
 func (menuService *MenuService) UserAuthorityDefaultRouter(user *system.SysUser) {
 	var menuIds []string
 	err := global.KUBEGALE_DB.Model(&system.SysAuthorityMenu{}).Where("sys_authority_authority_id = ?", user.AuthorityId).Pluck("sys_base_menu_id", &menuIds).Error

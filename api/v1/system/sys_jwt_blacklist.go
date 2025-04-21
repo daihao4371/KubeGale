@@ -11,7 +11,8 @@ import (
 
 type JwtApi struct{}
 
-// JsonInBlacklist  jwt加入黑名单
+// JsonInBlacklist
+// @Summary   jwt加入黑名单
 func (j *JwtApi) JsonInBlacklist(c *gin.Context) {
 	token := utils.GetToken(c)
 	jwt := system.JwtBlacklist{Jwt: token}

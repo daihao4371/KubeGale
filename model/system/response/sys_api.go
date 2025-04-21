@@ -1,6 +1,8 @@
 package response
 
-import "KubeGale/model/system"
+import (
+	"KubeGale/model/system"
+)
 
 type SysAPIResponse struct {
 	Api system.SysApi `json:"api"`

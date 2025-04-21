@@ -30,7 +30,8 @@ func NewServerCommand() *cobra.Command {
 
 func (s Server) Init() {
 
-	global.KUBEGALE_VP = Viper()            // 初始化viper配置
+	global.KUBEGALE_VP = Viper() // 初始化viper配置
+	initialize.OtherInit()
 	global.KUBEGALE_LOG = Zap()             // 初始化zap日志
 	zap.ReplaceGlobals(global.KUBEGALE_LOG) // 替换zap
 	global.KUBEGALE_DB = initialize.Gorm()  // 初始化gorm数据库连接

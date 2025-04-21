@@ -12,7 +12,9 @@ import (
 
 type CasbinApi struct{}
 
-// UpdateCasbin 更新角色api权限
+// UpdateCasbin
+// @Tags      Casbin
+// @Summary   更新角色api权限
 func (cas *CasbinApi) UpdateCasbin(c *gin.Context) {
 	var cmr request.CasbinInReceive
 	err := c.ShouldBindJSON(&cmr)
@@ -35,7 +37,8 @@ func (cas *CasbinApi) UpdateCasbin(c *gin.Context) {
 	response.OkWithMessage("更新成功", c)
 }
 
-// GetPolicyPathByAuthorityId 获取权限列表
+// GetPolicyPathByAuthorityId
+// @Summary   获取权限列表
 func (cas *CasbinApi) GetPolicyPathByAuthorityId(c *gin.Context) {
 	var casbin request.CasbinInReceive
 	err := c.ShouldBindJSON(&casbin)

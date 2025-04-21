@@ -1,6 +1,8 @@
 package response
 
-import "KubeGale/model/system"
+import (
+	"KubeGale/model/system"
+)
 
 type SysUserResponse struct {
 	User system.SysUser `json:"user"`

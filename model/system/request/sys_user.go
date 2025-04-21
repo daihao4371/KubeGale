@@ -1,6 +1,8 @@
 package request
 
-import "KubeGale/model/system"
+import (
+	"KubeGale/model/system"
+)
 
 // Register User register structure
 type Register struct {

@@ -4,14 +4,14 @@ import (
 	"KubeGale/global"
 	"KubeGale/model/common/response"
 	"KubeGale/model/system/request"
-	"go.uber.org/zap"
-
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 type AuthorityBtnApi struct{}
 
-// GetAuthorityBtn 获取权限按钮
+// GetAuthorityBtn
+// @Summary   获取权限按钮
 func (a *AuthorityBtnApi) GetAuthorityBtn(c *gin.Context) {
 	var req request.SysAuthorityBtnReq
 	err := c.ShouldBindJSON(&req)
@@ -28,7 +28,9 @@ func (a *AuthorityBtnApi) GetAuthorityBtn(c *gin.Context) {
 	response.OkWithDetailed(res, "查询成功", c)
 }
 
-// SetAuthorityBtn 设置权限按钮
+// SetAuthorityBtn
+// @Tags      AuthorityBtn
+// @Summary   设置权限按钮
 func (a *AuthorityBtnApi) SetAuthorityBtn(c *gin.Context) {
 	var req request.SysAuthorityBtnReq
 	err := c.ShouldBindJSON(&req)
@@ -45,7 +47,9 @@ func (a *AuthorityBtnApi) SetAuthorityBtn(c *gin.Context) {
 	response.OkWithMessage("分配成功", c)
 }
 
-// CanRemoveAuthorityBtn 设置权限按钮
+// CanRemoveAuthorityBtn
+// @Tags      AuthorityBtn
+// @Summary   设置权限按钮
 func (a *AuthorityBtnApi) CanRemoveAuthorityBtn(c *gin.Context) {
 	id := c.Query("id")
 	err := authorityBtnService.CanRemoveAuthorityBtn(id)

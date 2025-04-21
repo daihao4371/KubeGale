@@ -7,35 +7,41 @@ import (
 	systemReq "KubeGale/model/system/request"
 )
 
+//@function: CreateSysOperationRecord
+//@description: 创建记录
+
 type OperationRecordService struct{}
 
 var OperationRecordServiceApp = new(OperationRecordService)
 
-// 创建记录
 func (operationRecordService *OperationRecordService) CreateSysOperationRecord(sysOperationRecord system.SysOperationRecord) (err error) {
 	err = global.KUBEGALE_DB.Create(&sysOperationRecord).Error
 	return err
 }
 
-// 批量删除记录
+// @function: DeleteSysOperationRecordByIds
+// @description: 批量删除记录
 func (operationRecordService *OperationRecordService) DeleteSysOperationRecordByIds(ids request.IdsReq) (err error) {
 	err = global.KUBEGALE_DB.Delete(&[]system.SysOperationRecord{}, "id in (?)", ids.Ids).Error
 	return err
 }
 
-// 删除操作记录
+// @function: DeleteSysOperationRecord
+// @description: 删除操作记录
 func (operationRecordService *OperationRecordService) DeleteSysOperationRecord(sysOperationRecord system.SysOperationRecord) (err error) {
 	err = global.KUBEGALE_DB.Delete(&sysOperationRecord).Error
 	return err
 }
 
-// 根据id获取单条操作记录
+// @function: GetSysOperationRecord
+// @description: 根据id获取单条操作记录
 func (operationRecordService *OperationRecordService) GetSysOperationRecord(id uint) (sysOperationRecord system.SysOperationRecord, err error) {
 	err = global.KUBEGALE_DB.Where("id = ?", id).First(&sysOperationRecord).Error
 	return
 }
 
-// 分页获取操作记录列表
+// @function: GetSysOperationRecordInfoList
+// @description: 分页获取操作记录列表
 func (operationRecordService *OperationRecordService) GetSysOperationRecordInfoList(info systemReq.SysOperationRecordSearch) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)

@@ -1,6 +1,8 @@
 package system
 
-import "KubeGale/global"
+import (
+	"KubeGale/global"
+)
 
 type JwtBlacklist struct {
 	global.KUBEGALE_MODEL

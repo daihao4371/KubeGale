@@ -1,21 +1,24 @@
 package system
 
 import (
+	"time"
+
 	"KubeGale/global"
 	"KubeGale/model/common/response"
 	systemRes "KubeGale/model/system/response"
 	"github.com/gin-gonic/gin"
 	"github.com/mojocn/base64Captcha"
 	"go.uber.org/zap"
-	"time"
 )
 
 // 当开启多服务器部署时，替换下面的配置，使用redis共享存储验证码
-//var store = captcha.NewDefaultRedisStore()
-
+// var store = captcha.NewDefaultRedisStore()
 var store = base64Captcha.DefaultMemStore
 
-// 生成验证码
+type BaseApi struct{}
+
+// Captcha
+// @Summary   生成验证码
 func (b *BaseApi) Captcha(c *gin.Context) {
 	// 判断验证码是否开启
 	openCaptcha := global.KUBEGALE_CONFIG.Captcha.OpenCaptcha               // 是否开启防爆次数

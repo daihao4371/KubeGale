@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"KubeGale/service"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -12,6 +13,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
+
+var userService = service.ServiceGroupApp.SystemServiceGroup.UserService
 
 // GinRecovery recover掉项目可能出现的panic，并使用zap记录相关日志
 func GinRecovery(stack bool) gin.HandlerFunc {

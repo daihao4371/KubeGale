@@ -1,6 +1,10 @@
 package system
 
 import (
+	"gorm.io/datatypes"
+	"strconv"
+	"time"
+
 	"KubeGale/global"
 	"KubeGale/model/common/request"
 	"KubeGale/model/common/response"
@@ -8,72 +12,62 @@ import (
 	systemReq "KubeGale/model/system/request"
 	systemRes "KubeGale/model/system/response"
 	"KubeGale/utils"
+
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
-	"gorm.io/datatypes"
-	"strconv"
-	"time"
 )
 
-type BaseApi struct{}
-
-// Login 用户登录
+// Login
+// @Summary  用户登录
 func (b *BaseApi) Login(c *gin.Context) {
 	var l systemReq.Login
 	err := c.ShouldBindJSON(&l)
-	//key := c.ClientIP()
+	key := c.ClientIP()
 
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	/*	err = utils.Verify(l, utils.LoginVerify)
-		if err != nil {
-			response.FailWithMessage(err.Error(), c)
-			return
-		}*/
-
-	// 暂时注释验证码逻辑
-	/*
-		// 判断验证码是否开启
-		openCaptcha := global.KUBEGALE_CONFIG.Captcha.OpenCaptcha               // 是否开启防爆次数
-		openCaptchaTimeOut := global.KUBEGALE_CONFIG.Captcha.OpenCaptchaTimeOut // 缓存超时时间
-		v, ok := global.BlackCache.Get(key)
-		if !ok {
-			global.BlackCache.Set(key, 1, time.Second*time.Duration(openCaptchaTimeOut))
-		}
-
-		var oc bool = openCaptcha == 0 || openCaptcha < interfaceToInt(v)
-
-		if !oc || (l.CaptchaId != "" && l.Captcha != "" && store.Verify(l.CaptchaId, l.Captcha, true)) {
-	*/
-
-	// 直接进行登录验证
-	u := &system.SysUser{Username: l.Username, Password: l.Password}
-	user, err := userService.Login(u)
+	err = utils.Verify(l, utils.LoginVerify)
 	if err != nil {
-		global.KUBEGALE_LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
-		// 验证码次数+1
-		// global.BlackCache.Increment(key, 1)
-		response.FailWithMessage("用户名不存在或者密码错误", c)
+		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	if user.Enable != 1 {
-		global.KUBEGALE_LOG.Error("登陆失败! 用户被禁止登录!")
-		// 验证码次数+1
-		// global.BlackCache.Increment(key, 1)
-		response.FailWithMessage("用户被禁止登录", c)
-		return
+
+	// 判断验证码是否开启
+	openCaptcha := global.KUBEGALE_CONFIG.Captcha.OpenCaptcha               // 是否开启防爆次数
+	openCaptchaTimeOut := global.KUBEGALE_CONFIG.Captcha.OpenCaptchaTimeOut // 缓存超时时间
+	v, ok := global.BlackCache.Get(key)
+	if !ok {
+		global.BlackCache.Set(key, 1, time.Second*time.Duration(openCaptchaTimeOut))
 	}
-	b.TokenNext(c, *user)
-	return
-	/*
+
+	var oc bool = openCaptcha == 0 || openCaptcha < interfaceToInt(v)
+
+	if !oc || (l.CaptchaId != "" && l.Captcha != "" && store.Verify(l.CaptchaId, l.Captcha, true)) {
+		u := &system.SysUser{Username: l.Username, Password: l.Password}
+		user, err := userService.Login(u)
+		if err != nil {
+			global.KUBEGALE_LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
+			// 验证码次数+1
+			global.BlackCache.Increment(key, 1)
+			response.FailWithMessage("用户名不存在或者密码错误", c)
+			return
 		}
-		// 验证码次数+1
-		global.BlackCache.Increment(key, 1)
-		response.FailWithMessage("验证码错误", c)
-	*/
+		if user.Enable != 1 {
+			global.KUBEGALE_LOG.Error("登陆失败! 用户被禁止登录!")
+			// 验证码次数+1
+			global.BlackCache.Increment(key, 1)
+			response.FailWithMessage("用户被禁止登录", c)
+			return
+		}
+		b.TokenNext(c, *user)
+		return
+	}
+	// 验证码次数+1
+	global.BlackCache.Increment(key, 1)
+	response.FailWithMessage("验证码错误", c)
 }
 
 // TokenNext 登录以后签发jwt
@@ -129,7 +123,8 @@ func (b *BaseApi) TokenNext(c *gin.Context, user system.SysUser) {
 	}
 }
 
-// Register 用户注册账号
+// Register
+// @Summary  用户注册账号
 func (b *BaseApi) Register(c *gin.Context) {
 	var r systemReq.Register
 	err := c.ShouldBindJSON(&r)
@@ -158,7 +153,9 @@ func (b *BaseApi) Register(c *gin.Context) {
 	response.OkWithDetailed(systemRes.SysUserResponse{User: userReturn}, "注册成功", c)
 }
 
-// 用户修改密码 ChangePassword
+// ChangePassword
+// @Tags      SysUser
+// @Summary   用户修改密码
 func (b *BaseApi) ChangePassword(c *gin.Context) {
 	var req systemReq.ChangePasswordReq
 	err := c.ShouldBindJSON(&req)
@@ -182,7 +179,9 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 	response.OkWithMessage("修改成功", c)
 }
 
-// 分页获取用户列表
+// GetUserList
+// @Tags      SysUser
+// @Summary   分页获取用户列表
 func (b *BaseApi) GetUserList(c *gin.Context) {
 	var pageInfo request.PageInfo
 	err := c.ShouldBindJSON(&pageInfo)
@@ -209,7 +208,9 @@ func (b *BaseApi) GetUserList(c *gin.Context) {
 	}, "获取成功", c)
 }
 
-// 更改用户权限
+// SetUserAuthority
+// @Tags      SysUser
+// @Summary   更改用户权限
 func (b *BaseApi) SetUserAuthority(c *gin.Context) {
 	var sua systemReq.SetUserAuth
 	err := c.ShouldBindJSON(&sua)
@@ -242,7 +243,9 @@ func (b *BaseApi) SetUserAuthority(c *gin.Context) {
 	}
 }
 
-// SetUserAuthorities 设置用户权限
+// SetUserAuthorities
+// @Tags      SysUser
+// @Summary   设置用户权限
 func (b *BaseApi) SetUserAuthorities(c *gin.Context) {
 	var sua systemReq.SetUserAuthorities
 	err := c.ShouldBindJSON(&sua)
@@ -260,7 +263,9 @@ func (b *BaseApi) SetUserAuthorities(c *gin.Context) {
 	response.OkWithMessage("修改成功", c)
 }
 
-// 删除用户  DeleteUser
+// DeleteUser
+// @Tags      SysUser
+// @Summary   删除用户
 func (b *BaseApi) DeleteUser(c *gin.Context) {
 	var reqId request.GetById
 	err := c.ShouldBindJSON(&reqId)
@@ -287,7 +292,9 @@ func (b *BaseApi) DeleteUser(c *gin.Context) {
 	response.OkWithMessage("删除成功", c)
 }
 
-// SetUserInfo 设置用户信息
+// SetUserInfo
+// @Tags      SysUser
+// @Summary   设置用户信息
 func (b *BaseApi) SetUserInfo(c *gin.Context) {
 	var user systemReq.ChangeUserInfo
 	err := c.ShouldBindJSON(&user)
@@ -327,7 +334,9 @@ func (b *BaseApi) SetUserInfo(c *gin.Context) {
 	response.OkWithMessage("设置成功", c)
 }
 
-// 设置用户信息
+// SetSelfInfo
+// @Tags      SysUser
+// @Summary   设置用户信息
 func (b *BaseApi) SetSelfInfo(c *gin.Context) {
 	var user systemReq.ChangeUserInfo
 	err := c.ShouldBindJSON(&user)
@@ -354,7 +363,9 @@ func (b *BaseApi) SetSelfInfo(c *gin.Context) {
 	response.OkWithMessage("设置成功", c)
 }
 
-// 设置用户配置 SetSelfSetting
+// SetSelfSetting
+// @Tags      SysUser
+// @Summary   设置用户配置
 func (b *BaseApi) SetSelfSetting(c *gin.Context) {
 	var req datatypes.JSON
 	err := c.ShouldBindJSON(&req)
@@ -372,7 +383,9 @@ func (b *BaseApi) SetSelfSetting(c *gin.Context) {
 	response.OkWithMessage("设置成功", c)
 }
 
-// GetUserInfo 获取用户信息
+// GetUserInfo
+// @Tags      SysUser
+// @Summary   获取用户信息
 func (b *BaseApi) GetUserInfo(c *gin.Context) {
 	uuid := utils.GetUserUuid(c)
 	ReqUser, err := userService.GetUserInfo(uuid)
@@ -384,7 +397,8 @@ func (b *BaseApi) GetUserInfo(c *gin.Context) {
 	response.OkWithDetailed(gin.H{"userInfo": ReqUser}, "获取成功", c)
 }
 
-// ResetPassword 重置用户密码
+// ResetPassword
+// @Summary   重置用户密码
 func (b *BaseApi) ResetPassword(c *gin.Context) {
 	var user system.SysUser
 	err := c.ShouldBindJSON(&user)
