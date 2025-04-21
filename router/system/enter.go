@@ -1,8 +1,6 @@
 package system
 
-import (
-	api "KubeGale/api/v1"
-)
+import api "KubeGale/api/v1"
 
 type RouterGroup struct {
 	ApiRouter
