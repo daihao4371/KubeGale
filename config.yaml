@@ -23,7 +23,7 @@ jwt:
   issuer: kubegale
 
 zap:
-  level: info
+  level: debug
   prefix: '[KUBEGALE]'
   format: console
   director: log
