@@ -30,3 +30,15 @@
 [KUBEGALE]2025-04-27 18:20:13.086	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:259	修改失败!	{"error": "empty slice found"}
 [KUBEGALE]2025-04-27 18:20:15.718	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_user.go:259	修改失败!	{"error": "empty slice found"}
 [KUBEGALE]2025-04-27 18:25:14.090	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-27 22:55:23.095	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_api.go:198	修改失败!	{"error": "Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'created_at' at row 1"}
+[KUBEGALE]2025-04-27 22:55:31.337	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_api.go:198	修改失败!	{"error": "Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'created_at' at row 1"}
+[KUBEGALE]2025-04-27 22:55:49.517	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_api.go:198	修改失败!	{"error": "Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'created_at' at row 1"}
+[KUBEGALE]2025-04-27 22:56:01.368	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_api.go:198	修改失败!	{"error": "Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'created_at' at row 1"}
+[KUBEGALE]2025-04-27 22:57:34.486	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_api.go:198	修改失败!	{"error": "Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'created_at' at row 1"}
+[KUBEGALE]2025-04-27 23:00:09.053	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_api.go:198	修改失败!	{"error": "Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'created_at' at row 1"}
+[KUBEGALE]2025-04-27 23:00:31.937	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_api.go:198	修改失败!	{"error": "Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'created_at' at row 1"}
+[KUBEGALE]2025-04-27 23:03:58.712	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-27 23:04:19.125	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_api.go:198	修改失败!	{"error": "Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'created_at' at row 1"}
+[KUBEGALE]2025-04-27 23:05:08.675	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-27 23:06:10.996	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/system/sys_api.go:198	修改失败!	{"error": "Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'created_at' at row 1"}
+[KUBEGALE]2025-04-27 23:08:13.787	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection

@@ -252,6 +252,10 @@ func (apiService *ApiService) GetApiById(id int) (api system.SysApi, err error) 
 func (apiService *ApiService) UpdateApi(api system.SysApi) (err error) {
 	var oldA system.SysApi
 	err = global.KUBEGALE_DB.First(&oldA, "id = ?", api.ID).Error
+	if err != nil {
+		return err
+	}
+	
 	if oldA.Path != api.Path || oldA.Method != api.Method {
 		var duplicateApi system.SysApi
 		if ferr := global.KUBEGALE_DB.First(&duplicateApi, "path = ? AND method = ?", api.Path, api.Method).Error; ferr != nil {
@@ -263,10 +267,6 @@ func (apiService *ApiService) UpdateApi(api system.SysApi) (err error) {
 				return errors.New("存在相同api路径")
 			}
 		}
-
-	}
-	if err != nil {
-		return err
 	}
 
 	err = CasbinServiceApp.UpdateCasbinApi(oldA.Path, api.Path, oldA.Method, api.Method)
@@ -274,7 +274,16 @@ func (apiService *ApiService) UpdateApi(api system.SysApi) (err error) {
 		return err
 	}
 
-	return global.KUBEGALE_DB.Save(&api).Error
+	// 保留原始的创建时间和更新时间
+	api.CreatedAt = oldA.CreatedAt
+	
+	// 使用Updates而不是Save，只更新特定字段
+	return global.KUBEGALE_DB.Model(&oldA).Updates(map[string]interface{}{
+		"path":        api.Path,
+		"description": api.Description,
+		"api_group":   api.ApiGroup,
+		"method":      api.Method,
+	}).Error
 }
 
 // @function: DeleteApisByIds
