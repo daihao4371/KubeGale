@@ -72,25 +72,61 @@ func (i *initCasbin) InitializeData(ctx context.Context) (context.Context, error
 
 	// 查询所有 API
 	var apis []struct {
-		Path   string
-		Method string
+		Path     string
+		Method   string
+		ApiGroup string
 	}
-	if err := db.Table("sys_apis").Select("path, method").Find(&apis).Error; err != nil {
+	if err := db.Table("sys_apis").Select("path, method, api_group").Find(&apis).Error; err != nil {
 		return ctx, errors.Wrap(err, "查询所有API失败")
 	}
 
-	// 为 admin 生成所有 API 权限
+	// 为不同角色生成API权限
 	entities := make([]adapter.CasbinRule, 0, len(apis))
+
+	// admin角色(888)拥有所有API权限
 	for _, api := range apis {
 		entities = append(entities, adapter.CasbinRule{
 			Ptype: "p",
-			V0:    "888", // admin 角色
+			V0:    "888", // admin角色
 			V1:    api.Path,
 			V2:    api.Method,
 		})
 	}
 
-	// 你可以在这里为其他角色分配权限（可选）
+	// 开发负责人角色(9528)拥有除系统管理外的所有API权限
+	for _, api := range apis {
+		if api.ApiGroup != "系统用户" && api.ApiGroup != "角色" && api.ApiGroup != "菜单" {
+			entities = append(entities, adapter.CasbinRule{
+				Ptype: "p",
+				V0:    "9528", // 开发负责人角色
+				V1:    api.Path,
+				V2:    api.Method,
+			})
+		}
+	}
+
+	// 运维角色(8881)拥有基础API权限
+	basicApis := []string{
+		"/user/getUserInfo",
+		"/user/setSelfInfo",
+		"/user/changePassword",
+		"/menu/getMenu",
+		"/menu/getBaseMenuTree",
+		"/jwt/jsonInBlacklist",
+	}
+	for _, api := range apis {
+		for _, basicApi := range basicApis {
+			if api.Path == basicApi {
+				entities = append(entities, adapter.CasbinRule{
+					Ptype: "p",
+					V0:    "8881", // 运维角色
+					V1:    api.Path,
+					V2:    api.Method,
+				})
+				break
+			}
+		}
+	}
 
 	if err := db.Create(&entities).Error; err != nil {
 		return ctx, errors.Wrap(err, "Casbin 表 ("+i.InitializerName()+") 数据初始化失败!")

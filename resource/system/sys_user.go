@@ -5,6 +5,7 @@ import (
 	sysModel "KubeGale/model/system"
 	"KubeGale/utils"
 	"context"
+
 	"github.com/gofrs/uuid/v5"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
@@ -81,7 +82,7 @@ func (i *InitUser) InitializeData(ctx context.Context) (next context.Context, er
 	if err = db.Model(&entities[0]).Association("Authorities").Replace(authorityEntities); err != nil {
 		return next, err
 	}
-	if err = db.Model(&entities[1]).Association("Authorities").Replace(authorityEntities[:1]); err != nil {
+	if err = db.Model(&entities[1]).Association("Authorities").Replace([]sysModel.SysAuthority{authorityEntities[1]}); err != nil {
 		return next, err
 	}
 	return next, err
