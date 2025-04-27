@@ -1,0 +1,109 @@
+[KUBEGALE]2025-04-27 11:27:00.728	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:42	register table success
+[KUBEGALE]2025-04-27 11:27:00.736	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-04-27 11:27:00.737	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-04-27 11:27:00.737	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-04-27 11:27:00.738	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:53	register swagger handler
+[KUBEGALE]2025-04-27 11:27:00.739	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:92	router register success
+[KUBEGALE]2025-04-27 11:27:00.739	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-04-27 16:13:38.296	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:42	register table success
+[KUBEGALE]2025-04-27 16:13:38.303	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-04-27 16:13:38.306	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-04-27 16:13:38.306	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-04-27 16:13:38.307	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:53	register swagger handler
+[KUBEGALE]2025-04-27 16:13:38.308	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:92	router register success
+[KUBEGALE]2025-04-27 16:13:38.308	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-04-27 16:14:23.813	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:42	register table success
+[KUBEGALE]2025-04-27 16:14:23.816	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-04-27 16:14:23.817	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-04-27 16:14:23.818	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-04-27 16:14:23.818	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:53	register swagger handler
+[KUBEGALE]2025-04-27 16:14:23.819	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:92	router register success
+[KUBEGALE]2025-04-27 16:14:23.819	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-04-27 16:19:41.514	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:18	初始化 API 表成功
+[KUBEGALE]2025-04-27 16:19:41.521	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:23	初始化 API 数据成功
+[KUBEGALE]2025-04-27 16:19:41.537	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:33	初始化 API 忽略表成功
+[KUBEGALE]2025-04-27 16:19:41.613	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:51	初始化权限表成功
+[KUBEGALE]2025-04-27 16:19:41.678	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:66	初始化菜单表成功
+[KUBEGALE]2025-04-27 16:19:41.679	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:71	初始化菜单数据成功
+[KUBEGALE]2025-04-27 16:19:41.727	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:81	初始化用户表成功
+[KUBEGALE]2025-04-27 16:30:47.605	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:18	初始化 API 表成功
+[KUBEGALE]2025-04-27 16:30:47.610	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:23	初始化 API 数据成功
+[KUBEGALE]2025-04-27 16:30:47.614	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:33	初始化 API 忽略表成功
+[KUBEGALE]2025-04-27 16:30:47.676	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:51	初始化权限表成功
+[KUBEGALE]2025-04-27 16:30:47.727	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:66	初始化菜单表成功
+[KUBEGALE]2025-04-27 16:30:47.728	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:71	初始化菜单数据成功
+[KUBEGALE]2025-04-27 16:30:47.774	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:81	初始化用户表成功
+[KUBEGALE]2025-04-27 16:37:58.343	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:18	初始化 API 表成功
+[KUBEGALE]2025-04-27 16:37:58.357	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:23	初始化 API 数据成功
+[KUBEGALE]2025-04-27 16:37:58.370	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:33	初始化 API 忽略表成功
+[KUBEGALE]2025-04-27 16:37:58.415	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:42	初始化 Casbin 表成功
+[KUBEGALE]2025-04-27 16:37:58.460	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:51	初始化权限表成功
+[KUBEGALE]2025-04-27 16:37:58.468	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:56	初始化权限数据成功
+[KUBEGALE]2025-04-27 16:37:58.530	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:66	初始化菜单表成功
+[KUBEGALE]2025-04-27 16:37:58.531	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:71	初始化菜单数据成功
+[KUBEGALE]2025-04-27 16:37:58.578	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:81	初始化用户表成功
+[KUBEGALE]2025-04-27 16:37:58.759	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:88	初始化用户数据成功
+[KUBEGALE]2025-04-27 16:43:07.483	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:42	register table success
+[KUBEGALE]2025-04-27 16:43:07.522	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-04-27 16:43:07.522	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-04-27 16:43:07.523	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-04-27 16:43:07.525	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:53	register swagger handler
+[KUBEGALE]2025-04-27 16:43:07.526	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:92	router register success
+[KUBEGALE]2025-04-27 16:43:07.526	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-04-27 16:43:17.606	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:42	register table success
+[KUBEGALE]2025-04-27 16:43:17.610	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-04-27 16:43:17.611	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-04-27 16:43:17.611	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-04-27 16:43:17.612	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:53	register swagger handler
+[KUBEGALE]2025-04-27 16:43:17.612	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:92	router register success
+[KUBEGALE]2025-04-27 16:43:17.612	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-04-27 17:15:53.795	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:42	register table success
+[KUBEGALE]2025-04-27 17:15:53.825	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-04-27 17:15:53.827	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-04-27 17:15:53.827	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-04-27 17:15:53.828	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:53	register swagger handler
+[KUBEGALE]2025-04-27 17:15:53.828	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:92	router register success
+[KUBEGALE]2025-04-27 17:15:53.828	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-04-27 17:23:19.624	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:18	初始化 API 表成功
+[KUBEGALE]2025-04-27 17:23:19.633	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:23	初始化 API 数据成功
+[KUBEGALE]2025-04-27 17:23:19.637	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:33	初始化 API 忽略表成功
+[KUBEGALE]2025-04-27 17:23:19.724	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:58	初始化权限表成功
+[KUBEGALE]2025-04-27 17:23:19.789	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:73	初始化菜单表成功
+[KUBEGALE]2025-04-27 17:23:19.790	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:78	初始化菜单数据成功
+[KUBEGALE]2025-04-27 17:23:19.840	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:88	初始化用户表成功
+[KUBEGALE]2025-04-27 17:23:34.993	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:18	初始化 API 表成功
+[KUBEGALE]2025-04-27 17:23:34.998	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:23	初始化 API 数据成功
+[KUBEGALE]2025-04-27 17:23:35.015	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:33	初始化 API 忽略表成功
+[KUBEGALE]2025-04-27 17:23:35.051	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:42	初始化 Casbin 表成功
+[KUBEGALE]2025-04-27 17:23:35.053	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:48	初始化 Casbin 权限数据成功
+[KUBEGALE]2025-04-27 17:23:35.106	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:58	初始化权限表成功
+[KUBEGALE]2025-04-27 17:23:35.121	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:63	初始化权限数据成功
+[KUBEGALE]2025-04-27 17:23:35.180	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:73	初始化菜单表成功
+[KUBEGALE]2025-04-27 17:23:35.182	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:78	初始化菜单数据成功
+[KUBEGALE]2025-04-27 17:23:35.233	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:88	初始化用户表成功
+[KUBEGALE]2025-04-27 17:23:35.421	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:95	初始化用户数据成功
+[KUBEGALE]2025-04-27 17:23:59.952	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:42	register table success
+[KUBEGALE]2025-04-27 17:23:59.960	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-04-27 17:23:59.961	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-04-27 17:23:59.961	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-04-27 17:23:59.962	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:53	register swagger handler
+[KUBEGALE]2025-04-27 17:23:59.963	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:92	router register success
+[KUBEGALE]2025-04-27 17:23:59.963	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-04-27 17:25:27.773	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:18	初始化 API 表成功
+[KUBEGALE]2025-04-27 17:25:27.783	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:23	初始化 API 数据成功
+[KUBEGALE]2025-04-27 17:25:27.795	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:33	初始化 API 忽略表成功
+[KUBEGALE]2025-04-27 17:25:27.835	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:42	初始化 Casbin 表成功
+[KUBEGALE]2025-04-27 17:25:27.836	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:48	初始化 Casbin 权限数据成功
+[KUBEGALE]2025-04-27 17:25:27.923	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:58	初始化权限表成功
+[KUBEGALE]2025-04-27 17:25:27.928	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:63	初始化权限数据成功
+[KUBEGALE]2025-04-27 17:25:27.990	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:73	初始化菜单表成功
+[KUBEGALE]2025-04-27 17:25:27.991	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:78	初始化菜单数据成功
+[KUBEGALE]2025-04-27 17:25:28.041	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:88	初始化用户表成功
+[KUBEGALE]2025-04-27 17:25:28.222	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:95	初始化用户数据成功
+[KUBEGALE]2025-04-27 17:25:42.609	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:42	register table success
+[KUBEGALE]2025-04-27 17:25:42.614	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-04-27 17:25:42.618	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-04-27 17:25:42.618	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-04-27 17:25:42.619	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:53	register swagger handler
+[KUBEGALE]2025-04-27 17:25:42.620	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:92	router register success
+[KUBEGALE]2025-04-27 17:25:42.620	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}

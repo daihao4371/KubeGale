@@ -3,6 +3,7 @@ package system
 import (
 	"KubeGale/common"
 	"context"
+
 	adapter "github.com/casbin/gorm-adapter/v3"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
@@ -69,38 +70,27 @@ func (i *initCasbin) InitializeData(ctx context.Context) (context.Context, error
 		return ctx, common.ErrMissingDBContext
 	}
 
-	// 只保留基本权限，其他权限通过管理界面分配
-	entities := []adapter.CasbinRule{
-		// 超级管理员权限
-		{Ptype: "p", V0: "888", V1: "/user/admin_register", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/createApi", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/getApiList", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/getApiById", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/deleteApi", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/updateApi", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/getAllApis", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/deleteApisByIds", V2: "DELETE"},
-		{Ptype: "p", V0: "888", V1: "/api/syncApi", V2: "GET"},
-		{Ptype: "p", V0: "888", V1: "/api/getApiGroups", V2: "GET"},
-		{Ptype: "p", V0: "888", V1: "/api/enterSyncApi", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/ignoreApi", V2: "POST"},
-
-		// 以下是所有角色都需要的基本权限
-		{Ptype: "p", V0: "888", V1: "/menu/getMenu", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/jwt/jsonInBlacklist", V2: "POST"},
-		{Ptype: "p", V0: "888", V1: "/api/user/getUserInfo", V2: "GET"},
-
-		{Ptype: "p", V0: "9528", V1: "/menu/getMenu", V2: "POST"},
-		{Ptype: "p", V0: "9528", V1: "/jwt/jsonInBlacklist", V2: "POST"},
-		{Ptype: "p", V0: "9528", V1: "/user/getUserInfo", V2: "GET"},
-
-		{Ptype: "p", V0: "8881", V1: "/menu/getMenu", V2: "POST"},
-		{Ptype: "p", V0: "8881", V1: "/jwt/jsonInBlacklist", V2: "POST"},
-		{Ptype: "p", V0: "8881", V1: "/user/getUserInfo", V2: "GET"},
-
-		// 添加刷新Casbin的权限，仅超级管理员可用
-		{Ptype: "p", V0: "888", V1: "/api/freshCasbin", V2: "GET"},
+	// 查询所有 API
+	var apis []struct {
+		Path   string
+		Method string
 	}
+	if err := db.Table("sys_apis").Select("path, method").Find(&apis).Error; err != nil {
+		return ctx, errors.Wrap(err, "查询所有API失败")
+	}
+
+	// 为 admin 生成所有 API 权限
+	entities := make([]adapter.CasbinRule, 0, len(apis))
+	for _, api := range apis {
+		entities = append(entities, adapter.CasbinRule{
+			Ptype: "p",
+			V0:    "888", // admin 角色
+			V1:    api.Path,
+			V2:    api.Method,
+		})
+	}
+
+	// 你可以在这里为其他角色分配权限（可选）
 
 	if err := db.Create(&entities).Error; err != nil {
 		return ctx, errors.Wrap(err, "Casbin 表 ("+i.InitializerName()+") 数据初始化失败!")
@@ -114,7 +104,8 @@ func (i *initCasbin) DataInserted(ctx context.Context) bool {
 	if !ok {
 		return false
 	}
-	if errors.Is(db.Where(adapter.CasbinRule{Ptype: "p", V0: "9528", V1: "/user/getUserInfo", V2: "GET"}).
+	// 修改为检查 admin 角色(888)的权限
+	if errors.Is(db.Where(adapter.CasbinRule{Ptype: "p", V0: "888", V1: "/user/getUserInfo", V2: "GET"}).
 		First(&adapter.CasbinRule{}).Error, gorm.ErrRecordNotFound) { // 判断是否存在数据
 		return false
 	}

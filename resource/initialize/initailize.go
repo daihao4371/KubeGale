@@ -40,6 +40,13 @@ func InitializeAllSystemData(ctx context.Context) {
 		global.KUBEGALE_LOG.Error("初始化 Casbin 表失败", zap.Error(err))
 	} else {
 		global.KUBEGALE_LOG.Info("初始化 Casbin 表成功")
+		// 添加这部分代码，调用 InitializeData 方法为 admin 初始化权限
+		ctx, err = casbinInitializer.InitializeData(ctx)
+		if err != nil {
+			global.KUBEGALE_LOG.Error("初始化 Casbin 权限数据失败", zap.Error(err))
+		} else {
+			global.KUBEGALE_LOG.Info("初始化 Casbin 权限数据成功")
+		}
 	}
 
 	// 初始化权限表
