@@ -5,6 +5,7 @@ import (
 	sysModel "KubeGale/model/system"
 	"KubeGale/utils"
 	"context"
+
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
 )
@@ -48,6 +49,7 @@ func (i *InitAuthority) InitializeData(ctx context.Context) (context.Context, er
 		return ctx, errors.Wrapf(err, "%s表数据初始化失败!", sysModel.SysAuthority{}.TableName())
 	}
 	// data authority
+	// admin角色可以访问所有数据
 	if err := db.Model(&entities[0]).Association("DataAuthorityId").Replace(
 		[]*sysModel.SysAuthority{
 			{AuthorityId: 888},
@@ -57,6 +59,7 @@ func (i *InitAuthority) InitializeData(ctx context.Context) (context.Context, er
 		return ctx, errors.Wrapf(err, "%s表数据初始化失败!",
 			db.Model(&entities[0]).Association("DataAuthorityId").Relationship.JoinTable.Name)
 	}
+	// 开发负责人角色可以访问自己和运维的数据
 	if err := db.Model(&entities[1]).Association("DataAuthorityId").Replace(
 		[]*sysModel.SysAuthority{
 			{AuthorityId: 9528},
@@ -64,6 +67,14 @@ func (i *InitAuthority) InitializeData(ctx context.Context) (context.Context, er
 		}); err != nil {
 		return ctx, errors.Wrapf(err, "%s表数据初始化失败!",
 			db.Model(&entities[1]).Association("DataAuthorityId").Relationship.JoinTable.Name)
+	}
+	// 运维角色只能访问自己的数据
+	if err := db.Model(&entities[2]).Association("DataAuthorityId").Replace(
+		[]*sysModel.SysAuthority{
+			{AuthorityId: 8881},
+		}); err != nil {
+		return ctx, errors.Wrapf(err, "%s表数据初始化失败!",
+			db.Model(&entities[2]).Association("DataAuthorityId").Relationship.JoinTable.Name)
 	}
 
 	next := context.WithValue(ctx, i.InitializerName(), entities)
