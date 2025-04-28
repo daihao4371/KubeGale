@@ -9,15 +9,18 @@ import (
 func bizModel() error {
 	db := global.KUBEGALE_DB
 	err := db.AutoMigrate(
+		// CMDB相关表
 		cmdb.CmdbProjects{},
 		cmdb.CmdbHosts{},
-		im.NotificationConfig{},
-		im.DingTalkConfig{},
-		im.FeiShuConfig{},
-		im.CardContentConfig{},
+
+		// IM通知相关表
+		im.NotificationConfig{}, // 基础通知配置表
+		im.DingTalkConfig{},     // 钉钉通知配置表
+		im.FeiShuConfig{},       // 飞书通知配置表
+		im.CardContentConfig{},  // 告警卡片内容配置表
 	)
 	if err != nil {
 		return err
 	}
-	return err
+	return nil
 }
