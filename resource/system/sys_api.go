@@ -4,6 +4,7 @@ import (
 	"KubeGale/common"
 	sysModel "KubeGale/model/system"
 	"context"
+
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
 )
@@ -93,6 +94,18 @@ func (i *InitApi) InitializeData(ctx context.Context) (context.Context, error) {
 		{ApiGroup: "按钮权限", Method: "POST", Path: "/authorityBtn/setAuthorityBtn", Description: "设置按钮权限"},
 		{ApiGroup: "按钮权限", Method: "POST", Path: "/authorityBtn/getAuthorityBtn", Description: "获取已有按钮权限"},
 		{ApiGroup: "按钮权限", Method: "POST", Path: "/authorityBtn/canRemoveAuthorityBtn", Description: "删除按钮"},
+
+		{ApiGroup: "即时通讯", Method: "POST", Path: "/notification/createDingTalk", Description: "创建钉钉通知"},
+		{ApiGroup: "即时通讯", Method: "POST", Path: "/notification/createFeiShu", Description: "创建飞书通知"},
+		{ApiGroup: "即时通讯", Method: "PUT", Path: "/notification/updateDingTalk", Description: "更新钉钉通知"},
+		{ApiGroup: "即时通讯", Method: "PUT", Path: "/notification/updateFeiShu", Description: "更新飞书通知"},
+		{ApiGroup: "即时通讯", Method: "DELETE", Path: "/notification/deleteNotification", Description: "删除通知配置"},
+		{ApiGroup: "即时通讯", Method: "POST", Path: "/notification/testNotification", Description: "测试通知发送"},
+		{ApiGroup: "即时通讯", Method: "POST", Path: "/notification/createCardContent", Description: "创建卡片内容"},
+		{ApiGroup: "即时通讯", Method: "PUT", Path: "/notification/updateCardContent", Description: "更新卡片内容"},
+		{ApiGroup: "即时通讯", Method: "POST", Path: "/notification/getNotificationList", Description: "获取通知配置列表"},
+		{ApiGroup: "即时通讯", Method: "GET", Path: "/notification/getNotificationById", Description: "根据ID获取通知配置"},
+		{ApiGroup: "即时通讯", Method: "GET", Path: "/notification/getCardContent", Description: "根据通知ID获取卡片内容"},
 	}
 	if err := db.Create(&entities).Error; err != nil {
 		return ctx, errors.Wrap(err, sysModel.SysApi{}.TableName()+"表数据初始化失败!")
