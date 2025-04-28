@@ -1,0 +1,20 @@
+[KUBEGALE]2025-04-28 10:32:07.568	[35mdebug[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:24	[32m/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_authority.go:116
+[0m[33m[0.496ms] [34;1m[rows:0][0m SELECT * FROM `sys_user_authority` WHERE `sys_user_authority`.`sys_authority_authority_id` = 9530
+[KUBEGALE]2025-04-28 10:32:07.568	[35mdebug[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:24	[32m/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_authority.go:116
+[0m[33m[3.866ms] [34;1m[rows:1][0m SELECT * FROM `sys_authorities` WHERE `sys_authorities`.`authority_id` = 9530 ORDER BY `sys_authorities`.`authority_id` LIMIT 1
+[KUBEGALE]2025-04-28 10:32:17.401	[35mdebug[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:24	[32m/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_authority.go:116
+[0m[33m[2.162ms] [34;1m[rows:0][0m SELECT * FROM `sys_user_authority` WHERE `sys_user_authority`.`sys_authority_authority_id` = 1
+[KUBEGALE]2025-04-28 10:32:17.402	[35mdebug[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:24	[32m/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_authority.go:116
+[0m[33m[4.694ms] [34;1m[rows:1][0m SELECT * FROM `sys_authorities` WHERE `sys_authorities`.`authority_id` = 1 ORDER BY `sys_authorities`.`authority_id` LIMIT 1
+[KUBEGALE]2025-04-28 11:14:04.493	[35mdebug[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:24	[32m/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_authority.go:116
+[0m[33m[2.683ms] [34;1m[rows:0][0m SELECT * FROM `sys_user_authority` WHERE `sys_user_authority`.`sys_authority_authority_id` = 1
+[KUBEGALE]2025-04-28 11:14:04.496	[35mdebug[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:24	[32m/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_authority.go:116
+[0m[33m[10.616ms] [34;1m[rows:1][0m SELECT * FROM `sys_authorities` WHERE `sys_authorities`.`authority_id` = 1 ORDER BY `sys_authorities`.`authority_id` LIMIT 1
+[KUBEGALE]2025-04-28 11:14:15.128	[35mdebug[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:24	[32m/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_authority.go:116
+[0m[33m[0.382ms] [34;1m[rows:0][0m SELECT * FROM `sys_user_authority` WHERE `sys_user_authority`.`sys_authority_authority_id` = 1
+[KUBEGALE]2025-04-28 11:14:15.129	[35mdebug[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:24	[32m/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_authority.go:116
+[0m[33m[2.704ms] [34;1m[rows:1][0m SELECT * FROM `sys_authorities` WHERE `sys_authorities`.`authority_id` = 1 ORDER BY `sys_authorities`.`authority_id` LIMIT 1
+[KUBEGALE]2025-04-28 11:14:18.208	[35mdebug[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:24	[32m/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_authority.go:116
+[0m[33m[0.460ms] [34;1m[rows:0][0m SELECT * FROM `sys_user_authority` WHERE `sys_user_authority`.`sys_authority_authority_id` = 2
+[KUBEGALE]2025-04-28 11:14:18.209	[35mdebug[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/internal/gorm_logger_writer.go:24	[32m/Users/daihao/Downloads/gocode/KubeGale/service/system/sys_authority.go:116
+[0m[33m[1.848ms] [34;1m[rows:1][0m SELECT * FROM `sys_authorities` WHERE `sys_authorities`.`authority_id` = 2 ORDER BY `sys_authorities`.`authority_id` LIMIT 1

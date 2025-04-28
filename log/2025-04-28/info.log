@@ -1,0 +1,14 @@
+[KUBEGALE]2025-04-28 10:13:27.671	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:42	register table success
+[KUBEGALE]2025-04-28 10:13:27.675	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-04-28 10:13:27.676	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-04-28 10:13:27.676	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-04-28 10:13:27.678	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:53	register swagger handler
+[KUBEGALE]2025-04-28 10:13:27.679	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:92	router register success
+[KUBEGALE]2025-04-28 10:13:27.679	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-04-28 17:35:22.888	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:42	register table success
+[KUBEGALE]2025-04-28 17:35:22.891	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-04-28 17:35:22.892	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-04-28 17:35:22.892	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-04-28 17:35:22.893	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:53	register swagger handler
+[KUBEGALE]2025-04-28 17:35:22.894	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:92	router register success
+[KUBEGALE]2025-04-28 17:35:22.894	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
