@@ -5,6 +5,7 @@ import (
 	"KubeGale/model/im"
 	"KubeGale/model/im/request"
 	"KubeGale/model/im/response"
+	messageIm "KubeGale/utils/im"
 	"errors"
 	"fmt"
 	"gorm.io/gorm"
@@ -360,14 +361,14 @@ func (notificationService *NotificationService) GetNotificationList(params reque
 // @description: 根据ID获取通知配置
 func (notificationService *NotificationService) GetNotificationById(id uint, notificationType string) (interface{}, error) {
 	var cardContent im.CardContentConfig
-	
+
 	// 查询卡片内容
 	err := global.KUBEGALE_DB.Where("notification_id = ?", id).First(&cardContent).Error
 	// 如果卡片内容不存在，这里不返回错误，而是使用空的卡片内容
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, fmt.Errorf("查询卡片内容失败: %w", err)
 	}
-	
+
 	switch notificationType {
 	case im.NotificationTypeDingTalk:
 		var dingTalk im.DingTalkConfig
@@ -414,10 +415,10 @@ func (notificationService *NotificationService) TestNotification(req request.Tes
 	switch req.Type {
 	case im.NotificationTypeDingTalk:
 		dingTalkResp := notification.(response.DingTalkResponse)
-		err = MessageServiceApp.SendDingTalkMessage(dingTalkResp.Config, dingTalkResp.CardContent, testMessage)
+		err = messageIm.MessageServiceApp.SendDingTalkMessage(dingTalkResp.Config, dingTalkResp.CardContent, testMessage)
 	case im.NotificationTypeFeiShu:
 		feiShuResp := notification.(response.FeiShuResponse)
-		err = MessageServiceApp.SendFeiShuMessage(feiShuResp.Config, feiShuResp.CardContent, testMessage)
+		err = messageIm.MessageServiceApp.SendFeiShuMessage(feiShuResp.Config, feiShuResp.CardContent, testMessage)
 	default:
 		return response.TestNotificationResponse{
 			Success: false,
