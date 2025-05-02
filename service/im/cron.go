@@ -3,6 +3,7 @@ package im
 import (
 	"KubeGale/global"
 	"KubeGale/model/im"
+	"KubeGale/model/im/response"
 	messageIm "KubeGale/utils/im"
 	"fmt"
 	"time"
@@ -37,7 +38,35 @@ func (cronService *CronService) SendDailyStats() error {
 		var cardContent im.CardContentConfig
 		global.KUBEGALE_DB.Where("notification_id = ?", config.ID).First(&cardContent)
 
-		err := messageIm.MessageServiceApp.SendDingTalkMessage(config, cardContent, stats)
+		notificationConfig := response.NotificationDetailConfig{
+			ID:                 config.ID,
+			Name:               config.Name,
+			Type:               config.Type,
+			NotificationPolicy: config.NotificationPolicy,
+			SendDailyStats:     config.SendDailyStats,
+			CreatedAt:          config.CreatedAt,
+			UpdatedAt:          config.UpdatedAt,
+			RobotURL:           config.RobotURL,
+		}
+
+		cardContentDetail := response.CardContentDetail{
+			ID:                 cardContent.ID,
+			NotificationID:     cardContent.NotificationID,
+			AlertLevel:         cardContent.AlertLevel,
+			AlertName:          cardContent.AlertName,
+			NotificationPolicy: cardContent.NotificationPolicy,
+			AlertContent:       cardContent.AlertContent,
+			AlertTime:          cardContent.AlertTime,
+			NotifiedUsers:      cardContent.NotifiedUsers,
+			LastSimilarAlert:   cardContent.LastSimilarAlert,
+			AlertHandler:       cardContent.AlertHandler,
+			ClaimAlert:         cardContent.ClaimAlert,
+			ResolveAlert:       cardContent.ResolveAlert,
+			MuteAlert:          cardContent.MuteAlert,
+			UnresolvedAlert:    cardContent.UnresolvedAlert,
+		}
+
+		err := messageIm.MessageServiceApp.SendDingTalkMessage(notificationConfig, cardContentDetail, stats)
 		if err != nil {
 			global.KUBEGALE_LOG.Error(fmt.Sprintf("发送钉钉每日统计失败: %s", err.Error()))
 		}
@@ -48,7 +77,35 @@ func (cronService *CronService) SendDailyStats() error {
 		var cardContent im.CardContentConfig
 		global.KUBEGALE_DB.Where("notification_id = ?", config.ID).First(&cardContent)
 
-		err := messageIm.MessageServiceApp.SendFeiShuMessage(config, cardContent, stats)
+		notificationConfig := response.NotificationDetailConfig{
+			ID:                 config.ID,
+			Name:               config.Name,
+			Type:               config.Type,
+			NotificationPolicy: config.NotificationPolicy,
+			SendDailyStats:     config.SendDailyStats,
+			CreatedAt:          config.CreatedAt,
+			UpdatedAt:          config.UpdatedAt,
+			RobotURL:           config.RobotURL,
+		}
+
+		cardContentDetail := response.CardContentDetail{
+			ID:                 cardContent.ID,
+			NotificationID:     cardContent.NotificationID,
+			AlertLevel:         cardContent.AlertLevel,
+			AlertName:          cardContent.AlertName,
+			NotificationPolicy: cardContent.NotificationPolicy,
+			AlertContent:       cardContent.AlertContent,
+			AlertTime:          cardContent.AlertTime,
+			NotifiedUsers:      cardContent.NotifiedUsers,
+			LastSimilarAlert:   cardContent.LastSimilarAlert,
+			AlertHandler:       cardContent.AlertHandler,
+			ClaimAlert:         cardContent.ClaimAlert,
+			ResolveAlert:       cardContent.ResolveAlert,
+			MuteAlert:          cardContent.MuteAlert,
+			UnresolvedAlert:    cardContent.UnresolvedAlert,
+		}
+
+		err := messageIm.MessageServiceApp.SendFeiShuMessage(notificationConfig, cardContentDetail, stats)
 		if err != nil {
 			global.KUBEGALE_LOG.Error(fmt.Sprintf("发送飞书每日统计失败: %s", err.Error()))
 		}

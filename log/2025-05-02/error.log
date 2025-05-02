@@ -1,0 +1,14 @@
+[KUBEGALE]2025-05-02 12:53:40.733	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	net.Listen error: listen tcp :8080: bind: address already in use
+[KUBEGALE]2025-05-02 13:03:14.046	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:29	创建失败!	{"error": "Error 1062 (23000): Duplicate entry '测试钉钉通知' for key 'uni_im_ding_talk_configs_name'"}
+[KUBEGALE]2025-05-02 13:53:36.913	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:29	创建失败!	{"error": "Error 1062 (23000): Duplicate entry '测试钉钉通知' for key 'uni_im_ding_talk_configs_name'"}
+[KUBEGALE]2025-05-02 13:53:41.416	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:29	创建失败!	{"error": "Error 1062 (23000): Duplicate entry '测试钉钉通知' for key 'uni_im_ding_talk_configs_name'"}
+[KUBEGALE]2025-05-02 13:53:43.696	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:29	创建失败!	{"error": "Error 1062 (23000): Duplicate entry '测试钉钉通知' for key 'uni_im_ding_talk_configs_name'"}
+[KUBEGALE]2025-05-02 14:01:27.395	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-02 14:08:24.046	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-02 14:12:18.649	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-02 14:17:18.170	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-02 14:21:42.108	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-02 14:29:00.376	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-02 14:31:02.775	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-02 14:50:23.768	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-02 15:05:52.784	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection

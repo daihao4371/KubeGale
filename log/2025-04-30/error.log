@@ -1,0 +1,13 @@
+[KUBEGALE]2025-04-30 06:55:46.320	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-30 06:55:54.344	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:258	获取通知配置失败!	{"error": "不支持的通知类型"}
+[KUBEGALE]2025-04-30 07:02:46.821	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-30 07:08:18.175	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:252	获取通知配置失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-30 07:08:19.981	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:252	获取通知配置失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-30 07:10:38.746	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:170	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-30 07:11:03.357	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:252	获取通知配置失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-30 07:13:28.424	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:170	获取失败!	{"error": "不支持的通知类型"}
+[KUBEGALE]2025-04-30 07:15:54.764	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:170	获取失败!	{"error": "不支持的通知类型"}
+[KUBEGALE]2025-04-30 07:16:07.175	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-30 07:16:14.884	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:170	获取失败!	{"error": "record not found"}
+[KUBEGALE]2025-04-30 07:16:42.441	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-04-30 07:17:14.281	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:170	获取失败!	{"error": "record not found"}

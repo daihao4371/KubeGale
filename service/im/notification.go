@@ -8,6 +8,9 @@ import (
 	messageIm "KubeGale/utils/im"
 	"errors"
 	"fmt"
+	"sort"
+	"time"
+
 	"gorm.io/gorm"
 )
 
@@ -46,6 +49,10 @@ func (notificationService *NotificationService) CreateDingTalk(req request.Creat
 		if req.CardContent.AlertLevel != "" {
 			cardContent := req.CardContent
 			cardContent.NotificationID = dingTalk.ID
+			// 设置告警时间为当前时间，避免数据库插入空时间
+			if cardContent.AlertTime.IsZero() {
+				cardContent.AlertTime = time.Now()
+			}
 			if err := tx.Create(&cardContent).Error; err != nil {
 				return err
 			}
@@ -87,6 +94,10 @@ func (notificationService *NotificationService) CreateFeiShu(req request.CreateF
 		if req.CardContent.AlertLevel != "" {
 			cardContent := req.CardContent
 			cardContent.NotificationID = feiShu.ID
+			// 设置告警时间为当前时间，避免数据库插入空时间
+			if cardContent.AlertTime.IsZero() {
+				cardContent.AlertTime = time.Now()
+			}
 			if err := tx.Create(&cardContent).Error; err != nil {
 				return err
 			}
@@ -265,93 +276,114 @@ func (notificationService *NotificationService) DeleteNotification(id uint, noti
 }
 
 // @function: GetNotificationList
-// @description: 获取通知配置列表
-func (notificationService *NotificationService) GetNotificationList(params request.SearchNotificationParams) (list []interface{}, total int64, err error) {
+// @description: 获取通知配置列表，合并钉钉和飞书配置
+func (notificationService *NotificationService) GetNotificationList(params request.SearchNotificationParams) (list []response.NotificationResponse, total int64, err error) {
 	limit := params.PageSize
 	offset := params.PageSize * (params.Page - 1)
+	list = make([]response.NotificationResponse, 0)
 
-	// 查询条件
-	db := global.KUBEGALE_DB.Model(&im.NotificationConfig{})
+	// 创建子查询
+	dingTalkQuery := global.KUBEGALE_DB.Model(&im.DingTalkConfig{}).Select("id, name, 'dingtalk' as type, notification_policy, robot_url, created_at")
+	feiShuQuery := global.KUBEGALE_DB.Model(&im.FeiShuConfig{}).Select("id, name, 'feishu' as type, notification_policy, robot_url, created_at")
 
+	// 添加搜索条件
 	if params.Name != "" {
-		db = db.Where("name LIKE ?", "%"+params.Name+"%")
+		dingTalkQuery = dingTalkQuery.Where("name LIKE ?", "%"+params.Name+"%")
+		feiShuQuery = feiShuQuery.Where("name LIKE ?", "%"+params.Name+"%")
 	}
-
 	if params.Type != "" {
-		db = db.Where("type = ?", params.Type)
+		if params.Type == im.NotificationTypeDingTalk {
+			feiShuQuery = feiShuQuery.Where("1 = 0") // 不查询飞书数据
+		} else if params.Type == im.NotificationTypeFeiShu {
+			dingTalkQuery = dingTalkQuery.Where("1 = 0") // 不查询钉钉数据
+		}
 	}
-
 	if params.NotificationPolicy != "" {
-		db = db.Where("notification_policy LIKE ?", "%"+params.NotificationPolicy+"%")
+		dingTalkQuery = dingTalkQuery.Where("notification_policy = ?", params.NotificationPolicy)
+		feiShuQuery = feiShuQuery.Where("notification_policy = ?", params.NotificationPolicy)
 	}
 
-	// 获取总数
-	err = db.Count(&total).Error
-	if err != nil {
+	// 计算总数
+	var dingTalkCount, feiShuCount int64
+	if err = dingTalkQuery.Count(&dingTalkCount).Error; err != nil {
 		return nil, 0, err
 	}
+	if err = feiShuQuery.Count(&feiShuCount).Error; err != nil {
+		return nil, 0, err
+	}
+	total = dingTalkCount + feiShuCount
 
-	// 排序
-	orderStr := "id desc"
+	// 构建排序
+	order := "created_at"
 	if params.OrderKey != "" {
-		orderMap := map[string]bool{
-			"id":                  true,
-			"name":                true,
-			"type":                true,
-			"notification_policy": true,
-			"created_at":          true,
-			"updated_at":          true,
-		}
-
-		if !orderMap[params.OrderKey] {
-			return nil, 0, fmt.Errorf("非法的排序字段: %v", params.OrderKey)
-		}
-
-		orderStr = params.OrderKey
-		if params.Desc {
-			orderStr += " desc"
-		}
+		order = params.OrderKey
+	}
+	if params.Desc {
+		order = order + " desc"
+	} else {
+		order = order + " asc"
 	}
 
-	// 查询通知配置
-	var configs []im.NotificationConfig
-	err = db.Order(orderStr).Limit(limit).Offset(offset).Find(&configs).Error
-	if err != nil {
+	// 查询钉钉配置
+	var dingTalkConfigs []struct {
+		ID                 uint      `gorm:"column:id"`
+		Name               string    `gorm:"column:name"`
+		Type               string    `gorm:"column:type"`
+		NotificationPolicy string    `gorm:"column:notification_policy"`
+		RobotURL           string    `gorm:"column:robot_url"`
+		CreatedAt          time.Time `gorm:"column:created_at"`
+	}
+	if err = dingTalkQuery.Order(order).Limit(limit).Offset(offset).Find(&dingTalkConfigs).Error; err != nil {
 		return nil, 0, err
 	}
 
-	// 根据类型获取详细配置
-	for _, config := range configs {
-		var item interface{}
-		var cardContent im.CardContentConfig
+	// 查询飞书配置
+	var feiShuConfigs []struct {
+		ID                 uint      `gorm:"column:id"`
+		Name               string    `gorm:"column:name"`
+		Type               string    `gorm:"column:type"`
+		NotificationPolicy string    `gorm:"column:notification_policy"`
+		RobotURL           string    `gorm:"column:robot_url"`
+		CreatedAt          time.Time `gorm:"column:created_at"`
+	}
+	if err = feiShuQuery.Order(order).Limit(limit).Offset(offset).Find(&feiShuConfigs).Error; err != nil {
+		return nil, 0, err
+	}
 
-		// 查询卡片内容
-		global.KUBEGALE_DB.Where("notification_id = ?", config.ID).First(&cardContent)
+	// 合并数据
+	for _, config := range dingTalkConfigs {
+		list = append(list, response.NotificationResponse{
+			ID:                 config.ID,
+			Name:               config.Name,
+			Type:               config.Type,
+			NotificationPolicy: config.NotificationPolicy,
+			RobotURL:           config.RobotURL,
+			CreatedAt:          config.CreatedAt,
+		})
+	}
 
-		switch config.Type {
-		case im.NotificationTypeDingTalk:
-			var dingTalk im.DingTalkConfig
-			if err := global.KUBEGALE_DB.Where("id = ?", config.ID).First(&dingTalk).Error; err != nil {
-				continue
-			}
-			item = response.DingTalkResponse{
-				Config:      dingTalk,
-				CardContent: cardContent,
-			}
-		case im.NotificationTypeFeiShu:
-			var feiShu im.FeiShuConfig
-			if err := global.KUBEGALE_DB.Where("id = ?", config.ID).First(&feiShu).Error; err != nil {
-				continue
-			}
-			item = response.FeiShuResponse{
-				Config:      feiShu,
-				CardContent: cardContent,
-			}
+	for _, config := range feiShuConfigs {
+		list = append(list, response.NotificationResponse{
+			ID:                 config.ID,
+			Name:               config.Name,
+			Type:               config.Type,
+			NotificationPolicy: config.NotificationPolicy,
+			RobotURL:           config.RobotURL,
+			CreatedAt:          config.CreatedAt,
+		})
+	}
+
+	// 对合并后的数据进行排序
+	sort.Slice(list, func(i, j int) bool {
+		if params.Desc {
+			return list[i].CreatedAt.After(list[j].CreatedAt)
 		}
+		return list[i].CreatedAt.Before(list[j].CreatedAt)
+	})
 
-		if item != nil {
-			list = append(list, item)
-		}
+	// 如果合并后的数据超过了页面大小，需要截取
+	if len(list) > limit {
+		list = list[:limit]
 	}
 
 	return list, total, nil
@@ -359,8 +391,9 @@ func (notificationService *NotificationService) GetNotificationList(params reque
 
 // @function: GetNotificationById
 // @description: 根据ID获取通知配置
-func (notificationService *NotificationService) GetNotificationById(id uint, notificationType string) (interface{}, error) {
+func (notificationService *NotificationService) GetNotificationById(id uint, notificationType string) (*response.NotificationDetailResponse, error) {
 	var cardContent im.CardContentConfig
+	var config response.NotificationDetailConfig
 
 	// 查询卡片内容
 	err := global.KUBEGALE_DB.Where("notification_id = ?", id).First(&cardContent).Error
@@ -369,28 +402,62 @@ func (notificationService *NotificationService) GetNotificationById(id uint, not
 		return nil, fmt.Errorf("查询卡片内容失败: %w", err)
 	}
 
+	// 根据类型查询对应的配置
 	switch notificationType {
 	case im.NotificationTypeDingTalk:
 		var dingTalk im.DingTalkConfig
 		if err := global.KUBEGALE_DB.Where("id = ?", id).First(&dingTalk).Error; err != nil {
 			return nil, err
 		}
-		return response.DingTalkResponse{
-			Config:      dingTalk,
-			CardContent: cardContent,
-		}, nil
+		config = response.NotificationDetailConfig{
+			ID:                 dingTalk.ID,
+			Name:               dingTalk.Name,
+			Type:               dingTalk.Type,
+			NotificationPolicy: dingTalk.NotificationPolicy,
+			SendDailyStats:     dingTalk.SendDailyStats,
+			CreatedAt:          dingTalk.CreatedAt,
+			UpdatedAt:          dingTalk.UpdatedAt,
+			SignatureKey:       dingTalk.SignatureKey,
+			RobotURL:           dingTalk.RobotURL,
+		}
 	case im.NotificationTypeFeiShu:
 		var feiShu im.FeiShuConfig
 		if err := global.KUBEGALE_DB.Where("id = ?", id).First(&feiShu).Error; err != nil {
 			return nil, err
 		}
-		return response.FeiShuResponse{
-			Config:      feiShu,
-			CardContent: cardContent,
-		}, nil
+		config = response.NotificationDetailConfig{
+			ID:                 feiShu.ID,
+			Name:               feiShu.Name,
+			Type:               feiShu.Type,
+			NotificationPolicy: feiShu.NotificationPolicy,
+			SendDailyStats:     feiShu.SendDailyStats,
+			CreatedAt:          feiShu.CreatedAt,
+			UpdatedAt:          feiShu.UpdatedAt,
+			RobotURL:           feiShu.RobotURL,
+		}
 	default:
 		return nil, errors.New("不支持的通知类型")
 	}
+
+	return &response.NotificationDetailResponse{
+		Config: config,
+		CardContent: response.CardContentDetail{
+			ID:                 cardContent.ID,
+			NotificationID:     cardContent.NotificationID,
+			AlertLevel:         cardContent.AlertLevel,
+			AlertName:          cardContent.AlertName,
+			NotificationPolicy: cardContent.NotificationPolicy,
+			AlertContent:       cardContent.AlertContent,
+			AlertTime:          cardContent.AlertTime,
+			NotifiedUsers:      cardContent.NotifiedUsers,
+			LastSimilarAlert:   cardContent.LastSimilarAlert,
+			AlertHandler:       cardContent.AlertHandler,
+			ClaimAlert:         cardContent.ClaimAlert,
+			ResolveAlert:       cardContent.ResolveAlert,
+			MuteAlert:          cardContent.MuteAlert,
+			UnresolvedAlert:    cardContent.UnresolvedAlert,
+		},
+	}, nil
 }
 
 // @function: TestNotification
@@ -414,11 +481,9 @@ func (notificationService *NotificationService) TestNotification(req request.Tes
 	// 根据通知类型发送测试消息
 	switch req.Type {
 	case im.NotificationTypeDingTalk:
-		dingTalkResp := notification.(response.DingTalkResponse)
-		err = messageIm.MessageServiceApp.SendDingTalkMessage(dingTalkResp.Config, dingTalkResp.CardContent, testMessage)
+		err = messageIm.MessageServiceApp.SendDingTalkMessage(notification.Config, notification.CardContent, testMessage)
 	case im.NotificationTypeFeiShu:
-		feiShuResp := notification.(response.FeiShuResponse)
-		err = messageIm.MessageServiceApp.SendFeiShuMessage(feiShuResp.Config, feiShuResp.CardContent, testMessage)
+		err = messageIm.MessageServiceApp.SendFeiShuMessage(notification.Config, notification.CardContent, testMessage)
 	default:
 		return response.TestNotificationResponse{
 			Success: false,

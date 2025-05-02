@@ -3,6 +3,7 @@ package im
 import (
 	"KubeGale/global"
 	"KubeGale/model/im"
+	"KubeGale/model/im/response"
 	messageIm "KubeGale/utils/im"
 	"errors"
 	"fmt"
@@ -37,6 +38,10 @@ func (alertService *AlertService) SendAlert(notificationID uint, notificationTyp
 	cardContent.AlertName = alertInfo.Name
 	cardContent.AlertContent = alertInfo.Content
 	cardContent.AlertTime = alertInfo.Time
+	// 确保告警时间不为零值
+	if cardContent.AlertTime.IsZero() {
+		cardContent.AlertTime = time.Now()
+	}
 	cardContent.NotifiedUsers = alertInfo.NotifyUsers
 	cardContent.AlertHandler = alertInfo.Handler
 	cardContent.ClaimAlert = false
@@ -52,6 +57,24 @@ func (alertService *AlertService) SendAlert(notificationID uint, notificationTyp
 		global.KUBEGALE_DB.Create(&cardContent)
 	}
 
+	// 转换卡片内容为响应格式
+	cardContentDetail := response.CardContentDetail{
+		ID:                 cardContent.ID,
+		NotificationID:     cardContent.NotificationID,
+		AlertLevel:         cardContent.AlertLevel,
+		AlertName:          cardContent.AlertName,
+		NotificationPolicy: cardContent.NotificationPolicy,
+		AlertContent:       cardContent.AlertContent,
+		AlertTime:          cardContent.AlertTime,
+		NotifiedUsers:      cardContent.NotifiedUsers,
+		LastSimilarAlert:   cardContent.LastSimilarAlert,
+		AlertHandler:       cardContent.AlertHandler,
+		ClaimAlert:         cardContent.ClaimAlert,
+		ResolveAlert:       cardContent.ResolveAlert,
+		MuteAlert:          cardContent.MuteAlert,
+		UnresolvedAlert:    cardContent.UnresolvedAlert,
+	}
+
 	// 根据通知类型发送告警
 	switch notificationType {
 	case im.NotificationTypeDingTalk:
@@ -59,13 +82,34 @@ func (alertService *AlertService) SendAlert(notificationID uint, notificationTyp
 		if err := global.KUBEGALE_DB.Where("id = ?", notificationID).First(&dingTalk).Error; err != nil {
 			return err
 		}
-		return messageIm.MessageServiceApp.SendDingTalkMessage(dingTalk, cardContent, "")
+		config := response.NotificationDetailConfig{
+			ID:                 dingTalk.ID,
+			Name:               dingTalk.Name,
+			Type:               dingTalk.Type,
+			NotificationPolicy: dingTalk.NotificationPolicy,
+			SendDailyStats:     dingTalk.SendDailyStats,
+			CreatedAt:          dingTalk.CreatedAt,
+			UpdatedAt:          dingTalk.UpdatedAt,
+			SignatureKey:       dingTalk.SignatureKey,
+			RobotURL:           dingTalk.RobotURL,
+		}
+		return messageIm.MessageServiceApp.SendDingTalkMessage(config, cardContentDetail, "")
 	case im.NotificationTypeFeiShu:
 		var feiShu im.FeiShuConfig
 		if err := global.KUBEGALE_DB.Where("id = ?", notificationID).First(&feiShu).Error; err != nil {
 			return err
 		}
-		return messageIm.MessageServiceApp.SendFeiShuMessage(feiShu, cardContent, "")
+		config := response.NotificationDetailConfig{
+			ID:                 feiShu.ID,
+			Name:               feiShu.Name,
+			Type:               feiShu.Type,
+			NotificationPolicy: feiShu.NotificationPolicy,
+			SendDailyStats:     feiShu.SendDailyStats,
+			CreatedAt:          feiShu.CreatedAt,
+			UpdatedAt:          feiShu.UpdatedAt,
+			RobotURL:           feiShu.RobotURL,
+		}
+		return messageIm.MessageServiceApp.SendFeiShuMessage(config, cardContentDetail, "")
 	default:
 		return errors.New("不支持的通知类型")
 	}

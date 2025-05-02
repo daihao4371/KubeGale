@@ -123,13 +123,33 @@ func (n *NotificationApi) DeleteNotification(c *gin.Context) {
 // @Summary 获取通知配置列表
 func (n *NotificationApi) GetNotificationList(c *gin.Context) {
 	var params request.SearchNotificationParams
-	err := c.ShouldBindJSON(&params)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
+	// 设置默认分页参数
+	params.Page = 1
+	params.PageSize = 10
+
+	// 支持GET和POST两种方式获取参数
+	if c.Request.Method == "POST" {
+		if err := c.ShouldBindJSON(&params); err != nil {
+			response.FailWithMessage(err.Error(), c)
+			return
+		}
+	} else {
+		// GET方式获取参数
+		if err := c.ShouldBindQuery(&params); err != nil {
+			response.FailWithMessage(err.Error(), c)
+			return
+		}
 	}
 
-	err = utils.Verify(params.PageInfo, utils.PageInfoVerify)
+	// 确保分页参数有效
+	if params.Page <= 0 {
+		params.Page = 1
+	}
+	if params.PageSize <= 0 {
+		params.PageSize = 10
+	}
+
+	err := utils.Verify(params.PageInfo, utils.PageInfoVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -142,6 +162,7 @@ func (n *NotificationApi) GetNotificationList(c *gin.Context) {
 		return
 	}
 
+	// 返回统一的响应格式
 	response.OkWithDetailed(response.PageResult{
 		List:     list,
 		Total:    total,
@@ -244,12 +265,24 @@ func (n *NotificationApi) GetCardContentByNotificationId(c *gin.Context) {
 		return
 	}
 
-	cardContent, err := cardContentService.GetCardContentById(uint(id))
+	// 先查询通知配置的类型
+	var notificationType string
+	var notificationConfig im.NotificationConfig
+	err = global.KUBEGALE_DB.Where("id = ?", id).First(&notificationConfig).Error
 	if err != nil {
-		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
-		response.FailWithMessage("获取失败: "+err.Error(), c)
+		global.KUBEGALE_LOG.Error("获取通知配置失败!", zap.Error(err))
+		response.FailWithMessage("获取通知配置失败: "+err.Error(), c)
+		return
+	}
+	notificationType = notificationConfig.Type
+
+	// 获取通知配置和卡片内容
+	result, err := notificationService.GetNotificationById(uint(id), notificationType)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("获取通知配置失败!", zap.Error(err))
+		response.FailWithMessage("获取通知配置失败: "+err.Error(), c)
 		return
 	}
 
-	response.OkWithData(cardContent, c)
+	response.OkWithData(result, c)
 }

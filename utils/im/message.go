@@ -1,7 +1,7 @@
 package im
 
 import (
-	"KubeGale/model/im"
+	"KubeGale/model/im/response"
 	"bytes"
 	"crypto/hmac"
 	"crypto/sha256"
@@ -71,19 +71,18 @@ type FeiShuCardElement struct {
 	Text FeiShuCardText `json:"text,omitempty"`
 }
 
-// @function: SendDingTalkMessage
-// @description: 发送钉钉消息
-func (messageService *MessageService) SendDingTalkMessage(dingTalkConfig im.DingTalkConfig, cardContent im.CardContentConfig, message string) error {
+// SendDingTalkMessage 发送钉钉消息
+func (m *MessageService) SendDingTalkMessage(config response.NotificationDetailConfig, cardContent response.CardContentDetail, message string) error {
 	// 构建签名
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/1e6, 10)
-	stringToSign := timestamp + "\n" + dingTalkConfig.SignatureKey
+	stringToSign := timestamp + "\n" + config.SignatureKey
 
-	mac := hmac.New(sha256.New, []byte(dingTalkConfig.SignatureKey))
+	mac := hmac.New(sha256.New, []byte(config.SignatureKey))
 	mac.Write([]byte(stringToSign))
 	sign := url.QueryEscape(base64.StdEncoding.EncodeToString(mac.Sum(nil)))
 
 	// 构建请求URL
-	requestURL := fmt.Sprintf("%s&timestamp=%s&sign=%s", dingTalkConfig.RobotURL, timestamp, sign)
+	requestURL := fmt.Sprintf("%s&timestamp=%s&sign=%s", config.RobotURL, timestamp, sign)
 
 	// 构建消息内容
 	title := "系统通知"
@@ -115,11 +114,10 @@ func (messageService *MessageService) SendDingTalkMessage(dingTalkConfig im.Ding
 	return sendRequest(requestURL, msg)
 }
 
-// @function: SendFeiShuMessage
-// @description: 发送飞书消息
-func (messageService *MessageService) SendFeiShuMessage(feiShuConfig im.FeiShuConfig, cardContent im.CardContentConfig, message string) error {
+// SendFeiShuMessage 发送飞书消息
+func (m *MessageService) SendFeiShuMessage(config response.NotificationDetailConfig, cardContent response.CardContentDetail, message string) error {
 	// 构建请求URL
-	requestURL := feiShuConfig.RobotURL
+	requestURL := config.RobotURL
 
 	// 如果有卡片内容配置，则使用卡片消息
 	if cardContent.ID != 0 {

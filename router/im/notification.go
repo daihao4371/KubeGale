@@ -26,7 +26,8 @@ func (r *NotificationRouter) InitNotificationRouter(Router *gin.RouterGroup) {
 
 	// 不需要记录操作的查询接口
 	{
-		notificationRouterWithoutRecord.POST("getNotificationList", notificationApi.GetNotificationList)      // 获取通知配置列表
+		notificationRouterWithoutRecord.POST("getNotificationList", notificationApi.GetNotificationList)      // 获取通知配置列表(POST方式)
+		notificationRouterWithoutRecord.GET("getNotificationList", notificationApi.GetNotificationList)       // 获取通知配置列表(GET方式)
 		notificationRouterWithoutRecord.GET("getNotificationById", notificationApi.GetNotificationById)       // 根据ID获取通知配置
 		notificationRouterWithoutRecord.GET("getCardContent", notificationApi.GetCardContentByNotificationId) // 根据通知ID获取卡片内容
 	}
