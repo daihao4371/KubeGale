@@ -29,7 +29,7 @@ type UpdateDingTalkRequest struct {
 	ID                 uint                 `json:"id" binding:"required"`                  // 通知ID
 	Name               string               `json:"name" binding:"required"`                // 通知名称
 	NotificationPolicy string               `json:"notification_policy" binding:"required"` // 通知策略
-	SignatureKey       string               `json:"signature_key" binding:"required"`       // 签名秘钥
+	SignatureKey       string               `json:"signature_key"`                          // 签名秘钥
 	RobotURL           string               `json:"robot_url" binding:"required"`           // 机器人地址
 	SendDailyStats     bool                 `json:"send_daily_stats"`                       // 是否发送每日统计
 	CardContent        im.CardContentConfig `json:"card_content,omitempty"`                 // 卡片内容配置

@@ -134,8 +134,12 @@ func (notificationService *NotificationService) UpdateDingTalk(req request.Updat
 		"name":                req.Name,
 		"notification_policy": req.NotificationPolicy,
 		"send_daily_stats":    req.SendDailyStats,
-		"signature_key":       req.SignatureKey,
 		"robot_url":           req.RobotURL,
+	}
+
+	// 只有当提供了新的签名密钥时才更新
+	if req.SignatureKey != "" {
+		updateMap["signature_key"] = req.SignatureKey
 	}
 
 	// 开启事务

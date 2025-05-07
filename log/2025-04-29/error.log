@@ -1,7 +1,0 @@
-[KUBEGALE]2025-04-29 09:54:19.879	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
-[KUBEGALE]2025-04-29 10:21:43.691	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:29	创建失败!	{"error": "Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'alert_time' at row 1"}
-[KUBEGALE]2025-04-29 10:22:20.292	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
-[KUBEGALE]2025-04-29 10:23:02.160	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:29	创建失败!	{"error": "Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'alert_time' at row 1"}
-[KUBEGALE]2025-04-29 10:24:26.983	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:29	创建失败!	{"error": "Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'alert_time' at row 1"}
-[KUBEGALE]2025-04-29 10:26:59.482	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
-[KUBEGALE]2025-04-29 16:47:47.529	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection

@@ -1,0 +1,8 @@
+[KUBEGALE]2025-05-07 09:30:09.576	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	net.Listen error: listen tcp :8080: bind: address already in use
+[KUBEGALE]2025-05-07 09:30:50.940	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	net.Listen error: listen tcp :8080: bind: address already in use
+[KUBEGALE]2025-05-07 09:32:28.666	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/utils/claims.go:48	重新写入cookie token失败,未能成功解析token,请检查请求头是否存在x-token且claims是否为规定结构
+[KUBEGALE]2025-05-07 09:33:24.565	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/utils/claims.go:48	重新写入cookie token失败,未能成功解析token,请检查请求头是否存在x-token且claims是否为规定结构
+[KUBEGALE]2025-05-07 09:33:28.139	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/utils/claims.go:48	重新写入cookie token失败,未能成功解析token,请检查请求头是否存在x-token且claims是否为规定结构
+[KUBEGALE]2025-05-07 09:33:31.310	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/utils/claims.go:48	重新写入cookie token失败,未能成功解析token,请检查请求头是否存在x-token且claims是否为规定结构
+[KUBEGALE]2025-05-07 09:37:07.315	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-07 09:41:11.049	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
