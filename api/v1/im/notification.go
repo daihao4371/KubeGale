@@ -2,14 +2,17 @@ package im
 
 import (
 	"KubeGale/global"
-	"KubeGale/model/common/response"
+	commonResponse "KubeGale/model/common/response"
 	"KubeGale/model/im"
 	"KubeGale/model/im/request"
+	imResponse "KubeGale/model/im/response"
 	"KubeGale/utils"
+	"errors"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
 type NotificationApi struct{}
@@ -20,18 +23,18 @@ func (n *NotificationApi) CreateDingTalk(c *gin.Context) {
 	var req request.CreateDingTalkRequest
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
-		response.FailWithMessage(err.Error(), c)
+		commonResponse.FailWithMessage(err.Error(), c)
 		return
 	}
 
 	_, err = notificationService.CreateDingTalk(req)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
-		response.FailWithMessage("创建失败: "+err.Error(), c)
+		commonResponse.FailWithMessage("创建失败: "+err.Error(), c)
 		return
 	}
 
-	response.OkWithMessage("创建成功", c)
+	commonResponse.OkWithMessage("创建成功", c)
 }
 
 // CreateFeiShu
@@ -40,18 +43,18 @@ func (n *NotificationApi) CreateFeiShu(c *gin.Context) {
 	var req request.CreateFeiShuRequest
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
-		response.FailWithMessage(err.Error(), c)
+		commonResponse.FailWithMessage(err.Error(), c)
 		return
 	}
 
 	_, err = notificationService.CreateFeiShu(req)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
-		response.FailWithMessage("创建失败: "+err.Error(), c)
+		commonResponse.FailWithMessage("创建失败: "+err.Error(), c)
 		return
 	}
 
-	response.OkWithMessage("创建成功", c)
+	commonResponse.OkWithMessage("创建成功", c)
 }
 
 // UpdateDingTalk
@@ -60,18 +63,18 @@ func (n *NotificationApi) UpdateDingTalk(c *gin.Context) {
 	var req request.UpdateDingTalkRequest
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
-		response.FailWithMessage(err.Error(), c)
+		commonResponse.FailWithMessage(err.Error(), c)
 		return
 	}
 
 	_, err = notificationService.UpdateDingTalk(req)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
-		response.FailWithMessage("更新失败: "+err.Error(), c)
+		commonResponse.FailWithMessage("更新失败: "+err.Error(), c)
 		return
 	}
 
-	response.OkWithMessage("更新成功", c)
+	commonResponse.OkWithMessage("更新成功", c)
 }
 
 // UpdateFeiShu
@@ -80,18 +83,18 @@ func (n *NotificationApi) UpdateFeiShu(c *gin.Context) {
 	var req request.UpdateFeiShuRequest
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
-		response.FailWithMessage(err.Error(), c)
+		commonResponse.FailWithMessage(err.Error(), c)
 		return
 	}
 
 	_, err = notificationService.UpdateFeiShu(req)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
-		response.FailWithMessage("更新失败: "+err.Error(), c)
+		commonResponse.FailWithMessage("更新失败: "+err.Error(), c)
 		return
 	}
 
-	response.OkWithMessage("更新成功", c)
+	commonResponse.OkWithMessage("更新成功", c)
 }
 
 // DeleteNotification
@@ -99,24 +102,24 @@ func (n *NotificationApi) UpdateFeiShu(c *gin.Context) {
 func (n *NotificationApi) DeleteNotification(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
 	if err != nil {
-		response.FailWithMessage("参数错误", c)
+		commonResponse.FailWithMessage("参数错误", c)
 		return
 	}
 
 	notificationType := c.Query("type")
 	if notificationType == "" {
-		response.FailWithMessage("通知类型不能为空", c)
+		commonResponse.FailWithMessage("通知类型不能为空", c)
 		return
 	}
 
 	err = notificationService.DeleteNotification(uint(id), notificationType)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
-		response.FailWithMessage("删除失败: "+err.Error(), c)
+		commonResponse.FailWithMessage("删除失败: "+err.Error(), c)
 		return
 	}
 
-	response.OkWithMessage("删除成功", c)
+	commonResponse.OkWithMessage("删除成功", c)
 }
 
 // GetNotificationList
@@ -130,13 +133,13 @@ func (n *NotificationApi) GetNotificationList(c *gin.Context) {
 	// 支持GET和POST两种方式获取参数
 	if c.Request.Method == "POST" {
 		if err := c.ShouldBindJSON(&params); err != nil {
-			response.FailWithMessage(err.Error(), c)
+			commonResponse.FailWithMessage(err.Error(), c)
 			return
 		}
 	} else {
 		// GET方式获取参数
 		if err := c.ShouldBindQuery(&params); err != nil {
-			response.FailWithMessage(err.Error(), c)
+			commonResponse.FailWithMessage(err.Error(), c)
 			return
 		}
 	}
@@ -151,19 +154,19 @@ func (n *NotificationApi) GetNotificationList(c *gin.Context) {
 
 	err := utils.Verify(params.PageInfo, utils.PageInfoVerify)
 	if err != nil {
-		response.FailWithMessage(err.Error(), c)
+		commonResponse.FailWithMessage(err.Error(), c)
 		return
 	}
 
 	list, total, err := notificationService.GetNotificationList(params)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
-		response.FailWithMessage("获取失败: "+err.Error(), c)
+		commonResponse.FailWithMessage("获取失败: "+err.Error(), c)
 		return
 	}
 
 	// 返回统一的响应格式
-	response.OkWithDetailed(response.PageResult{
+	commonResponse.OkWithDetailed(commonResponse.PageResult{
 		List:     list,
 		Total:    total,
 		Page:     params.Page,
@@ -176,24 +179,24 @@ func (n *NotificationApi) GetNotificationList(c *gin.Context) {
 func (n *NotificationApi) GetNotificationById(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Query("id"), 10, 32)
 	if err != nil {
-		response.FailWithMessage("参数错误", c)
+		commonResponse.FailWithMessage("参数错误", c)
 		return
 	}
 
 	notificationType := c.Query("type")
 	if notificationType == "" {
-		response.FailWithMessage("通知类型不能为空", c)
+		commonResponse.FailWithMessage("通知类型不能为空", c)
 		return
 	}
 
 	notification, err := notificationService.GetNotificationById(uint(id), notificationType)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
-		response.FailWithMessage("获取失败: "+err.Error(), c)
+		commonResponse.FailWithMessage("获取失败: "+err.Error(), c)
 		return
 	}
 
-	response.OkWithData(notification, c)
+	commonResponse.OkWithData(notification, c)
 }
 
 // TestNotification
@@ -202,18 +205,18 @@ func (n *NotificationApi) TestNotification(c *gin.Context) {
 	var req request.TestNotificationRequest
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
-		response.FailWithMessage(err.Error(), c)
+		commonResponse.FailWithMessage(err.Error(), c)
 		return
 	}
 
 	result, err := notificationService.TestNotification(req)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("测试失败!", zap.Error(err))
-		response.FailWithMessage("测试失败: "+err.Error(), c)
+		commonResponse.FailWithMessage("测试失败: "+err.Error(), c)
 		return
 	}
 
-	response.OkWithData(result, c)
+	commonResponse.OkWithData(result, c)
 }
 
 // CreateCardContent
@@ -222,18 +225,18 @@ func (n *NotificationApi) CreateCardContent(c *gin.Context) {
 	var req im.CardContentConfig
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
-		response.FailWithMessage(err.Error(), c)
+		commonResponse.FailWithMessage(err.Error(), c)
 		return
 	}
 
 	err = cardContentService.CreateCardContent(req)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
-		response.FailWithMessage("创建失败: "+err.Error(), c)
+		commonResponse.FailWithMessage("创建失败: "+err.Error(), c)
 		return
 	}
 
-	response.OkWithDetailed(req, "创建成功", c)
+	commonResponse.OkWithDetailed(req, "创建成功", c)
 }
 
 // UpdateCardContent
@@ -242,18 +245,18 @@ func (n *NotificationApi) UpdateCardContent(c *gin.Context) {
 	var req im.CardContentConfig
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
-		response.FailWithMessage(err.Error(), c)
+		commonResponse.FailWithMessage(err.Error(), c)
 		return
 	}
 
 	err = cardContentService.UpdateCardContent(req)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
-		response.FailWithMessage("更新失败: "+err.Error(), c)
+		commonResponse.FailWithMessage("更新失败: "+err.Error(), c)
 		return
 	}
 
-	response.OkWithDetailed(req, "更新成功", c)
+	commonResponse.OkWithDetailed(req, "更新成功", c)
 }
 
 // GetCardContentByNotificationId
@@ -261,7 +264,7 @@ func (n *NotificationApi) UpdateCardContent(c *gin.Context) {
 func (n *NotificationApi) GetCardContentByNotificationId(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Query("notification_id"), 10, 32)
 	if err != nil {
-		response.FailWithMessage("参数错误", c)
+		commonResponse.FailWithMessage("参数错误", c)
 		return
 	}
 
@@ -270,8 +273,16 @@ func (n *NotificationApi) GetCardContentByNotificationId(c *gin.Context) {
 	var notificationConfig im.NotificationConfig
 	err = global.KUBEGALE_DB.Where("id = ?", id).First(&notificationConfig).Error
 	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			// 如果通知配置不存在，返回空的卡片内容
+			commonResponse.OkWithData(imResponse.NotificationDetailResponse{
+				Config:      imResponse.NotificationDetailConfig{},
+				CardContent: imResponse.CardContentDetail{},
+			}, c)
+			return
+		}
 		global.KUBEGALE_LOG.Error("获取通知配置失败!", zap.Error(err))
-		response.FailWithMessage("获取通知配置失败: "+err.Error(), c)
+		commonResponse.FailWithMessage("获取通知配置失败: "+err.Error(), c)
 		return
 	}
 	notificationType = notificationConfig.Type
@@ -280,9 +291,9 @@ func (n *NotificationApi) GetCardContentByNotificationId(c *gin.Context) {
 	result, err := notificationService.GetNotificationById(uint(id), notificationType)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("获取通知配置失败!", zap.Error(err))
-		response.FailWithMessage("获取通知配置失败: "+err.Error(), c)
+		commonResponse.FailWithMessage("获取通知配置失败: "+err.Error(), c)
 		return
 	}
 
-	response.OkWithData(result, c)
+	commonResponse.OkWithData(result, c)
 }
