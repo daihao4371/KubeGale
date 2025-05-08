@@ -95,9 +95,7 @@ func (i *InitApi) InitializeData(ctx context.Context) (context.Context, error) {
 		{ApiGroup: "按钮权限", Method: "POST", Path: "/authorityBtn/getAuthorityBtn", Description: "获取已有按钮权限"},
 		{ApiGroup: "按钮权限", Method: "POST", Path: "/authorityBtn/canRemoveAuthorityBtn", Description: "删除按钮"},
 
-		{ApiGroup: "即时通讯", Method: "POST", Path: "/notification/createDingTalk", Description: "创建钉钉通知"},
 		{ApiGroup: "即时通讯", Method: "POST", Path: "/notification/createFeiShu", Description: "创建飞书通知"},
-		{ApiGroup: "即时通讯", Method: "PUT", Path: "/notification/updateDingTalk", Description: "更新钉钉通知"},
 		{ApiGroup: "即时通讯", Method: "PUT", Path: "/notification/updateFeiShu", Description: "更新飞书通知"},
 		{ApiGroup: "即时通讯", Method: "DELETE", Path: "/notification/deleteNotification", Description: "删除通知配置"},
 		{ApiGroup: "即时通讯", Method: "POST", Path: "/notification/testNotification", Description: "测试通知发送"},
