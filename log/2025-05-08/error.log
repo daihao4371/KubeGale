@@ -19,3 +19,7 @@
 [KUBEGALE]2025-05-08 10:39:16.861	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
 [KUBEGALE]2025-05-08 10:46:40.939	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	net.Listen error: listen tcp :8080: bind: address already in use
 [KUBEGALE]2025-05-08 10:46:50.354	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	net.Listen error: listen tcp :8080: bind: address already in use
+[KUBEGALE]2025-05-08 14:06:01.641	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	net.Listen error: listen tcp :8080: bind: address already in use
+[KUBEGALE]2025-05-08 15:28:39.355	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-08 15:29:35.034	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:32	创建失败!	{"error": "Error 1062 (23000): Duplicate entry '测试飞书通知' for key 'uni_im_fei_shu_configs_name'"}
+[KUBEGALE]2025-05-08 15:54:21.460	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection

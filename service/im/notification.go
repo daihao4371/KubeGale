@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"sort"
+	"strings"
 	"time"
 
 	"gorm.io/gorm"
@@ -20,47 +21,27 @@ var NotificationServiceApp = new(NotificationService)
 
 // @function: CreateFeiShu
 // @description: 创建飞书通知配置
-func (notificationService *NotificationService) CreateFeiShu(req request.CreateFeiShuRequest) (feiShu im.FeiShuConfig, err error) {
-	// 检查名称是否已存在
-	if !errors.Is(global.KUBEGALE_DB.Where("name = ?", req.Name).First(&im.NotificationConfig{}).Error, gorm.ErrRecordNotFound) {
-		return feiShu, errors.New("通知名称已存在")
+func (notificationService *NotificationService) CreateFeiShu(req request.CreateFeiShuRequest) (*im.FeiShuConfig, error) {
+	// 创建通知配置
+	notification := im.NotificationConfig{
+		Name:               req.Name,
+		Type:               req.Type,
+		NotificationPolicy: strings.Join(req.NotifyEvents, ","),
+		SendDailyStats:     req.SendDailyStats,
 	}
 
-	// 创建飞书通知配置
-	feiShu = im.FeiShuConfig{
-		NotificationConfig: im.NotificationConfig{
-			Name:               req.Name,
-			Type:               im.NotificationTypeFeiShu,
-			NotificationPolicy: req.NotificationPolicy,
-			SendDailyStats:     req.SendDailyStats,
-		},
-		RobotURL: req.RobotURL,
+	// 创建飞书配置
+	feiShuConfig := im.FeiShuConfig{
+		NotificationConfig: notification,
+		RobotURL:           req.WebhookURL,
 	}
 
-	// 开启事务
-	err = global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		// 创建飞书配置
-		if err := tx.Create(&feiShu).Error; err != nil {
-			return err
-		}
+	// 保存到数据库
+	if err := global.KUBEGALE_DB.Create(&feiShuConfig).Error; err != nil {
+		return nil, err
+	}
 
-		// 如果有卡片内容配置，则创建
-		if req.CardContent.AlertLevel != "" {
-			cardContent := req.CardContent
-			cardContent.NotificationID = feiShu.ID
-			// 设置告警时间为当前时间，避免数据库插入空时间
-			if cardContent.AlertTime.IsZero() {
-				cardContent.AlertTime = time.Now()
-			}
-			if err := tx.Create(&cardContent).Error; err != nil {
-				return err
-			}
-		}
-
-		return nil
-	})
-
-	return feiShu, err
+	return &feiShuConfig, nil
 }
 
 // @function: UpdateFeiShu

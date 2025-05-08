@@ -7,11 +7,16 @@ import (
 
 // CreateFeiShuRequest 创建飞书通知请求结构
 type CreateFeiShuRequest struct {
-	Name               string               `json:"name" binding:"required"`                // 通知名称
-	NotificationPolicy string               `json:"notification_policy" binding:"required"` // 通知策略
-	RobotURL           string               `json:"robot_url" binding:"required"`           // 机器人地址
-	SendDailyStats     bool                 `json:"send_daily_stats"`                       // 是否发送每日统计
-	CardContent        im.CardContentConfig `json:"card_content,omitempty"`                 // 卡片内容配置
+	Name           string   `json:"name" binding:"required"`        // 通知名称
+	Type           string   `json:"type" binding:"required"`        // 通知类型
+	Enabled        bool     `json:"enabled"`                        // 是否启用
+	WebhookURL     string   `json:"webhook_url" binding:"required"` // 机器人地址
+	Secret         string   `json:"secret"`                         // 签名密钥
+	Description    string   `json:"description"`                    // 描述
+	Tags           []string `json:"tags"`                           // 标签
+	NotifyEvents   []string `json:"notify_events"`                  // 通知事件
+	Receivers      []string `json:"receivers"`                      // 接收者
+	SendDailyStats bool     `json:"send_daily_stats"`               // 是否发送每日统计
 }
 
 // UpdateFeiShuRequest 更新飞书通知请求结构
