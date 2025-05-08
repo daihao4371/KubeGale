@@ -3,9 +3,10 @@ package initialize
 import (
 	"KubeGale/global"
 	"KubeGale/model/system"
+	"os"
+
 	"go.uber.org/zap"
 	"gorm.io/gorm"
-	"os"
 )
 
 func Gorm() *gorm.DB {
@@ -33,7 +34,7 @@ func RegisterTables() {
 		os.Exit(0)
 	}
 
-	err = bizModel()
+	err = RegisterIMTables()
 
 	if err != nil {
 		global.KUBEGALE_LOG.Error("register biz_table failed", zap.Error(err))

@@ -3,32 +3,14 @@ package im
 import (
 	"KubeGale/model/im/response"
 	"bytes"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"net/url"
-	"strconv"
-	"time"
 )
 
 type MessageService struct{}
 
 var MessageServiceApp = new(MessageService)
-
-// 钉钉消息结构
-type DingTalkMessage struct {
-	MsgType  string                  `json:"msgtype"`
-	Markdown DingTalkMarkdownContent `json:"markdown,omitempty"`
-}
-
-// 钉钉 Markdown 消息内容
-type DingTalkMarkdownContent struct {
-	Title string `json:"title"`
-	Text  string `json:"text"`
-}
 
 // 飞书消息结构
 type FeiShuMessage struct {
@@ -69,49 +51,6 @@ type FeiShuCardText struct {
 type FeiShuCardElement struct {
 	Tag  string         `json:"tag"`
 	Text FeiShuCardText `json:"text,omitempty"`
-}
-
-// SendDingTalkMessage 发送钉钉消息
-func (m *MessageService) SendDingTalkMessage(config response.NotificationDetailConfig, cardContent response.CardContentDetail, message string) error {
-	// 构建签名
-	timestamp := strconv.FormatInt(time.Now().UnixNano()/1e6, 10)
-	stringToSign := timestamp + "\n" + config.SignatureKey
-
-	mac := hmac.New(sha256.New, []byte(config.SignatureKey))
-	mac.Write([]byte(stringToSign))
-	sign := url.QueryEscape(base64.StdEncoding.EncodeToString(mac.Sum(nil)))
-
-	// 构建请求URL
-	requestURL := fmt.Sprintf("%s&timestamp=%s&sign=%s", config.RobotURL, timestamp, sign)
-
-	// 构建消息内容
-	title := "系统通知"
-	content := message
-
-	// 如果有卡片内容配置，则使用卡片内容
-	if cardContent.ID != 0 {
-		title = cardContent.AlertName
-		content = fmt.Sprintf("### %s\n\n**告警等级**: %s\n\n**告警内容**: %s\n\n**告警时间**: %s\n\n**通知人**: %s\n\n**上次相似告警**: %s\n\n**告警处理人**: %s",
-			cardContent.AlertName,
-			cardContent.AlertLevel,
-			cardContent.AlertContent,
-			cardContent.AlertTime.Format("2006-01-02 15:04:05"),
-			cardContent.NotifiedUsers,
-			cardContent.LastSimilarAlert,
-			cardContent.AlertHandler)
-	}
-
-	// 构建消息体
-	msg := DingTalkMessage{
-		MsgType: "markdown",
-		Markdown: DingTalkMarkdownContent{
-			Title: title,
-			Text:  content,
-		},
-	}
-
-	// 发送请求
-	return sendRequest(requestURL, msg)
 }
 
 // SendFeiShuMessage 发送飞书消息

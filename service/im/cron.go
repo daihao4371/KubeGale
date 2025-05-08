@@ -7,135 +7,69 @@ import (
 	messageIm "KubeGale/utils/im"
 	"fmt"
 	"time"
+
+	"go.uber.org/zap"
 )
 
 type CronService struct{}
 
 var CronServiceApp = new(CronService)
 
-// @function: SendDailyStats
-// @description: 发送每日统计信息
-func (cronService *CronService) SendDailyStats() error {
-	// 获取所有启用了每日统计的通知配置
-	var dingTalkConfigs []im.DingTalkConfig
+// SendDailyStats 发送每日统计
+func (s *CronService) SendDailyStats() error {
+	// 获取所有飞书配置
 	var feiShuConfigs []im.FeiShuConfig
-
-	// 查询钉钉配置
-	if err := global.KUBEGALE_DB.Where("send_daily_stats = ?", true).Find(&dingTalkConfigs).Error; err != nil {
+	if err := global.KUBEGALE_DB.Find(&feiShuConfigs).Error; err != nil {
 		return err
 	}
 
-	// 查询飞书配置
-	if err := global.KUBEGALE_DB.Where("send_daily_stats = ?", true).Find(&feiShuConfigs).Error; err != nil {
+	// 获取今天的告警统计
+	today := time.Now().Format("2006-01-02")
+	var alertCount int64
+	if err := global.KUBEGALE_DB.Model(&im.CardContentConfig{}).
+		Where("DATE(alert_time) = ?", today).
+		Count(&alertCount).Error; err != nil {
 		return err
 	}
 
-	// 生成统计信息
-	stats := generateDailyStats()
-
-	// 发送钉钉通知
-	for _, config := range dingTalkConfigs {
-		var cardContent im.CardContentConfig
-		global.KUBEGALE_DB.Where("notification_id = ?", config.ID).First(&cardContent)
-
-		notificationConfig := response.NotificationDetailConfig{
-			ID:                 config.ID,
-			Name:               config.Name,
-			Type:               config.Type,
-			NotificationPolicy: config.NotificationPolicy,
-			SendDailyStats:     config.SendDailyStats,
-			CreatedAt:          config.CreatedAt,
-			UpdatedAt:          config.UpdatedAt,
-			RobotURL:           config.RobotURL,
-		}
-
-		cardContentDetail := response.CardContentDetail{
-			ID:                 cardContent.ID,
-			NotificationID:     cardContent.NotificationID,
-			AlertLevel:         cardContent.AlertLevel,
-			AlertName:          cardContent.AlertName,
-			NotificationPolicy: cardContent.NotificationPolicy,
-			AlertContent:       cardContent.AlertContent,
-			AlertTime:          cardContent.AlertTime,
-			NotifiedUsers:      cardContent.NotifiedUsers,
-			LastSimilarAlert:   cardContent.LastSimilarAlert,
-			AlertHandler:       cardContent.AlertHandler,
-			ClaimAlert:         cardContent.ClaimAlert,
-			ResolveAlert:       cardContent.ResolveAlert,
-			MuteAlert:          cardContent.MuteAlert,
-			UnresolvedAlert:    cardContent.UnresolvedAlert,
-		}
-
-		err := messageIm.MessageServiceApp.SendDingTalkMessage(notificationConfig, cardContentDetail, stats)
-		if err != nil {
-			global.KUBEGALE_LOG.Error(fmt.Sprintf("发送钉钉每日统计失败: %s", err.Error()))
-		}
+	// 获取未解决的告警数量
+	var unresolvedCount int64
+	if err := global.KUBEGALE_DB.Model(&im.CardContentConfig{}).
+		Where("unresolved_alert = ?", true).
+		Count(&unresolvedCount).Error; err != nil {
+		return err
 	}
 
-	// 发送飞书通知
+	// 构建统计消息
+	statsMessage := fmt.Sprintf("每日告警统计\n"+
+		"日期: %s\n"+
+		"今日告警总数: %d\n"+
+		"未解决告警数: %d", today, alertCount, unresolvedCount)
+
+	// 发送统计消息到所有飞书配置
 	for _, config := range feiShuConfigs {
-		var cardContent im.CardContentConfig
-		global.KUBEGALE_DB.Where("notification_id = ?", config.ID).First(&cardContent)
+		if config.SendDailyStats {
+			// 构建通知配置详情
+			notificationConfig := response.NotificationDetailConfig{
+				ID:                 config.ID,
+				Name:               config.Name,
+				Type:               config.Type,
+				NotificationPolicy: config.NotificationPolicy,
+				SendDailyStats:     config.SendDailyStats,
+				CreatedAt:          config.CreatedAt,
+				UpdatedAt:          config.UpdatedAt,
+				RobotURL:           config.RobotURL,
+			}
 
-		notificationConfig := response.NotificationDetailConfig{
-			ID:                 config.ID,
-			Name:               config.Name,
-			Type:               config.Type,
-			NotificationPolicy: config.NotificationPolicy,
-			SendDailyStats:     config.SendDailyStats,
-			CreatedAt:          config.CreatedAt,
-			UpdatedAt:          config.UpdatedAt,
-			RobotURL:           config.RobotURL,
-		}
-
-		cardContentDetail := response.CardContentDetail{
-			ID:                 cardContent.ID,
-			NotificationID:     cardContent.NotificationID,
-			AlertLevel:         cardContent.AlertLevel,
-			AlertName:          cardContent.AlertName,
-			NotificationPolicy: cardContent.NotificationPolicy,
-			AlertContent:       cardContent.AlertContent,
-			AlertTime:          cardContent.AlertTime,
-			NotifiedUsers:      cardContent.NotifiedUsers,
-			LastSimilarAlert:   cardContent.LastSimilarAlert,
-			AlertHandler:       cardContent.AlertHandler,
-			ClaimAlert:         cardContent.ClaimAlert,
-			ResolveAlert:       cardContent.ResolveAlert,
-			MuteAlert:          cardContent.MuteAlert,
-			UnresolvedAlert:    cardContent.UnresolvedAlert,
-		}
-
-		err := messageIm.MessageServiceApp.SendFeiShuMessage(notificationConfig, cardContentDetail, stats)
-		if err != nil {
-			global.KUBEGALE_LOG.Error(fmt.Sprintf("发送飞书每日统计失败: %s", err.Error()))
+			// 发送飞书消息
+			err := messageIm.MessageServiceApp.SendFeiShuMessage(notificationConfig, response.CardContentDetail{}, statsMessage)
+			if err != nil {
+				global.KUBEGALE_LOG.Error("发送每日统计失败",
+					zap.String("config", config.Name),
+					zap.Error(err))
+			}
 		}
 	}
 
 	return nil
-}
-
-// @function: generateDailyStats
-// @description: 生成每日统计信息
-func generateDailyStats() string {
-	// 这里应该实现实际的统计逻辑，例如查询数据库获取今日告警数量、处理情况等
-	// 这里只是一个示例
-	now := time.Now()
-	yesterday := now.AddDate(0, 0, -1)
-
-	// 查询昨日告警数量（示例）
-	var alertCount int64
-	global.KUBEGALE_DB.Model(&im.CardContentConfig{}).Where("alert_time BETWEEN ? AND ?", yesterday.Format("2006-01-02"), now.Format("2006-01-02")).Count(&alertCount)
-
-	// 查询已解决告警数量（示例）
-	var resolvedCount int64
-	global.KUBEGALE_DB.Model(&im.CardContentConfig{}).Where("alert_time BETWEEN ? AND ? AND resolve_alert = ?", yesterday.Format("2006-01-02"), now.Format("2006-01-02"), true).Count(&resolvedCount)
-
-	// 生成统计信息
-	stats := fmt.Sprintf("# 每日告警统计 (%s)\n\n", yesterday.Format("2006-01-02"))
-	stats += fmt.Sprintf("- 总告警数量: %d\n", alertCount)
-	stats += fmt.Sprintf("- 已解决告警: %d\n", resolvedCount)
-	stats += fmt.Sprintf("- 未解决告警: %d\n", alertCount-resolvedCount)
-	stats += fmt.Sprintf("- 解决率: %.2f%%\n", float64(resolvedCount)/float64(alertCount)*100)
-
-	return stats
 }

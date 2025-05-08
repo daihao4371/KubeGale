@@ -17,26 +17,6 @@ import (
 
 type NotificationApi struct{}
 
-// CreateDingTalk
-// @Summary 创建钉钉通知配置
-func (n *NotificationApi) CreateDingTalk(c *gin.Context) {
-	var req request.CreateDingTalkRequest
-	err := c.ShouldBindJSON(&req)
-	if err != nil {
-		commonResponse.FailWithMessage(err.Error(), c)
-		return
-	}
-
-	_, err = notificationService.CreateDingTalk(req)
-	if err != nil {
-		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
-		commonResponse.FailWithMessage("创建失败: "+err.Error(), c)
-		return
-	}
-
-	commonResponse.OkWithMessage("创建成功", c)
-}
-
 // CreateFeiShu
 // @Summary 创建飞书通知配置
 func (n *NotificationApi) CreateFeiShu(c *gin.Context) {
@@ -55,26 +35,6 @@ func (n *NotificationApi) CreateFeiShu(c *gin.Context) {
 	}
 
 	commonResponse.OkWithMessage("创建成功", c)
-}
-
-// UpdateDingTalk
-// @Summary 更新钉钉通知配置
-func (n *NotificationApi) UpdateDingTalk(c *gin.Context) {
-	var req request.UpdateDingTalkRequest
-	err := c.ShouldBindJSON(&req)
-	if err != nil {
-		commonResponse.FailWithMessage(err.Error(), c)
-		return
-	}
-
-	_, err = notificationService.UpdateDingTalk(req)
-	if err != nil {
-		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
-		commonResponse.FailWithMessage("更新失败: "+err.Error(), c)
-		return
-	}
-
-	commonResponse.OkWithMessage("更新成功", c)
 }
 
 // UpdateFeiShu

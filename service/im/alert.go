@@ -8,6 +8,8 @@ import (
 	"errors"
 	"fmt"
 	"time"
+
+	"go.uber.org/zap"
 )
 
 type AlertService struct{}
@@ -24,129 +26,137 @@ type AlertInfo struct {
 	Handler     string    // 处理人
 }
 
-// @function: SendAlert
-// @description: 发送告警通知
-func (alertService *AlertService) SendAlert(notificationID uint, notificationType string, alertInfo AlertInfo) error {
-	// 获取通知配置
-	var cardContent im.CardContentConfig
-
-	// 查询卡片内容配置
-	global.KUBEGALE_DB.Where("notification_id = ?", notificationID).First(&cardContent)
-
-	// 更新卡片内容
-	cardContent.AlertLevel = alertInfo.Level
-	cardContent.AlertName = alertInfo.Name
-	cardContent.AlertContent = alertInfo.Content
-	cardContent.AlertTime = alertInfo.Time
-	// 确保告警时间不为零值
-	if cardContent.AlertTime.IsZero() {
-		cardContent.AlertTime = time.Now()
-	}
-	cardContent.NotifiedUsers = alertInfo.NotifyUsers
-	cardContent.AlertHandler = alertInfo.Handler
-	cardContent.ClaimAlert = false
-	cardContent.ResolveAlert = false
-	cardContent.MuteAlert = false
-	cardContent.UnresolvedAlert = true
-
-	// 保存卡片内容
-	if cardContent.ID != 0 {
-		global.KUBEGALE_DB.Save(&cardContent)
-	} else {
-		cardContent.NotificationID = notificationID
-		global.KUBEGALE_DB.Create(&cardContent)
+// SendAlert 发送告警通知
+func (s *AlertService) SendAlert(alert *im.CardContentConfig) error {
+	// 查询通知配置
+	var notification im.FeiShuConfig
+	err := global.KUBEGALE_DB.Where("id = ?", alert.NotificationID).First(&notification).Error
+	if err != nil {
+		return fmt.Errorf("查询通知配置失败: %w", err)
 	}
 
-	// 转换卡片内容为响应格式
-	cardContentDetail := response.CardContentDetail{
-		ID:                 cardContent.ID,
-		NotificationID:     cardContent.NotificationID,
-		AlertLevel:         cardContent.AlertLevel,
-		AlertName:          cardContent.AlertName,
-		NotificationPolicy: cardContent.NotificationPolicy,
-		AlertContent:       cardContent.AlertContent,
-		AlertTime:          cardContent.AlertTime,
-		NotifiedUsers:      cardContent.NotifiedUsers,
-		LastSimilarAlert:   cardContent.LastSimilarAlert,
-		AlertHandler:       cardContent.AlertHandler,
-		ClaimAlert:         cardContent.ClaimAlert,
-		ResolveAlert:       cardContent.ResolveAlert,
-		MuteAlert:          cardContent.MuteAlert,
-		UnresolvedAlert:    cardContent.UnresolvedAlert,
-	}
-
-	// 根据通知类型发送告警
-	switch notificationType {
-	case im.NotificationTypeDingTalk:
-		var dingTalk im.DingTalkConfig
-		if err := global.KUBEGALE_DB.Where("id = ?", notificationID).First(&dingTalk).Error; err != nil {
-			return err
-		}
-		config := response.NotificationDetailConfig{
-			ID:                 dingTalk.ID,
-			Name:               dingTalk.Name,
-			Type:               dingTalk.Type,
-			NotificationPolicy: dingTalk.NotificationPolicy,
-			SendDailyStats:     dingTalk.SendDailyStats,
-			CreatedAt:          dingTalk.CreatedAt,
-			UpdatedAt:          dingTalk.UpdatedAt,
-			SignatureKey:       dingTalk.SignatureKey,
-			RobotURL:           dingTalk.RobotURL,
-		}
-		return messageIm.MessageServiceApp.SendDingTalkMessage(config, cardContentDetail, "")
+	// 根据通知类型发送消息
+	switch notification.Type {
 	case im.NotificationTypeFeiShu:
-		var feiShu im.FeiShuConfig
-		if err := global.KUBEGALE_DB.Where("id = ?", notificationID).First(&feiShu).Error; err != nil {
-			return err
-		}
+		// 构建通知配置详情
 		config := response.NotificationDetailConfig{
-			ID:                 feiShu.ID,
-			Name:               feiShu.Name,
-			Type:               feiShu.Type,
-			NotificationPolicy: feiShu.NotificationPolicy,
-			SendDailyStats:     feiShu.SendDailyStats,
-			CreatedAt:          feiShu.CreatedAt,
-			UpdatedAt:          feiShu.UpdatedAt,
-			RobotURL:           feiShu.RobotURL,
+			ID:                 notification.ID,
+			Name:               notification.Name,
+			Type:               notification.Type,
+			NotificationPolicy: notification.NotificationPolicy,
+			SendDailyStats:     notification.SendDailyStats,
+			CreatedAt:          notification.CreatedAt,
+			UpdatedAt:          notification.UpdatedAt,
+			RobotURL:           notification.RobotURL,
 		}
-		return messageIm.MessageServiceApp.SendFeiShuMessage(config, cardContentDetail, "")
+
+		// 构建卡片内容详情
+		cardContent := response.CardContentDetail{
+			ID:                 alert.ID,
+			NotificationID:     alert.NotificationID,
+			AlertLevel:         alert.AlertLevel,
+			AlertName:          alert.AlertName,
+			NotificationPolicy: alert.NotificationPolicy,
+			AlertContent:       alert.AlertContent,
+			AlertTime:          alert.AlertTime,
+			NotifiedUsers:      alert.NotifiedUsers,
+			LastSimilarAlert:   alert.LastSimilarAlert,
+			AlertHandler:       alert.AlertHandler,
+			ClaimAlert:         alert.ClaimAlert,
+			ResolveAlert:       alert.ResolveAlert,
+			MuteAlert:          alert.MuteAlert,
+			UnresolvedAlert:    alert.UnresolvedAlert,
+		}
+
+		// 发送飞书消息
+		err = messageIm.MessageServiceApp.SendFeiShuMessage(config, cardContent, alert.AlertContent)
+		if err != nil {
+			return fmt.Errorf("发送飞书消息失败: %w", err)
+		}
 	default:
 		return errors.New("不支持的通知类型")
 	}
+
+	return nil
 }
 
-// @function: SendAlertToAll
-// @description: 向所有通知配置发送告警
-func (alertService *AlertService) SendAlertToAll(alertInfo AlertInfo) error {
+// SendAlertToAll 向所有通知配置发送告警
+func (s *AlertService) SendAlertToAll(alertInfo AlertInfo) error {
 	// 获取所有通知配置
-	var dingTalkConfigs []im.DingTalkConfig
 	var feiShuConfigs []im.FeiShuConfig
-
-	// 查询钉钉配置
-	if err := global.KUBEGALE_DB.Find(&dingTalkConfigs).Error; err != nil {
-		return err
-	}
 
 	// 查询飞书配置
 	if err := global.KUBEGALE_DB.Find(&feiShuConfigs).Error; err != nil {
 		return err
 	}
 
-	// 发送钉钉通知
-	for _, config := range dingTalkConfigs {
-		err := alertService.SendAlert(config.ID, im.NotificationTypeDingTalk, alertInfo)
-		if err != nil {
-			global.KUBEGALE_LOG.Error(fmt.Sprintf("发送钉钉告警失败: %s", err.Error()))
-		}
-	}
-
 	// 发送飞书通知
 	for _, config := range feiShuConfigs {
-		err := alertService.SendAlert(config.ID, im.NotificationTypeFeiShu, alertInfo)
-		if err != nil {
-			global.KUBEGALE_LOG.Error(fmt.Sprintf("发送飞书告警失败: %s", err.Error()))
+		// 创建卡片内容
+		cardContent := &im.CardContentConfig{
+			NotificationID:  config.ID,
+			AlertLevel:      alertInfo.Level,
+			AlertName:       alertInfo.Name,
+			AlertContent:    alertInfo.Content,
+			AlertTime:       alertInfo.Time,
+			NotifiedUsers:   alertInfo.NotifyUsers,
+			AlertHandler:    alertInfo.Handler,
+			ClaimAlert:      false,
+			ResolveAlert:    false,
+			MuteAlert:       false,
+			UnresolvedAlert: true,
+		}
+
+		// 确保告警时间不为零值
+		if cardContent.AlertTime.IsZero() {
+			cardContent.AlertTime = time.Now()
+		}
+
+		// 保存卡片内容
+		if err := global.KUBEGALE_DB.Create(cardContent).Error; err != nil {
+			global.KUBEGALE_LOG.Error("创建卡片内容失败",
+				zap.String("config", config.Name),
+				zap.Error(err))
+			continue
+		}
+
+		// 发送告警
+		if err := s.SendAlert(cardContent); err != nil {
+			global.KUBEGALE_LOG.Error("发送飞书告警失败",
+				zap.String("config", config.Name),
+				zap.Error(err))
 		}
 	}
 
 	return nil
+}
+
+// GetAlertList 获取告警列表
+func (s *AlertService) GetAlertList(notificationID uint) ([]im.CardContentConfig, error) {
+	var alerts []im.CardContentConfig
+	err := global.KUBEGALE_DB.Where("notification_id = ?", notificationID).Find(&alerts).Error
+	if err != nil {
+		return nil, err
+	}
+	return alerts, nil
+}
+
+// GetAlertById 根据ID获取告警
+func (s *AlertService) GetAlertById(id uint) (*im.CardContentConfig, error) {
+	var alert im.CardContentConfig
+	err := global.KUBEGALE_DB.Where("id = ?", id).First(&alert).Error
+	if err != nil {
+		return nil, err
+	}
+	return &alert, nil
+}
+
+// UpdateAlert 更新告警
+func (s *AlertService) UpdateAlert(alert *im.CardContentConfig) error {
+	return global.KUBEGALE_DB.Model(alert).Updates(alert).Error
+}
+
+// DeleteAlert 删除告警
+func (s *AlertService) DeleteAlert(id uint) error {
+	return global.KUBEGALE_DB.Delete(&im.CardContentConfig{}, id).Error
 }

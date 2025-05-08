@@ -2,25 +2,23 @@ package initialize
 
 import (
 	"KubeGale/global"
-	"KubeGale/model/cmdb"
 	"KubeGale/model/im"
+
+	"go.uber.org/zap"
 )
 
-func bizModel() error {
+// RegisterIMTables 注册IM相关数据库表
+func RegisterIMTables() error {
 	db := global.KUBEGALE_DB
 	err := db.AutoMigrate(
-		// CMDB相关表
-		cmdb.CmdbProjects{},
-		cmdb.CmdbHosts{},
-
-		// IM通知相关表
-		im.NotificationConfig{}, // 基础通知配置表
-		im.DingTalkConfig{},     // 钉钉通知配置表
-		im.FeiShuConfig{},       // 飞书通知配置表
-		im.CardContentConfig{},  // 告警卡片内容配置表
+		im.NotificationConfig{},
+		im.FeiShuConfig{},
+		im.CardContentConfig{},
 	)
 	if err != nil {
+		global.KUBEGALE_LOG.Error("register IM tables failed", zap.Error(err))
 		return err
 	}
+	global.KUBEGALE_LOG.Info("register IM tables success")
 	return nil
 }

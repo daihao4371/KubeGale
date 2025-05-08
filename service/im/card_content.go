@@ -5,6 +5,9 @@ import (
 	"KubeGale/model/common/request"
 	"KubeGale/model/im"
 	"errors"
+	"time"
+
+	"gorm.io/gorm"
 )
 
 type CardContentService struct{}
@@ -13,62 +16,33 @@ var CardContentServiceApp = new(CardContentService)
 
 // @function: CreateCardContent
 // @description: 创建卡片内容配置
-func (cardContentService *CardContentService) CreateCardContent(cardContent im.CardContentConfig) (err error) {
-	// 检查关联的通知配置是否存在
-	var count int64
-	err = global.KUBEGALE_DB.Model(&im.NotificationConfig{}).Where("id = ?", cardContent.NotificationID).Count(&count).Error
-	if err != nil {
-		return err
-	}
-	if count == 0 {
-		return errors.New("关联的通知配置不存在")
+func (cardContentService *CardContentService) CreateCardContent(req im.CardContentConfig) error {
+	// 检查通知配置是否存在
+	var notification im.NotificationConfig
+	if err := global.KUBEGALE_DB.Where("id = ?", req.NotificationID).First(&notification).Error; err != nil {
+		return errors.New("通知配置不存在")
 	}
 
-	return global.KUBEGALE_DB.Create(&cardContent).Error
+	// 设置告警时间为当前时间，避免数据库插入空时间
+	if req.AlertTime.IsZero() {
+		req.AlertTime = time.Now()
+	}
+
+	// 创建卡片内容
+	return global.KUBEGALE_DB.Create(&req).Error
 }
 
 // @function: UpdateCardContent
 // @description: 更新卡片内容配置
-func (cardContentService *CardContentService) UpdateCardContent(cardContent im.CardContentConfig) (err error) {
-	var oldContent im.CardContentConfig
-
-	// 查询原有配置
-	err = global.KUBEGALE_DB.Where("id = ?", cardContent.ID).First(&oldContent).Error
-	if err != nil {
-		return errors.New("卡片内容配置不存在")
+func (cardContentService *CardContentService) UpdateCardContent(req im.CardContentConfig) error {
+	// 检查卡片内容是否存在
+	var cardContent im.CardContentConfig
+	if err := global.KUBEGALE_DB.Where("id = ?", req.ID).First(&cardContent).Error; err != nil {
+		return errors.New("卡片内容不存在")
 	}
 
-	// 如果修改了通知ID，检查新的通知配置是否存在
-	if cardContent.NotificationID != oldContent.NotificationID {
-		var count int64
-		err = global.KUBEGALE_DB.Model(&im.NotificationConfig{}).Where("id = ?", cardContent.NotificationID).Count(&count).Error
-		if err != nil {
-			return err
-		}
-		if count == 0 {
-			return errors.New("关联的通知配置不存在")
-		}
-	}
-
-	// 保留原始的创建时间
-	cardContent.CreatedAt = oldContent.CreatedAt
-
-	// 使用Updates更新特定字段
-	return global.KUBEGALE_DB.Model(&oldContent).Updates(map[string]interface{}{
-		"notification_id":     cardContent.NotificationID,
-		"alert_level":         cardContent.AlertLevel,
-		"alert_name":          cardContent.AlertName,
-		"notification_policy": cardContent.NotificationPolicy,
-		"alert_content":       cardContent.AlertContent,
-		"alert_time":          cardContent.AlertTime,
-		"notified_users":      cardContent.NotifiedUsers,
-		"last_similar_alert":  cardContent.LastSimilarAlert,
-		"alert_handler":       cardContent.AlertHandler,
-		"claim_alert":         cardContent.ClaimAlert,
-		"resolve_alert":       cardContent.ResolveAlert,
-		"mute_alert":          cardContent.MuteAlert,
-		"unresolved_alert":    cardContent.UnresolvedAlert,
-	}).Error
+	// 更新卡片内容
+	return global.KUBEGALE_DB.Model(&cardContent).Updates(req).Error
 }
 
 // @function: DeleteCardContent
@@ -114,4 +88,21 @@ func (cardContentService *CardContentService) GetCardContentList(info request.Pa
 func (cardContentService *CardContentService) GetCardContentById(id uint) (cardContent im.CardContentConfig, err error) {
 	err = global.KUBEGALE_DB.Where("id = ?", id).First(&cardContent).Error
 	return cardContent, err
+}
+
+// @function: GetCardContentByNotificationId
+// @description: 根据通知ID获取卡片内容
+func (s *CardContentService) GetCardContentByNotificationId(notificationId uint) (*im.CardContentConfig, error) {
+	var cardContent im.CardContentConfig
+	err := global.KUBEGALE_DB.Where("notification_id = ?", notificationId).First(&cardContent).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			// 如果卡片内容不存在，返回空的卡片内容
+			return &im.CardContentConfig{
+				NotificationID: notificationId,
+			}, nil
+		}
+		return nil, err
+	}
+	return &cardContent, nil
 }
