@@ -21,6 +21,10 @@ require (
 	github.com/songzhibin97/gkit v1.2.13
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.0
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cdb v1.0.1163
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/clb v1.0.1165
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1165
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cvm v1.0.1161
 	github.com/unrolled/secure v1.17.0
 	github.com/xuri/excelize/v2 v2.9.1
 	go.uber.org/zap v1.27.0
