@@ -4,9 +4,10 @@ import (
 	"KubeGale/global"
 	"KubeGale/middleware"
 	"KubeGale/router"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"os"
+
+	"github.com/gin-gonic/gin"
 )
 
 type justFilesFilesystem struct {
@@ -85,7 +86,7 @@ func Routers() *gin.Engine {
 	//InstallPlugin(PrivateGroup, PublicGroup, Router)
 
 	// 注册业务路由
-	//initBizRouter(PrivateGroup, PublicGroup)
+	initBizRouter(PrivateGroup, PublicGroup)
 
 	global.KUBEGALE_ROUTERS = Router.Routes()
 

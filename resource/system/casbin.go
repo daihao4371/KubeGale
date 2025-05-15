@@ -105,7 +105,7 @@ func (i *initCasbin) InitializeData(ctx context.Context) (context.Context, error
 		}
 	}
 
-	// 运维角色(8881)拥有基础API权限
+	// 运维角色(8881)拥有基础API权限和即时通讯API权限
 	basicApis := []string{
 		"/user/getUserInfo",
 		"/user/setSelfInfo",
@@ -113,6 +113,11 @@ func (i *initCasbin) InitializeData(ctx context.Context) (context.Context, error
 		"/menu/getMenu",
 		"/menu/getBaseMenuTree",
 		"/jwt/jsonInBlacklist",
+		// 添加即时通讯相关的基础API
+		"/notification/getNotificationList",
+		"/notification/getNotificationById",
+		"/notification/getCardContent",
+		"/notification/testNotification",
 	}
 	for _, api := range apis {
 		for _, basicApi := range basicApis {

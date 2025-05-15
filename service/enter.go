@@ -1,9 +1,15 @@
 package service
 
-import "KubeGale/service/system"
-
-var ServiceGroupApp = new(ServiceGroup)
+import (
+	"KubeGale/service/cmdb"
+	"KubeGale/service/im"
+	"KubeGale/service/system"
+)
 
 type ServiceGroup struct {
 	SystemServiceGroup system.ServiceGroup
+	ImServiceGroup     im.ServiceGroup
+	CmdbServiceGroup   cmdb.ServiceGroup
 }
+
+var ServiceGroupApp = new(ServiceGroup)
