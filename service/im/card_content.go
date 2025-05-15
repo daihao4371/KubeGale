@@ -5,11 +5,14 @@ import (
 	"KubeGale/model/common/request"
 	"KubeGale/model/im"
 	"errors"
+	"fmt"
 	"time"
 
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
+// CardContentService 卡片内容服务
 type CardContentService struct{}
 
 var CardContentServiceApp = new(CardContentService)
@@ -17,19 +20,49 @@ var CardContentServiceApp = new(CardContentService)
 // @function: CreateCardContent
 // @description: 创建卡片内容配置
 func (cardContentService *CardContentService) CreateCardContent(req im.CardContentConfig) error {
-	// 检查通知配置是否存在
-	var notification im.NotificationConfig
-	if err := global.KUBEGALE_DB.Where("id = ?", req.NotificationID).First(&notification).Error; err != nil {
-		return errors.New("通知配置不存在")
+	// 首先检查通用通知配置是否存在
+	var notificationConfig im.NotificationConfig
+	err := global.KUBEGALE_DB.Table("im_notification_configs").Where("id = ?", req.NotificationID).First(&notificationConfig).Error
+	if err != nil {
+		global.KUBEGALE_LOG.Error("查询通知配置失败",
+			zap.Uint("notification_id", req.NotificationID),
+			zap.Error(err))
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			// 尝试查询飞书配置表
+			var feiShuConfig im.FeiShuConfig
+			err = global.KUBEGALE_DB.Where("id = ?", req.NotificationID).First(&feiShuConfig).Error
+			if err != nil {
+				if errors.Is(err, gorm.ErrRecordNotFound) {
+					return errors.New("通知配置不存在")
+				}
+				return fmt.Errorf("查询飞书配置失败: %w", err)
+			}
+			// 找到了飞书配置，可以继续处理
+			notificationConfig.ID = feiShuConfig.ID
+			notificationConfig.Type = feiShuConfig.Type
+		} else {
+			return fmt.Errorf("查询通知配置失败: %w", err)
+		}
 	}
 
-	// 设置告警时间为当前时间，避免数据库插入空时间
+	// 设置告警时间为当前时间，如果未提供
 	if req.AlertTime.IsZero() {
 		req.AlertTime = time.Now()
 	}
 
 	// 创建卡片内容
-	return global.KUBEGALE_DB.Create(&req).Error
+	err = global.KUBEGALE_DB.Create(&req).Error
+	if err != nil {
+		global.KUBEGALE_LOG.Error("创建卡片内容失败",
+			zap.Uint("notification_id", req.NotificationID),
+			zap.Error(err))
+		return fmt.Errorf("创建卡片内容失败: %w", err)
+	}
+
+	global.KUBEGALE_LOG.Info("创建卡片内容成功",
+		zap.Uint("notification_id", req.NotificationID),
+		zap.String("alert_name", req.AlertName))
+	return nil
 }
 
 // @function: UpdateCardContent
@@ -93,6 +126,16 @@ func (cardContentService *CardContentService) GetCardContentById(id uint) (cardC
 // @function: GetCardContentByNotificationId
 // @description: 根据通知ID获取卡片内容
 func (s *CardContentService) GetCardContentByNotificationId(notificationId uint) (*im.CardContentConfig, error) {
+	// 首先检查通知配置是否存在
+	var notification im.FeiShuConfig
+	if err := global.KUBEGALE_DB.Where("id = ?", notificationId).First(&notification).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errors.New("通知配置不存在")
+		}
+		return nil, err
+	}
+
+	// 查询卡片内容
 	var cardContent im.CardContentConfig
 	err := global.KUBEGALE_DB.Where("notification_id = ?", notificationId).First(&cardContent).Error
 	if err != nil {

@@ -3,6 +3,7 @@ package request
 import (
 	"KubeGale/model/common/request"
 	"KubeGale/model/im"
+	"time"
 )
 
 // CreateFeiShuRequest 创建飞书通知请求结构
@@ -11,7 +12,6 @@ type CreateFeiShuRequest struct {
 	Type           string   `json:"type" binding:"required"`        // 通知类型
 	Enabled        bool     `json:"enabled"`                        // 是否启用
 	WebhookURL     string   `json:"webhook_url" binding:"required"` // 机器人地址
-	Secret         string   `json:"secret"`                         // 签名密钥
 	Description    string   `json:"description"`                    // 描述
 	Tags           []string `json:"tags"`                           // 标签
 	NotifyEvents   []string `json:"notify_events"`                  // 通知事件
@@ -44,4 +44,21 @@ type SearchNotificationParams struct {
 	request.PageInfo
 	OrderKey string `json:"orderKey" form:"orderKey"` // 排序字段
 	Desc     bool   `json:"desc" form:"desc"`         // 排序方式:升序false(默认)|降序true
+}
+
+// CreateCardContentRequest 创建卡片内容请求结构
+type CreateCardContentRequest struct {
+	NotificationID     uint      `json:"notification_id" binding:"required"`     // 关联的通知配置ID
+	AlertLevel         string    `json:"alert_level" binding:"required"`         // 告警等级
+	AlertName          string    `json:"alert_name" binding:"required"`          // 告警名称
+	NotificationPolicy string    `json:"notification_policy" binding:"required"` // 通知策略
+	AlertContent       string    `json:"alert_content"`                          // 告警内容
+	AlertTime          time.Time `json:"alert_time"`                             // 告警时间
+	NotifiedUsers      []string  `json:"notified_users"`                         // 通知用户
+	LastSimilarAlert   string    `json:"last_similar_alert"`                     // 上次相似告警
+	AlertHandler       string    `json:"alert_handler" binding:"required"`       // 告警处理人
+	ClaimAlert         bool      `json:"claim_alert"`                            // 是否认领告警
+	ResolveAlert       bool      `json:"resolve_alert"`                          // 是否解决告警
+	MuteAlert          bool      `json:"mute_alert"`                             // 是否屏蔽告警
+	UnresolvedAlert    bool      `json:"unresolved_alert"`                       // 是否未解决告警
 }

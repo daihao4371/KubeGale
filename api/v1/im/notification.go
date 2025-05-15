@@ -7,6 +7,7 @@ import (
 	"KubeGale/model/im/request"
 	imResponse "KubeGale/model/im/response"
 	"KubeGale/utils"
+	"encoding/json"
 	"errors"
 	"strconv"
 
@@ -182,21 +183,49 @@ func (n *NotificationApi) TestNotification(c *gin.Context) {
 // CreateCardContent
 // @Summary 创建卡片内容配置
 func (n *NotificationApi) CreateCardContent(c *gin.Context) {
-	var req im.CardContentConfig
-	err := c.ShouldBindJSON(&req)
-	if err != nil {
-		commonResponse.FailWithMessage(err.Error(), c)
+	var req request.CreateCardContentRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		commonResponse.FailWithMessage("参数错误: "+err.Error(), c)
 		return
 	}
 
-	err = cardContentService.CreateCardContent(req)
+	// 将通知用户数组转换为JSON字符串
+	var notifiedUsersStr string
+	if len(req.NotifiedUsers) > 0 {
+		notifiedUsersBytes, err := json.Marshal(req.NotifiedUsers)
+		if err != nil {
+			global.KUBEGALE_LOG.Error("序列化通知用户失败", zap.Error(err))
+			commonResponse.FailWithMessage("创建失败: 序列化通知用户失败", c)
+			return
+		}
+		notifiedUsersStr = string(notifiedUsersBytes)
+	}
+
+	// 将请求转换为卡片内容配置
+	cardContent := im.CardContentConfig{
+		NotificationID:     req.NotificationID,
+		AlertLevel:         req.AlertLevel,
+		AlertName:          req.AlertName,
+		NotificationPolicy: req.NotificationPolicy,
+		AlertContent:       req.AlertContent,
+		AlertTime:          req.AlertTime,
+		NotifiedUsers:      notifiedUsersStr,
+		LastSimilarAlert:   req.LastSimilarAlert,
+		AlertHandler:       req.AlertHandler,
+		ClaimAlert:         req.ClaimAlert,
+		ResolveAlert:       req.ResolveAlert,
+		MuteAlert:          req.MuteAlert,
+		UnresolvedAlert:    req.UnresolvedAlert,
+	}
+
+	err := cardContentService.CreateCardContent(cardContent)
 	if err != nil {
-		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("创建卡片内容失败", zap.Error(err))
 		commonResponse.FailWithMessage("创建失败: "+err.Error(), c)
 		return
 	}
 
-	commonResponse.OkWithDetailed(req, "创建成功", c)
+	commonResponse.OkWithMessage("创建成功", c)
 }
 
 // UpdateCardContent

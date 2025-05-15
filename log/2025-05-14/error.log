@@ -1,0 +1,16 @@
+[KUBEGALE]2025-05-14 10:15:55.235	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-14 10:16:25.237	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:195	查询通知配置失败	{"error": "record not found"}
+[KUBEGALE]2025-05-14 10:20:00.340	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-14 10:20:07.793	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/service/im/card_content.go:27	查询通知配置失败	{"notification_id": 1, "error": "record not found"}
+[KUBEGALE]2025-05-14 10:20:07.794	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:223	创建卡片内容失败	{"error": "通知配置不存在"}
+[KUBEGALE]2025-05-14 10:20:08.865	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/service/im/card_content.go:27	查询通知配置失败	{"notification_id": 1, "error": "record not found"}
+[KUBEGALE]2025-05-14 10:20:08.865	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:223	创建卡片内容失败	{"error": "通知配置不存在"}
+[KUBEGALE]2025-05-14 10:20:50.368	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/utils/claims.go:48	重新写入cookie token失败,未能成功解析token,请检查请求头是否存在x-token且claims是否为规定结构
+[KUBEGALE]2025-05-14 10:21:02.814	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/service/im/card_content.go:27	查询通知配置失败	{"notification_id": 1, "error": "record not found"}
+[KUBEGALE]2025-05-14 10:21:02.815	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:223	创建卡片内容失败	{"error": "通知配置不存在"}
+[KUBEGALE]2025-05-14 10:23:11.347	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-14 10:23:22.775	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/service/im/card_content.go:27	查询通知配置失败	{"notification_id": 1, "error": "record not found"}
+[KUBEGALE]2025-05-14 10:23:22.775	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:223	创建卡片内容失败	{"error": "通知配置不存在"}
+[KUBEGALE]2025-05-14 10:29:44.611	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/service/im/card_content.go:27	查询通知配置失败	{"notification_id": 1, "error": "record not found"}
+[KUBEGALE]2025-05-14 10:29:44.612	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/im/notification.go:223	创建卡片内容失败	{"error": "通知配置不存在"}
+[KUBEGALE]2025-05-14 11:04:43.409	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection

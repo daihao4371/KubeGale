@@ -20,9 +20,10 @@ require (
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.0
 	github.com/unrolled/secure v1.17.0
+	github.com/xuri/excelize/v2 v2.9.1
 	go.uber.org/zap v1.27.0
-	golang.org/x/crypto v0.36.0
-	golang.org/x/sync v0.12.0
+	golang.org/x/crypto v0.38.0
+	golang.org/x/sync v0.14.0
 	gorm.io/datatypes v1.2.5
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.25.12
@@ -69,20 +70,25 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230126093431-47fa9a501578 // indirect
+	github.com/richardlehane/mscfb v1.0.4 // indirect
+	github.com/richardlehane/msoleps v1.0.4 // indirect
 	github.com/sagikazarmark/locafero v0.7.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.12.0 // indirect
 	github.com/spf13/cast v1.7.1 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
+	github.com/tiendc/go-deepcopy v1.6.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
+	github.com/xuri/efp v0.0.1 // indirect
+	github.com/xuri/nfp v0.0.1 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/arch v0.12.0 // indirect
-	golang.org/x/image v0.23.0 // indirect
-	golang.org/x/net v0.37.0 // indirect
-	golang.org/x/sys v0.31.0 // indirect
-	golang.org/x/text v0.23.0 // indirect
+	golang.org/x/image v0.25.0 // indirect
+	golang.org/x/net v0.40.0 // indirect
+	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/text v0.25.0 // indirect
 	google.golang.org/protobuf v1.36.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/postgres v1.5.9 // indirect
