@@ -19,6 +19,17 @@ import (
 type CloudLoadBalancerService struct{}
 
 // List 负载均衡列表
+// 功能：获取负载均衡器列表，支持分页、排序和条件筛选
+// 参数：
+//   - slb: 负载均衡器查询条件
+//   - info: 分页信息
+//   - order: 排序字段
+//   - desc: 是否降序排序
+//
+// 返回：
+//   - list: 负载均衡器列表
+//   - total: 总记录数
+//   - err: 错误信息
 func (l *CloudLoadBalancerService) List(slb model.LoadBalancer, info cloudcmdbreq.PageInfo, order string, desc bool) (list interface{}, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
@@ -76,6 +87,9 @@ func (l *CloudLoadBalancerService) List(slb model.LoadBalancer, info cloudcmdbre
 }
 
 // UpdateLoadBalancer 更新负载均衡信息
+// 功能：批量更新或插入负载均衡器信息到数据库
+// 参数：
+//   - list: 负载均衡器信息列表
 func (l *CloudLoadBalancerService) UpdateLoadBalancer(list []model.LoadBalancer) {
 	db := global.KUBEGALE_DB.Model(model.LoadBalancer{})
 
@@ -116,6 +130,12 @@ func (l *CloudLoadBalancerService) UpdateLoadBalancer(list []model.LoadBalancer)
 }
 
 // AliyunSyncLoadBalancer 阿里云同步负载均衡
+// 功能：同步阿里云平台的所有区域下的负载均衡器信息
+// 参数：
+//   - cloud: 云平台信息，包含访问凭证和平台ID
+//
+// 返回：
+//   - err: 错误信息
 func (l *CloudLoadBalancerService) AliyunSyncLoadBalancer(cloud model.CloudPlatform) (err error) {
 	var regions []model.CloudRegions
 	if err = global.KUBEGALE_DB.Where("cloud_platform_id = ?", cloud.ID).Find(&regions).Error; err != nil {
@@ -148,6 +168,12 @@ func (l *CloudLoadBalancerService) AliyunSyncLoadBalancer(cloud model.CloudPlatf
 }
 
 // TencentSyncLoadBalancer 腾讯云同步负载均衡
+// 功能：同步腾讯云平台的所有区域下的负载均衡器信息
+// 参数：
+//   - cloud: 云平台信息，包含访问凭证和平台ID
+//
+// 返回：
+//   - err: 错误信息
 func (l *CloudLoadBalancerService) TencentSyncLoadBalancer(cloud model.CloudPlatform) (err error) {
 	var regions []model.CloudRegions
 	if err = global.KUBEGALE_DB.Where("cloud_platform_id = ?", cloud.ID).Find(&regions).Error; err != nil {
@@ -179,6 +205,12 @@ func (l *CloudLoadBalancerService) TencentSyncLoadBalancer(cloud model.CloudPlat
 }
 
 // HuaweiSyncLoadBalancer 华为云同步负载均衡
+// 功能：同步华为云平台的所有区域下的负载均衡器信息
+// 参数：
+//   - cloud: 云平台信息，包含访问凭证和平台ID
+//
+// 返回：
+//   - err: 错误信息
 func (l *CloudLoadBalancerService) HuaweiSyncLoadBalancer(cloud model.CloudPlatform) (err error) {
 	var regions []model.CloudRegions
 	if err = global.KUBEGALE_DB.Where("cloud_platform_id = ?", cloud.ID).Find(&regions).Error; err != nil {
@@ -210,6 +242,12 @@ func (l *CloudLoadBalancerService) HuaweiSyncLoadBalancer(cloud model.CloudPlatf
 }
 
 // AwsSyncLoadBalancer 亚马逊云同步负载均衡
+// 功能：同步亚马逊云平台的所有区域下的负载均衡器信息
+// 参数：
+//   - cloud: 云平台信息，包含访问凭证和平台ID
+//
+// 返回：
+//   - err: 错误信息
 func (l *CloudLoadBalancerService) AwsSyncLoadBalancer(cloud model.CloudPlatform) (err error) {
 	var regions []model.CloudRegions
 	if err = global.KUBEGALE_DB.Where("cloud_platform_id = ?", cloud.ID).Find(&regions).Error; err != nil {
@@ -241,6 +279,12 @@ func (l *CloudLoadBalancerService) AwsSyncLoadBalancer(cloud model.CloudPlatform
 }
 
 // SyncLoadBalancer 同步各个厂商的负载均衡
+// 功能：根据云平台类型选择对应的同步方法
+// 参数：
+//   - id: 云平台ID
+//
+// 返回：
+//   - err: 错误信息
 func (l *CloudLoadBalancerService) SyncLoadBalancer(id int) (err error) {
 	db := global.KUBEGALE_DB.Model(model.CloudPlatform{})
 	var cloud model.CloudPlatform
@@ -275,7 +319,17 @@ func (l *CloudLoadBalancerService) SyncLoadBalancer(id int) (err error) {
 	return err
 }
 
-// SyncLoadBalancer 负载均衡目录树
+// LoadBalancerTree 负载均衡目录树
+// 功能：获取负载均衡器的目录树结构，按云平台和区域组织
+// 参数：
+//   - cloud: 云平台信息
+//   - info: 分页信息
+//   - order: 排序字段
+//   - desc: 是否降序排序
+//
+// 返回：
+//   - list: 目录树结构
+//   - err: 错误信息
 func (l *CloudLoadBalancerService) LoadBalancerTree(cloud model.CloudPlatform, info request.PageInfo, order string, desc bool) (list interface{}, err error) {
 	info.PageSize, info.Page = 1000, 1
 	var platformTree []model.PlatformTree
