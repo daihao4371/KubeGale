@@ -4,12 +4,12 @@ import (
 	"KubeGale/global"
 	model "KubeGale/model/cloudCmdb"
 	cloudcmdbreq "KubeGale/model/cloudCmdb/cloudcmdb"
+	"KubeGale/model/common/request"
 	"KubeGale/utils/cloudCmdb/aliyun"
 	"KubeGale/utils/cloudCmdb/aws"
 	"KubeGale/utils/cloudCmdb/huawei"
 	"KubeGale/utils/cloudCmdb/tencent"
 	"fmt"
-	"KubeGale/model/common/request"
 
 	"go.uber.org/zap"
 	"gorm.io/gorm"
