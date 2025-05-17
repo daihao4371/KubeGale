@@ -182,6 +182,8 @@ github.com/hashicorp/go-uuid v1.0.2/go.mod h1:6SBZvOh/SIDV7/2o3Jml5SYk/TvGqwFJ/b
 github.com/hashicorp/go-uuid v1.0.3/go.mod h1:6SBZvOh/SIDV7/2o3Jml5SYk/TvGqwFJ/bN7x4byOro=
 github.com/huaweicloud/huaweicloud-sdk-go-v3 v0.1.148 h1:PdWSbniKnPhKe1B19KUHW/9ahYbFH2EY6Iq6sxOnomo=
 github.com/huaweicloud/huaweicloud-sdk-go-v3 v0.1.148/go.mod h1:Y/+YLCFCJtS29i2MbYPTUlNNfwXvkzEsZKR0imY/2aY=
+github.com/huaweicloud/huaweicloud-sdk-go-v3 v0.1.149 h1:gDzo/eYE8/mwF5fi7v10pdBW2027PUvaHvRPA5aOPoM=
+github.com/huaweicloud/huaweicloud-sdk-go-v3 v0.1.149/go.mod h1:Y/+YLCFCJtS29i2MbYPTUlNNfwXvkzEsZKR0imY/2aY=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
 github.com/jackc/pgpassfile v1.0.0 h1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=

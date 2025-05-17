@@ -30,8 +30,9 @@ func initBizRouter(routers ...*gin.RouterGroup) {
 		cmdbRouter.InitBatchOperationsRouter(privateGroup, publicGroup)
 	}
 
+	// 注册云资源路由
 	{
-		// 注册云资源路由
+
 		cloudCmdbRouter := cloudCmdb.RouterGroupApp
 		cloudCmdbRouter.InitCloudPlatformRouter(privateGroup)  // 云平台路由
 		cloudCmdbRouter.InitCloudRegionRouter(privateGroup)    // 云区域路由
