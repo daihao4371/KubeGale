@@ -91,6 +91,13 @@ func (l *CloudLoadBalancerService) List(slb model.LoadBalancer, info cloudcmdbre
 // 参数：
 //   - list: 负载均衡器信息列表
 func (l *CloudLoadBalancerService) UpdateLoadBalancer(list []model.LoadBalancer) {
+	if len(list) == 0 {
+		return
+	}
+
+	global.KUBEGALE_LOG.Info("开始更新负载均衡器数据",
+		zap.Int("count", len(list)))
+
 	db := global.KUBEGALE_DB.Model(model.LoadBalancer{})
 
 	for _, machine := range list {
@@ -99,9 +106,9 @@ func (l *CloudLoadBalancerService) UpdateLoadBalancer(list []model.LoadBalancer)
 
 		// 更新所有存在的记录，忽略不存在的记录
 		if err := tx.Session(&gorm.Session{AllowGlobalUpdate: true}).Clauses(clause.OnConflict{
+			Columns: []clause.Column{{Name: "instance_id"}},
 			DoUpdates: clause.AssignmentColumns([]string{
 				"name",
-				"instance_id",
 				"private_addr",
 				"public_addr",
 				"bandwidth",
@@ -112,21 +119,25 @@ func (l *CloudLoadBalancerService) UpdateLoadBalancer(list []model.LoadBalancer)
 				"cloud_platform_id",
 			}),
 		}).Create(&machine).Error; err != nil {
-			global.KUBEGALE_LOG.Error("LoadBalancer  messages update fail!", zap.Error(err))
+			global.KUBEGALE_LOG.Error("更新负载均衡器记录失败",
+				zap.Error(err),
+				zap.String("instanceId", machine.InstanceId))
 			tx.Rollback()
-		}
-
-		// 插入不存在的记录
-		if err := tx.Clauses(clause.OnConflict{
-			DoNothing: true,
-		}).Create(&machine).Error; err != nil {
-			global.KUBEGALE_LOG.Error("LoadBalancer messages insert fail!", zap.Error(err))
-			tx.Rollback()
+			continue
 		}
 
 		// 提交事务
-		tx.Commit()
+		if err := tx.Commit().Error; err != nil {
+			global.KUBEGALE_LOG.Error("提交负载均衡器更新事务失败",
+				zap.Error(err),
+				zap.String("instanceId", machine.InstanceId))
+			tx.Rollback()
+			continue
+		}
 	}
+
+	global.KUBEGALE_LOG.Info("完成更新负载均衡器数据",
+		zap.Int("count", len(list)))
 }
 
 // AliyunSyncLoadBalancer 阿里云同步负载均衡
@@ -142,26 +153,31 @@ func (l *CloudLoadBalancerService) AliyunSyncLoadBalancer(cloud model.CloudPlatf
 		return err
 	}
 
+	// 支持的负载均衡类型
+	lbTypes := []string{"slb", "alb"}
+
 	for _, region := range regions {
-		go func(region model.CloudRegions) {
-			defer func() {
-				if err := recover(); err != nil {
-					global.KUBEGALE_LOG.Error(fmt.Sprintf("aliyun ecs list get fail: %s", err))
+		for _, lbType := range lbTypes {
+			go func(region model.CloudRegions, lbType string) {
+				defer func() {
+					if err := recover(); err != nil {
+						global.KUBEGALE_LOG.Error(fmt.Sprintf("aliyun %s list get fail: %s", lbType, err))
+					}
+				}()
+
+				lb := aliyun.NewLoadBalancer(lbType)
+				list, err := lb.List(cloud.ID, region, cloud.AccessKeyId, cloud.AccessKeySecret)
+				if err != nil {
+					global.KUBEGALE_LOG.Error(fmt.Sprintf("aliyun %s list get fail: ", lbType), zap.Error(err))
+					return
 				}
-			}()
 
-			ecs := aliyun.NewLoadBalancer()
-			list, err := ecs.List(cloud.ID, region, cloud.AccessKeyId, cloud.AccessKeySecret)
-			if err != nil {
-				global.KUBEGALE_LOG.Error("aliyun LoadBalancer list get fail: ", zap.Error(err))
-				return
-			}
+				if len(list) > 0 {
+					l.UpdateLoadBalancer(list)
+				}
 
-			if len(list) > 0 {
-				l.UpdateLoadBalancer(list)
-			}
-
-		}(region)
+			}(region, lbType)
+		}
 	}
 
 	return err
