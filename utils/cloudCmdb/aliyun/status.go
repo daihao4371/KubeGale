@@ -29,8 +29,12 @@ var (
 	}
 
 	LoadBalancerStatus = map[string]string{
-		"inactive": "已停止",
-		"active":   "运行中",
-		"locked":   "已锁定",
+		"active":      "运行中",
+		"inactive":    "已停止",
+		"locked":      "已锁定",
+		"creating":    "创建中",
+		"deleting":    "删除中",
+		"deleted":     "已删除",
+		"configuring": "配置中",
 	}
 )
