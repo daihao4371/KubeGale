@@ -104,6 +104,54 @@ func (i *InitApi) InitializeData(ctx context.Context) (context.Context, error) {
 		{ApiGroup: "即时通讯", Method: "POST", Path: "/notification/getNotificationList", Description: "获取通知配置列表"},
 		{ApiGroup: "即时通讯", Method: "GET", Path: "/notification/getNotificationById", Description: "根据ID获取通知配置"},
 		{ApiGroup: "即时通讯", Method: "GET", Path: "/notification/getCardContent", Description: "根据通知ID获取卡片内容"},
+
+		// CMDB项目管理
+		{ApiGroup: "cmdb", Method: "POST", Path: "/cmdb/projects", Description: "新建项目"},
+		{ApiGroup: "cmdb", Method: "DELETE", Path: "/cmdb/projects", Description: "删除项目"},
+		{ApiGroup: "cmdb", Method: "DELETE", Path: "/cmdb/projectsByIds", Description: "批量删除项目"},
+		{ApiGroup: "cmdb", Method: "PUT", Path: "/cmdb/projects", Description: "更新项目"},
+		{ApiGroup: "cmdb", Method: "GET", Path: "/cmdb/projectsById", Description: "根据ID获取项目"},
+		{ApiGroup: "cmdb", Method: "GET", Path: "/cmdb/projects", Description: "获取项目列表"},
+
+		// CMDB主机管理
+		{ApiGroup: "cmdb", Method: "POST", Path: "/cmdb/hosts", Description: "新建主机"},
+		{ApiGroup: "cmdb", Method: "DELETE", Path: "/cmdb/hosts", Description: "删除主机"},
+		{ApiGroup: "cmdb", Method: "DELETE", Path: "/cmdb/hostsByIds", Description: "批量删除主机"},
+		{ApiGroup: "cmdb", Method: "PUT", Path: "/cmdb/hosts", Description: "更新主机"},
+		{ApiGroup: "cmdb", Method: "POST", Path: "/cmdb/hosts/authentication", Description: "SSH认证主机"},
+		{ApiGroup: "cmdb", Method: "POST", Path: "/cmdb/hosts/import", Description: "导入主机"},
+		{ApiGroup: "cmdb", Method: "GET", Path: "/cmdb/hostsById", Description: "根据ID获取主机"},
+		{ApiGroup: "cmdb", Method: "GET", Path: "/cmdb/hosts", Description: "获取主机列表"},
+
+		// 批量操作
+		{ApiGroup: "cmdb", Method: "POST", Path: "/cmdb/batchOperations/execute", Description: "执行批量操作"},
+		{ApiGroup: "cmdb", Method: "GET", Path: "/cmdb/batchOperations/execLogs", Description: "获取执行记录"},
+
+		// 云平台管理
+		{ApiGroup: "cloud_platform", Method: "POST", Path: "/cloud_platform/getById", Description: "获取云平台信息"},
+		{ApiGroup: "cloud_platform", Method: "POST", Path: "/cloud_platform/create", Description: "创建云平台"},
+		{ApiGroup: "cloud_platform", Method: "PUT", Path: "/cloud_platform/update", Description: "更新云平台"},
+		{ApiGroup: "cloud_platform", Method: "DELETE", Path: "/cloud_platform/delete", Description: "删除云平台"},
+		{ApiGroup: "cloud_platform", Method: "DELETE", Path: "/cloud_platform/deleteByIds", Description: "批量删除云平台"},
+		{ApiGroup: "cloud_platform", Method: "POST", Path: "/cloud_platform/list", Description: "获取云平台列表"},
+
+		// 云区域管理
+		{ApiGroup: "cloud_region", Method: "POST", Path: "/cloud_region/syncRegion", Description: "同步区域信息"},
+
+		// 云主机管理
+		{ApiGroup: "virtualMachine", Method: "POST", Path: "/virtualMachine/sync", Description: "同步云主机"},
+		{ApiGroup: "virtualMachine", Method: "POST", Path: "/virtualMachine/tree", Description: "获取云主机目录树"},
+		{ApiGroup: "virtualMachine", Method: "POST", Path: "/virtualMachine/list", Description: "获取云主机列表"},
+
+		// 负载均衡管理
+		{ApiGroup: "loadBalancer", Method: "POST", Path: "/loadBalancer/sync", Description: "同步负载均衡"},
+		{ApiGroup: "loadBalancer", Method: "POST", Path: "/loadBalancer/tree", Description: "获取负载均衡目录树"},
+		{ApiGroup: "loadBalancer", Method: "POST", Path: "/loadBalancer/list", Description: "获取负载均衡列表"},
+
+		// RDS管理
+		{ApiGroup: "rds", Method: "POST", Path: "/rds/sync", Description: "同步RDS"},
+		{ApiGroup: "rds", Method: "POST", Path: "/rds/tree", Description: "获取RDS目录树"},
+		{ApiGroup: "rds", Method: "POST", Path: "/rds/list", Description: "获取RDS列表"},
 	}
 	if err := db.Create(&entities).Error; err != nil {
 		return ctx, errors.Wrap(err, sysModel.SysApi{}.TableName()+"表数据初始化失败!")

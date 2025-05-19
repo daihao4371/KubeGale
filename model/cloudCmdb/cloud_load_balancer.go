@@ -1,8 +1,9 @@
 package cloudCmdb
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 // LoadBalancer 负载均衡
@@ -18,6 +19,7 @@ type LoadBalancer struct {
 	Status          string         `json:"status" gorm:"comment:'状态'"`
 	CreationTime    string         `json:"creation_time" gorm:"comment:'创建时间'"`
 	ExpiredTime     string         `json:"expired_time" gorm:"comment:'到期时间'"`
+	Type            string         `json:"type" gorm:"comment:'负载均衡类型'"`
 	CloudPlatformId uint           `json:"cloud_platform_id"`
 	CloudPlatform   CloudPlatform  `json:"cloud_platform" gorm:"ForeignKey:CloudPlatformId"`
 	CreatedAt       time.Time      `json:"created_at"`

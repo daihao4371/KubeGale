@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"KubeGale/router"
+	"KubeGale/router/cloudCmdb"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,4 +30,14 @@ func initBizRouter(routers ...*gin.RouterGroup) {
 		cmdbRouter.InitBatchOperationsRouter(privateGroup, publicGroup)
 	}
 
+	// 注册云资源路由
+	{
+
+		cloudCmdbRouter := cloudCmdb.RouterGroupApp
+		cloudCmdbRouter.InitCloudPlatformRouter(privateGroup)  // 云平台路由
+		cloudCmdbRouter.InitCloudRegionRouter(privateGroup)    // 云区域路由
+		cloudCmdbRouter.InitVirtualMachineRouter(privateGroup) // 云主机路由
+		cloudCmdbRouter.InitLoadBalancerRouter(privateGroup)   // 负载均衡路由
+		cloudCmdbRouter.InitRDSRouter(privateGroup)            // RDS路由
+	}
 }

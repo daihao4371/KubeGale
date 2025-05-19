@@ -87,6 +87,11 @@ func (l *LoadBalancer) getInstanceIP(instance interface{}, tp string) string {
 }
 
 func (l *LoadBalancer) List(cloudId uint, region model.CloudRegions, AccessKeyID, AccessKeySecret string) (list []model.LoadBalancer, err error) {
+	global.KUBEGALE_LOG.Info("开始同步AWS负载均衡器",
+		zap.Uint("cloudId", cloudId),
+		zap.String("region", region.RegionId),
+		zap.String("regionName", region.RegionName))
+
 	// 创建 AWS 配置
 	cfg, err := config.LoadDefaultConfig(context.TODO(),
 		config.WithRegion(strings.ReplaceAll(region.RegionId, "aws-", "")),
@@ -98,8 +103,10 @@ func (l *LoadBalancer) List(cloudId uint, region model.CloudRegions, AccessKeyID
 		}))),
 	)
 	if err != nil {
-		global.KUBEGALE_LOG.Error("aws config load fail!", zap.Error(err))
-		return nil, err
+		global.KUBEGALE_LOG.Error("AWS配置加载失败",
+			zap.Error(err),
+			zap.String("region", region.RegionId))
+		return nil, fmt.Errorf("AWS配置加载失败: %v", err)
 	}
 
 	// 创建 ALB/NLB 客户端
@@ -109,31 +116,73 @@ func (l *LoadBalancer) List(cloudId uint, region model.CloudRegions, AccessKeyID
 	// 获取 ALB/NLB 负载均衡器
 	v2LoadBalancers, err := l.getV2LoadBalancers(v2Client, pageSize)
 	if err != nil {
-		global.KUBEGALE_LOG.Error("aws get ALB/NLB instances fail!", zap.Error(err))
-		return list, err
+		global.KUBEGALE_LOG.Error("获取ALB/NLB实例失败",
+			zap.Error(err),
+			zap.String("region", region.RegionId))
+		return list, fmt.Errorf("获取ALB/NLB实例失败: %v", err)
 	}
+
+	global.KUBEGALE_LOG.Info("成功获取ALB/NLB实例",
+		zap.Int("count", len(v2LoadBalancers)),
+		zap.String("region", region.RegionId))
 
 	// 处理 ALB/NLB 负载均衡器
 	for _, instance := range v2LoadBalancers {
+		global.KUBEGALE_LOG.Debug("处理ALB/NLB实例",
+			zap.String("name", aws.ToString(instance.LoadBalancerName)),
+			zap.String("type", string(instance.Type)))
+
 		// 获取带宽信息（仅适用于 NLB）
 		bandwidth := ""
 		if instance.Type == types.LoadBalancerTypeEnumNetwork {
-			// NLB 的带宽信息需要从其他 API 获取
-			// TODO: 实现获取 NLB 带宽信息的逻辑
+			// 获取 NLB 的属性信息
+			attributes, err := v2Client.DescribeLoadBalancerAttributes(context.TODO(), &elasticloadbalancingv2.DescribeLoadBalancerAttributesInput{
+				LoadBalancerArn: instance.LoadBalancerArn,
+			})
+			if err != nil {
+				global.KUBEGALE_LOG.Error("aws get NLB attributes fail!", zap.Error(err))
+			} else {
+				// 遍历属性查找带宽信息
+				for _, attr := range attributes.Attributes {
+					if *attr.Key == "load_balancing.cross_zone.enabled" {
+						// 如果是跨可用区，带宽会更高
+						if *attr.Value == "true" {
+							bandwidth = "1000" // 跨可用区 NLB 默认带宽为 1000Mbps
+						} else {
+							bandwidth = "500" // 单可用区 NLB 默认带宽为 500Mbps
+						}
+						break
+					}
+				}
+			}
 		}
 
-		list = append(list, model.LoadBalancer{
-			Name:            *instance.LoadBalancerName,
-			InstanceId:      *instance.LoadBalancerArn,
-			PrivateAddr:     l.getInstanceIP(instance, "private"),
-			PublicAddr:      l.getInstanceIP(instance, "public"),
+		privateAddr := ""
+		publicAddr := ""
+		if instance.Scheme == types.LoadBalancerSchemeEnumInternetFacing {
+			publicAddr = aws.ToString(instance.DNSName)
+		} else if instance.Scheme == types.LoadBalancerSchemeEnumInternal {
+			privateAddr = aws.ToString(instance.DNSName)
+		}
+
+		lb := model.LoadBalancer{
+			Name:            aws.ToString(instance.LoadBalancerName),
+			InstanceId:      aws.ToString(instance.LoadBalancerArn),
+			PrivateAddr:     privateAddr,
+			PublicAddr:      publicAddr,
 			Bandwidth:       bandwidth,
 			Region:          strings.ReplaceAll(region.RegionId, "aws-", ""),
 			RegionName:      region.RegionName,
 			Status:          l.status(string(instance.State.Code)),
 			CreationTime:    instance.CreatedTime.String(),
 			CloudPlatformId: cloudId,
-		})
+		}
+
+		global.KUBEGALE_LOG.Debug("添加ALB/NLB到列表",
+			zap.String("name", lb.Name),
+			zap.String("instanceId", lb.InstanceId))
+
+		list = append(list, lb)
 	}
 
 	// 创建 Classic LB 客户端
@@ -142,31 +191,58 @@ func (l *LoadBalancer) List(cloudId uint, region model.CloudRegions, AccessKeyID
 	// 获取 Classic 负载均衡器
 	classicLoadBalancers, err := l.getClassicLoadBalancers(classicClient, pageSize)
 	if err != nil {
-		global.KUBEGALE_LOG.Error("aws get Classic LB instances fail!", zap.Error(err))
-		return list, err
+		global.KUBEGALE_LOG.Error("获取Classic LB实例失败",
+			zap.Error(err),
+			zap.String("region", region.RegionId))
+		return list, fmt.Errorf("获取Classic LB实例失败: %v", err)
 	}
+
+	global.KUBEGALE_LOG.Info("成功获取Classic LB实例",
+		zap.Int("count", len(classicLoadBalancers)),
+		zap.String("region", region.RegionId))
 
 	// 处理 Classic 负载均衡器
 	for _, instance := range classicLoadBalancers {
+		global.KUBEGALE_LOG.Debug("处理Classic LB实例",
+			zap.String("name", aws.ToString(instance.LoadBalancerName)))
+
 		// 获取带宽信息
 		bandwidth := ""
 		if instance.HealthCheck != nil {
 			bandwidth = fmt.Sprintf("%d", *instance.HealthCheck.HealthyThreshold)
 		}
 
-		list = append(list, model.LoadBalancer{
-			Name:            *instance.LoadBalancerName,
-			InstanceId:      *instance.LoadBalancerName, // Classic LB 使用名称作为 ID
-			PrivateAddr:     l.getInstanceIP(instance, "private"),
-			PublicAddr:      l.getInstanceIP(instance, "public"),
+		privateAddr := ""
+		publicAddr := ""
+		if instance.Scheme != nil && *instance.Scheme == "internet-facing" {
+			publicAddr = aws.ToString(instance.DNSName)
+		} else if instance.Scheme != nil && *instance.Scheme == "internal" {
+			privateAddr = aws.ToString(instance.DNSName)
+		}
+
+		lb := model.LoadBalancer{
+			Name:            aws.ToString(instance.LoadBalancerName),
+			InstanceId:      aws.ToString(instance.LoadBalancerName),
+			PrivateAddr:     privateAddr,
+			PublicAddr:      publicAddr,
 			Bandwidth:       bandwidth,
 			Region:          strings.ReplaceAll(region.RegionId, "aws-", ""),
 			RegionName:      region.RegionName,
-			Status:          l.status("active"), // Classic LB 总是返回 active 状态
+			Status:          l.status("active"),
 			CreationTime:    instance.CreatedTime.String(),
 			CloudPlatformId: cloudId,
-		})
+		}
+
+		global.KUBEGALE_LOG.Debug("添加Classic LB到列表",
+			zap.String("name", lb.Name),
+			zap.String("instanceId", lb.InstanceId))
+
+		list = append(list, lb)
 	}
+
+	global.KUBEGALE_LOG.Info("负载均衡器同步完成",
+		zap.Int("totalCount", len(list)),
+		zap.String("region", region.RegionId))
 
 	return list, nil
 }

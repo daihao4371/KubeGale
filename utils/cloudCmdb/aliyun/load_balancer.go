@@ -3,38 +3,35 @@ package aliyun
 import (
 	"KubeGale/global"
 	model "KubeGale/model/cloudCmdb"
+	"fmt"
 	"strconv"
 	"strings"
 
 	"github.com/aliyun/alibaba-cloud-sdk-go/sdk"
 	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth/credentials"
 	"github.com/aliyun/alibaba-cloud-sdk-go/sdk/requests"
+	"github.com/aliyun/alibaba-cloud-sdk-go/services/alb"
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/slb"
 	"go.uber.org/zap"
 )
 
-// LoadBalancer 阿里云负载均衡器结构体
 type LoadBalancer struct {
+	Type string // "slb", "alb"
 }
 
-// NewLoadBalancer 创建新的负载均衡器实例
-func NewLoadBalancer() *LoadBalancer {
-	return &LoadBalancer{}
+func NewLoadBalancer(lbType string) *LoadBalancer {
+	return &LoadBalancer{
+		Type: lbType,
+	}
 }
 
-// get 获取负载均衡器列表
-// client: SLB客户端
-// pageNumber: 页码
-// pageSize: 每页数量
-// 返回: 负载均衡器列表和错误信息
-func (l *LoadBalancer) get(client *slb.Client, pageNumber int, pageSize int) ([]slb.LoadBalancer, error) {
-	// 创建请求对象
+// SLB相关方法
+func (l *LoadBalancer) getSLB(client *slb.Client, pageNumber int, pageSize int) ([]slb.LoadBalancer, error) {
 	request := slb.CreateDescribeLoadBalancersRequest()
 	request.Scheme = "https"
 	request.PageSize = requests.NewInteger(pageSize)
 	request.PageNumber = requests.NewInteger(pageNumber)
 
-	// 发送请求获取负载均衡器列表
 	response, err := client.DescribeLoadBalancers(request)
 	if err != nil {
 		return nil, err
@@ -43,9 +40,25 @@ func (l *LoadBalancer) get(client *slb.Client, pageNumber int, pageSize int) ([]
 	return response.LoadBalancers.LoadBalancer, err
 }
 
-// status 转换负载均衡器状态
-// status: 原始状态
-// 返回: 转换后的状态
+// ALB相关方法
+func (l *LoadBalancer) getALB(client *alb.Client, pageNumber int, pageSize int) ([]alb.LoadBalancer, error) {
+	request := alb.CreateListLoadBalancersRequest()
+	request.Scheme = "https"
+	request.MaxResults = requests.NewInteger(pageSize)
+
+	// 第一页不需要 NextToken
+	if pageNumber > 1 {
+		request.NextToken = strconv.Itoa((pageNumber - 1) * pageSize)
+	}
+
+	response, err := client.ListLoadBalancers(request)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.LoadBalancers, err
+}
+
 func (l *LoadBalancer) status(status string) string {
 	if _, ok := LoadBalancerStatus[status]; ok {
 		return LoadBalancerStatus[status]
@@ -53,85 +66,141 @@ func (l *LoadBalancer) status(status string) string {
 	return ""
 }
 
-// getInstanceIP 获取负载均衡器IP地址
-// instance: 负载均衡器实例
-// tp: IP类型（intranet/internet）
-// 返回: IP地址
-func (l *LoadBalancer) getInstanceIP(instance slb.LoadBalancer, tp string) string {
-	// 检查是否为内网IP
-	if instance.AddressType == "intranet" && instance.AddressType == tp {
-		return instance.Address
+func (l *LoadBalancer) getInstanceIP(instance interface{}, tp string) string {
+	switch v := instance.(type) {
+	case slb.LoadBalancer:
+		if v.AddressType == tp {
+			return v.Address
+		}
+	case alb.LoadBalancer:
+		if v.AddressType == tp {
+			return v.DNSName
+		}
 	}
-
-	// 检查是否为公网IP
-	if instance.AddressType == "internet" && instance.AddressType == tp {
-		return instance.Address
-	}
-
 	return ""
 }
 
-// List 获取负载均衡器列表
-// cloudId: 云平台ID
-// region: 区域信息
-// AccessKeyID: 访问密钥ID
-// AccessKeySecret: 访问密钥密码
-// 返回: 负载均衡器列表和错误信息
-func (l LoadBalancer) List(cloudId uint, region model.CloudRegions, AccessKeyID, AccessKeySecret string) (list []model.LoadBalancer, err error) {
-	// 创建SDK配置
+func (l *LoadBalancer) List(cloudId uint, region model.CloudRegions, AccessKeyID, AccessKeySecret string) (list []model.LoadBalancer, err error) {
 	config := sdk.NewConfig()
 	credential := credentials.NewAccessKeyCredential(AccessKeyID, AccessKeySecret)
+	regionId := strings.ReplaceAll(region.RegionId, "aliyun-", "")
 
-	// 创建SLB客户端
-	client, err := slb.NewClientWithOptions(strings.ReplaceAll(region.RegionId, "aliyun-", ""), config, credential)
+	switch l.Type {
+	case "slb":
+		return l.listSLB(cloudId, region, regionId, config, credential)
+	case "alb":
+		return l.listALB(cloudId, region, regionId, config, credential)
+	default:
+		global.KUBEGALE_LOG.Error("Unsupported load balancer type", zap.String("type", l.Type))
+		return nil, fmt.Errorf("unsupported load balancer type: %s", l.Type)
+	}
+}
+
+func (l *LoadBalancer) listSLB(cloudId uint, region model.CloudRegions, regionId string, config *sdk.Config, credential *credentials.AccessKeyCredential) (list []model.LoadBalancer, err error) {
+	client, err := slb.NewClientWithOptions(regionId, config, credential)
 	if err != nil {
-		global.KUBEGALE_LOG.Error("LoadBalancer new Client fail!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("SLB new Client fail!", zap.Error(err))
 		return
 	}
 
-	// 设置分页参数
 	pageNumber := 1
 	pageSize := 30
 
-	// 循环获取所有负载均衡器
 	for {
-		// 获取当前页的负载均衡器列表
-		response, err := l.get(client, pageNumber, pageSize)
+		response, err := l.getSLB(client, pageNumber, pageSize)
 		if err != nil {
-			global.KUBEGALE_LOG.Error("LoadBalancer getInstances fail!", zap.Error(err))
+			global.KUBEGALE_LOG.Error("SLB getInstances fail!", zap.Error(err))
 			return list, err
 		}
 
-		// 处理每个负载均衡器实例
 		for _, instance := range response {
-			// 处理带宽信息
 			bandwidth := ""
 			if instance.Bandwidth != 0 {
 				bandwidth = strconv.Itoa(instance.Bandwidth)
 			}
 
-			// 构建负载均衡器信息
 			list = append(list, model.LoadBalancer{
 				Name:            instance.LoadBalancerName,
 				InstanceId:      instance.LoadBalancerId,
 				PrivateAddr:     l.getInstanceIP(instance, "intranet"),
 				PublicAddr:      l.getInstanceIP(instance, "internet"),
 				Bandwidth:       bandwidth,
-				Region:          strings.ReplaceAll(region.RegionId, "aliyun-", ""),
+				Region:          regionId,
 				RegionName:      region.RegionName,
 				Status:          l.status(instance.LoadBalancerStatus),
 				CreationTime:    instance.CreateTime,
 				CloudPlatformId: cloudId,
+				Type:            "SLB",
 			})
 		}
 
-		// 如果返回的实例数小于页大小，说明已经获取完所有数据
 		if len(response) < pageSize {
 			break
 		}
 
-		// 继续获取下一页
 		pageNumber++
+	}
+
+	return list, err
+}
+
+func (l *LoadBalancer) listALB(cloudId uint, region model.CloudRegions, regionId string, config *sdk.Config, credential *credentials.AccessKeyCredential) (list []model.LoadBalancer, err error) {
+	client, err := alb.NewClientWithOptions(regionId, config, credential)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("ALB new Client fail!", zap.Error(err))
+		return
+	}
+
+	pageSize := 50
+	var nextToken string
+
+	for {
+		request := alb.CreateListLoadBalancersRequest()
+		request.Scheme = "https"
+		request.MaxResults = requests.NewInteger(pageSize)
+
+		// 只有在有 nextToken 时才设置
+		if nextToken != "" {
+			request.NextToken = nextToken
+		}
+
+		response, err := client.ListLoadBalancers(request)
+		if err != nil {
+			global.KUBEGALE_LOG.Error("ALB getInstances fail!", zap.Error(err))
+			return list, err
+		}
+
+		for _, instance := range response.LoadBalancers {
+			// 获取负载均衡器的详细信息
+			detailRequest := alb.CreateGetLoadBalancerAttributeRequest()
+			detailRequest.Scheme = "https"
+			detailRequest.LoadBalancerId = instance.LoadBalancerId
+
+			detailResponse, err := client.GetLoadBalancerAttribute(detailRequest)
+			if err != nil {
+				global.KUBEGALE_LOG.Error("ALB get detail fail!", zap.Error(err))
+				continue
+			}
+
+			list = append(list, model.LoadBalancer{
+				Name:            instance.LoadBalancerName,
+				InstanceId:      instance.LoadBalancerId,
+				PrivateAddr:     detailResponse.VpcId, // 使用 VPC ID 作为私网地址
+				PublicAddr:      detailResponse.DNSName,
+				Region:          regionId,
+				RegionName:      region.RegionName,
+				Status:          l.status(instance.LoadBalancerStatus),
+				CreationTime:    instance.CreateTime,
+				CloudPlatformId: cloudId,
+				Type:            "ALB",
+			})
+		}
+
+		// 检查是否有下一页
+		if response.NextToken == "" {
+			break
+		}
+		nextToken = response.NextToken
 	}
 
 	return list, err

@@ -34,7 +34,7 @@ func RegisterTables() {
 		os.Exit(0)
 	}
 
-	err = RegisterIMTables()
+	err = bizModel()
 
 	if err != nil {
 		global.KUBEGALE_LOG.Error("register biz_table failed", zap.Error(err))
