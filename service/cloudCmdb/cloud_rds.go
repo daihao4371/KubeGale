@@ -10,6 +10,7 @@ import (
 	"KubeGale/utils/cloudCmdb/huawei"
 	"KubeGale/utils/cloudCmdb/tencent"
 	"fmt"
+
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -391,4 +392,36 @@ func (r *CloudRDSService) RDSTree(cloud model.CloudPlatform, info request.PageIn
 	}
 
 	return platformTree, err
+}
+
+// GetRDSInstance 获取RDS实例详情
+// 功能：根据实例名称或实例ID查询RDS实例信息
+// 参数：
+//   - name: 实例名称
+//   - instanceId: 实例ID
+//
+// 返回：
+//   - instance: RDS实例信息
+//   - err: 错误信息
+func (r *CloudRDSService) GetRDSInstance(name, instanceId string) (instance model.RDS, err error) {
+	db := global.KUBEGALE_DB.Model(model.RDS{})
+
+	// 构建查询条件
+	if name != "" {
+		db = db.Where("name = ?", name)
+	}
+	if instanceId != "" {
+		db = db.Where("instance_id = ?", instanceId)
+	}
+
+	// 执行查询
+	err = db.First(&instance).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return instance, fmt.Errorf("未找到RDS实例")
+		}
+		return instance, fmt.Errorf("查询RDS实例失败: %v", err)
+	}
+
+	return instance, nil
 }
