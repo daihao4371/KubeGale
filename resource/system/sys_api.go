@@ -4,6 +4,7 @@ import (
 	"KubeGale/common"
 	sysModel "KubeGale/model/system"
 	"context"
+	"fmt"
 
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
@@ -38,7 +39,22 @@ func (i *InitApi) InitializeData(ctx context.Context) (context.Context, error) {
 	if !ok {
 		return ctx, common.ErrMissingDBContext
 	}
-	entities := []sysModel.SysApi{
+
+	// 获取现有的API列表
+	var existingApis []sysModel.SysApi
+	if err := db.Find(&existingApis).Error; err != nil {
+		return ctx, errors.Wrap(err, "获取现有API列表失败")
+	}
+
+	// 创建API映射，用于快速查找
+	apiMap := make(map[string]sysModel.SysApi)
+	for _, api := range existingApis {
+		key := fmt.Sprintf("%s:%s:%s", api.ApiGroup, api.Method, api.Path)
+		apiMap[key] = api
+	}
+
+	// 定义需要初始化的API列表
+	apis := []sysModel.SysApi{
 		{ApiGroup: "jwt", Method: "POST", Path: "/jwt/jsonInBlacklist", Description: "jwt加入黑名单(退出，必选)"},
 
 		{ApiGroup: "系统用户", Method: "DELETE", Path: "/user/deleteUser", Description: "删除用户"},
@@ -153,10 +169,29 @@ func (i *InitApi) InitializeData(ctx context.Context) (context.Context, error) {
 		{ApiGroup: "rds", Method: "POST", Path: "/rds/sync", Description: "同步RDS"},
 		{ApiGroup: "rds", Method: "POST", Path: "/rds/tree", Description: "获取RDS目录树"},
 		{ApiGroup: "rds", Method: "POST", Path: "/rds/list", Description: "获取RDS列表"},
+		{ApiGroup: "rds", Method: "POST", Path: "/rds/get", Description: "RDS实例信息"},
 	}
-	if err := db.Create(&entities).Error; err != nil {
-		return ctx, errors.Wrap(err, sysModel.SysApi{}.TableName()+"表数据初始化失败!")
+
+	// 用于存储需要新增的API
+	var newApis []sysModel.SysApi
+
+	// 检查每个API是否需要新增
+	for _, api := range apis {
+		key := fmt.Sprintf("%s:%s:%s", api.ApiGroup, api.Method, api.Path)
+		if _, exists := apiMap[key]; !exists {
+			newApis = append(newApis, api)
+		}
 	}
-	next := context.WithValue(ctx, i.InitializerName(), entities)
+
+	// 如果有新的API需要添加
+	if len(newApis) > 0 {
+		if err := db.Create(&newApis).Error; err != nil {
+			return ctx, errors.Wrap(err, sysModel.SysApi{}.TableName()+"表数据初始化失败!")
+		}
+	}
+
+	// 合并现有API和新API
+	allApis := append(existingApis, newApis...)
+	next := context.WithValue(ctx, i.InitializerName(), allApis)
 	return next, nil
 }

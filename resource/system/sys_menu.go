@@ -4,6 +4,8 @@ import (
 	"KubeGale/common"
 	. "KubeGale/model/system"
 	"context"
+	"fmt"
+
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
 )
@@ -44,7 +46,22 @@ func (i *InitMenu) InitializeData(ctx context.Context) (next context.Context, er
 	if !ok {
 		return ctx, common.ErrMissingDBContext
 	}
-	entities := []SysBaseMenu{
+
+	// 获取现有的菜单列表
+	var existingMenus []SysBaseMenu
+	if err := db.Find(&existingMenus).Error; err != nil {
+		return ctx, errors.Wrap(err, "获取现有菜单列表失败")
+	}
+
+	// 创建菜单映射，用于快速查找
+	menuMap := make(map[string]SysBaseMenu)
+	for _, menu := range existingMenus {
+		key := fmt.Sprintf("%s:%s", menu.Path, menu.Name)
+		menuMap[key] = menu
+	}
+
+	// 定义需要初始化的菜单
+	menus := []SysBaseMenu{
 		{MenuLevel: 0, Hidden: false, ParentId: 0, Path: "dashboard", Name: "dashboard", Component: "dashboardIndex.vue", Sort: 1, Meta: Meta{Title: "仪表盘", Icon: "odometer"}},
 		{MenuLevel: 0, Hidden: false, ParentId: 0, Path: "admin", Name: "superAdmin", Component: "superAdminIndex.vue", Sort: 3, Meta: Meta{Title: "系统管理", Icon: "user"}},
 		{MenuLevel: 0, Hidden: false, ParentId: 3, Path: "authority", Name: "authority", Component: "superAdmin/authority/authority.vue", Sort: 1, Meta: Meta{Title: "角色管理", Icon: "avatar"}},
@@ -52,15 +69,29 @@ func (i *InitMenu) InitializeData(ctx context.Context) (next context.Context, er
 		{MenuLevel: 0, Hidden: false, ParentId: 3, Path: "api", Name: "api", Component: "superAdmin/api/api.vue", Sort: 3, Meta: Meta{Title: "api管理", Icon: "platform", KeepAlive: true}},
 		{MenuLevel: 0, Hidden: false, ParentId: 3, Path: "user", Name: "user", Component: "superAdmin/user/user.vue", Sort: 4, Meta: Meta{Title: "用户管理", Icon: "coordinate"}},
 		{MenuLevel: 0, Hidden: false, ParentId: 3, Path: "operation", Name: "operation", Component: "superAdmin/operation/sysOperationRecord.vue", Sort: 6, Meta: Meta{Title: "操作历史", Icon: "pie-chart"}},
-		//// CMDB子菜单
-		//{MenuLevel: 0, Hidden: false, ParentId: 30, Path: "cmdbProjects", Name: "cmdbProjects", Component: "view/cmdb/batchOperations/index.vue", Sort: 1, Meta: Meta{Title: "项目管理", Icon: "folder"}},
-		//{MenuLevel: 0, Hidden: false, ParentId: 30, Path: "cmdbHosts", Name: "cmdbHosts", Component: "view/cmdb/cmdbHosts/index.vue", Sort: 2, Meta: Meta{Title: "主机管理", Icon: "cpu"}},
-		//{MenuLevel: 0, Hidden: false, ParentId: 30, Path: "batchOperations", Name: "batchOperations", Component: "view/cmdb/batchOperations/cmdbProjects.vue", Sort: 3, Meta: Meta{Title: "批量操作", Icon: "operation"}},
 	}
-	if err = db.Create(&entities).Error; err != nil {
-		return ctx, errors.Wrap(err, SysBaseMenu{}.TableName()+"表数据初始化失败!")
+
+	// 用于存储需要新增的菜单
+	var newMenus []SysBaseMenu
+
+	// 检查每个菜单是否需要新增
+	for _, menu := range menus {
+		key := fmt.Sprintf("%s:%s", menu.Path, menu.Name)
+		if _, exists := menuMap[key]; !exists {
+			newMenus = append(newMenus, menu)
+		}
 	}
-	next = context.WithValue(ctx, i.InitializerName(), entities)
+
+	// 如果有新的菜单需要添加
+	if len(newMenus) > 0 {
+		if err := db.Create(&newMenus).Error; err != nil {
+			return ctx, errors.Wrap(err, SysBaseMenu{}.TableName()+"表数据初始化失败!")
+		}
+	}
+
+	// 合并现有菜单和新菜单
+	allMenus := append(existingMenus, newMenus...)
+	next = context.WithValue(ctx, i.InitializerName(), allMenus)
 	return next, nil
 }
 
