@@ -3,6 +3,7 @@ package cloudCmdb
 import (
 	api "KubeGale/api/v1/cloudCmdb"
 	"KubeGale/middleware"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,5 +15,6 @@ func (c *CloudRegionRouter) InitCloudRegionRouter(Router *gin.RouterGroup) {
 	cloudRegionApi := api.ApiGroupApp.CloudRegionApi
 	{
 		cloudRegionRouter.POST("syncRegion", cloudRegionApi.CloudPlatformSyncRegion) // 同步区域信息
+		cloudRegionRouter.GET("tree", cloudRegionApi.GetRegionTree)                  // 获取区域树形结构
 	}
 }

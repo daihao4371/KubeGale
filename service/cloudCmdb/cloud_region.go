@@ -251,3 +251,52 @@ func (r CloudRegionService) SyncRegion(id int) (err error) {
 
 	return
 }
+
+// GetRegionTree 获取区域树形结构
+// 功能：获取所有云平台及其区域的树形结构
+// 返回：
+//   - list: 区域树形结构列表
+//   - err: 错误信息
+func (r *CloudRegionService) GetRegionTree() (list []model.PlatformTree, err error) {
+	// 获取所有云平台
+	var platforms []model.CloudPlatform
+	if err := global.KUBEGALE_DB.Find(&platforms).Error; err != nil {
+		global.KUBEGALE_LOG.Error("获取云平台列表失败", zap.Error(err))
+		return nil, err
+	}
+
+	// 遍历每个云平台
+	for _, platform := range platforms {
+		// 获取该云平台下的所有区域
+		var regions []model.CloudRegions
+		if err := global.KUBEGALE_DB.Where("cloud_platform_id = ?", platform.ID).Find(&regions).Error; err != nil {
+			global.KUBEGALE_LOG.Error("获取区域列表失败",
+				zap.Error(err),
+				zap.String("platform", platform.Name))
+			continue
+		}
+
+		// 转换区域格式
+		var regionList []model.Regions
+		for _, region := range regions {
+			regionList = append(regionList, model.Regions{
+				ID:         region.RegionId,
+				Name:       region.Name,
+				RegionId:   region.RegionId,
+				RegionName: region.RegionName,
+			})
+		}
+
+		// 添加到树形结构
+		list = append(list, model.PlatformTree{
+			ID:     platform.ID,
+			Name:   platform.Name,
+			Region: regionList,
+		})
+	}
+
+	global.KUBEGALE_LOG.Info("获取区域树形结构完成",
+		zap.Int("platformCount", len(list)))
+
+	return list, nil
+}

@@ -152,3 +152,25 @@
 [KUBEGALE]2025-05-19 17:31:42.862	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:139	完成更新负载均衡器数据	{"count": 27}
 [KUBEGALE]2025-05-19 17:31:43.011	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/utils/cloudCmdb/aws/load_balancer.go:200	成功获取Classic LB实例	{"count": 0, "region": "aws-af-south-1"}
 [KUBEGALE]2025-05-19 17:31:43.012	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/utils/cloudCmdb/aws/load_balancer.go:243	负载均衡器同步完成	{"totalCount": 0, "region": "aws-af-south-1"}
+[KUBEGALE]2025-05-19 17:46:20.748	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:98	开始更新负载均衡器数据	{"count": 18}
+[KUBEGALE]2025-05-19 17:46:20.830	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:139	完成更新负载均衡器数据	{"count": 18}
+[KUBEGALE]2025-05-19 17:46:20.908	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:98	开始更新负载均衡器数据	{"count": 11}
+[KUBEGALE]2025-05-19 17:46:20.924	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:139	完成更新负载均衡器数据	{"count": 11}
+[KUBEGALE]2025-05-19 17:46:21.810	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:98	开始更新负载均衡器数据	{"count": 77}
+[KUBEGALE]2025-05-19 17:46:21.925	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:139	完成更新负载均衡器数据	{"count": 77}
+[KUBEGALE]2025-05-19 17:46:22.787	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:98	开始更新负载均衡器数据	{"count": 1}
+[KUBEGALE]2025-05-19 17:46:22.789	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:139	完成更新负载均衡器数据	{"count": 1}
+[KUBEGALE]2025-05-19 17:46:22.896	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:98	开始更新负载均衡器数据	{"count": 1}
+[KUBEGALE]2025-05-19 17:46:22.898	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:139	完成更新负载均衡器数据	{"count": 1}
+[KUBEGALE]2025-05-19 17:46:23.089	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:98	开始更新负载均衡器数据	{"count": 2}
+[KUBEGALE]2025-05-19 17:46:23.092	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:139	完成更新负载均衡器数据	{"count": 2}
+[KUBEGALE]2025-05-19 17:46:23.161	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:98	开始更新负载均衡器数据	{"count": 1}
+[KUBEGALE]2025-05-19 17:46:23.162	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:139	完成更新负载均衡器数据	{"count": 1}
+[KUBEGALE]2025-05-19 17:46:23.163	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:98	开始更新负载均衡器数据	{"count": 1}
+[KUBEGALE]2025-05-19 17:46:23.164	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:139	完成更新负载均衡器数据	{"count": 1}
+[KUBEGALE]2025-05-19 17:46:23.423	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:98	开始更新负载均衡器数据	{"count": 27}
+[KUBEGALE]2025-05-19 17:46:23.450	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:139	完成更新负载均衡器数据	{"count": 27}
+[KUBEGALE]2025-05-19 17:46:24.136	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:98	开始更新负载均衡器数据	{"count": 2}
+[KUBEGALE]2025-05-19 17:46:24.138	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:139	完成更新负载均衡器数据	{"count": 2}
+[KUBEGALE]2025-05-19 17:46:25.746	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:98	开始更新负载均衡器数据	{"count": 1}
+[KUBEGALE]2025-05-19 17:46:25.755	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_load_balancer.go:139	完成更新负载均衡器数据	{"count": 1}

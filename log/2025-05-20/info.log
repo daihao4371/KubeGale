@@ -1,0 +1,436 @@
+[KUBEGALE]2025-05-20 10:45:12.468	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_biz.go:35	register  tables success
+[KUBEGALE]2025-05-20 10:45:12.469	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:43	register table success
+[KUBEGALE]2025-05-20 10:45:12.474	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-05-20 10:45:12.475	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-05-20 10:45:12.475	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-05-20 10:45:12.476	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:54	register swagger handler
+[KUBEGALE]2025-05-20 10:45:12.477	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:93	router register success
+[KUBEGALE]2025-05-20 10:45:12.477	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-05-20 10:48:55.239	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_biz.go:35	register  tables success
+[KUBEGALE]2025-05-20 10:48:55.239	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:43	register table success
+[KUBEGALE]2025-05-20 10:48:55.241	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-05-20 10:48:55.242	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-05-20 10:48:55.242	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-05-20 10:48:55.242	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:54	register swagger handler
+[KUBEGALE]2025-05-20 10:48:55.243	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:93	router register success
+[KUBEGALE]2025-05-20 10:48:55.243	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-05-20 10:50:19.646	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_biz.go:35	register  tables success
+[KUBEGALE]2025-05-20 10:50:19.646	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:43	register table success
+[KUBEGALE]2025-05-20 10:50:19.648	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-05-20 10:50:19.649	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-05-20 10:50:19.649	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-05-20 10:50:19.650	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:54	register swagger handler
+[KUBEGALE]2025-05-20 10:50:19.650	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:93	router register success
+[KUBEGALE]2025-05-20 10:50:19.650	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-05-20 10:55:21.231	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_biz.go:35	register  tables success
+[KUBEGALE]2025-05-20 10:55:21.231	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:43	register table success
+[KUBEGALE]2025-05-20 10:55:21.232	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-05-20 10:55:21.233	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-05-20 10:55:21.233	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-05-20 10:55:21.234	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:54	register swagger handler
+[KUBEGALE]2025-05-20 10:55:21.234	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:93	router register success
+[KUBEGALE]2025-05-20 10:55:21.234	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-05-20 11:00:49.155	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_biz.go:35	register  tables success
+[KUBEGALE]2025-05-20 11:00:49.156	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:43	register table success
+[KUBEGALE]2025-05-20 11:00:49.181	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-05-20 11:00:49.182	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-05-20 11:00:49.182	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-05-20 11:00:49.183	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:54	register swagger handler
+[KUBEGALE]2025-05-20 11:00:49.184	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:93	router register success
+[KUBEGALE]2025-05-20 11:00:49.184	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-05-20 11:06:32.985	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_biz.go:35	register  tables success
+[KUBEGALE]2025-05-20 11:06:32.985	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:43	register table success
+[KUBEGALE]2025-05-20 11:06:32.987	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-05-20 11:06:32.987	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-05-20 11:06:32.988	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-05-20 11:06:32.988	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:54	register swagger handler
+[KUBEGALE]2025-05-20 11:06:32.990	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:93	router register success
+[KUBEGALE]2025-05-20 11:06:32.990	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-05-20 11:06:40.819	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 0}
+[KUBEGALE]2025-05-20 11:10:07.996	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:11:11.561	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:11:14.088	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:19:29.018	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:19:29.027	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:19:45.580	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:19:45.585	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:19:45.591	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:20:14.715	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:20:14.722	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:20:14.733	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:20:34.352	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:20:34.357	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:20:34.362	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:20:53.893	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:20:53.899	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:20:53.906	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:21:20.266	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:21:20.272	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:21:20.280	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:21:35.399	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:21:35.406	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:21:35.413	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:22:41.054	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:23:00.957	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:23:36.430	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:27:03.518	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:27:03.526	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:27:03.533	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:27:03.541	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:27:11.279	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:27:11.284	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:27:11.289	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:27:11.295	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:27:11.302	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:28:15.297	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:28:15.304	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:28:15.308	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:28:15.314	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:28:15.318	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:28:15.328	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:28:16.712	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:28:16.718	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:28:16.724	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:28:16.727	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:28:16.731	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:28:16.735	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:28:16.752	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:27.095	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:27.095	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:27.101	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:27.102	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:27.110	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:27.113	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:27.121	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:27.140	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:29.643	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:29.644	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:29.646	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:29.647	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:29.649	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:29.649	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:29.656	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:29.656	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:29.658	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:36.054	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:36.055	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:36.055	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:36.056	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:36.056	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:36.057	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:36.091	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:36.092	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:36.093	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:36.093	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:44.732	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:44.733	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:44.734	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:44.735	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:44.741	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:44.742	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:44.757	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:44.757	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:44.760	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:44.761	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:44.762	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:48.337	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:48.338	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:48.339	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:48.340	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:48.342	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:48.342	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:48.356	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:48.357	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:48.358	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:48.359	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:48.374	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:48.375	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:51.936	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:51.940	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:51.941	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:51.957	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:51.959	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:51.961	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:51.963	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:51.977	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:51.993	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:52.000	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:52.000	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:52.000	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:52.000	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.195	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.196	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.197	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.197	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.200	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.200	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.314	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.316	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.332	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.364	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.365	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.366	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.367	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:57.367	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.081	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.083	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.085	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.085	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.101	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.102	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.157	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.171	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.171	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.171	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.189	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.189	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.189	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.191	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:58.207	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.668	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.669	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.669	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.681	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.681	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.685	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.687	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.688	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.690	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.691	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.691	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.702	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.705	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.706	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.708	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:32:59.709	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.019	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.020	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.024	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.028	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.028	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.029	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.045	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.059	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.059	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.060	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.070	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.074	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.074	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.080	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.082	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.083	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:10.084	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.888	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.888	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.889	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.892	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.901	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.903	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.915	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.917	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.921	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.922	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.931	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.931	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.934	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.935	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.941	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.955	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.957	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:16.957	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.034	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.034	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.034	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.034	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.035	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.035	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.085	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.087	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.088	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.088	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.100	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.101	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.101	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.102	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.102	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.104	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.121	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.122	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:42.122	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.111	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.112	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.112	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.113	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.114	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.114	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.158	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.158	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.159	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.160	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.190	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.190	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.191	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.213	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.213	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.214	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.214	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.229	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.229	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:33:49.239	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.789	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.790	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.790	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.791	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.791	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.793	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.821	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.821	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.821	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.822	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.823	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.823	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.834	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.834	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.834	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.834	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.835	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.836	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.841	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.841	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:39.841	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.638	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.639	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.641	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.645	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.649	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.649	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.665	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.674	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.678	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.678	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.679	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.691	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.694	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.694	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.699	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.705	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.707	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.709	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.709	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.710	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.716	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:46.716	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.544	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.546	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.547	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.547	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.549	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.549	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.569	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.570	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.570	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.571	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.624	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.625	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.627	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.628	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.632	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.638	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.641	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.650	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.653	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.655	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.659	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.663	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:48.663	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.872	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.874	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.874	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.875	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.882	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.885	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.895	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.897	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.897	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.898	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.914	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.916	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.919	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.919	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.941	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.941	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.941	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.942	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.942	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.942	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.956	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.956	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.956	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:54.958	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.533	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.534	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.537	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.539	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.539	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.540	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.554	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.554	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.555	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.556	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.556	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.570	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.570	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.571	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.571	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.572	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.572	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.581	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.583	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.584	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.585	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.585	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.586	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.588	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:35:58.596	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:36:41.413	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:38:03.741	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:41:26.677	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:43:37.916	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:44:10.691	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:44:25.920	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:47:20.448	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:47:59.562	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:48:00.973	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:48:08.207	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:48:14.773	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:50:19.016	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:50:19.016	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:50:36.745	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:50:36.746	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:50:36.746	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:55:10.940	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:56:50.544	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:58:22.524	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:58:27.189	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:58:33.450	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 11:59:52.420	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 12:00:00.798	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 12:00:09.978	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 12:02:28.613	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_biz.go:35	register  tables success
+[KUBEGALE]2025-05-20 12:02:28.614	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:43	register table success
+[KUBEGALE]2025-05-20 12:02:28.619	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-05-20 12:02:28.619	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-05-20 12:02:28.620	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-05-20 12:02:28.620	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:54	register swagger handler
+[KUBEGALE]2025-05-20 12:02:28.621	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:93	router register success
+[KUBEGALE]2025-05-20 12:02:28.621	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-05-20 12:05:06.531	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_biz.go:35	register  tables success
+[KUBEGALE]2025-05-20 12:05:06.532	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:43	register table success
+[KUBEGALE]2025-05-20 12:05:06.535	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-05-20 12:05:06.535	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-05-20 12:05:06.535	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-05-20 12:05:06.536	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:54	register swagger handler
+[KUBEGALE]2025-05-20 12:05:06.537	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:93	router register success
+[KUBEGALE]2025-05-20 12:05:06.537	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-05-20 12:05:13.165	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-05-20 12:05:16.960	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
