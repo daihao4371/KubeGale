@@ -118,6 +118,12 @@ func (i *initCasbin) InitializeData(ctx context.Context) (context.Context, error
 		"/notification/getNotificationById",
 		"/notification/getCardContent",
 		"/notification/testNotification",
+		// 添加云平台相关的基础API
+		"/cloud_region/tree",
+		"/cloud_platform/list",
+		"/virtualMachine/list",
+		"/loadBalancer/list",
+		"/rds/list",
 	}
 	for _, api := range apis {
 		for _, basicApi := range basicApis {

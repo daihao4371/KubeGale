@@ -137,6 +137,7 @@ func (i *InitApi) InitializeData(ctx context.Context) (context.Context, error) {
 
 		// 云区域管理
 		{ApiGroup: "cloud_region", Method: "POST", Path: "/cloud_region/syncRegion", Description: "同步区域信息"},
+		{ApiGroup: "cloud_region", Method: "GET", Path: "/cloud_region/tree", Description: "获取区域树形结构"},
 
 		// 云主机管理
 		{ApiGroup: "virtualMachine", Method: "POST", Path: "/virtualMachine/sync", Description: "同步云主机"},
