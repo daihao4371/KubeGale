@@ -6,6 +6,7 @@ import (
 	"KubeGale/model/common/request"
 	"KubeGale/model/common/response"
 	"KubeGale/utils"
+
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -66,4 +67,32 @@ func (r *CloudRDSApi) CloudRDSTree(c *gin.Context) {
 			List: list,
 		}, "获取成功", c)
 	}
+}
+
+// GetRDSInstance 获取RDS实例详情
+func (r *CloudRDSApi) GetRDSInstance(c *gin.Context) {
+	var req struct {
+		Name       string `json:"name"`
+		InstanceId string `json:"instanceId"`
+	}
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		response.FailWithMessage("参数错误", c)
+		return
+	}
+
+	// 验证至少提供了一个查询参数
+	if req.Name == "" && req.InstanceId == "" {
+		response.FailWithMessage("请提供实例名称或实例ID", c)
+		return
+	}
+
+	instance, err := cloudRDSService.GetRDSInstance(req.Name, req.InstanceId)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("获取RDS实例失败!", zap.Error(err))
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	response.OkWithDetailed(instance, "获取成功", c)
 }
