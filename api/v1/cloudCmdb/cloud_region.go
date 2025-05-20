@@ -5,6 +5,7 @@ import (
 	"KubeGale/model/common/request"
 	"KubeGale/model/common/response"
 	"KubeGale/utils"
+
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -27,4 +28,15 @@ func (r *CloudRegionApi) CloudPlatformSyncRegion(c *gin.Context) {
 	} else {
 		response.OkWithMessage("同步操作成功, 数据异步处理中, 请稍后!", c)
 	}
+}
+
+// GetRegionTree 获取区域树形结构
+func (r *CloudRegionApi) GetRegionTree(c *gin.Context) {
+	list, err := cloudRegionService.GetRegionTree()
+	if err != nil {
+		global.KUBEGALE_LOG.Error("获取区域树形结构失败!", zap.Error(err))
+		response.FailWithMessage("获取区域树形结构失败: "+err.Error(), c)
+		return
+	}
+	response.OkWithData(list, c)
 }

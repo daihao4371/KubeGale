@@ -10,7 +10,6 @@ import (
 	"KubeGale/utils/cloudCmdb/huawei"
 	"KubeGale/utils/cloudCmdb/tencent"
 	"fmt"
-
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -147,34 +146,30 @@ func (r *CloudRDSService) UpdateRDS(list []model.RDS) {
 // 返回：
 //   - err: 错误信息
 func (r *CloudRDSService) AliyunSyncLoadRDS(cloud model.CloudPlatform) (err error) {
-	// 获取云平台所有区域信息
 	var regions []model.CloudRegions
 	if err = global.KUBEGALE_DB.Where("cloud_platform_id = ?", cloud.ID).Find(&regions).Error; err != nil {
 		return err
 	}
 
-	// 并发处理每个区域
 	for _, region := range regions {
 		go func(region model.CloudRegions) {
-			// 错误恢复机制：捕获并记录可能的panic
 			defer func() {
 				if err := recover(); err != nil {
 					global.KUBEGALE_LOG.Error(fmt.Sprintf("aliyun ecs list get fail: %s", err))
 				}
 			}()
 
-			// 创建RDS实例并获取列表
 			rds := aliyun.NewRDS()
 			list, err := rds.List(cloud.ID, region, cloud.AccessKeyId, cloud.AccessKeySecret)
 			if err != nil {
-				global.KUBEGALE_LOG.Error("aliyun LoadBalancer list get fail: ", zap.Error(err))
+				global.KUBEGALE_LOG.Error("aliyun RDS list get fail: ", zap.Error(err))
 				return
 			}
 
-			// 更新数据库：如果有数据则进行更新
 			if len(list) > 0 {
 				r.UpdateRDS(list)
 			}
+
 		}(region)
 	}
 
