@@ -1,19 +1,23 @@
 package cmdb
 
-import "KubeGale/global"
+import (
+	"KubeGale/global"
+	"time"
+)
 
-// cmdbProjects表 结构体  CmdbProjects
+// CmdbProjects 结构体
 type CmdbProjects struct {
 	global.KUBEGALE_MODEL
-	Name      string `json:"name" form:"name" gorm:"column:name;comment:项目名称;size:255;" binding:"required"`               //项目名称
-	Principal string `json:"principal" form:"principal" gorm:"column:principal;comment:负责人;size:255;" binding:"required"` //负责人
-	Note      string `json:"note" form:"note" gorm:"column:note;comment:备注;size:255;"`                                    //备注
-	CreatedBy uint   `gorm:"column:created_by;comment:创建者"`
-	UpdatedBy uint   `gorm:"column:updated_by;comment:更新者"`
-	DeletedBy uint   `gorm:"column:deleted_by;comment:删除者"`
+	Name        string     `json:"name" form:"name" gorm:"column:name;comment:项目名称;"`
+	Description string     `json:"description" form:"description" gorm:"column:description;comment:项目描述;"`
+	Manager     string     `json:"manager" form:"manager" gorm:"column:manager;comment:项目负责人;"`
+	CreatedBy   uint       `json:"created_by" form:"created_by" gorm:"column:created_by;comment:创建人;"`
+	UpdatedBy   uint       `json:"updated_by" form:"updated_by" gorm:"column:updated_by;comment:更新人;"`
+	DeletedBy   uint       `json:"deleted_by" form:"deleted_by" gorm:"column:deleted_by;comment:删除人;"`
+	DeletedAt   *time.Time `json:"deleted_at" form:"deleted_at" gorm:"column:deleted_at;comment:删除时间;"`
 }
 
-// TableName cmdbProjects表 CmdbProjects自定义表名 cmdb_projects
+// TableName 表名
 func (CmdbProjects) TableName() string {
 	return "cmdb_projects"
 }

@@ -6,6 +6,9 @@ import (
 	cmdbReq "KubeGale/model/cmdb/request"
 	"KubeGale/model/common/response"
 	"KubeGale/utils"
+
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -32,9 +35,14 @@ func (cmdbProjectsApi *CmdbProjectsApi) CreateCmdbProjects(c *gin.Context) {
 
 // DeleteCmdbProjects 删除cmdbProjects表
 func (cmdbProjectsApi *CmdbProjectsApi) DeleteCmdbProjects(c *gin.Context) {
-	ID := c.Query("ID")
+	var req cmdbReq.DeleteCmdbProjectsRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		response.FailWithMessage("参数错误: "+err.Error(), c)
+		return
+	}
+
 	userID := utils.GetUserID(c)
-	err := cmdbProjectsService.DeleteCmdbProjects(ID, userID)
+	err := cmdbProjectsService.DeleteCmdbProjects(fmt.Sprintf("%d", req.ID), userID)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败:"+err.Error(), c)
@@ -45,9 +53,20 @@ func (cmdbProjectsApi *CmdbProjectsApi) DeleteCmdbProjects(c *gin.Context) {
 
 // DeleteCmdbProjectsByIds 批量删除cmdbProjects表
 func (cmdbProjectsApi *CmdbProjectsApi) DeleteCmdbProjectsByIds(c *gin.Context) {
-	IDs := c.QueryArray("IDs[]")
+	var req cmdbReq.DeleteCmdbProjectsIdsRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		response.FailWithMessage("参数错误: "+err.Error(), c)
+		return
+	}
+
+	// 将 uint 数组转换为 string 数组
+	ids := make([]string, len(req.IDs))
+	for i, id := range req.IDs {
+		ids[i] = fmt.Sprintf("%d", id)
+	}
+
 	userID := utils.GetUserID(c)
-	err := cmdbProjectsService.DeleteCmdbProjectsByIds(IDs, userID)
+	err := cmdbProjectsService.DeleteCmdbProjectsByIds(ids, userID)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("批量删除失败!", zap.Error(err))
 		response.FailWithMessage("批量删除失败:"+err.Error(), c)
@@ -76,7 +95,7 @@ func (cmdbProjectsApi *CmdbProjectsApi) UpdateCmdbProjects(c *gin.Context) {
 
 // FindCmdbProjects 用id查询cmdbProjects表
 func (cmdbProjectsApi *CmdbProjectsApi) FindCmdbProjects(c *gin.Context) {
-	ID := c.Query("ID")
+	ID := c.Query("id")
 	recmdbProjects, err := cmdbProjectsService.GetCmdbProjects(ID)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("查询失败!", zap.Error(err))

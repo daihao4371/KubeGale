@@ -4,6 +4,8 @@ import (
 	"KubeGale/global"
 	"KubeGale/model/cmdb"
 	cmdbReq "KubeGale/model/cmdb/request"
+	"fmt"
+
 	"gorm.io/gorm"
 )
 
@@ -17,30 +19,44 @@ func (cmdbProjectsService *CmdbProjectsService) CreateCmdbProjects(cmdbProjects 
 
 // DeleteCmdbProjects 删除cmdbProjects表记录
 func (cmdbProjectsService *CmdbProjectsService) DeleteCmdbProjects(ID string, userID uint) (err error) {
-	err = global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Model(&cmdb.CmdbProjects{}).Where("id = ?", ID).Update("deleted_by", userID).Error; err != nil {
+	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
+		// 先检查记录是否存在
+		var project cmdb.CmdbProjects
+		if err := tx.Where("id = ?", ID).First(&project).Error; err != nil {
+			if err == gorm.ErrRecordNotFound {
+				return fmt.Errorf("项目不存在")
+			}
 			return err
 		}
-		if err = tx.Delete(&cmdb.CmdbProjects{}, "id = ?", ID).Error; err != nil {
+
+		// 执行物理删除
+		if err := tx.Unscoped().Delete(&cmdb.CmdbProjects{}, "id = ?", ID).Error; err != nil {
 			return err
 		}
+
 		return nil
 	})
-	return err
 }
 
 // DeleteCmdbProjectsByIds 批量删除cmdbProjects表记录
 func (cmdbProjectsService *CmdbProjectsService) DeleteCmdbProjectsByIds(IDs []string, deleted_by uint) (err error) {
-	err = global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Model(&cmdb.CmdbProjects{}).Where("id in ?", IDs).Update("deleted_by", deleted_by).Error; err != nil {
+	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
+		// 检查所有记录是否存在
+		var count int64
+		if err := tx.Model(&cmdb.CmdbProjects{}).Where("id IN ?", IDs).Count(&count).Error; err != nil {
 			return err
 		}
-		if err := tx.Where("id in ?", IDs).Delete(&cmdb.CmdbProjects{}).Error; err != nil {
+		if int(count) != len(IDs) {
+			return fmt.Errorf("部分项目不存在")
+		}
+
+		// 执行批量物理删除
+		if err := tx.Unscoped().Delete(&cmdb.CmdbProjects{}, "id IN ?", IDs).Error; err != nil {
 			return err
 		}
+
 		return nil
 	})
-	return err
 }
 
 // UpdateCmdbProjects 更新cmdbProjects表记录
@@ -66,6 +82,10 @@ func (cmdbProjectsService *CmdbProjectsService) GetCmdbProjectsInfoList(info cmd
 	if info.StartCreatedAt != nil && info.EndCreatedAt != nil {
 		db = db.Where("created_at BETWEEN ? AND ?", info.StartCreatedAt, info.EndCreatedAt)
 	}
+
+	// 只查询未删除的记录
+	db = db.Unscoped().Where("deleted_at IS NULL")
+
 	err = db.Count(&total).Error
 	if err != nil {
 		return
