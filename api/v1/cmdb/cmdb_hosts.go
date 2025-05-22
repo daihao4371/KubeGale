@@ -6,9 +6,11 @@ import (
 	cmdbReq "KubeGale/model/cmdb/request"
 	"KubeGale/model/common/response"
 	"KubeGale/utils"
+	"fmt"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"strconv"
 )
 
 type CmdbHostsApi struct{}
@@ -55,9 +57,14 @@ func (cmdbHostsApi *CmdbHostsApi) AuthenticationCmdbHosts(c *gin.Context) {
 
 // DeleteCmdbHosts 删除cmdbHosts表
 func (cmdbHostsApi *CmdbHostsApi) DeleteCmdbHosts(c *gin.Context) {
-	ID := c.Query("id")
+	var req cmdbReq.DeleteCmdbHostsRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		response.FailWithMessage("参数错误: "+err.Error(), c)
+		return
+	}
+
 	userID := utils.GetUserID(c)
-	err := cmdbHostsService.DeleteCmdbHosts(ID, userID)
+	err := cmdbHostsService.DeleteCmdbHosts(fmt.Sprintf("%d", req.ID), userID)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败:"+err.Error(), c)
@@ -68,9 +75,20 @@ func (cmdbHostsApi *CmdbHostsApi) DeleteCmdbHosts(c *gin.Context) {
 
 // DeleteCmdbHostsByIds 批量删除cmdbHosts表
 func (cmdbHostsApi *CmdbHostsApi) DeleteCmdbHostsByIds(c *gin.Context) {
-	IDs := c.QueryArray("IDs[]")
+	var req cmdbReq.DeleteCmdbHostsIdsRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		response.FailWithMessage("参数错误: "+err.Error(), c)
+		return
+	}
+
+	// 将 uint 数组转换为 string 数组
+	ids := make([]string, len(req.IDs))
+	for i, id := range req.IDs {
+		ids[i] = fmt.Sprintf("%d", id)
+	}
+
 	userID := utils.GetUserID(c)
-	err := cmdbHostsService.DeleteCmdbHostsByIds(IDs, userID)
+	err := cmdbHostsService.DeleteCmdbHostsByIds(ids, userID)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("批量删除失败!", zap.Error(err))
 		response.FailWithMessage("批量删除失败:"+err.Error(), c)
@@ -112,17 +130,20 @@ func (cmdbHostsApi *CmdbHostsApi) FindCmdbHosts(c *gin.Context) {
 // GetCmdbHostsList 获取cmdbHosts表列表
 func (cmdbHostsApi *CmdbHostsApi) GetCmdbHostsList(c *gin.Context) {
 	var pageInfo cmdbReq.CmdbHostsSearch
-	err := c.ShouldBindQuery(&pageInfo)
+	err := c.ShouldBindJSON(&pageInfo)
 	if err != nil {
-		response.FailWithMessage(err.Error(), c)
+		global.KUBEGALE_LOG.Error("参数绑定失败!", zap.Error(err))
+		response.FailWithMessage("参数错误: "+err.Error(), c)
 		return
 	}
+
 	list, total, err := cmdbHostsService.GetCmdbHostsInfoList(pageInfo)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败:"+err.Error(), c)
 		return
 	}
+
 	response.OkWithDetailed(response.PageResult{
 		List:     list,
 		Total:    total,

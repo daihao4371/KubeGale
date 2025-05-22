@@ -7,11 +7,12 @@ import (
 	utils "KubeGale/utils/cmdb"
 
 	"fmt"
-	"github.com/xuri/excelize/v2"
-	"gorm.io/gorm"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/xuri/excelize/v2"
+	"gorm.io/gorm"
 )
 
 type CmdbHostsService struct{}
@@ -93,30 +94,44 @@ func (cmdbHostsService *CmdbHostsService) CreateCmdbHosts(req *cmdb.CmdbHosts) (
 
 // DeleteCmdbHosts 删除主机
 func (cmdbHostsService *CmdbHostsService) DeleteCmdbHosts(ID string, userID uint) (err error) {
-	err = global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Model(&cmdb.CmdbHosts{}).Where("id = ?", ID).Update("deleted_by", userID).Error; err != nil {
+	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
+		// 先检查记录是否存在
+		var host cmdb.CmdbHosts
+		if err := tx.Where("id = ?", ID).First(&host).Error; err != nil {
+			if err == gorm.ErrRecordNotFound {
+				return fmt.Errorf("主机不存在")
+			}
 			return err
 		}
-		if err = tx.Delete(&cmdb.CmdbHosts{}, "id = ?", ID).Error; err != nil {
+
+		// 执行物理删除
+		if err := tx.Unscoped().Delete(&cmdb.CmdbHosts{}, "id = ?", ID).Error; err != nil {
 			return err
 		}
+
 		return nil
 	})
-	return err
 }
 
 // DeleteCmdbHostsByIds 批量删除cmdbHosts表记录
 func (cmdbHostsService *CmdbHostsService) DeleteCmdbHostsByIds(IDs []string, deleted_by uint) (err error) {
-	err = global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Model(&cmdb.CmdbHosts{}).Where("id in ?", IDs).Update("deleted_by", deleted_by).Error; err != nil {
+	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
+		// 检查所有记录是否存在
+		var count int64
+		if err := tx.Model(&cmdb.CmdbHosts{}).Where("id IN ?", IDs).Count(&count).Error; err != nil {
 			return err
 		}
-		if err := tx.Where("id in ?", IDs).Delete(&cmdb.CmdbHosts{}).Error; err != nil {
+		if int(count) != len(IDs) {
+			return fmt.Errorf("部分主机不存在")
+		}
+
+		// 执行批量物理删除
+		if err := tx.Unscoped().Delete(&cmdb.CmdbHosts{}, "id IN ?", IDs).Error; err != nil {
 			return err
 		}
+
 		return nil
 	})
-	return err
 }
 
 // UpdateCmdbHosts 更新主机信息
@@ -174,23 +189,31 @@ func (cmdbHostsService *CmdbHostsService) ImportHosts(filePath string, projectId
 func (cmdbHostsService *CmdbHostsService) GetCmdbHostsInfoList(info cmdbReq.CmdbHostsSearch) (list []cmdb.CmdbHosts, total int64, err error) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
+
 	// 创建db
 	db := global.KUBEGALE_DB.Model(&cmdb.CmdbHosts{})
 	var cmdbHostss []cmdb.CmdbHosts
-	// 如果有条件搜索 下方会自动创建搜索语句
-	//if info.StartCreatedAt != nil && info.EndCreatedAt != nil {
-	//db = db.Where("created_at BETWEEN ? AND ?", info.StartCreatedAt, info.EndCreatedAt).Where("project = ?",info.Project)
-	db = db.Where("project = ?", info.Project)
-	//}
+
+	// 添加项目ID查询条件
+	if info.Project > 0 {
+		db = db.Where("project = ?", info.Project)
+	}
+
+	// 只查询未删除的记录
+	db = db.Unscoped().Where("deleted_at IS NULL")
+
+	// 获取总数
 	err = db.Count(&total).Error
 	if err != nil {
 		return
 	}
 
+	// 分页查询
 	if limit != 0 {
 		db = db.Limit(limit).Offset(offset)
 	}
 
+	// 执行查询
 	err = db.Find(&cmdbHostss).Error
 	return cmdbHostss, total, err
 }

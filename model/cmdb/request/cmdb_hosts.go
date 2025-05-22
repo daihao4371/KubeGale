@@ -11,3 +11,13 @@ type CmdbHostsSearch struct {
 	Project        int        `json:"project" form:"project"`
 	request.PageInfo
 }
+
+// DeleteCmdbHostsRequest 删除请求结构体
+type DeleteCmdbHostsRequest struct {
+	ID uint `json:"id" binding:"required"`
+}
+
+// DeleteCmdbHostsIdsRequest 批量删除请求结构体
+type DeleteCmdbHostsIdsRequest struct {
+	IDs []uint `json:"ids" binding:"required"`
+}
