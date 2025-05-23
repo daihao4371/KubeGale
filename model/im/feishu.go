@@ -1,10 +1,13 @@
 package im
 
+import "KubeGale/global"
+
 // FeiShuConfig 飞书通知配置结构体
-// 继承自 NotificationConfig，并增加了飞书特有的字段，如机器人地址等。
 type FeiShuConfig struct {
-	NotificationConfig
-	RobotURL string `gorm:"type:varchar(255);not null" json:"robot_url"` // RobotURL 飞书机器人的接收地址
+	global.KUBEGALE_MODEL                                                  // Own ID for the im_fei_shu_configs table
+	NotificationConfigID uint               `gorm:"not null;uniqueIndex"`     // Foreign key to im_notification_configs.id
+	NotificationConfig   NotificationConfig `gorm:"foreignKey:NotificationConfigID;references:ID"` // Defines the relationship
+	RobotURL             string             `gorm:"type:varchar(255);not null" json:"robot_url"`   // RobotURL 飞书机器人的接收地址
 }
 
 // TableName 设置表名

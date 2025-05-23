@@ -180,6 +180,54 @@ func (n *NotificationApi) TestNotification(c *gin.Context) {
 	commonResponse.OkWithData(result, c)
 }
 
+// CreateDingTalk
+// @Tags Notification
+// @Summary 创建钉钉通知配置
+// @Produce application/json
+// @Param data body request.CreateDingTalkRequest true "钉钉通知配置信息"
+// @Success 200 {object} commonResponse.Response{data=im.DingTalkConfig,msg=string} "创建成功"
+// @Router /notification/createDingTalk [post]
+func (n *NotificationApi) CreateDingTalk(c *gin.Context) {
+	var req request.CreateDingTalkRequest
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		commonResponse.FailWithMessage(err.Error(), c)
+		return
+	}
+	
+	createdDingTalkConfig, err := notificationService.CreateDingTalk(req) // Assuming notificationService is available as in other handlers
+	if err != nil {
+		global.KUBEGALE_LOG.Error("创建钉钉配置失败!", zap.Error(err))
+		commonResponse.FailWithMessage("创建失败: "+err.Error(), c)
+		return
+	}
+	commonResponse.OkWithData(createdDingTalkConfig, c) // Return created data
+}
+
+// UpdateDingTalk
+// @Tags Notification
+// @Summary 更新钉钉通知配置
+// @Produce application/json
+// @Param data body request.UpdateDingTalkRequest true "钉钉通知配置更新信息"
+// @Success 200 {object} commonResponse.Response{data=im.DingTalkConfig,msg=string} "更新成功"
+// @Router /notification/updateDingTalk [put]
+func (n *NotificationApi) UpdateDingTalk(c *gin.Context) {
+	var req request.UpdateDingTalkRequest
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		commonResponse.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	updatedDingTalkConfig, err := notificationService.UpdateDingTalk(req) // Assuming notificationService is available
+	if err != nil {
+		global.KUBEGALE_LOG.Error("更新钉钉配置失败!", zap.Error(err))
+		commonResponse.FailWithMessage("更新失败: "+err.Error(), c)
+		return
+	}
+	commonResponse.OkWithData(updatedDingTalkConfig, c) // Return updated data
+}
+
 // CreateCardContent
 // @Summary 创建卡片内容配置
 func (n *NotificationApi) CreateCardContent(c *gin.Context) {

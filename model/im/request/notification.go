@@ -62,3 +62,23 @@ type CreateCardContentRequest struct {
 	MuteAlert          bool      `json:"mute_alert"`                             // 是否屏蔽告警
 	UnresolvedAlert    bool      `json:"unresolved_alert"`                       // 是否未解决告警
 }
+
+// CreateDingTalkRequest 创建钉钉通知请求结构
+type CreateDingTalkRequest struct {
+	Name           string   `json:"name" binding:"required"`        // 通知名称
+	NotifyEvents   []string `json:"notify_events"`                  // 通知事件 (用于生成NotificationPolicy)
+	SendDailyStats bool     `json:"send_daily_stats"`               // 是否发送每日统计
+	WebhookURL     string   `json:"webhook_url" binding:"required"` // 钉钉机器人Webhook地址
+	Secret         string   `json:"secret,omitempty"`               // 钉钉机器人加签密钥 (optional)
+}
+
+// UpdateDingTalkRequest 更新钉钉通知请求结构
+type UpdateDingTalkRequest struct {
+	ID                 uint                 `json:"id" binding:"required"`                  // DingTalkConfig的ID
+	Name               string               `json:"name,omitempty"`                         // 通知名称 (optional for update)
+	NotificationPolicy string               `json:"notification_policy,omitempty"`          // 通知策略 (optional for update)
+	SendDailyStats     *bool                `json:"send_daily_stats,omitempty"`             // 是否发送每日统计 (pointer for optional update)
+	WebhookURL         string               `json:"webhook_url,omitempty"`                  // 钉钉机器人Webhook地址 (optional for update)
+	Secret             *string              `json:"secret,omitempty"`                       // 钉钉机器人加签密钥 (pointer for optional update, can be empty string to clear)
+	CardContent        im.CardContentConfig `json:"card_content,omitempty"`                 // 卡片内容配置 (optional for update)
+}

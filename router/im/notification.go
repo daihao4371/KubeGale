@@ -20,6 +20,8 @@ func (r *NotificationRouter) InitNotificationRouter(Router *gin.RouterGroup) {
 		notificationRouter.POST("testNotification", notificationApi.TestNotification)       // 测试通知发送
 		notificationRouter.POST("createCardContent", notificationApi.CreateCardContent)     // 创建卡片内容
 		notificationRouter.PUT("updateCardContent", notificationApi.UpdateCardContent)      // 更新卡片内容
+		notificationRouter.POST("createDingTalk", notificationApi.CreateDingTalk) // 创建钉钉通知
+		notificationRouter.PUT("updateDingTalk", notificationApi.UpdateDingTalk)    // 更新钉钉通知
 	}
 
 	// 不需要记录操作的查询接口

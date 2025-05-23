@@ -6,6 +6,7 @@ type RouterGroup struct {
 	CloudVirtualMachineRouter
 	CloudLoadBalancerRouter
 	CloudRDSRouter
+	CloudStatsRouter // Add this line
 }
 
 var RouterGroupApp = new(RouterGroup)

@@ -10,6 +10,7 @@ type ApiGroup struct {
 	CloudVirtualMachineApi
 	CloudLoadBalancerApi
 	CloudRDSApi
+	CloudStatsApi // Add this line
 }
 
 var ApiGroupApp = new(ApiGroup)
