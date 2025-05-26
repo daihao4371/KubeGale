@@ -23,3 +23,15 @@
 [KUBEGALE]2025-05-22 11:48:37.311	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/cmdb/cmdb_projects.go:101	查询失败!	{"error": "record not found"}
 [KUBEGALE]2025-05-22 11:48:37.967	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/cmdb/cmdb_projects.go:101	查询失败!	{"error": "record not found"}
 [KUBEGALE]2025-05-22 11:48:48.494	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/cmdb/cmdb_projects.go:101	查询失败!	{"error": "record not found"}
+[KUBEGALE]2025-05-22 15:17:55.463	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-22 15:19:09.369	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-22 15:19:24.870	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-22 15:19:39.867	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-22 15:21:19.355	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-22 15:21:51.724	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-22 15:23:20.005	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-22 15:29:34.361	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-22 15:31:34.695	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-22 17:37:52.849	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection
+[KUBEGALE]2025-05-22 17:38:57.759	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/cmdb/cmdb_hosts.go:69	删除失败!	{"error": "主机不存在"}
+[KUBEGALE]2025-05-22 17:39:04.235	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/api/v1/cmdb/cmdb_hosts.go:69	删除失败!	{"error": "主机不存在"}

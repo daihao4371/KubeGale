@@ -145,6 +145,13 @@ func (m *MessageService) SendFeiShuMessage(config response.NotificationDetailCon
 	return sendRequest(requestURL, msg)
 }
 
+// SendDingTalkMessage sends a DingTalk message by calling the sender in dingtalk_sender.go
+func (m *MessageService) SendDingTalkMessage(config response.NotificationDetailConfig, cardContent response.CardContentDetail, message string) error {
+	// The actual implementation is in dingtalk_sender.go
+	// This method makes it callable via MessageServiceApp, consistent with SendFeiShuMessage
+	return SendDingTalkMessage(config, cardContent, message)
+}
+
 // @function: sendRequest
 // @description: 发送HTTP请求
 func sendRequest(url string, data interface{}) error {

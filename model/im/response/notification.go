@@ -35,7 +35,8 @@ type NotificationDetailConfig struct {
 	SendDailyStats     bool      `json:"send_daily_stats"`    // 是否发送每日统计
 	CreatedAt          time.Time `json:"created_at"`          // 创建时间
 	UpdatedAt          time.Time `json:"updated_at"`          // 更新时间
-	RobotURL           string    `json:"robot_url"`           // 机器人地址
+	RobotURL           string    `json:"robot_url"`           // For FeiShu RobotURL or DingTalk WebhookURL
+	Secret             *string   `json:"secret,omitempty"`    // For DingTalk Secret (pointer to allow empty/null)
 }
 
 // NotificationDetailResponse 通知配置详情响应

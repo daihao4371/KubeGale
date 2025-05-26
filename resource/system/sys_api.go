@@ -137,7 +137,8 @@ func (i *InitApi) InitializeData(ctx context.Context) (context.Context, error) {
 		{ApiGroup: "cmdb", Method: "POST", Path: "/cmdb/hosts/authentication", Description: "SSH认证主机"},
 		{ApiGroup: "cmdb", Method: "POST", Path: "/cmdb/hosts/import", Description: "导入主机"},
 		{ApiGroup: "cmdb", Method: "GET", Path: "/cmdb/hostsById", Description: "根据ID获取主机"},
-		{ApiGroup: "cmdb", Method: "GET", Path: "/cmdb/hosts", Description: "获取主机列表"},
+		{ApiGroup: "cmdb", Method: "POST", Path: "/cmdb/hostsList", Description: "获取主机列表"},
+		{ApiGroup: "cmdb", Method: "GET", Path: "/cmdb/hosts/terminal", Description: "SSH终端连接"},
 
 		// 批量操作
 		{ApiGroup: "cmdb", Method: "POST", Path: "/cmdb/batchOperations/execute", Description: "执行批量操作"},

@@ -22,27 +22,17 @@ var CardContentServiceApp = new(CardContentService)
 func (cardContentService *CardContentService) CreateCardContent(req im.CardContentConfig) error {
 	// 首先检查通用通知配置是否存在
 	var notificationConfig im.NotificationConfig
-	err := global.KUBEGALE_DB.Table("im_notification_configs").Where("id = ?", req.NotificationID).First(&notificationConfig).Error
+	// Query NotificationConfig by its primary key (req.NotificationID)
+	err := global.KUBEGALE_DB.First(&notificationConfig, req.NotificationID).Error
 	if err != nil {
-		global.KUBEGALE_LOG.Error("查询通知配置失败",
+		global.KUBEGALE_LOG.Error("查询关联的通知配置失败",
 			zap.Uint("notification_id", req.NotificationID),
 			zap.Error(err))
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			// 尝试查询飞书配置表
-			var feiShuConfig im.FeiShuConfig
-			err = global.KUBEGALE_DB.Where("id = ?", req.NotificationID).First(&feiShuConfig).Error
-			if err != nil {
-				if errors.Is(err, gorm.ErrRecordNotFound) {
-					return errors.New("通知配置不存在")
-				}
-				return fmt.Errorf("查询飞书配置失败: %w", err)
-			}
-			// 找到了飞书配置，可以继续处理
-			notificationConfig.ID = feiShuConfig.ID
-			notificationConfig.Type = feiShuConfig.Type
-		} else {
-			return fmt.Errorf("查询通知配置失败: %w", err)
+			return errors.New("关联的通知配置不存在") // Associated notification configuration does not exist
 		}
+		// For other types of errors, return a more generic error message
+		return fmt.Errorf("查询关联的通知配置失败: %w", err)
 	}
 
 	// 设置告警时间为当前时间，如果未提供
@@ -126,13 +116,13 @@ func (cardContentService *CardContentService) GetCardContentById(id uint) (cardC
 // @function: GetCardContentByNotificationId
 // @description: 根据通知ID获取卡片内容
 func (s *CardContentService) GetCardContentByNotificationId(notificationId uint) (*im.CardContentConfig, error) {
-	// 首先检查通知配置是否存在
-	var notification im.FeiShuConfig
-	if err := global.KUBEGALE_DB.Where("id = ?", notificationId).First(&notification).Error; err != nil {
+	// 首先检查通知配置是否存在 by checking NotificationConfig table
+	var notification im.NotificationConfig
+	if err := global.KUBEGALE_DB.First(&notification, notificationId).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errors.New("通知配置不存在")
 		}
-		return nil, err
+		return nil, fmt.Errorf("查询通知配置失败: %w", err) // Return a more generic error for other failures
 	}
 
 	// 查询卡片内容

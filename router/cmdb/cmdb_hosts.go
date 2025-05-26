@@ -20,7 +20,7 @@ func (s *CmdbHostsRouter) InitCmdbHostsRouter(Router *gin.RouterGroup, PublicRou
 		cmdbHostsRouter.POST("hosts/import", cmdbHostsApi.ImportHosts)
 	}
 	{
-		cmdbHostsRouterWithoutRecord.GET("hostsById", cmdbHostsApi.FindCmdbHosts) // 根据ID获取cmdbHosts表
-		cmdbHostsRouterWithoutRecord.GET("hosts", cmdbHostsApi.GetCmdbHostsList)  // 获取cmdbHosts表列表
+		cmdbHostsRouterWithoutRecord.GET("hostsById", cmdbHostsApi.FindCmdbHosts)     // 根据ID获取cmdbHosts表
+		cmdbHostsRouterWithoutRecord.POST("hostsList", cmdbHostsApi.GetCmdbHostsList) // 获取cmdbHosts表列表
 	}
 }
