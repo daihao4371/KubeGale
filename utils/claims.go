@@ -4,10 +4,11 @@ import (
 	"KubeGale/global"
 	"KubeGale/model/system"
 	systemReq "KubeGale/model/system/request"
-	"github.com/gin-gonic/gin"
-	"github.com/gofrs/uuid/v5"
 	"net"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/gofrs/uuid/v5"
 )
 
 func ClearToken(c *gin.Context) {

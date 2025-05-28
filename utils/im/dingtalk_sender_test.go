@@ -1,15 +1,9 @@
 package im
 
 import (
-	"KubeGale/global"
 	"KubeGale/model/im/response"
-	"bytes"
-	"encoding/json"
-	"io/ioutil"
 	"net/http"
-	"strings"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/h2non/gock.v1" // Example HTTP mocking library
@@ -18,7 +12,7 @@ import (
 // Mock a logger for tests if needed, or ensure global.KUBEGALE_LOG is test-safe
 func init() {
 	// Basic zap logger for tests if not already initialized
-	// global.KUBEGALE_LOG = zap.NewNop() 
+	// global.KUBEGALE_LOG = zap.NewNop()
 	// Or initialize your actual logger in a test-friendly way
 }
 
@@ -51,7 +45,7 @@ func TestSendDingTalkMessage_Success(t *testing.T) {
 
 func TestSendDingTalkMessage_WithSecret(t *testing.T) {
 	defer gock.Off()
-	
+
 	secret := "sec12345"
 	config := response.NotificationDetailConfig{
 		RobotURL: "http://dingtalk.example.com/webhook",
@@ -83,7 +77,6 @@ func TestSendDingTalkMessage_WithSecret(t *testing.T) {
 	assert.True(t, gock.IsDone())
 }
 
-
 func TestSendDingTalkMessage_HttpError(t *testing.T) {
 	defer gock.Off()
 	config := response.NotificationDetailConfig{RobotURL: "http://dingtalk.example.com/webhook"}
@@ -106,7 +99,7 @@ func TestSendDingTalkMessage_DingTalkError(t *testing.T) {
 		Post("/webhook").
 		Reply(200).
 		JSON(map[string]interface{}{"errcode": 310000, "errmsg": "sign not match"})
-	
+
 	err := SendDingTalkMessage(config, response.CardContentDetail{}, "test")
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "dingtalk api returned error: code 310000")

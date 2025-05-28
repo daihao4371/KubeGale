@@ -29,7 +29,7 @@ type AlertInfo struct {
 // SendAlert 发送告警通知
 func (s *AlertService) SendAlert(alert *im.CardContentConfig) error {
 	// 查询通知配置
-	var notification im.FeiShuConfig
+	var notification im.NotificationConfig
 	err := global.KUBEGALE_DB.Where("id = ?", alert.NotificationID).First(&notification).Error
 	if err != nil {
 		return fmt.Errorf("查询通知配置失败: %w", err)
@@ -38,6 +38,10 @@ func (s *AlertService) SendAlert(alert *im.CardContentConfig) error {
 	// 根据通知类型发送消息
 	switch notification.Type {
 	case im.NotificationTypeFeiShu:
+		var feiShuConfig im.FeiShuConfig
+		if err := global.KUBEGALE_DB.Where("notification_config_id = ?", notification.ID).First(&feiShuConfig).Error; err != nil {
+			return fmt.Errorf("查询飞书配置失败: %w", err)
+		}
 		// 构建通知配置详情
 		config := response.NotificationDetailConfig{
 			ID:                 notification.ID,
@@ -47,7 +51,7 @@ func (s *AlertService) SendAlert(alert *im.CardContentConfig) error {
 			SendDailyStats:     notification.SendDailyStats,
 			CreatedAt:          notification.CreatedAt,
 			UpdatedAt:          notification.UpdatedAt,
-			RobotURL:           notification.RobotURL,
+			RobotURL:           feiShuConfig.RobotURL,
 		}
 
 		// 构建卡片内容详情
@@ -83,18 +87,30 @@ func (s *AlertService) SendAlert(alert *im.CardContentConfig) error {
 // SendAlertToAll 向所有通知配置发送告警
 func (s *AlertService) SendAlertToAll(alertInfo AlertInfo) error {
 	// 获取所有通知配置
-	var feiShuConfigs []im.FeiShuConfig
+	var notifications []im.NotificationConfig
 
-	// 查询飞书配置
-	if err := global.KUBEGALE_DB.Find(&feiShuConfigs).Error; err != nil {
+	// 查询所有通知配置
+	if err := global.KUBEGALE_DB.Find(&notifications).Error; err != nil {
 		return err
 	}
 
-	// 发送飞书通知
-	for _, config := range feiShuConfigs {
+	// 发送通知
+	for _, notification := range notifications {
+		if notification.Type != im.NotificationTypeFeiShu {
+			continue
+		}
+
+		var feiShuConfig im.FeiShuConfig
+		if err := global.KUBEGALE_DB.Where("notification_config_id = ?", notification.ID).First(&feiShuConfig).Error; err != nil {
+			global.KUBEGALE_LOG.Error("查询飞书配置失败",
+				zap.String("config", notification.Name),
+				zap.Error(err))
+			continue
+		}
+
 		// 创建卡片内容
 		cardContent := &im.CardContentConfig{
-			NotificationID:  config.ID,
+			NotificationID:  notification.ID,
 			AlertLevel:      alertInfo.Level,
 			AlertName:       alertInfo.Name,
 			AlertContent:    alertInfo.Content,
@@ -115,7 +131,7 @@ func (s *AlertService) SendAlertToAll(alertInfo AlertInfo) error {
 		// 保存卡片内容
 		if err := global.KUBEGALE_DB.Create(cardContent).Error; err != nil {
 			global.KUBEGALE_LOG.Error("创建卡片内容失败",
-				zap.String("config", config.Name),
+				zap.String("config", notification.Name),
 				zap.Error(err))
 			continue
 		}
@@ -123,7 +139,7 @@ func (s *AlertService) SendAlertToAll(alertInfo AlertInfo) error {
 		// 发送告警
 		if err := s.SendAlert(cardContent); err != nil {
 			global.KUBEGALE_LOG.Error("发送飞书告警失败",
-				zap.String("config", config.Name),
+				zap.String("config", notification.Name),
 				zap.Error(err))
 		}
 	}

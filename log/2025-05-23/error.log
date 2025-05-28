@@ -1,1 +1,0 @@
-[KUBEGALE]2025-05-23 08:13:36.227	[31merror[0m	/app/initialize/gorm_mysql.go:29	MySQL连接失败	{"error": "Error 1049 (42000): Unknown database 'kubegale'"}
