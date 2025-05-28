@@ -11,3 +11,4 @@ type ApiGroup struct {
 var cmdbProjectsService = service.ServiceGroupApp.CmdbServiceGroup.CmdbProjectsService
 var cmdbHostsService = service.ServiceGroupApp.CmdbServiceGroup.CmdbHostsService
 var batchOperationsService = service.ServiceGroupApp.CmdbServiceGroup.BatchOperationsService
+

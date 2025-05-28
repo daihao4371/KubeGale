@@ -8,9 +8,7 @@ import (
 	messageIm "KubeGale/utils/im"
 	"errors"
 	"fmt"
-	"sort"
 	"strings"
-	"time"
 
 	"gorm.io/gorm"
 )
@@ -243,7 +241,7 @@ func (notificationService *NotificationService) UpdateDingTalk(req request.Updat
 				}
 			} else { // Update existing
 				updateData := req.CardContent
-				updateData.ID = cardContent.ID // Ensure we update the correct record
+				updateData.ID = cardContent.ID                         // Ensure we update the correct record
 				updateData.NotificationID = cardContent.NotificationID // Keep original link
 				if updateErr := tx.Model(&cardContent).Updates(updateData).Error; updateErr != nil {
 					return fmt.Errorf("failed to update card content: %w", updateErr)
@@ -368,12 +366,9 @@ func (notificationService *NotificationService) GetNotificationList(params reque
 		switch baseConfig.Type {
 		case im.NotificationTypeFeiShu:
 			var feiShuConfig im.FeiShuConfig
-			// Fetch FeiShuConfig by NotificationConfigID
-			// Use a separate query for simplicity, acknowledge N+1 potential
 			err := global.KUBEGALE_DB.Where("notification_config_id = ?", baseConfig.ID).First(&feiShuConfig).Error
 			if err != nil {
 				if errors.Is(err, gorm.ErrRecordNotFound) {
-					// Log or handle if specific config is missing but base exists
 					global.KUBEGALE_LOG.Warn(fmt.Sprintf("FeiShuConfig not found for NotificationConfigID: %d", baseConfig.ID))
 				} else {
 					return nil, 0, fmt.Errorf("failed to fetch feishu config for ID %d: %w", baseConfig.ID, err)
@@ -381,17 +376,14 @@ func (notificationService *NotificationService) GetNotificationList(params reque
 			} else {
 				respItem.RobotURL = feiShuConfig.RobotURL
 			}
-		} else if baseConfig.Type == im.NotificationTypeDingTalk {
+		case im.NotificationTypeDingTalk:
 			var dingTalkConfig im.DingTalkConfig
 			if errDb := global.KUBEGALE_DB.Where("notification_config_id = ?", baseConfig.ID).First(&dingTalkConfig).Error; errDb == nil {
 				respItem.RobotURL = dingTalkConfig.WebhookURL // Reusing RobotURL for WebhookURL
 			} else if !errors.Is(errDb, gorm.ErrRecordNotFound) {
-				// Log or handle if specific config is missing but base exists and error is not RecordNotFound
 				global.KUBEGALE_LOG.Warn(fmt.Sprintf("DingTalkConfig not found for NotificationConfigID: %d, error: %v", baseConfig.ID, errDb))
 			}
-			// Secret is not typically shown in list views, so not adding it here.
-		} else {
-			// Log or handle unknown types if necessary
+		default:
 			global.KUBEGALE_LOG.Warn(fmt.Sprintf("Unhandled notification type '%s' in GetNotificationList for ID %d", baseConfig.Type, baseConfig.ID))
 		}
 		list = append(list, respItem)
@@ -439,7 +431,7 @@ func (notificationService *NotificationService) GetNotificationById(id uint, not
 			NotificationPolicy: cardContent.NotificationPolicy, // Assuming this is the card's own policy if distinct
 			AlertContent:       cardContent.AlertContent,
 			AlertTime:          cardContent.AlertTime,
-			NotifiedUsers:      strings.Join(cardContent.NotifiedUsers, ","), // Assuming NotifiedUsers is []string in model
+			NotifiedUsers:      cardContent.NotifiedUsers,
 			LastSimilarAlert:   cardContent.LastSimilarAlert,
 			AlertHandler:       cardContent.AlertHandler,
 			ClaimAlert:         cardContent.ClaimAlert,
@@ -532,7 +524,7 @@ func (notificationService *NotificationService) TestNotification(req request.Tes
 			NotificationPolicy: cardContent.NotificationPolicy,
 			AlertContent:       cardContent.AlertContent,
 			AlertTime:          cardContent.AlertTime,
-			NotifiedUsers:      strings.Join(cardContent.NotifiedUsers, ","),
+			NotifiedUsers:      cardContent.NotifiedUsers,
 			LastSimilarAlert:   cardContent.LastSimilarAlert,
 			AlertHandler:       cardContent.AlertHandler,
 			ClaimAlert:         cardContent.ClaimAlert,

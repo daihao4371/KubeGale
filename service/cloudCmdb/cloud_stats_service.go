@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"go.uber.org/zap" // Added for logging
-	"gorm.io/gorm"
 )
 
 type CloudStatsService struct{}

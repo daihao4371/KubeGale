@@ -1,6 +1,0 @@
-[KUBEGALE]2025-05-23 08:13:36.231	[34minfo[0m	/app/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
-[KUBEGALE]2025-05-23 08:13:36.234	[34minfo[0m	/app/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
-[KUBEGALE]2025-05-23 08:13:36.234	[34minfo[0m	/app/core/server.go:55	initialize local cache
-[KUBEGALE]2025-05-23 08:13:36.234	[34minfo[0m	/app/initialize/router.go:54	register swagger handler
-[KUBEGALE]2025-05-23 08:13:36.235	[34minfo[0m	/app/initialize/router.go:93	router register success
-[KUBEGALE]2025-05-23 08:13:36.235	[34minfo[0m	/app/core/server.go:66	server run success on 	{"address": ":8080"}

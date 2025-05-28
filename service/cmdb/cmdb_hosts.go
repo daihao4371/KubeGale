@@ -12,10 +12,13 @@ import (
 	"strings"
 
 	"github.com/xuri/excelize/v2"
+	"golang.org/x/crypto/ssh"
 	"gorm.io/gorm"
 )
 
 type CmdbHostsService struct{}
+
+var CmdbHostsServiceApp = new(CmdbHostsService)
 
 // SSHTestCmdbHosts 测试本地是否可以免密连接远程主机
 func (cmdbHostsService *CmdbHostsService) SSHTestCmdbHosts(req *cmdb.CmdbHosts) (err error) {
@@ -24,44 +27,39 @@ func (cmdbHostsService *CmdbHostsService) SSHTestCmdbHosts(req *cmdb.CmdbHosts) 
 	if err != nil {
 		return err
 	}
-
 	// 检查私钥文件是否存在
 	if _, err := os.Stat(privateKeyPath); os.IsNotExist(err) {
 		if err := utils.GenerateSSHKey(privateKeyPath); err != nil {
 			return err
 		}
 	}
-
 	canLogin, err := utils.CanSSHWithoutPassword(req.ServerHost, port, req.Username, privateKeyPath)
 	if err != nil {
 		return err
 	}
-
-	// 创建SSH客户端
-	if !canLogin {
+	if canLogin {
+		// 创建 SSH 客户端
 		client, err := utils.CreateSSHClient(req.ServerHost, port, req.Username, privateKeyPath)
 		if err != nil {
 			return fmt.Errorf("创建 SSH 客户端失败: %v", err)
 		}
-
 		defer client.Close()
 		// 获取主机信息
 		if err := utils.PopulateHostInfo(client, req); err != nil {
 			return fmt.Errorf("获取主机信息失败: %v", err)
 		}
 		req.Status = "已验证"
-
 		// 存储到数据库
 		if err := global.KUBEGALE_DB.Create(req).Error; err != nil {
 			return fmt.Errorf("存储到数据库失败: %v", err)
 		}
 		return nil
 	}
-
 	if strings.Contains(err.Error(), "ssh: handshake failed: ssh: unable to authenticate, attempted methods [none publickey], no supported methods remain") {
 		return fmt.Errorf("auth failed")
 	}
 	return err
+
 }
 
 // CreateCmdbHosts 创建CMDB主机
@@ -216,4 +214,33 @@ func (cmdbHostsService *CmdbHostsService) GetCmdbHostsInfoList(info cmdbReq.Cmdb
 	// 执行查询
 	err = db.Find(&cmdbHostss).Error
 	return cmdbHostss, total, err
+}
+
+// CreateSSHSession 创建SSH会话
+func (cmdbHostsService *CmdbHostsService) CreateSSHSession(host *cmdb.CmdbHosts) (*ssh.Session, error) {
+	port := strconv.Itoa(*host.Port)
+	privateKeyPath, err := utils.GetDefaultPrivateKeyPath()
+	if err != nil {
+		return nil, fmt.Errorf("获取默认私钥路径失败: %v", err)
+	}
+
+	// 检查私钥文件是否存在
+	if _, err := os.Stat(privateKeyPath); os.IsNotExist(err) {
+		return nil, fmt.Errorf("私钥文件不存在: %s", privateKeyPath)
+	}
+
+	// 创建SSH客户端
+	client, err := utils.CreateSSHClient(host.ServerHost, port, host.Username, privateKeyPath)
+	if err != nil {
+		return nil, fmt.Errorf("创建SSH客户端失败: %v", err)
+	}
+
+	// 创建新的会话
+	session, err := client.NewSession()
+	if err != nil {
+		client.Close()
+		return nil, fmt.Errorf("创建SSH会话失败: %v", err)
+	}
+
+	return session, nil
 }

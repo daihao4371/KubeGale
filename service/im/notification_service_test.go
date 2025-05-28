@@ -4,13 +4,12 @@ import (
 	"KubeGale/global"
 	"KubeGale/model/im"
 	"KubeGale/model/im/request"
+
 	// "KubeGale/model/im/response" // May be needed for TestNotification
 	// "KubeGale/utils" // For Verify if used directly in service, or for initializing mocks
-	"errors"
 	"regexp" // For go-sqlmock if used
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/DATA-DOG/go-sqlmock" // Example mocking library
 	"github.com/stretchr/testify/assert"
@@ -26,7 +25,7 @@ func newMockDB(t *testing.T) (*gorm.DB, sqlmock.Sqlmock) {
 	}
 
 	gormDB, err := gorm.Open(mysql.New(mysql.Config{
-		Conn: db,
+		Conn:                      db,
 		SkipInitializeWithVersion: true,
 	}), &gorm.Config{})
 	if err != nil {
@@ -58,7 +57,7 @@ func TestNotificationService_CreateFeiShu(t *testing.T) {
 	// Expected FeiShuConfig creation
 	mock.ExpectExec(regexp.QuoteMeta("INSERT INTO `im_fei_shu_configs`")).
 		WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg(), uint(1), req.WebhookURL). // Assumes NotificationConfigID is 1
-		WillReturnResult(sqlmock.NewResult(1, 1)) // ID 1, 1 row affected
+		WillReturnResult(sqlmock.NewResult(1, 1))                                                // ID 1, 1 row affected
 	mock.ExpectCommit()
 
 	// Expected query after creation to preload NotificationConfig
@@ -74,7 +73,6 @@ func TestNotificationService_CreateFeiShu(t *testing.T) {
 	mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `im_notification_configs` WHERE `im_notification_configs`.`id` = ?")).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"id", "name", "type"}).AddRow(1, req.Name, im.NotificationTypeFeiShu))
-
 
 	createdConfig, err := service.CreateFeiShu(req)
 
@@ -124,7 +122,6 @@ func TestNotificationService_CreateDingTalk(t *testing.T) {
 		WithArgs(2). // NotificationConfig ID is 2
 		WillReturnRows(sqlmock.NewRows([]string{"id", "name", "type"}).AddRow(2, req.Name, im.NotificationTypeDingTalk))
 
-
 	createdConfig, err := service.CreateDingTalk(req)
 
 	assert.NoError(t, err)
@@ -134,7 +131,7 @@ func TestNotificationService_CreateDingTalk(t *testing.T) {
 	assert.NotNil(t, createdConfig.NotificationConfig)
 	assert.Equal(t, req.Name, createdConfig.NotificationConfig.Name)
 	assert.Equal(t, im.NotificationTypeDingTalk, createdConfig.NotificationConfig.Type)
-	
+
 	if err := mock.ExpectationsWereMet(); err != nil {
 		t.Errorf("there were unfulfilled expectations: %s", err)
 	}
@@ -167,7 +164,7 @@ func (m *MockMessageService) SendDingTalkMessage(config response.NotificationDet
 
 func TestNotificationService_TestNotification_DingTalk(t *testing.T) {
     // ... setup DB mock for fetching configs ...
-    
+
     // Setup mock message sender
     originalMessageService := messageIm.MessageServiceApp
     mockSender := &MockMessageService{}

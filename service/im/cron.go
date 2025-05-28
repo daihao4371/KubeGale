@@ -17,9 +17,9 @@ var CronServiceApp = new(CronService)
 
 // SendDailyStats 发送每日统计
 func (s *CronService) SendDailyStats() error {
-	// 获取所有飞书配置
-	var feiShuConfigs []im.FeiShuConfig
-	if err := global.KUBEGALE_DB.Find(&feiShuConfigs).Error; err != nil {
+	// 获取所有通知配置
+	var notifications []im.NotificationConfig
+	if err := global.KUBEGALE_DB.Find(&notifications).Error; err != nil {
 		return err
 	}
 
@@ -46,28 +46,38 @@ func (s *CronService) SendDailyStats() error {
 		"今日告警总数: %d\n"+
 		"未解决告警数: %d", today, alertCount, unresolvedCount)
 
-	// 发送统计消息到所有飞书配置
-	for _, config := range feiShuConfigs {
-		if config.SendDailyStats {
-			// 构建通知配置详情
-			notificationConfig := response.NotificationDetailConfig{
-				ID:                 config.ID,
-				Name:               config.Name,
-				Type:               config.Type,
-				NotificationPolicy: config.NotificationPolicy,
-				SendDailyStats:     config.SendDailyStats,
-				CreatedAt:          config.CreatedAt,
-				UpdatedAt:          config.UpdatedAt,
-				RobotURL:           config.RobotURL,
-			}
+	// 发送统计消息到所有配置
+	for _, notification := range notifications {
+		if notification.Type != im.NotificationTypeFeiShu || !notification.SendDailyStats {
+			continue
+		}
 
-			// 发送飞书消息
-			err := messageIm.MessageServiceApp.SendFeiShuMessage(notificationConfig, response.CardContentDetail{}, statsMessage)
-			if err != nil {
-				global.KUBEGALE_LOG.Error("发送每日统计失败",
-					zap.String("config", config.Name),
-					zap.Error(err))
-			}
+		var feiShuConfig im.FeiShuConfig
+		if err := global.KUBEGALE_DB.Where("notification_config_id = ?", notification.ID).First(&feiShuConfig).Error; err != nil {
+			global.KUBEGALE_LOG.Error("查询飞书配置失败",
+				zap.String("config", notification.Name),
+				zap.Error(err))
+			continue
+		}
+
+		// 构建通知配置详情
+		notificationConfig := response.NotificationDetailConfig{
+			ID:                 notification.ID,
+			Name:               notification.Name,
+			Type:               notification.Type,
+			NotificationPolicy: notification.NotificationPolicy,
+			SendDailyStats:     notification.SendDailyStats,
+			CreatedAt:          notification.CreatedAt,
+			UpdatedAt:          notification.UpdatedAt,
+			RobotURL:           feiShuConfig.RobotURL,
+		}
+
+		// 发送飞书消息
+		err := messageIm.MessageServiceApp.SendFeiShuMessage(notificationConfig, response.CardContentDetail{}, statsMessage)
+		if err != nil {
+			global.KUBEGALE_LOG.Error("发送每日统计失败",
+				zap.String("config", notification.Name),
+				zap.Error(err))
 		}
 	}
 
