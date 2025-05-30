@@ -117,6 +117,10 @@ func (i *InitApi) InitializeData(ctx context.Context) (context.Context, error) {
 		{ApiGroup: "即时通讯", Method: "POST", Path: "/notification/testNotification", Description: "测试通知发送"},
 		{ApiGroup: "即时通讯", Method: "POST", Path: "/notification/createCardContent", Description: "创建卡片内容"},
 		{ApiGroup: "即时通讯", Method: "PUT", Path: "/notification/updateCardContent", Description: "更新卡片内容"},
+
+		{ApiGroup: "即时通讯", Method: "POST", Path: "/notification/createDingTalk", Description: "创建钉钉通知"},
+		{ApiGroup: "即时通讯", Method: "PUT", Path: "/notification/updateDingTalk", Description: "更新钉钉通知"},
+
 		{ApiGroup: "即时通讯", Method: "POST", Path: "/notification/getNotificationList", Description: "获取通知配置列表"},
 		{ApiGroup: "即时通讯", Method: "GET", Path: "/notification/getNotificationById", Description: "根据ID获取通知配置"},
 		{ApiGroup: "即时通讯", Method: "GET", Path: "/notification/getCardContent", Description: "根据通知ID获取卡片内容"},
