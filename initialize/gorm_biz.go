@@ -17,6 +17,7 @@ func bizModel() error {
 		im.NotificationConfig{},
 		im.FeiShuConfig{},
 		im.CardContentConfig{},
+		im.DingTalkConfig{},
 
 		// 资产管理自建机房资源
 		cmdb.CmdbHosts{},
