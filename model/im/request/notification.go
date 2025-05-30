@@ -8,15 +8,15 @@ import (
 
 // CreateFeiShuRequest 创建飞书通知请求结构
 type CreateFeiShuRequest struct {
-	Name           string   `json:"name" binding:"required"`        // 通知名称
-	Type           string   `json:"type" binding:"required"`        // 通知类型
-	Enabled        bool     `json:"enabled"`                        // 是否启用
-	WebhookURL     string   `json:"webhook_url" binding:"required"` // 机器人地址
-	Description    string   `json:"description"`                    // 描述
-	Tags           []string `json:"tags"`                           // 标签
-	NotifyEvents   []string `json:"notify_events"`                  // 通知事件
-	Receivers      []string `json:"receivers"`                      // 接收者
-	SendDailyStats bool     `json:"send_daily_stats"`               // 是否发送每日统计
+	Name           string   `json:"name" binding:"required"`          // 通知名称
+	Type           string   `json:"type" binding:"required"`          // 通知类型
+	Enabled        bool     `json:"enabled"`                          // 是否启用
+	WebhookURL     string   `json:"webhook_url" binding:"required"`   // 机器人地址
+	Description    string   `json:"description"`                      // 描述
+	Tags           []string `json:"tags"`                             // 标签
+	NotifyEvents   []string `json:"notify_events" binding:"required"` // 通知事件
+	Receivers      []string `json:"receivers"`                        // 接收者
+	SendDailyStats bool     `json:"send_daily_stats"`                 // 是否发送每日统计
 }
 
 // UpdateFeiShuRequest 更新飞书通知请求结构
@@ -74,11 +74,11 @@ type CreateDingTalkRequest struct {
 
 // UpdateDingTalkRequest 更新钉钉通知请求结构
 type UpdateDingTalkRequest struct {
-	ID                 uint                 `json:"id" binding:"required"`                  // DingTalkConfig的ID
-	Name               string               `json:"name,omitempty"`                         // 通知名称 (optional for update)
-	NotificationPolicy string               `json:"notification_policy,omitempty"`          // 通知策略 (optional for update)
-	SendDailyStats     *bool                `json:"send_daily_stats,omitempty"`             // 是否发送每日统计 (pointer for optional update)
-	WebhookURL         string               `json:"webhook_url,omitempty"`                  // 钉钉机器人Webhook地址 (optional for update)
-	Secret             *string              `json:"secret,omitempty"`                       // 钉钉机器人加签密钥 (pointer for optional update, can be empty string to clear)
-	CardContent        im.CardContentConfig `json:"card_content,omitempty"`                 // 卡片内容配置 (optional for update)
+	ID                 uint                 `json:"id" binding:"required"`         // DingTalkConfig的ID
+	Name               string               `json:"name,omitempty"`                // 通知名称 (optional for update)
+	NotificationPolicy string               `json:"notification_policy,omitempty"` // 通知策略 (optional for update)
+	SendDailyStats     *bool                `json:"send_daily_stats,omitempty"`    // 是否发送每日统计 (pointer for optional update)
+	WebhookURL         string               `json:"webhook_url,omitempty"`         // 钉钉机器人Webhook地址 (optional for update)
+	Secret             *string              `json:"secret,omitempty"`              // 钉钉机器人加签密钥 (pointer for optional update, can be empty string to clear)
+	CardContent        im.CardContentConfig `json:"card_content,omitempty"`        // 卡片内容配置 (optional for update)
 }

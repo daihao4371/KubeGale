@@ -22,7 +22,7 @@ type AlertInfo struct {
 	Name        string    // 告警名称
 	Content     string    // 告警内容
 	Time        time.Time // 告警时间
-	NotifyUsers string    // 通知人
+	NotifyUsers []string  // 通知人
 	Handler     string    // 处理人
 }
 

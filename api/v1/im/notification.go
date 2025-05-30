@@ -7,7 +7,6 @@ import (
 	"KubeGale/model/im/request"
 	imResponse "KubeGale/model/im/response"
 	"KubeGale/utils"
-	"encoding/json"
 	"errors"
 	"strconv"
 
@@ -24,7 +23,21 @@ func (n *NotificationApi) CreateFeiShu(c *gin.Context) {
 	var req request.CreateFeiShuRequest
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
-		commonResponse.FailWithMessage(err.Error(), c)
+		commonResponse.FailWithMessage("参数验证失败: "+err.Error(), c)
+		return
+	}
+
+	// 验证必需字段
+	if req.Name == "" {
+		commonResponse.FailWithMessage("通知名称不能为空", c)
+		return
+	}
+	if req.WebhookURL == "" {
+		commonResponse.FailWithMessage("机器人地址不能为空", c)
+		return
+	}
+	if len(req.NotifyEvents) == 0 {
+		commonResponse.FailWithMessage("通知事件不能为空", c)
 		return
 	}
 
@@ -194,7 +207,7 @@ func (n *NotificationApi) CreateDingTalk(c *gin.Context) {
 		commonResponse.FailWithMessage(err.Error(), c)
 		return
 	}
-	
+
 	createdDingTalkConfig, err := notificationService.CreateDingTalk(req) // Assuming notificationService is available as in other handlers
 	if err != nil {
 		global.KUBEGALE_LOG.Error("创建钉钉配置失败!", zap.Error(err))
@@ -237,18 +250,6 @@ func (n *NotificationApi) CreateCardContent(c *gin.Context) {
 		return
 	}
 
-	// 将通知用户数组转换为JSON字符串
-	var notifiedUsersStr string
-	if len(req.NotifiedUsers) > 0 {
-		notifiedUsersBytes, err := json.Marshal(req.NotifiedUsers)
-		if err != nil {
-			global.KUBEGALE_LOG.Error("序列化通知用户失败", zap.Error(err))
-			commonResponse.FailWithMessage("创建失败: 序列化通知用户失败", c)
-			return
-		}
-		notifiedUsersStr = string(notifiedUsersBytes)
-	}
-
 	// 将请求转换为卡片内容配置
 	cardContent := im.CardContentConfig{
 		NotificationID:     req.NotificationID,
@@ -257,7 +258,7 @@ func (n *NotificationApi) CreateCardContent(c *gin.Context) {
 		NotificationPolicy: req.NotificationPolicy,
 		AlertContent:       req.AlertContent,
 		AlertTime:          req.AlertTime,
-		NotifiedUsers:      notifiedUsersStr,
+		NotifiedUsers:      req.NotifiedUsers,
 		LastSimilarAlert:   req.LastSimilarAlert,
 		AlertHandler:       req.AlertHandler,
 		ClaimAlert:         req.ClaimAlert,

@@ -54,7 +54,7 @@ type CardContentDetail struct {
 	NotificationPolicy string    `json:"notification_policy"` // 通知策略
 	AlertContent       string    `json:"alert_content"`       // 告警内容
 	AlertTime          time.Time `json:"alert_time"`          // 告警时间
-	NotifiedUsers      string    `json:"notified_users"`      // 通知用户
+	NotifiedUsers      []string  `json:"notified_users"`      // 通知用户
 	LastSimilarAlert   string    `json:"last_similar_alert"`  // 上次相似告警
 	AlertHandler       string    `json:"alert_handler"`       // 告警处理人
 	ClaimAlert         bool      `json:"claim_alert"`         // 是否认领告警

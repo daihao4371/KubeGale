@@ -15,7 +15,7 @@ type CardContentConfig struct {
 	NotificationPolicy string    `gorm:"type:varchar(255);not null" json:"notification_policy"` // NotificationPolicy 告警的通知策略
 	AlertContent       string    `gorm:"type:text" json:"alert_content"`                        // AlertContent 告警的详细内容
 	AlertTime          time.Time `json:"alert_time"`                                            // AlertTime 告警触发的时间
-	NotifiedUsers      string    `json:"notified_users"`                                        // 通知用户，存储为JSON字符串
+	NotifiedUsers      []string  `gorm:"type:text;serializer:json" json:"notified_users"`       // 通知用户
 	LastSimilarAlert   string    `gorm:"type:text" json:"last_similar_alert"`                   // LastSimilarAlert 上次相似的告警信息
 	AlertHandler       string    `gorm:"type:varchar(255);not null" json:"alert_handler"`       // AlertHandler 告警处理人
 	ClaimAlert         bool      `json:"claim_alert"`                                           // ClaimAlert 是否认领该告警

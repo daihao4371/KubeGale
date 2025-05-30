@@ -91,7 +91,7 @@ func (notificationService *NotificationService) UpdateFeiShu(req request.UpdateF
 
 		// 3. Update NotificationConfig fields
 		feiShuConfigToUpdate.NotificationConfig.Name = req.Name
-		feiShuConfigToUpdate.NotificationConfig.NotificationPolicy = req.NotificationPolicy // Directly from UpdateFeiShuRequest
+		feiShuConfigToUpdate.NotificationConfig.NotificationPolicy = req.NotificationPolicy
 		feiShuConfigToUpdate.NotificationConfig.SendDailyStats = req.SendDailyStats
 
 		if err := tx.Save(&feiShuConfigToUpdate.NotificationConfig).Error; err != nil {
@@ -104,30 +104,27 @@ func (notificationService *NotificationService) UpdateFeiShu(req request.UpdateF
 			return fmt.Errorf("failed to save feishu config: %w", err)
 		}
 
-		// 5. Card Content Handling (Simplified)
-		if req.CardContent.AlertLevel != "" { // Check if CardContent is provided in the request
+		// 5. Card Content Handling
+		if req.CardContent.AlertLevel != "" {
 			var cardContent im.CardContentConfig
-			// Attempt to find existing card content
 			err := tx.Where("notification_id = ?", feiShuConfigToUpdate.NotificationConfigID).First(&cardContent).Error
 			if err != nil {
 				if errors.Is(err, gorm.ErrRecordNotFound) {
-					// Not found, create new if AlertLevel is present
+					// 创建新的卡片内容
 					newCardContent := req.CardContent
-					newCardContent.NotificationID = feiShuConfigToUpdate.NotificationConfigID // Set the foreign key
+					newCardContent.NotificationID = feiShuConfigToUpdate.NotificationConfigID
 					if createErr := tx.Create(&newCardContent).Error; createErr != nil {
 						return fmt.Errorf("failed to create card content: %w", createErr)
 					}
 				} else {
-					// Other error finding card content
 					return fmt.Errorf("failed to query card content: %w", err)
 				}
 			} else {
-				// Found, update existing card content
-				// Important: Ensure req.CardContent has an ID if you want to update a specific record by its ID.
-				// GORM's Updates will update based on the primary key if present in req.CardContent,
-				// or based on the Model(&cardContent) condition if not.
-				// For simplicity, we assume Updates will correctly update the found cardContent.
-				if updateErr := tx.Model(&cardContent).Updates(req.CardContent).Error; updateErr != nil {
+				// 更新现有卡片内容
+				updateData := req.CardContent
+				updateData.ID = cardContent.ID
+				updateData.NotificationID = cardContent.NotificationID
+				if updateErr := tx.Model(&cardContent).Updates(updateData).Error; updateErr != nil {
 					return fmt.Errorf("failed to update card content: %w", updateErr)
 				}
 			}
@@ -136,10 +133,9 @@ func (notificationService *NotificationService) UpdateFeiShu(req request.UpdateF
 	})
 
 	if err != nil {
-		return im.FeiShuConfig{}, err // Return zero value of FeiShuConfig on error
+		return im.FeiShuConfig{}, err
 	}
 
-	// The feiShuConfigToUpdate already has NotificationConfig preloaded from the start of the transaction.
 	return feiShuConfigToUpdate, nil
 }
 

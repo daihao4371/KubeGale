@@ -9,10 +9,13 @@
 {
     "name": "测试飞书通知",
     "type": "feishu",
+    "enabled": true,
     "webhook_url": "https://open.feishu.cn/open-apis/bot/v2/hook/xxx",
-    "secret": "your_secret",
     "description": "这是一个测试飞书通知配置",
-    "status": true
+    "tags": ["告警", "监控"],
+    "notify_events": ["alert", "warning"],
+    "receivers": ["张三", "李四"],
+    "send_daily_stats": true
 }
 ```
 
@@ -23,11 +26,23 @@
 {
     "id": 1,
     "name": "更新后的飞书通知",
-    "type": "feishu",
-    "webhook_url": "https://open.feishu.cn/open-apis/bot/v2/hook/xxx",
-    "secret": "your_secret",
-    "description": "这是更新后的飞书通知配置",
-    "status": true
+    "notification_policy": "alert,warning",
+    "robot_url": "https://open.feishu.cn/open-apis/bot/v2/hook/xxx",
+    "send_daily_stats": true,
+    "card_content": {
+        "alert_level": "warning",
+        "alert_name": "测试告警",
+        "notification_policy": "immediate",
+        "alert_content": "这是一个测试告警内容",
+        "alert_time": "2024-03-20T10:00:00Z",
+        "notified_users": ["张三", "李四"],
+        "last_similar_alert": "2024-03-19T10:00:00Z",
+        "alert_handler": "系统管理员",
+        "claim_alert": false,
+        "resolve_alert": false,
+        "mute_alert": false,
+        "unresolved_alert": true
+    }
 }
 ```
 
@@ -37,11 +52,10 @@
 ```json
 {
     "name": "测试钉钉通知",
-    "type": "dingtalk",
+    "notify_events": ["alert", "warning"],
+    "send_daily_stats": true,
     "webhook_url": "https://oapi.dingtalk.com/robot/send?access_token=xxx",
-    "secret": "your_secret",
-    "description": "这是一个测试钉钉通知配置",
-    "status": true
+    "secret": "your_secret"
 }
 ```
 
@@ -52,11 +66,24 @@
 {
     "id": 1,
     "name": "更新后的钉钉通知",
-    "type": "dingtalk",
+    "notification_policy": "alert,warning",
+    "send_daily_stats": true,
     "webhook_url": "https://oapi.dingtalk.com/robot/send?access_token=xxx",
     "secret": "your_secret",
-    "description": "这是更新后的钉钉通知配置",
-    "status": true
+    "card_content": {
+        "alert_level": "warning",
+        "alert_name": "测试告警",
+        "notification_policy": "immediate",
+        "alert_content": "这是一个测试告警内容",
+        "alert_time": "2024-03-20T10:00:00Z",
+        "notified_users": ["张三", "李四"],
+        "last_similar_alert": "2024-03-19T10:00:00Z",
+        "alert_handler": "系统管理员",
+        "claim_alert": false,
+        "resolve_alert": false,
+        "mute_alert": false,
+        "unresolved_alert": true
+    }
 }
 ```
 
