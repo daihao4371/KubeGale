@@ -65,18 +65,10 @@ func (b *BatchOperationsService) CreateBatchOperations(req request.ExecuteReques
 		wg.Add(1)
 		go func(host, user string) {
 			defer wg.Done()
-			output, err := executeRemoteCommandWithKey(host, user, keyPath, fullCommand)
-			if err != nil {
-				results <- request.HostExecResult{
-					Host:   host,
-					Error:  err.Error(),
-					Output: output, // 即使有错误也包含输出
-				}
-			} else {
-				results <- request.HostExecResult{
-					Host:   host,
-					Output: output,
-				}
+			output, _ := executeRemoteCommandWithKey(host, user, keyPath, fullCommand)
+			results <- request.HostExecResult{
+				Host:   host,
+				Output: output,
 			}
 		}(host, user)
 	}
@@ -91,7 +83,8 @@ func (b *BatchOperationsService) CreateBatchOperations(req request.ExecuteReques
 	var execResults []request.HostExecResult
 	for res := range results {
 		execResults = append(execResults, res)
-		if res.Error != "" {
+		// 检查输出中是否包含错误信息
+		if strings.Contains(res.Output, "error") || strings.Contains(res.Output, "Error") || strings.Contains(res.Output, "failed") || strings.Contains(res.Output, "Is a directory") {
 			failureHosts = append(failureHosts, res.Host)
 		} else {
 			successHosts = append(successHosts, res.Host)
@@ -157,6 +150,12 @@ func (b *BatchOperationsService) GetUserRecentExecutionRecords(userId uint) ([]r
 
 // 根据请求构建完整命令
 func buildCommand(req request.ExecuteRequest) (string, error) {
+	// 优先使用单个命令
+	if req.Command != "" {
+		return req.Command, nil
+	}
+
+	// 如果没有单个命令，则使用命令列表
 	switch req.Language {
 	case "shell":
 		return strings.Join(req.Commands, " && "), nil
