@@ -4,6 +4,7 @@ import (
 	"KubeGale/global"
 	cloudCmdb "KubeGale/model/cloudCmdb"
 	cmdb "KubeGale/model/cmdb"
+	cmdbReq "KubeGale/model/cmdb/request"
 	"KubeGale/model/im"
 
 	"go.uber.org/zap"
@@ -20,6 +21,7 @@ func bizModel() error {
 		// 资产管理自建机房资源
 		cmdb.CmdbHosts{},
 		cmdb.CmdbProjects{},
+		cmdbReq.CommandExecutionLog{},
 
 		// 云资源
 		cloudCmdb.LoadBalancer{},

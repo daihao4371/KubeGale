@@ -5,9 +5,10 @@ import "time"
 // 执行命令请求的结构体
 type ExecuteRequest struct {
 	Hosts    []string `json:"hosts" form:"hosts"`       // 主机列表
-	Users    []string `json:"users" form:"users"`       //
-	Ports    []int    `json:"ports" form:"ports"`       //
-	UserId   uint     `json:"userId" form:"userId"`     //
+	Users    []string `json:"users" form:"users"`       // 用户列表
+	Ports    []int    `json:"ports" form:"ports"`       // 端口列表
+	UserId   uint     `json:"userId" form:"userId"`     // 用户ID
+	Command  string   `json:"command" form:"command"`   // 单个命令
 	Commands []string `json:"commands" form:"commands"` // 要执行的命令列表
 	Language string   `json:"language" form:"language"` // "shell" 或者"python"
 }
@@ -16,7 +17,6 @@ type ExecuteRequest struct {
 type HostExecResult struct {
 	Host   string `json:"host" form:"host"`
 	Output string `json:"output" form:"output"`
-	Error  string `json:"error,omitempty" form:"error"`
 }
 
 // 响应体的结构体
@@ -25,7 +25,7 @@ type ExecuteResponse struct {
 	SuccessHosts  []string         `json:"successHosts" form:"successHosts"`   // 成功的主机列表
 	FailureHosts  []string         `json:"failureHosts" form:"failureHosts"`   // 失败的主机列表
 	ExecutionLogs []HostExecResult `json:"executionLogs" form:"executionLogs"` // 执行日志
-	Status        string           `json:"status"`
+	Status        string           `json:"status"`                             // 执行状态：success 或 failed
 }
 
 type CommandExecutionLog struct {
