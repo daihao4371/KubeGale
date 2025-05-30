@@ -4,13 +4,17 @@ import (
 	"KubeGale/global"
 	"KubeGale/model/cmdb/request"
 	"KubeGale/utils/cmdb"
+	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
-	"golang.org/x/crypto/ssh"
+	"io"
 	"os"
 	"strings"
 	"sync"
 	"time"
+
+	"golang.org/x/crypto/ssh"
 )
 
 type BatchOperationsService struct{}
@@ -25,6 +29,17 @@ func (b *BatchOperationsService) CreateBatchOperations(req request.ExecuteReques
 	// 检查主机和用户列表长度是否一致
 	if len(req.Hosts) != len(req.Users) {
 		return nil, fmt.Errorf("hosts and users list must have the same length")
+	}
+
+	// 如果只提供了一个端口，则所有主机使用相同端口
+	if len(req.Ports) == 1 {
+		port := req.Ports[0]
+		req.Ports = make([]int, len(req.Hosts))
+		for i := range req.Hosts {
+			req.Ports[i] = port
+		}
+	} else if len(req.Ports) != len(req.Hosts) {
+		return nil, fmt.Errorf("ports list must have length 1 or match hosts length")
 	}
 
 	// 构建完整的命令
@@ -52,9 +67,16 @@ func (b *BatchOperationsService) CreateBatchOperations(req request.ExecuteReques
 			defer wg.Done()
 			output, err := executeRemoteCommandWithKey(host, user, keyPath, fullCommand)
 			if err != nil {
-				results <- request.HostExecResult{Host: host, Error: err.Error()}
+				results <- request.HostExecResult{
+					Host:   host,
+					Error:  err.Error(),
+					Output: output, // 即使有错误也包含输出
+				}
 			} else {
-				results <- request.HostExecResult{Host: host, Output: output}
+				results <- request.HostExecResult{
+					Host:   host,
+					Output: output,
+				}
 			}
 		}(host, user)
 	}
@@ -75,10 +97,13 @@ func (b *BatchOperationsService) CreateBatchOperations(req request.ExecuteReques
 			successHosts = append(successHosts, res.Host)
 		}
 	}
+
+	// 如果有任何失败的主机，将状态设置为失败
 	responseStatus := "success"
 	if len(failureHosts) > 0 {
 		responseStatus = "failed"
 	}
+
 	// 构建响应体
 	response := &request.ExecuteResponse{
 		Status:        responseStatus,
@@ -102,7 +127,7 @@ func (b *BatchOperationsService) CreateBatchOperations(req request.ExecuteReques
 		SuccessHosts:  strings.Join(successHosts, ","), // 成功主机列表
 		FailureHosts:  strings.Join(failureHosts, ","), // 失败主机列表
 		ExecutionLogs: string(executionLogsJSON),       // 执行日志的 JSON
-		Status:        response.Status,
+		Status:        responseStatus,
 	}
 
 	// 使用 gorm 保存到数据库
@@ -112,6 +137,7 @@ func (b *BatchOperationsService) CreateBatchOperations(req request.ExecuteReques
 
 	return response, nil
 }
+
 func (b *BatchOperationsService) GetUserRecentExecutionRecords(userId uint) ([]request.CommandExecutionLog, error) {
 	var logs []request.CommandExecutionLog
 
@@ -164,8 +190,8 @@ func executeRemoteCommandWithKey(host, user, keyPath, command string) (string, e
 		Auth: []ssh.AuthMethod{
 			ssh.PublicKeys(signer),
 		},
-		HostKeyCallback: ssh.InsecureIgnoreHostKey(), // 生产环境下应该使用安全的 HostKeyCallback
-		Timeout:         5 * time.Second,             // 设置超时
+		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		Timeout:         10 * time.Second,
 	}
 
 	// 建立连接
@@ -181,11 +207,95 @@ func executeRemoteCommandWithKey(host, user, keyPath, command string) (string, e
 	}
 	defer session.Close()
 
-	// 执行命令并获取输出
-	output, err := session.CombinedOutput(command)
+	// 设置命令执行超时
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+
+	// 创建管道来捕获输出
+	stdout, err := session.StdoutPipe()
 	if err != nil {
-		return "", fmt.Errorf("failed to execute command: %v", err)
+		return "", fmt.Errorf("failed to get stdout pipe: %v", err)
+	}
+	stderr, err := session.StderrPipe()
+	if err != nil {
+		return "", fmt.Errorf("failed to get stderr pipe: %v", err)
 	}
 
-	return string(output), nil
+	// 使用 bash -c 执行命令
+	fullCommand := fmt.Sprintf("bash -c '%s'", command)
+	if err := session.Start(fullCommand); err != nil {
+		return "", fmt.Errorf("failed to start command: %v", err)
+	}
+
+	// 读取输出
+	var outputBuf, errorBuf bytes.Buffer
+	outputDone := make(chan struct{})
+	errorDone := make(chan struct{})
+
+	go func() {
+		io.Copy(&outputBuf, stdout)
+		close(outputDone)
+	}()
+
+	go func() {
+		io.Copy(&errorBuf, stderr)
+		close(errorDone)
+	}()
+
+	// 等待命令完成或超时
+	done := make(chan error)
+	go func() {
+		done <- session.Wait()
+	}()
+
+	select {
+	case err := <-done:
+		<-outputDone
+		<-errorDone
+
+		// 获取标准输出和错误输出
+		output := outputBuf.String()
+		errorOutput := errorBuf.String()
+
+		// 构建完整的输出结果
+		var result strings.Builder
+
+		// 如果有标准输出，添加到结果中
+		if output != "" {
+			result.WriteString(output)
+			if !strings.HasSuffix(output, "\n") {
+				result.WriteString("\n")
+			}
+		}
+
+		// 如果有错误输出，添加到结果中
+		if errorOutput != "" {
+			if output != "" {
+				result.WriteString("\n")
+			}
+			result.WriteString(errorOutput)
+			if !strings.HasSuffix(errorOutput, "\n") {
+				result.WriteString("\n")
+			}
+		}
+
+		// 如果命令执行出错或stderr有输出，返回错误
+		if err != nil || errorOutput != "" {
+			if result.Len() == 0 {
+				return "", fmt.Errorf("command failed: %v", err)
+			}
+			return result.String(), fmt.Errorf("command failed: %v", err)
+		}
+
+		// 如果没有任何输出，返回空字符串
+		if result.Len() == 0 {
+			return "", nil
+		}
+
+		return result.String(), nil
+
+	case <-ctx.Done():
+		session.Close()
+		return "", fmt.Errorf("command execution timed out")
+	}
 }
