@@ -10,6 +10,7 @@ type Server struct {
 	// gorm
 	Mysql  Mysql           `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
 	DBList []SpecializedDB `mapstructure:"db-list" json:"db-list" yaml:"db-list"`
+	Local  Local           `mapstructure:"local" json:"local" yaml:"local"`
 
 	// 跨域配置
 	Cors CORS `mapstructure:"cors" json:"cors" yaml:"cors"`
