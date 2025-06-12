@@ -14,6 +14,12 @@ type PodSecurityPoliciesListResponse struct {
 	request.PageInfo
 }
 
+// DescribePodSecurityPoliciesResponse Pod安全策略详情响应结构体
+// 用于返回单个Pod安全策略的详细信息
+type DescribePodSecurityPoliciesResponse struct {
+	Items *v1.PodSecurityContext `json:"items" form:"items"` // Pod安全策略详情
+}
+
 //type DescribeStorageClassResponse struct {
 //	Items *v1.StorageClass `json:"items" form:"items"`
 //}
