@@ -3,15 +3,15 @@ package endpoint
 import (
 	"KubeGale/model/common/request"
 
-	corev1 "k8s.io/api/core/v1"
+	discoveryv1 "k8s.io/api/discovery/v1"
 )
 
 type EndPointListResponse struct {
-	Items *[]corev1.Endpoints `json:"items" form:"items"`
-	Total int                 `json:"total" form:"total"`
+	Items *[]discoveryv1.EndpointSlice `json:"items" form:"items"`
+	Total int                          `json:"total" form:"total"`
 	request.PageInfo
 }
 
 type DescribeEndPointResponse struct {
-	Items *corev1.Endpoints `json:"items" form:"items"`
+	Items *discoveryv1.EndpointSlice `json:"items" form:"items"`
 }

@@ -3,6 +3,7 @@ package configmap
 import (
 	v1 "KubeGale/api/v1"
 	"KubeGale/middleware"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,8 +22,5 @@ func (s *K8sConfigMapRouter) InitK8sConfigMapRouter(Router *gin.RouterGroup, Pub
 	{
 		k8sConfigMapRouterWithoutRecord.GET("configMap", k8sConfigMapApi.GetConfigMapList)             // 根据ID获取k8sCluster表
 		k8sConfigMapRouterWithoutRecord.GET("configMapDetails", k8sConfigMapApi.DescribeConfigMapInfo) // 根据ID获取k8sCluster表
-	}
-	{
-
 	}
 }
