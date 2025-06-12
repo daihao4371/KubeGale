@@ -1,15 +1,15 @@
 package cluster
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/request"
-	"DYCLOUD/model/common/response"
-	"DYCLOUD/model/kubernetes"
-	"DYCLOUD/model/kubernetes/cluster"
-	clusterReq "DYCLOUD/model/kubernetes/cluster/request"
-	response2 "DYCLOUD/model/kubernetes/cluster/response"
-	"DYCLOUD/service"
-	"DYCLOUD/utils"
+	"KubeGale/global"
+	"KubeGale/model/common/request"
+	"KubeGale/model/common/response"
+	"KubeGale/model/kubernetes"
+	"KubeGale/model/kubernetes/cluster"
+	clusterReq "KubeGale/model/kubernetes/cluster/request"
+	response2 "KubeGale/model/kubernetes/cluster/response"
+	"KubeGale/service"
+	"KubeGale/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -37,7 +37,7 @@ func (k8sClusterApi *K8sClusterApi) CreateK8sCluster(c *gin.Context) {
 	k8sCluster.CreatedBy = utils.GetUserID(c)
 
 	if err := k8sClusterService.CreateK8sCluster(&k8sCluster); err != nil {
-		global.DYCLOUD_LOG.Error(err.Error(), zap.Error(err))
+		global.KUBEGALE_LOG.Error(err.Error(), zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 	} else {
 		response.OkWithMessage("创建成功", c)
@@ -57,7 +57,7 @@ func (k8sClusterApi *K8sClusterApi) DeleteK8sCluster(c *gin.Context) {
 	var idInfo request.GetById
 	_ = c.ShouldBindJSON(&idInfo)
 	if err := k8sClusterService.DeleteK8sCluster(idInfo.ID); err != nil {
-		global.DYCLOUD_LOG.Error(err.Error(), zap.Error(err))
+		global.KUBEGALE_LOG.Error(err.Error(), zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 	} else {
 		response.OkWithMessage("删除成功", c)
@@ -76,7 +76,7 @@ func (k8sClusterApi *K8sClusterApi) DeleteK8sClusterByIds(c *gin.Context) {
 	var ids request.IdsReq
 	_ = c.ShouldBindJSON(&ids)
 	if err := k8sClusterService.DeleteK8sClusterByIds(ids); err != nil {
-		global.DYCLOUD_LOG.Error("批量删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("批量删除失败!", zap.Error(err))
 		response.FailWithMessage("批量删除失败", c)
 	} else {
 		response.OkWithMessage("批量删除成功", c)
@@ -102,7 +102,7 @@ func (k8sClusterApi *K8sClusterApi) UpdateK8sCluster(c *gin.Context) {
 	k8sCluster.UpdatedBy = utils.GetUserID(c)
 
 	if err := k8sClusterService.UpdateK8sCluster(k8sCluster); err != nil {
-		global.DYCLOUD_LOG.Error("更新失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败", c)
 	} else {
 		response.OkWithMessage("更新成功", c)
@@ -126,7 +126,7 @@ func (K8sClusterApi *K8sClusterApi) CreateCredential(c *gin.Context) {
 		return
 	}
 	if err := k8sClusterService.CreateCredential(idInfo.ID, utils.GetUserID(c)); err != nil {
-		global.DYCLOUD_LOG.Error("凭据创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("凭据创建失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 	} else {
 		response.OkWithMessage("凭据创建成功", c)
@@ -151,7 +151,7 @@ func (K8sClusterApi *K8sClusterApi) GetClusterUserById(c *gin.Context) {
 	}
 	cluster, err := k8sClusterService.GetClusterUserById(idInfo.ID, utils.GetUserID(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response2.ClusterUserResponse{User: cluster}, "获取成功", c)
@@ -176,7 +176,7 @@ func (K8sClusterApi *K8sClusterApi) GetClusterRoles(c *gin.Context) {
 	}
 	roles, err := k8sClusterService.GetClusterRoles(roleType)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response2.RolesResponse{Roles: roles}, "获取成功", c)
@@ -201,7 +201,7 @@ func (K8sClusterApi *K8sClusterApi) GetClusterApiGroups(c *gin.Context) {
 	}
 	groups, err := k8sClusterService.GetClusterApiGroups(apiGroups)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response2.ApiGroupResponse{Groups: groups}, "获取成功", c)
@@ -227,7 +227,7 @@ func (K8sClusterApi *K8sClusterApi) CreateClusterRole(c *gin.Context) {
 
 	err := k8sClusterService.CreateClusterRole(role)
 	if err != nil {
-		global.DYCLOUD_LOG.Error(err.Error(), zap.Error(err))
+		global.KUBEGALE_LOG.Error(err.Error(), zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 	} else {
 		response.OkWithMessage("角色创建成功!", c)
@@ -253,7 +253,7 @@ func (K8sClusterApi *K8sClusterApi) UpdateClusterRole(c *gin.Context) {
 
 	err := k8sClusterService.UpdateClusterRole(role)
 	if err != nil {
-		global.DYCLOUD_LOG.Error(err.Error(), zap.Error(err))
+		global.KUBEGALE_LOG.Error(err.Error(), zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 	} else {
 		response.OkWithMessage("角色更新成功!", c)
@@ -279,7 +279,7 @@ func (K8sClusterApi *K8sClusterApi) DeleteClusterRole(c *gin.Context) {
 
 	err := k8sClusterService.DeleteClusterRole(role)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("角色删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("角色删除失败!", zap.Error(err))
 		response.FailWithMessage("角色删除失败!", c)
 	} else {
 		response.OkWithMessage("角色删除成功!", c)
@@ -305,7 +305,7 @@ func (K8sClusterApi *K8sClusterApi) CreateClusterUser(c *gin.Context) {
 
 	err := k8sClusterService.CreateUser(role)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("用户授权失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("用户授权失败!", zap.Error(err))
 		response.FailWithMessage("用户授权失败!", c)
 	} else {
 		response.OkWithMessage("用户授权成功!", c)
@@ -331,7 +331,7 @@ func (K8sClusterApi *K8sClusterApi) UpdateClusterUser(c *gin.Context) {
 
 	err := k8sClusterService.UpdateClusterUser(role)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("用户授权更新失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("用户授权更新失败!", zap.Error(err))
 		response.FailWithMessage("用户授权更新失败!", c)
 	} else {
 		response.OkWithMessage("用户授权更新成功!", c)
@@ -357,7 +357,7 @@ func (K8sClusterApi *K8sClusterApi) DeleteClusterUser(c *gin.Context) {
 
 	err := k8sClusterService.DeleteClusterUser(role)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("用户删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("用户删除失败!", zap.Error(err))
 		response.FailWithMessage("用户删除失败!", c)
 	} else {
 		response.OkWithMessage("用户删除成功!", c)
@@ -383,7 +383,7 @@ func (K8sClusterApi *K8sClusterApi) GetClusterUserNamespace(c *gin.Context) {
 
 	namespaces, err := k8sClusterService.GetClusterUserNamespace(idInfo.ID, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error("获取命名空间失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取命名空间失败!", zap.Error(err))
 		response.FailWithMessage("获取命名空间失败", c)
 	} else {
 		response.OkWithDetailed(response2.ClusterUserNamespace{Namespaces: namespaces}, "获取成功", c)
@@ -409,7 +409,7 @@ func (k8sClusterApi *K8sClusterApi) GetClusterListNamespace(c *gin.Context) {
 
 	namespaces, err := k8sClusterService.GetClusterListNamespace(idInfo.ID)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("获取命名空间失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取命名空间失败!", zap.Error(err))
 		response.FailWithMessage("获取命名空间失败", c)
 	} else {
 		response.OkWithDetailed(response2.ClusterListNamespace{Namespaces: namespaces}, "获取成功", c)
@@ -434,7 +434,7 @@ func (k8sClusterApi *K8sClusterApi) FindK8sCluster(c *gin.Context) {
 	}
 	cluster, err := k8sClusterService.GetK8sCluster(idInfo.ID)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response2.ClusterResponse{Cluster: cluster}, "获取成功", c)
@@ -451,7 +451,7 @@ func (k8sClusterApi *K8sClusterApi) FindK8sClusterByName(c *gin.Context) {
 	name := c.Query("name")
 	cluster, err := k8sClusterService.GetK8sClusterByName(name)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response2.ClusterResponse{Cluster: cluster}, "获取成功", c)
@@ -475,7 +475,7 @@ func (k8sClusterApi *K8sClusterApi) GetK8sClusterList(c *gin.Context) {
 		return
 	}
 	if list, total, err := k8sClusterService.GetK8sClusterInfoList(pageInfo); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
 		response.OkWithDetailed(response.PageResult{

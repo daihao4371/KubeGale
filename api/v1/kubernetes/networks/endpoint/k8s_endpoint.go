@@ -1,12 +1,12 @@
 package endpoint
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/request"
-	"DYCLOUD/model/common/response"
-	endpoint2 "DYCLOUD/model/kubernetes/endpoint"
-	"DYCLOUD/service"
-	"DYCLOUD/utils"
+	"KubeGale/global"
+	"KubeGale/model/common/request"
+	"KubeGale/model/common/response"
+	endpoint2 "KubeGale/model/kubernetes/endpoint"
+	"KubeGale/service"
+	"KubeGale/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"time"
@@ -25,7 +25,7 @@ func (k *K8sEndPointApi) GetEndPointList(c *gin.Context) {
 	}
 
 	if list, total, err := k8sEndPointService.GetEndPointList(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败:"+err.Error(), c)
 		return
 	} else {
@@ -50,7 +50,7 @@ func (k *K8sEndPointApi) DescribeEndPointInfo(c *gin.Context) {
 	}
 
 	if list, err := k8sEndPointService.DescribeEndPoint(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败："+err.Error(), c)
 		return
 	} else {
@@ -66,7 +66,7 @@ func (k *K8sEndPointApi) UpdateEndPoint(c *gin.Context) {
 	}
 
 	if list, err := k8sEndPointService.UpdateEndPoint(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("更新失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败："+err.Error(), c)
 		return
 	} else {
@@ -82,7 +82,7 @@ func (k *K8sEndPointApi) DeleteEndPoint(c *gin.Context) {
 	}
 
 	if err := k8sEndPointService.DeleteEndPoint(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败"+err.Error(), c)
 		return
 	} else {
@@ -99,7 +99,7 @@ func (k *K8sEndPointApi) CreateEndPoint(c *gin.Context) {
 	}
 
 	if CronJob, err := k8sEndPointService.CreateEndPoint(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败："+err.Error(), c)
 		return
 	} else {

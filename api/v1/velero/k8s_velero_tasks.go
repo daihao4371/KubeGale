@@ -1,13 +1,13 @@
 package velero
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/request"
-	"DYCLOUD/model/common/response"
-	veleroReq "DYCLOUD/model/velero/request"
-	"DYCLOUD/service"
-	velero2 "DYCLOUD/service/kubernetes/velero"
-	"DYCLOUD/utils"
+	"KubeGale/global"
+	"KubeGale/model/common/request"
+	"KubeGale/model/common/response"
+	veleroReq "KubeGale/model/velero/request"
+	"KubeGale/service"
+	velero2 "KubeGale/service/kubernetes/velero"
+	"KubeGale/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"time"
@@ -36,7 +36,7 @@ func (k8sVeleroTasksApi *K8sVeleroTasksApi) CreateK8sVeleroTasks(c *gin.Context)
 	service := velero2.K8sVeleroTasksService{}
 	ins, err := service.CreateK8sVeleroTasks(&k8sVeleroTasks, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error("创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -62,7 +62,7 @@ func (k8sVeleroTasksApi *K8sVeleroTasksApi) DeleteK8sVeleroTasks(c *gin.Context)
 	service := velero2.K8sVeleroTasksService{}
 	err = service.DeleteK8sVeleroTasks(&req, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error("删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -88,7 +88,7 @@ func (k8sVeleroTasksApi *K8sVeleroTasksApi) UpdateK8sVeleroTasks(c *gin.Context)
 	service := velero2.K8sVeleroTasksService{}
 
 	if list, err := service.UpdateK8sVeleroTasks(&req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("更新失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败："+err.Error(), c)
 		return
 	} else {
@@ -142,7 +142,7 @@ func (k8sVeleroTasksApi *K8sVeleroTasksApi) GetK8sVeleroTasksList(c *gin.Context
 
 	list, total, err := service.GetK8sVeleroTasksInfoList(pageInfo, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -175,7 +175,7 @@ func (k8sVeleroTasksApi *K8sVeleroTasksApi) CreateVelero(c *gin.Context) {
 	}
 
 	if err := k8sVeleroService.CreateVelero(&req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败："+err.Error(), c)
 		return
 	} else {
@@ -202,7 +202,7 @@ func (K8sVeleroTasksApi *K8sVeleroTasksApi) ReductionK8sVeleroRecord(c *gin.Cont
 	service := velero2.K8sVeleroRestoresService{}
 	ins, err := service.CreateK8sVeleroRestore(&k8sVeleroTasks, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error("创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -229,7 +229,7 @@ func (K8sVeleroTasksApi *K8sVeleroTasksApi) GetK8sVeleroRecordList(c *gin.Contex
 
 	list, total, err := service.GetK8sVeleroRecordList(req, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -263,7 +263,7 @@ func (K8sVeleroTasksApi *K8sVeleroTasksApi) DeleteK8sVeleroRecord(c *gin.Context
 	service := velero2.K8sVeleroRecordsService{}
 	err = service.DeleteK8sVeleroRecord(&req, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error("删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -315,7 +315,7 @@ func (k8sVeleroTasksApi *K8sVeleroTasksApi) CreateK8sVeleroRecord(c *gin.Context
 	service := velero2.K8sVeleroRecordsService{}
 	ins, err := service.CreateK8sVeleroRecord(&k8sVeleroTasks, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error("创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -341,7 +341,7 @@ func (k8sVeleroTasksApi *K8sVeleroTasksApi) UpdateK8sVeleroRecord(c *gin.Context
 	service := velero2.K8sVeleroRecordsService{}
 
 	if list, err := service.UpdateK8sVeleroRecord(&req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("更新失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败："+err.Error(), c)
 		return
 	} else {
@@ -369,7 +369,7 @@ func (K8sVeleroTasksApi *K8sVeleroTasksApi) GetK8sVeleroRestoreList(c *gin.Conte
 
 	list, total, err := service.GetK8sVeleroRestoreList(req, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -403,7 +403,7 @@ func (K8sVeleroTasksApi *K8sVeleroTasksApi) DeleteK8sVeleroRestore(c *gin.Contex
 	service := velero2.K8sVeleroRestoresService{}
 	err = service.DeleteK8sVeleroRestore(&req, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error("删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	}

@@ -1,10 +1,10 @@
 package metrics
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/response"
-	"DYCLOUD/model/kubernetes/metrics"
-	"DYCLOUD/service"
+	"KubeGale/global"
+	"KubeGale/model/common/response"
+	"KubeGale/model/kubernetes/metrics"
+	"KubeGale/service"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -26,7 +26,7 @@ func (m *MetricsApi) MetricsGet(c *gin.Context) {
 	_ = c.ShouldBindJSON(&metricsQuery)
 
 	if queryResp, err := metricsService.GetMetrics(metricsQuery); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Any("err", err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Any("err", err))
 		response.FailWithMessage("获取失败: "+err.Error(), c)
 	} else {
 		response.OkWithDetailed(metrics.MetricsResponse{

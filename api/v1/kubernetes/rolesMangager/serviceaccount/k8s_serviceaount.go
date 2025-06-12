@@ -1,12 +1,12 @@
 package serviceaccount
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/request"
-	"DYCLOUD/model/common/response"
-	"DYCLOUD/model/kubernetes/serviceAccount"
-	"DYCLOUD/service"
-	"DYCLOUD/utils"
+	"KubeGale/global"
+	"KubeGale/model/common/request"
+	"KubeGale/model/common/response"
+	"KubeGale/model/kubernetes/serviceAccount"
+	"KubeGale/service"
+	"KubeGale/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"time"
@@ -25,7 +25,7 @@ func (k *K8sServiceAccountApi) GetServiceAccount(c *gin.Context) {
 	}
 
 	if list, total, err := k8sServiceAccountService.GetServiceAccountList(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 	} else {
 		response.OkWithDetailed(serviceAccount.ServiceAccountListResponse{
@@ -48,7 +48,7 @@ func (k *K8sServiceAccountApi) DescribeServiceAccountInfo(c *gin.Context) {
 	}
 
 	if list, err := k8sServiceAccountService.DescribeServiceAccount(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败："+err.Error(), c)
 		return
 	} else {
@@ -64,7 +64,7 @@ func (k *K8sServiceAccountApi) UpdateServiceAccount(c *gin.Context) {
 	}
 
 	if list, err := k8sServiceAccountService.UpdateServiceAccount(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("更新失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败："+err.Error(), c)
 		return
 	} else {
@@ -80,7 +80,7 @@ func (k *K8sServiceAccountApi) DeleteServiceAccount(c *gin.Context) {
 	}
 
 	if err := k8sServiceAccountService.DeleteServiceAccount(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败"+err.Error(), c)
 		return
 	} else {
@@ -97,7 +97,7 @@ func (k *K8sServiceAccountApi) CreateServiceAccount(c *gin.Context) {
 	}
 
 	if CronJob, err := k8sServiceAccountService.CreateServiceAccount(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败："+err.Error(), c)
 		return
 	} else {

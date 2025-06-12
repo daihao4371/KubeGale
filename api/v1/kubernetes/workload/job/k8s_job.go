@@ -1,12 +1,12 @@
 package job
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/request"
-	"DYCLOUD/model/common/response"
-	"DYCLOUD/model/kubernetes/job"
-	"DYCLOUD/service"
-	"DYCLOUD/utils"
+	"KubeGale/global"
+	"KubeGale/model/common/request"
+	"KubeGale/model/common/response"
+	"KubeGale/model/kubernetes/job"
+	"KubeGale/service"
+	"KubeGale/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"time"
@@ -25,7 +25,7 @@ func (k *K8sJobApi) GetJobList(c *gin.Context) {
 	}
 
 	if list, total, err := k8sJobService.GetJobList(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败:"+err.Error(), c)
 		return
 	} else {
@@ -50,7 +50,7 @@ func (k *K8sJobApi) DescribeJobInfo(c *gin.Context) {
 	}
 
 	if list, err := k8sJobService.DescribeJob(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败："+err.Error(), c)
 		return
 	} else {
@@ -66,7 +66,7 @@ func (k *K8sJobApi) UpdateJob(c *gin.Context) {
 	}
 
 	if list, err := k8sJobService.UpdateJob(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("更新失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败："+err.Error(), c)
 		return
 	} else {
@@ -82,7 +82,7 @@ func (k *K8sJobApi) DeleteJob(c *gin.Context) {
 	}
 
 	if err := k8sJobService.DeleteJob(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败"+err.Error(), c)
 		return
 	} else {
@@ -99,7 +99,7 @@ func (k *K8sJobApi) CreateJob(c *gin.Context) {
 	}
 
 	if Job, err := k8sJobService.CreateJob(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败："+err.Error(), c)
 		return
 	} else {

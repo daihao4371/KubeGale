@@ -5,6 +5,7 @@ import (
 	"KubeGale/service/cmdb"
 	"KubeGale/service/im"
 	"KubeGale/service/kubernetes/cloudtty"
+	"KubeGale/service/kubernetes/cluster"
 	"KubeGale/service/kubernetes/configManager/configmap"
 	"KubeGale/service/kubernetes/configManager/horizontalPod"
 	"KubeGale/service/kubernetes/configManager/limitRange"
@@ -17,6 +18,7 @@ import (
 	"KubeGale/service/kubernetes/network/endpoint"
 	"KubeGale/service/kubernetes/network/service"
 	"KubeGale/service/kubernetes/node"
+	"KubeGale/service/kubernetes/record"
 	"KubeGale/service/kubernetes/rolesManager/clusterRole"
 	"KubeGale/service/kubernetes/rolesManager/clusterRoleBinding"
 	"KubeGale/service/kubernetes/rolesManager/role"
@@ -41,6 +43,7 @@ type ServiceGroup struct {
 	ImServiceGroup                   im.ServiceGroup
 	CmdbServiceGroup                 cmdb.ServiceGroup
 	CloudCmdbServiceGroup            cloudCmdb.ServiceGroup
+	ClusterServiceGroup              cluster.ServiceGroup
 	NodeServiceGroup                 node.ServiceGroup
 	PodServiceGroup                  pod.ServiceGroup
 	DeploymentServiceGroup           deployment.ServiceGroup
@@ -69,7 +72,8 @@ type ServiceGroup struct {
 	RoleServiceGroup                 role.ServiceGroup
 	RoleBindingServiceGroup          roleBinding.ServiceGroup
 	VeleroServiceGroup               velero.ServiceGroup
-	MetricsServiceGroup              metrics.ServiceGroup // Added this line
+	MetricsServiceGroup              metrics.ServiceGroup
+	RecordServiceGroup               record.ServiceGroup // Added this line
 }
 
 var ServiceGroupApp = new(ServiceGroup)

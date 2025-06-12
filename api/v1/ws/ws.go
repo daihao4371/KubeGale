@@ -1,13 +1,13 @@
 package ws
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/response"
-	kubernetesReq "DYCLOUD/model/kubernetes/ws" // 确保导入路径正确
-	"DYCLOUD/model/system/request"
-	"DYCLOUD/utils"
-	sutils "DYCLOUD/utils"
-	"DYCLOUD/utils/kubernetes"
+	"KubeGale/global"
+	"KubeGale/model/common/response"
+	kubernetesReq "KubeGale/model/kubernetes/ws" // 确保导入路径正确
+	"KubeGale/model/system/request"
+	"KubeGale/utils"
+	sutils "KubeGale/utils"
+	"KubeGale/utils/kubernetes"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -21,7 +21,7 @@ func GetJWTAuth(token string) (user *request.CustomClaims, err error) {
 	j := sutils.NewJWT()
 	claims, err := j.ParseToken(token)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("从Gin的Context中获取从jwt解析信息失败, 请检查请求头是否存在x-token且claims是否为规定结构")
+		global.KUBEGALE_LOG.Error("从Gin的Context中获取从jwt解析信息失败, 请检查请求头是否存在x-token且claims是否为规定结构")
 	}
 
 	return claims, err
@@ -71,25 +71,25 @@ func (w *WsApi) Terminal(c *gin.Context) {
 		for {
 			select {
 			case <-exitChan:
-				global.DYCLOUD_LOG.Error("终端记录已经写入退出循环.")
+				global.KUBEGALE_LOG.Error("终端记录已经写入退出循环.")
 				return // 接收到退出通知时退出循环
 			case <-time.After(time.Second * 10):
 				if time.Now().Unix()-kubeshell.UpdatedAt.Unix() > 120 || time.Now().Unix()-kubeshell.WriteAt.Unix() > 120 {
 					if _, err = kubeshell.Write([]byte("exit\n")); err != nil {
-						global.DYCLOUD_LOG.Error("终端WebSocket 终端退出失败：" + err.Error())
+						global.KUBEGALE_LOG.Error("终端WebSocket 终端退出失败：" + err.Error())
 					}
 
 					if err := kubeshell.WriteLog(terminal, user); err != nil {
-						global.DYCLOUD_LOG.Error("终端记录写入失败：" + err.Error())
+						global.KUBEGALE_LOG.Error("终端记录写入失败：" + err.Error())
 						return
 					}
 
 					if err = kubeshell.Close(); err != nil {
-						global.DYCLOUD_LOG.Error("终端WebSocket超时关闭失败：" + err.Error())
+						global.KUBEGALE_LOG.Error("终端WebSocket超时关闭失败：" + err.Error())
 						return
 					}
 
-					global.DYCLOUD_LOG.Info("终端WebSocket超时关闭成功！")
+					global.KUBEGALE_LOG.Info("终端WebSocket超时关闭成功！")
 					return
 				}
 			}

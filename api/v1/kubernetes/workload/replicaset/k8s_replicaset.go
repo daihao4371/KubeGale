@@ -1,12 +1,12 @@
 package replicaset
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/request"
-	"DYCLOUD/model/common/response"
-	"DYCLOUD/model/kubernetes/replicaSet"
-	"DYCLOUD/service"
-	"DYCLOUD/utils"
+	"KubeGale/global"
+	"KubeGale/model/common/request"
+	"KubeGale/model/common/response"
+	"KubeGale/model/kubernetes/replicaSet"
+	"KubeGale/service"
+	"KubeGale/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -24,7 +24,7 @@ func (k *K8sReplicaSetApi) GetReplicaSetList(c *gin.Context) {
 	}
 
 	if list, total, err := k8sReplicaSetService.GetReplicaSetList(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 	} else {
 		response.OkWithDetailed(replicaSet.ReplicaSetListResponse{

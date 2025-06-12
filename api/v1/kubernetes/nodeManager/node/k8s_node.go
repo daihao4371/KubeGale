@@ -1,12 +1,12 @@
 package node
 
 import (
-	"DYCLOUD/model/common/request"
-	"DYCLOUD/model/common/response"
-	"DYCLOUD/model/kubernetes"
-	"DYCLOUD/model/kubernetes/nodes"
-	"DYCLOUD/service"
-	"DYCLOUD/utils"
+	"KubeGale/model/common/request"
+	"KubeGale/model/common/response"
+	"KubeGale/model/kubernetes"
+	"KubeGale/model/kubernetes/nodes"
+	"KubeGale/service"
+	"KubeGale/utils"
 	"github.com/gin-gonic/gin"
 )
 

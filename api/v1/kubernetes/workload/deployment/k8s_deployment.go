@@ -1,12 +1,12 @@
 package deployment
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/request"
-	"DYCLOUD/model/common/response"
-	"DYCLOUD/model/kubernetes/deployment"
-	"DYCLOUD/service"
-	"DYCLOUD/utils"
+	"KubeGale/global"
+	"KubeGale/model/common/request"
+	"KubeGale/model/common/response"
+	"KubeGale/model/kubernetes/deployment"
+	"KubeGale/service"
+	"KubeGale/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -23,7 +23,7 @@ func (k *K8sDeploymentApi) GetDeploymentList(c *gin.Context) {
 		return
 	}
 	if list, total, err := k8sDeploymentService.GetDeploymentList(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 		return
 	} else {
@@ -63,7 +63,7 @@ func (k *K8sDeploymentApi) UpdateDeploymentInfo(c *gin.Context) {
 	}
 	data, err := k8sDeploymentService.UpdateDeploymentInfo(req, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error(err.Error(), zap.Error(err))
+		global.KUBEGALE_LOG.Error(err.Error(), zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	} else {
@@ -79,7 +79,7 @@ func (k *K8sDeploymentApi) CreateDeployment(c *gin.Context) {
 	}
 	data, err := k8sDeploymentService.CreateDeployment(req, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error(err.Error(), zap.Error(err))
+		global.KUBEGALE_LOG.Error(err.Error(), zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	} else {
@@ -95,7 +95,7 @@ func (k *K8sDeploymentApi) DeleteDeployment(c *gin.Context) {
 	}
 	err = k8sDeploymentService.DeleteDeployment(req, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error(err.Error(), zap.Error(err))
+		global.KUBEGALE_LOG.Error(err.Error(), zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	} else {
@@ -111,7 +111,7 @@ func (k *K8sDeploymentApi) RollBackDeployment(c *gin.Context) {
 	}
 	data, err := k8sDeploymentService.RollBackDeployment(req, utils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error(err.Error(), zap.Error(err))
+		global.KUBEGALE_LOG.Error(err.Error(), zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	} else {

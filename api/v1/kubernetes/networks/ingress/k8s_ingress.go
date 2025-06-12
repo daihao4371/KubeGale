@@ -1,12 +1,12 @@
 package ingress
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/request"
-	"DYCLOUD/model/common/response"
-	"DYCLOUD/model/kubernetes/ingress"
-	"DYCLOUD/service"
-	"DYCLOUD/utils"
+	"KubeGale/global"
+	"KubeGale/model/common/request"
+	"KubeGale/model/common/response"
+	"KubeGale/model/kubernetes/ingress"
+	"KubeGale/service"
+	"KubeGale/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"time"
@@ -24,7 +24,7 @@ func (k *K8sIngressApi) GetIngressList(c *gin.Context) {
 		return
 	}
 	if list, total, err := k8sIngressService.GetIngressList(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 		return
 	} else {
@@ -47,7 +47,7 @@ func (k *K8sIngressApi) DescribeIngressInfo(c *gin.Context) {
 		return
 	}
 	if list, err := k8sIngressService.DescribeIngress(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败："+err.Error(), c)
 		return
 	} else {
@@ -62,7 +62,7 @@ func (k *K8sIngressApi) UpdateIngress(c *gin.Context) {
 		return
 	}
 	if list, err := k8sIngressService.UpdateIngress(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("更新失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败："+err.Error(), c)
 		return
 	} else {
@@ -78,7 +78,7 @@ func (k *K8sIngressApi) DeleteIngress(c *gin.Context) {
 	}
 
 	if err := k8sIngressService.DeleteIngress(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败"+err.Error(), c)
 		return
 	} else {
@@ -95,7 +95,7 @@ func (k *K8sIngressApi) CreateIngress(c *gin.Context) {
 	}
 
 	if CronJob, err := k8sIngressService.CreateIngress(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败："+err.Error(), c)
 		return
 	} else {

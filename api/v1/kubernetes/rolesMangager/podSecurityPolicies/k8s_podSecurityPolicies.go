@@ -1,11 +1,13 @@
 package podSecurityPolicies
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/PodSecurityPolicies"
-	"DYCLOUD/model/common/request"
-	"DYCLOUD/utils"
+	"KubeGale/global"
+	"KubeGale/model/PodSecurityPolicies"
+	"KubeGale/model/common/request"
+	"KubeGale/model/common/response"
+	"KubeGale/utils"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 	"time"
 )
 
@@ -22,7 +24,7 @@ func (k *K8sPodSecurityPoliciesApi) GetPodSecurityPoliciesList(c *gin.Context) {
 	}
 
 	if list, total, err := k8sPodSecurityPoliciesService.GetPodSecurityPoliciesList(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败:"+err.Error(), c)
 		return
 	} else {
@@ -47,7 +49,7 @@ func (k *K8sPodSecurityPoliciesApi) DescribePodSecurityPoliciesInfo(c *gin.Conte
 	}
 
 	if list, err := k8sPodSecurityPoliciesService.DescribePodSecurityPolicies(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败："+err.Error(), c)
 		return
 	} else {
@@ -63,7 +65,7 @@ func (k *K8sPodSecurityPoliciesApi) UpdatePodSecurityPolicies(c *gin.Context) {
 	}
 
 	if list, err := k8sPodSecurityPoliciesService.UpdatePodSecurityPolicies(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("更新失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败："+err.Error(), c)
 		return
 	} else {
@@ -79,7 +81,7 @@ func (k *K8sPodSecurityPoliciesApi) DeletePodSecurityPolicies(c *gin.Context) {
 	}
 
 	if err := k8sPodSecurityPoliciesService.DeletePodSecurityPolicies(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败"+err.Error(), c)
 		return
 	} else {
@@ -96,7 +98,7 @@ func (k *K8sPodSecurityPoliciesApi) CreatePodSecurityPolicies(c *gin.Context) {
 	}
 
 	if CronJob, err := k8sPodSecurityPoliciesService.CreatePodSecurityPolicies(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败："+err.Error(), c)
 		return
 	} else {

@@ -1,12 +1,12 @@
 package clusterrolebinding
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/request"
-	"DYCLOUD/model/common/response"
-	"DYCLOUD/model/kubernetes/clusterolebinding"
-	"DYCLOUD/service"
-	"DYCLOUD/utils"
+	"KubeGale/global"
+	"KubeGale/model/common/request"
+	"KubeGale/model/common/response"
+	"KubeGale/model/kubernetes/clusterolebinding"
+	"KubeGale/service"
+	"KubeGale/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"time"
@@ -34,7 +34,7 @@ func (k *K8sClusterRoleBindingApi) GetClusterRoleBindingList(c *gin.Context) {
 	}
 
 	if list, total, err := k8sClusterRoleBindingService.GetClusterRoleBindingList(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败:"+err.Error(), c)
 		return
 	} else {
@@ -69,7 +69,7 @@ func (k *K8sClusterRoleBindingApi) DescribeClusterRoleBindingInfo(c *gin.Context
 	}
 
 	if list, err := k8sClusterRoleBindingService.DescribeClusterRoleBinding(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败："+err.Error(), c)
 		return
 	} else {
@@ -95,7 +95,7 @@ func (k *K8sClusterRoleBindingApi) UpdateClusterRoleBinding(c *gin.Context) {
 	}
 
 	if list, err := k8sClusterRoleBindingService.UpdateClusterRoleBinding(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("更新失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败："+err.Error(), c)
 		return
 	} else {
@@ -121,7 +121,7 @@ func (k *K8sClusterRoleBindingApi) DeleteClusterRoleBinding(c *gin.Context) {
 	}
 
 	if err := k8sClusterRoleBindingService.DeleteClusterRoleBinding(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败"+err.Error(), c)
 		return
 	} else {
@@ -148,7 +148,7 @@ func (k *K8sClusterRoleBindingApi) CreateClusterRoleBinding(c *gin.Context) {
 	}
 
 	if CronJob, err := k8sClusterRoleBindingService.CreateClusterRoleBinding(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败："+err.Error(), c)
 		return
 	} else {

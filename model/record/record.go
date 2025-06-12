@@ -29,3 +29,15 @@ type CreateRecordReq struct {
 type DeleteRecordReq struct {
 	ClusterId int `json:"cluster_id" form:"cluster_id"` // 集群ID
 }
+
+// RecordListResponse 记录列表响应结构体
+type RecordListResponse struct {
+	Items []interface{} `json:"items" form:"items"`
+	Total int           `json:"total" form:"total"`
+	request.PageInfo
+}
+
+// DescribeRecordResponse 记录详情响应结构体
+type DescribeRecordResponse struct {
+	Items interface{} `json:"items" form:"items"`
+}

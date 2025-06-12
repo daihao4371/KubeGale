@@ -1,11 +1,11 @@
 package cloudtty
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/response"
-	kubernetesReq "DYCLOUD/model/kubernetes/cluster/request"
-	"DYCLOUD/service"
-	sutils "DYCLOUD/utils"
+	"KubeGale/global"
+	"KubeGale/model/common/response"
+	kubernetesReq "KubeGale/model/kubernetes/cluster/request"
+	"KubeGale/service"
+	sutils "KubeGale/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -26,7 +26,7 @@ func (n *K8SNodeTTYApi) NodeTTYGet(c *gin.Context) {
 
 	podMsg, err := k8sNodeTTYService.Get(nodetty, sutils.GetUserUuid(c))
 	if err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败: "+err.Error(), c)
 	} else {
 		response.OkWithDetailed(podMsg, "获取成功", c)

@@ -1,12 +1,12 @@
 package configmap
 
 import (
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/request"
-	"DYCLOUD/model/common/response"
-	"DYCLOUD/model/kubernetes/configmap"
-	"DYCLOUD/service"
-	"DYCLOUD/utils"
+	"KubeGale/global"
+	"KubeGale/model/common/request"
+	"KubeGale/model/common/response"
+	"KubeGale/model/kubernetes/configmap"
+	"KubeGale/service"
+	"KubeGale/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"time"
@@ -33,7 +33,7 @@ func (k K8sConfigMapApi) GetConfigMapList(c *gin.Context) {
 		return
 	}
 	if list, total, err := k8sConfigMapService.GetConfigMapList(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage(err.Error(), c)
 	} else {
 		response.OkWithDetailed(configmap.ConfigMapListResponse{
@@ -65,7 +65,7 @@ func (k *K8sConfigMapApi) DescribeConfigMapInfo(c *gin.Context) {
 		return
 	}
 	if list, err := k8sConfigMapService.DescribeConfigMap(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败："+err.Error(), c)
 		return
 	} else {
@@ -90,7 +90,7 @@ func (k *K8sConfigMapApi) UpdateConfigMap(c *gin.Context) {
 		return
 	}
 	if list, err := k8sConfigMapService.UpdateConfigMap(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("更新失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败："+err.Error(), c)
 		return
 	} else {
@@ -115,7 +115,7 @@ func (k *K8sConfigMapApi) DeleteConfigMap(c *gin.Context) {
 		return
 	}
 	if err := k8sConfigMapService.DeleteConfigMap(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败"+err.Error(), c)
 		return
 	} else {
@@ -141,7 +141,7 @@ func (k *K8sConfigMapApi) CreateConfigMap(c *gin.Context) {
 		return
 	}
 	if CronJob, err := k8sConfigMapService.CreateConfigMap(req, utils.GetUserUuid(c)); err != nil {
-		global.DYCLOUD_LOG.Error("创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败："+err.Error(), c)
 		return
 	} else {

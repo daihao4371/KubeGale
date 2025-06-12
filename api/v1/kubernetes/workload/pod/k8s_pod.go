@@ -1,14 +1,14 @@
 package pod
 
 import (
-	"DYCLOUD/api/v1/ws"
-	"DYCLOUD/global"
-	"DYCLOUD/model/common/request"
-	"DYCLOUD/model/common/response"
-	"DYCLOUD/model/kubernetes"
-	"DYCLOUD/model/kubernetes/pods"
-	"DYCLOUD/service"
-	"DYCLOUD/utils"
+	"KubeGale/api/v1/ws"
+	"KubeGale/global"
+	"KubeGale/model/common/request"
+	"KubeGale/model/common/response"
+	"KubeGale/model/kubernetes"
+	"KubeGale/model/kubernetes/pods"
+	"KubeGale/service"
+	"KubeGale/utils"
 	"archive/tar"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -172,7 +172,7 @@ func (p *K8sPodApi) DownloadFile(c *gin.Context) {
 
 	file, err := k8sPodService.DownloadFile(pods)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败"+err.Error(), c)
 	} else {
 		c.Header("Content-Disposition", "attachment; filename="+path.Base(file))
@@ -199,7 +199,7 @@ func (k *K8sPodApi) CreatePod(c *gin.Context) {
 	}
 
 	if pod, err := k8sPodService.CreatePod(req); err != nil {
-		global.DYCLOUD_LOG.Error("创建失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("创建失败!", zap.Error(err))
 		response.FailWithMessage("创建失败："+err.Error(), c)
 		return
 	} else {
@@ -225,7 +225,7 @@ func (k *K8sPodApi) DeletePod(c *gin.Context) {
 	}
 
 	if err = k8sPodService.DeletePod(req); err != nil {
-		global.DYCLOUD_LOG.Error("删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败："+err.Error(), c)
 		return
 	} else {
@@ -251,7 +251,7 @@ func (k *K8sPodApi) UpdatePod(c *gin.Context) {
 	}
 
 	if pod, err := k8sPodService.UpdatePod(req); err != nil {
-		global.DYCLOUD_LOG.Error("更新失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("更新失败!", zap.Error(err))
 		response.FailWithMessage("更新失败："+err.Error(), c)
 		return
 	} else {
@@ -277,7 +277,7 @@ func (k *K8sPodApi) ListPodFiles(c *gin.Context) {
 	}
 
 	if files, err := k8sPodService.ListPodFiles(req); err != nil {
-		global.DYCLOUD_LOG.Error("获取失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败："+err.Error(), c)
 		return
 	} else {
@@ -304,7 +304,7 @@ func (k *K8sPodApi) UploadFiles(c *gin.Context) {
 	srcPath := filepath.Join(os.TempDir(), fmt.Sprintf("%d", time.Now().UnixNano()))
 	err := saveTarFile(c, srcPath)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("上传失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("上传失败!", zap.Error(err))
 		response.FailWithMessage("上传失败"+err.Error(), c)
 		return
 	}
@@ -312,7 +312,7 @@ func (k *K8sPodApi) UploadFiles(c *gin.Context) {
 	req.FilePath = srcPath
 	err = k8sPodService.UploadFile(req)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("上传失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("上传失败!", zap.Error(err))
 		response.FailWithMessage("上传失败"+err.Error(), c)
 	} else {
 		response.OkWithMessage("上传成功", c)
@@ -338,7 +338,7 @@ func (k *K8sPodApi) DeleteFiles(c *gin.Context) {
 	}
 	err := k8sPodService.DeleteFile(req)
 	if err != nil {
-		global.DYCLOUD_LOG.Error("删除失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("删除失败!", zap.Error(err))
 		response.FailWithMessage("删除失败"+err.Error(), c)
 	} else {
 		response.OkWithMessage("删除成功", c)
@@ -348,7 +348,7 @@ func (k *K8sPodApi) DeleteFiles(c *gin.Context) {
 func saveTarFile(c *gin.Context, srcPath string) error {
 	form, err := c.MultipartForm()
 	if err != nil {
-		global.DYCLOUD_LOG.Error("接收文件失败!", zap.Error(err))
+		global.KUBEGALE_LOG.Error("接收文件失败!", zap.Error(err))
 		response.FailWithMessage("接收文件失败", c)
 	}
 
