@@ -3,6 +3,7 @@ package service
 import (
 	"KubeGale/service/cloudCmdb" // Added this import
 	"KubeGale/service/cmdb"
+	"KubeGale/service/example"
 	"KubeGale/service/im"
 	"KubeGale/service/kubernetes/cloudtty"
 	"KubeGale/service/kubernetes/cluster"
@@ -74,6 +75,7 @@ type ServiceGroup struct {
 	VeleroServiceGroup               velero.ServiceGroup
 	MetricsServiceGroup              metrics.ServiceGroup
 	RecordServiceGroup               record.ServiceGroup // Added this line
+	ExampleServiceGroup              example.ServiceGroup
 }
 
 var ServiceGroupApp = new(ServiceGroup)

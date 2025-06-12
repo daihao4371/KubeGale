@@ -106,3 +106,7 @@ func (e *FileUploadAndDownloadService) UploadFile(header *multipart.FileHeader, 
 	}
 	return f, nil
 }
+
+func (e *FileUploadAndDownloadService) ImportURL(file *[]example.ExaFileUploadAndDownload) error {
+	return global.KUBEGALE_DB.Create(&file).Error
+}

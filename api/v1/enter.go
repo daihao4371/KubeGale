@@ -2,6 +2,7 @@ package v1
 
 import (
 	"KubeGale/api/v1/cmdb"
+	"KubeGale/api/v1/example"
 	"KubeGale/api/v1/im"
 	"KubeGale/api/v1/kubernetes/cloudtty"
 	"KubeGale/api/v1/kubernetes/clusterManager/cluster"
@@ -76,4 +77,5 @@ type ApiGroup struct {
 	RoleBinding                      rolebindings.ApiGroup
 	Metrics                          metrics.ApiGroup
 	Record                           record.K8sRecordApi
+	ExampleApiGroup                  example.ApiGroup
 }

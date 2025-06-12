@@ -13,6 +13,7 @@ var (
 	OldAuthorityVerify     = Rules{"OldAuthorityId": {NotEmpty()}}
 	ChangePasswordVerify   = Rules{"Password": {NotEmpty()}, "NewPassword": {NotEmpty()}}
 	SetUserAuthorityVerify = Rules{"AuthorityId": {NotEmpty()}}
+	CustomerVerify         = Rules{"CustomerName": {NotEmpty()}, "CustomerPhoneData": {NotEmpty()}}
 
 	ProxyVerify     = Rules{"Path": {NotEmpty()}}
 	TerminalVerify  = Rules{"Name": {NotEmpty()}, "PodName": {NotEmpty()}, "Namespace": {NotEmpty()}}
