@@ -9,6 +9,7 @@ type ApiGroup struct {
 	SystemApiApi
 	AuthorityApi
 	OperationRecordApi
+	AuthorityApiApi
 }
 
 var (
@@ -18,4 +19,5 @@ var (
 	casbinService          = service.ServiceGroupApp.SystemServiceGroup.CasbinService
 	authorityService       = service.ServiceGroupApp.SystemServiceGroup.AuthorityService
 	operationRecordService = service.ServiceGroupApp.SystemServiceGroup.OperationRecordService
+	authorityApiService    = service.ServiceGroupApp.SystemServiceGroup.AuthorityApiService
 )

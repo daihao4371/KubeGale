@@ -10,6 +10,7 @@ type RouterGroup struct {
 	CasbinRouter
 	AuthorityRouter
 	OperationRecordRouter
+	AuthorityApiRouter
 }
 
 var (
@@ -19,4 +20,5 @@ var (
 	authorityApi       = api.ApiGroupApp.SystemApiGroup.AuthorityApi
 	apiRouterApi       = api.ApiGroupApp.SystemApiGroup.SystemApiApi
 	operationRecordApi = api.ApiGroupApp.SystemApiGroup.OperationRecordApi
+	authorityApiApi    = api.ApiGroupApp.SystemApiGroup.AuthorityApiApi
 )

@@ -24,6 +24,7 @@ func RegisterTables() {
 		system.JwtBlacklist{},
 		system.SysAuthority{},
 		system.SysOperationRecord{},
+		system.SysAuthorityApi{},
 	)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("register table failed", zap.Error(err))

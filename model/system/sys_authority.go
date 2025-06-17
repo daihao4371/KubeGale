@@ -14,6 +14,9 @@ type SysAuthority struct {
 	DataAuthorityId []*SysAuthority `json:"dataAuthorityId" gorm:"many2many:sys_data_authority_id;"`
 	Children        []SysAuthority  `json:"children" gorm:"-"`
 	Users           []SysUser       `json:"-" gorm:"many2many:sys_user_authority;"`
+
+	// 新增：角色-API权限多对多关联
+	Apis []SysApi `json:"apis" gorm:"many2many:sys_authority_apis;joinForeignKey:AuthorityId;JoinReferences:ApiId"`
 }
 
 func (SysAuthority) TableName() string {

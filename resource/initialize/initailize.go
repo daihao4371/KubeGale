@@ -65,6 +65,21 @@ func InitializeAllSystemData(ctx context.Context) {
 		}
 	}
 
+	// 初始化角色-API权限表
+	authorityApiInitializer := &system.InitAuthorityApi{}
+	ctx, err = authorityApiInitializer.MigrateTable(ctx)
+	if err != nil {
+		global.KUBEGALE_LOG.Error("初始化角色-API权限表失败", zap.Error(err))
+	} else {
+		global.KUBEGALE_LOG.Info("初始化角色-API权限表成功")
+		ctx, err = authorityApiInitializer.InitializeData(ctx)
+		if err != nil {
+			global.KUBEGALE_LOG.Error("初始化角色-API权限数据失败", zap.Error(err))
+		} else {
+			global.KUBEGALE_LOG.Info("初始化角色-API权限数据成功")
+		}
+	}
+
 	// 初始化用户表
 	userInitializer := &system.InitUser{}
 	ctx, err = userInitializer.MigrateTable(ctx)

@@ -7,4 +7,5 @@ type ServiceGroup struct {
 	CasbinService
 	AuthorityService
 	OperationRecordService
+	AuthorityApiService
 }
