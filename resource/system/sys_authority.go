@@ -54,9 +54,9 @@ func (i *InitAuthority) InitializeData(ctx context.Context) (context.Context, er
 
 	// 定义需要初始化的角色
 	authorities := []sysModel.SysAuthority{
-		{AuthorityId: 888, AuthorityName: "超管", ParentId: utils.Pointer[uint](0), DefaultRouter: "dashboard"},
-		{AuthorityId: 9528, AuthorityName: "开发负责人", ParentId: utils.Pointer[uint](0), DefaultRouter: "dashboard"},
-		{AuthorityId: 8881, AuthorityName: "运维", ParentId: utils.Pointer[uint](888), DefaultRouter: "dashboard"},
+		{AuthorityId: 888, AuthorityName: "超管", ParentId: utils.Pointer[uint](0)},
+		{AuthorityId: 9528, AuthorityName: "开发负责人", ParentId: utils.Pointer[uint](0)},
+		{AuthorityId: 8881, AuthorityName: "运维", ParentId: utils.Pointer[uint](888)},
 	}
 
 	// 用于存储需要新增的角色

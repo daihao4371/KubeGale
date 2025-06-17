@@ -1,0 +1,22 @@
+[KUBEGALE]2025-06-12 15:06:14.595	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:19	初始化 API 表成功
+[KUBEGALE]2025-06-12 15:06:14.610	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:24	初始化 API 数据成功
+[KUBEGALE]2025-06-12 15:06:14.613	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:34	初始化 API 忽略表成功
+[KUBEGALE]2025-06-12 15:06:14.656	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:43	初始化 Casbin 表成功
+[KUBEGALE]2025-06-12 15:06:14.672	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:49	初始化 Casbin 权限数据成功
+[KUBEGALE]2025-06-12 15:06:14.736	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:59	初始化权限表成功
+[KUBEGALE]2025-06-12 15:06:14.737	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:64	初始化权限数据成功
+[KUBEGALE]2025-06-12 15:06:14.790	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:74	初始化菜单表成功
+[KUBEGALE]2025-06-12 15:06:14.791	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:79	初始化菜单数据成功
+[KUBEGALE]2025-06-12 15:06:14.841	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:89	初始化用户表成功
+[KUBEGALE]2025-06-12 15:06:14.991	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:96	初始化用户数据成功
+[KUBEGALE]2025-06-12 17:23:50.881	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:19	初始化 API 表成功
+[KUBEGALE]2025-06-12 17:23:50.891	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:24	初始化 API 数据成功
+[KUBEGALE]2025-06-12 17:23:50.897	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:34	初始化 API 忽略表成功
+[KUBEGALE]2025-06-12 17:23:50.947	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:43	初始化 Casbin 表成功
+[KUBEGALE]2025-06-12 17:23:50.960	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:49	初始化 Casbin 权限数据成功
+[KUBEGALE]2025-06-12 17:23:51.021	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:59	初始化权限表成功
+[KUBEGALE]2025-06-12 17:23:51.021	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:64	初始化权限数据成功
+[KUBEGALE]2025-06-12 17:23:51.067	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:74	初始化菜单表成功
+[KUBEGALE]2025-06-12 17:23:51.068	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:79	初始化菜单数据成功
+[KUBEGALE]2025-06-12 17:23:51.128	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:89	初始化用户表成功
+[KUBEGALE]2025-06-12 17:23:51.292	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/resource/initialize/initailize.go:96	初始化用户数据成功

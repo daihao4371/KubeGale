@@ -3,13 +3,15 @@ package system
 import (
 	"errors"
 	"fmt"
-	"gorm.io/datatypes"
 	"time"
+
+	"gorm.io/datatypes"
 
 	"KubeGale/global"
 	"KubeGale/model/common/request"
 	"KubeGale/model/system"
 	"KubeGale/utils"
+
 	"github.com/gofrs/uuid/v5"
 	"gorm.io/gorm"
 )
@@ -46,7 +48,6 @@ func (userService *UserService) Login(u *system.SysUser) (userInter *system.SysU
 		if ok := utils.BcryptCheck(u.Password, user.Password); !ok {
 			return nil, errors.New("密码错误")
 		}
-		MenuServiceApp.UserAuthorityDefaultRouter(&user)
 	}
 	return &user, err
 }
@@ -88,7 +89,6 @@ func (userService *UserService) GetUserInfoList(info request.PageInfo) (list int
 //@description: 设置一个用户的权限
 
 func (userService *UserService) SetUserAuthority(id uint, authorityId uint) (err error) {
-
 	assignErr := global.KUBEGALE_DB.Where("sys_user_id = ? AND sys_authority_authority_id = ?", id, authorityId).First(&system.SysUserAuthority{}).Error
 	if errors.Is(assignErr, gorm.ErrRecordNotFound) {
 		return errors.New("该用户无此角色")
@@ -98,32 +98,6 @@ func (userService *UserService) SetUserAuthority(id uint, authorityId uint) (err
 	err = global.KUBEGALE_DB.Where("authority_id = ?", authorityId).First(&authority).Error
 	if err != nil {
 		return err
-	}
-	var authorityMenu []system.SysAuthorityMenu
-	var authorityMenuIDs []string
-	err = global.KUBEGALE_DB.Where("sys_authority_authority_id = ?", authorityId).Find(&authorityMenu).Error
-	if err != nil {
-		return err
-	}
-
-	for i := range authorityMenu {
-		authorityMenuIDs = append(authorityMenuIDs, authorityMenu[i].MenuId)
-	}
-
-	var authorityMenus []system.SysBaseMenu
-	err = global.KUBEGALE_DB.Preload("Parameters").Where("id in (?)", authorityMenuIDs).Find(&authorityMenus).Error
-	if err != nil {
-		return err
-	}
-	hasMenu := false
-	for i := range authorityMenus {
-		if authorityMenus[i].Name == authority.DefaultRouter {
-			hasMenu = true
-			break
-		}
-	}
-	if !hasMenu {
-		return errors.New("找不到默认路由,无法切换本角色")
 	}
 
 	err = global.KUBEGALE_DB.Model(&system.SysUser{}).Where("id = ?", id).Update("authority_id", authorityId).Error
@@ -226,7 +200,6 @@ func (userService *UserService) GetUserInfo(uuid uuid.UUID) (user system.SysUser
 	if err != nil {
 		return reqUser, err
 	}
-	MenuServiceApp.UserAuthorityDefaultRouter(&reqUser)
 	return reqUser, err
 }
 

@@ -1,0 +1,8 @@
+[KUBEGALE]2025-06-17 15:29:31.364	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_biz.go:52	register  tables success
+[KUBEGALE]2025-06-17 15:29:31.364	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:39	register table success
+[KUBEGALE]2025-06-17 15:29:31.369	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-06-17 15:29:31.372	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-06-17 15:29:31.372	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-06-17 15:29:31.374	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:54	register swagger handler
+[KUBEGALE]2025-06-17 15:29:31.376	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:91	router register success
+[KUBEGALE]2025-06-17 15:29:31.376	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}

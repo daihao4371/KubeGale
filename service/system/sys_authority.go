@@ -7,9 +7,9 @@ import (
 	systemReq "KubeGale/model/system/request"
 
 	"KubeGale/global"
-	"KubeGale/model/common/request"
 	"KubeGale/model/system"
 	"KubeGale/model/system/response"
+
 	"gorm.io/gorm"
 )
 
@@ -22,19 +22,12 @@ type AuthorityService struct{}
 var AuthorityServiceApp = new(AuthorityService)
 
 func (authorityService *AuthorityService) CreateAuthority(auth system.SysAuthority) (authority system.SysAuthority, err error) {
-
 	if err = global.KUBEGALE_DB.Where("authority_id = ?", auth.AuthorityId).First(&system.SysAuthority{}).Error; !errors.Is(err, gorm.ErrRecordNotFound) {
 		return auth, ErrRoleExistence
 	}
 
 	e := global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
-
 		if err = tx.Create(&auth).Error; err != nil {
-			return err
-		}
-
-		auth.SysBaseMenus = systemReq.DefaultMenu()
-		if err = tx.Model(&auth).Association("SysBaseMenus").Replace(&auth.SysBaseMenus); err != nil {
 			return err
 		}
 		casbinInfos := systemReq.DefaultCasbin()
@@ -57,37 +50,9 @@ func (authorityService *AuthorityService) CopyAuthority(adminAuthorityID uint, c
 		return authority, ErrRoleExistence
 	}
 	copyInfo.Authority.Children = []system.SysAuthority{}
-	menus, err := MenuServiceApp.GetMenuAuthority(&request.GetAuthorityId{AuthorityId: copyInfo.OldAuthorityId})
-	if err != nil {
-		return
-	}
-	var baseMenu []system.SysBaseMenu
-	for _, v := range menus {
-		intNum := v.MenuId
-		v.SysBaseMenu.ID = uint(intNum)
-		baseMenu = append(baseMenu, v.SysBaseMenu)
-	}
-	copyInfo.Authority.SysBaseMenus = baseMenu
 	err = global.KUBEGALE_DB.Create(&copyInfo.Authority).Error
 	if err != nil {
 		return
-	}
-
-	var btns []system.SysAuthorityBtn
-
-	err = global.KUBEGALE_DB.Find(&btns, "authority_id = ?", copyInfo.OldAuthorityId).Error
-	if err != nil {
-		return
-	}
-	if len(btns) > 0 {
-		for i := range btns {
-			btns[i].AuthorityId = copyInfo.Authority.AuthorityId
-		}
-		err = global.KUBEGALE_DB.Create(&btns).Error
-
-		if err != nil {
-			return
-		}
 	}
 	paths := CasbinServiceApp.GetPolicyPathByAuthorityId(copyInfo.OldAuthorityId)
 	err = CasbinServiceApp.UpdateCasbin(adminAuthorityID, copyInfo.Authority.AuthorityId, paths)
@@ -128,35 +93,21 @@ func (authorityService *AuthorityService) DeleteAuthority(auth *system.SysAuthor
 
 	return global.KUBEGALE_DB.Transaction(func(tx *gorm.DB) error {
 		var err error
-		if err = tx.Preload("SysBaseMenus").Preload("DataAuthorityId").Where("authority_id = ?", auth.AuthorityId).First(auth).Unscoped().Delete(auth).Error; err != nil {
+		if err = tx.Preload("DataAuthorityId").Where("authority_id = ?", auth.AuthorityId).First(auth).Unscoped().Delete(auth).Error; err != nil {
 			return err
-		}
-
-		if len(auth.SysBaseMenus) > 0 {
-			if err = tx.Model(auth).Association("SysBaseMenus").Delete(auth.SysBaseMenus); err != nil {
-				return err
-			}
-			// err = db.Association("SysBaseMenus").Delete(&auth)
 		}
 		if len(auth.DataAuthorityId) > 0 {
 			if err = tx.Model(auth).Association("DataAuthorityId").Delete(auth.DataAuthorityId); err != nil {
 				return err
 			}
 		}
-
 		if err = tx.Delete(&system.SysUserAuthority{}, "sys_authority_authority_id = ?", auth.AuthorityId).Error; err != nil {
 			return err
 		}
-		if err = tx.Where("authority_id = ?", auth.AuthorityId).Delete(&[]system.SysAuthorityBtn{}).Error; err != nil {
-			return err
-		}
-
 		authorityId := strconv.Itoa(int(auth.AuthorityId))
-
 		if err = CasbinServiceApp.RemoveFilteredPolicy(tx, authorityId); err != nil {
 			return err
 		}
-
 		return nil
 	})
 }
@@ -256,15 +207,6 @@ func (authorityService *AuthorityService) SetDataAuthority(adminAuthorityID uint
 	var s system.SysAuthority
 	global.KUBEGALE_DB.Preload("DataAuthorityId").First(&s, "authority_id = ?", auth.AuthorityId)
 	err := global.KUBEGALE_DB.Model(&s).Association("DataAuthorityId").Replace(&auth.DataAuthorityId)
-	return err
-}
-
-// @function: SetMenuAuthority
-// @description: 菜单与角色绑定
-func (authorityService *AuthorityService) SetMenuAuthority(auth *system.SysAuthority) error {
-	var s system.SysAuthority
-	global.KUBEGALE_DB.Preload("SysBaseMenus").First(&s, "authority_id = ?", auth.AuthorityId)
-	err := global.KUBEGALE_DB.Model(&s).Association("SysBaseMenus").Replace(&auth.SysBaseMenus)
 	return err
 }
 

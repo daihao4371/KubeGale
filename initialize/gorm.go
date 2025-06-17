@@ -21,13 +21,9 @@ func RegisterTables() {
 		system.SysApi{},
 		system.SysIgnoreApi{},
 		system.SysUser{},
-		system.SysBaseMenu{},
 		system.JwtBlacklist{},
 		system.SysAuthority{},
 		system.SysOperationRecord{},
-		system.SysBaseMenuParameter{},
-		system.SysBaseMenuBtn{},
-		system.SysAuthorityBtn{},
 	)
 	if err != nil {
 		global.KUBEGALE_LOG.Error("register table failed", zap.Error(err))

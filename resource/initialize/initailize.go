@@ -65,21 +65,6 @@ func InitializeAllSystemData(ctx context.Context) {
 		}
 	}
 
-	// 初始化菜单表
-	menuInitializer := &system.InitMenu{}
-	ctx, err = menuInitializer.MigrateTable(ctx)
-	if err != nil {
-		global.KUBEGALE_LOG.Error("初始化菜单表失败", zap.Error(err))
-	} else {
-		global.KUBEGALE_LOG.Info("初始化菜单表成功")
-		ctx, err = menuInitializer.InitializeData(ctx)
-		if err != nil {
-			global.KUBEGALE_LOG.Error("初始化菜单数据失败", zap.Error(err))
-		} else {
-			global.KUBEGALE_LOG.Info("初始化菜单数据成功")
-		}
-	}
-
 	// 初始化用户表
 	userInitializer := &system.InitUser{}
 	ctx, err = userInitializer.MigrateTable(ctx)
