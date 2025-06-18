@@ -1,0 +1,19 @@
+/* Flexbox Utilities */
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-align-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Standardized Input Width */
+/* Use with caution. Prefer using Element Plus grid system (el-col) for form item sizing where possible. */
+/* This can be useful for standalone search inputs or specific cases. */
+.input-width-standard {
+  width: 240px !important;
+}

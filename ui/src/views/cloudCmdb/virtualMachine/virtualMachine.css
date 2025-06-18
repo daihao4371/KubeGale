@@ -1,0 +1,109 @@
+/* Main Layout */
+.virtual-machine-container {
+  display: flex;
+  height: 100%;
+  gap: var(--spacing-lg); /* Gap between tree and list */
+  /* Assuming parent .content provides page padding */
+}
+
+.platform-tree {
+  flex: 0 0 300px; /* Fixed width for the tree */
+  background-color: var(--bg-color-card);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  overflow-y: auto; /* Allow tree to scroll if content overflows */
+  box-shadow: var(--box-shadow-sm);
+  height: 100%;
+}
+
+.virtual-machine-list {
+  flex: 1; /* Take remaining space */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0; /* Prevent overflow in flex layouts */
+}
+
+/* Card within virtual-machine-list */
+.virtual-machine-list .box-card { /* Targeting el-card instance */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  /* Global el-card styles from main.css apply for background, radius, shadow */
+}
+
+.virtual-machine-list .card-header { /* Content wrapper in el-card__header slot */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.virtual-machine-list .card-header span { /* Title */
+  font-size: 1.25rem; /* 20px */
+  font-weight: var(--font-weight-bold);
+  color: var(--color-heading);
+}
+
+.virtual-machine-list .header-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  /* Buttons will inherit global styles from main.css */
+}
+
+/* Search Form */
+.virtual-machine-list .search-form {
+  /* Padding is handled by el-card__body */
+  margin-bottom: var(--spacing-lg); /* Add space below search form before table */
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+.virtual-machine-list .search-form .el-form-item {
+  margin-bottom: 0 !important; /* For inline forms */
+}
+
+
+/* Table Container - Wrapper for el-table to manage flex growth and scrolling */
+.table-container {
+  flex-grow: 1;
+  overflow: auto;
+  position: relative; /* For potential sticky header (though Element Plus handles this) */
+  width: 100%;
+  min-height: 0; /* For nested flex */
+  display: flex; /* Ensure table fills this container */
+  flex-direction: column;
+}
+
+/* el-table itself */
+.el-table {
+  width: 100%;
+  flex-grow: 1; /* Ensure table grows within table-container */
+  /* Global styles from main.css apply for el-table */
+}
+
+/* Custom cell content */
+.vm-name { /* Assuming this is a class applied to content within a cell */
+  color: var(--text-color-secondary); /* Example: use secondary text color */
+  font-size: var(--font-size-sm);
+  /* Other styles like padding should be handled by cell's default padding */
+}
+
+/* Pagination Container */
+.pagination-container {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md) 0;
+  display: flex;
+  justify-content: flex-end;
+  /* Global el-pagination styles from main.css apply */
+}
+
+/* Ensure el-card__body allows table and pagination to fit */
+:deep(.virtual-machine-list .box-card > .el-card__body) {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden; /* Let children (.table-container) manage their scroll */
+  width: 100%;
+}

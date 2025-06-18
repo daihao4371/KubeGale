@@ -1,0 +1,20 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.vitest.json"
+    }
+  ],
+  "compilerOptions": {
+    "types": ["@stagewise/toolbar-vue", "@stagewise-plugins/vue"],
+    "paths": {
+      "@stagewise-plugins/vue": ["./node_modules/@stagewise-plugins/vue/dist/index.d.ts"]
+    }
+  }
+}

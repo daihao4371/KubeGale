@@ -1,0 +1,223 @@
+/* Enhanced Color Palette */
+:root {
+  /* Primary Colors */
+  --color-primary: #0077CC; /* Refined Blue */
+  --color-primary-light: #5DAEFF; /* Adjusted for new primary */
+  --color-primary-dark: #005FA3; /* Adjusted for new primary */
+
+  /* Secondary & Accent */
+  --color-secondary: #6c757d; /* Cool Gray */
+  --color-accent: #17a2b8; /* Teal - unchanged */
+
+  /* Text Colors */
+  --text-color-primary: #333333; /* Dark Gray */
+  --text-color-secondary: #666666; /* Medium Gray */
+  --text-color-on-primary: #ffffff; /* White */
+  --text-color-link: var(--color-primary);
+  --text-color-link-hover: var(--color-primary-dark);
+  --text-color-heading: #222222; /* Slightly darker for headings */
+
+  /* Background Colors */
+  --bg-color-page: #f8f9fa; /* Very Light Gray */
+  --bg-color-card: #ffffff;
+  --bg-color-input: #ffffff;
+  --bg-color-nav: #ffffff; /* Background for navigation elements */
+  --bg-color-header: #ffffff; /* Background for header elements */
+
+  /* Border Colors */
+  --border-color-light: #dee2e6; /* Light Gray */
+  --border-color-strong: #adb5bd; /* Stronger Gray */
+
+  /* Status Colors */
+  --success-color: #28a745; /* Green */
+  --warning-color: #ffc107; /* Yellow */
+  --error-color: #E53935; /* Refined Red */
+  --info-color: var(--color-accent); /* Teal (same as accent) */
+
+  /* Spacing Variables */
+  --spacing-unit: 8px;
+  --spacing-xxs: calc(var(--spacing-unit) * 0.25); /* 2px - new */
+  --spacing-xs: calc(var(--spacing-unit) * 0.5);  /* 4px */
+  --spacing-sm: var(--spacing-unit);             /* 8px */
+  --spacing-smd: calc(var(--spacing-unit) * 1.5);  /* 12px - renamed from xxs */
+  --spacing-md: calc(var(--spacing-unit) * 2);   /* 16px */
+  --spacing-lg: calc(var(--spacing-unit) * 3);   /* 24px */
+  --spacing-xl: calc(var(--spacing-unit) * 4);   /* 32px */
+  --section-gap: 120px; /* Adjusted from original */
+
+  /* Border Radius Variables */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px; /* Added larger radius for things like cards */
+
+  /* Font Variables */
+  --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-family-monospace: 'SFMono-Regular', Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-size-base: 16px;
+  --font-size-xs: 13px; /* 13px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-lg: 1.25rem;  /* 20px */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+  --line-height-base: 1.6;
+  --line-height-sm: 1.4;
+  --line-height-lg: 1.8;
+
+  /* Shadows - more subtle and modern */
+  --box-shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+  --box-shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --box-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -2px rgba(0,0,0,0.03);
+
+  /* Legacy Vue Theme Variables (can be phased out or mapped) */
+  --vt-c-white: var(--bg-color-card);
+  --vt-c-white-soft: #f9f9f9; /* Keep for compatibility if needed */
+  --vt-c-white-mute: #f1f1f1; /* Keep for compatibility if needed */
+
+  --vt-c-black: #1a1a1a; /* Keep for compatibility if needed */
+  --vt-c-black-soft: #242424; /* Keep for compatibility if needed */
+  --vt-c-black-mute: #2f2f2f; /* Keep for compatibility if needed */
+
+  --vt-c-indigo: var(--color-primary); /* Mapped to new primary */
+
+  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29); /* Legacy */
+  --vt-c-divider-light-2: var(--border-color-light); /* Mapped */
+  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65); /* Legacy */
+  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48); /* Legacy */
+
+  --vt-c-text-light-1: var(--text-color-primary); /* Mapped */
+  --vt-c-text-light-2: var(--text-color-secondary); /* Mapped */
+  --vt-c-text-dark-1: #ebebeb; /* Legacy Dark Theme Text */
+  --vt-c-text-dark-2: rgba(235, 235, 235, 0.75); /* Legacy Dark Theme Text */
+}
+
+/* Semantic color variables for this project (Light Theme - default) */
+:root {
+  --color-background: var(--bg-color-page);
+  --color-background-soft: var(--bg-color-card); /* For slightly off-page elements */
+  --color-background-mute: #f0f0f0; /* For subtle muted backgrounds */
+
+  --color-border: var(--border-color-light);
+  --color-border-hover: var(--border-color-strong);
+
+  --color-heading: var(--text-color-heading);
+  --color-text: var(--text-color-primary);
+}
+
+/* Dark Theme Overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #3399FF; /* Refined Blue for Dark Mode */
+    --color-primary-light: #7CC4FF; /* Adjusted for new dark primary */
+    --color-primary-dark: #0077E6; /* Adjusted for new dark primary */
+
+    --color-secondary: #5a6268; /* Dark mode secondary */
+    --color-accent: #34d399; /* Example: Emerald for dark mode accent - unchanged */
+
+    --text-color-primary: #e0e0e0; /* Light Gray for dark mode text */
+    --text-color-secondary: #b0b0b0; /* Medium-Light Gray */
+    --text-color-on-primary: #ffffff;
+    --text-color-link: var(--color-primary-light);
+    --text-color-link-hover: #8bbaff; /* This could be var(--color-primary) or a bit lighter still */
+    --text-color-heading: #f0f0f0;
+
+    --bg-color-page: #121212; /* Very Dark Gray/Black */
+    --bg-color-card: #1e1e1e; /* Dark Gray for cards */
+    --bg-color-input: #2c2c2c; /* Darker input background */
+    --bg-color-nav: var(--bg-color-card);
+    --bg-color-header: var(--bg-color-card);
+
+    --border-color-light: #444444; /* Darker border for dark mode */
+    --border-color-strong: #666666;
+
+    --success-color: #38c172; /* Adjusted Green */
+    --warning-color: #ffda6b; /* Adjusted Yellow */
+    --error-color: #EF5350;   /* Refined Red for Dark Mode */
+    --info-color: #34d399;    /* Adjusted Teal/Emerald (matches dark accent) */
+
+    /* Update legacy variables for dark mode */
+    --vt-c-white: var(--bg-color-card);
+    --vt-c-black: var(--bg-color-page); /* Base page background is black in dark mode */
+    --vt-c-black-soft: var(--bg-color-card);
+    --vt-c-black-mute: #2c2c2c;
+
+    --vt-c-indigo: var(--color-primary);
+
+    --vt-c-divider-light-1: rgba(180, 180, 180, 0.15);
+    --vt-c-divider-light-2: var(--border-color-light);
+    --vt-c-divider-dark-1: rgba(100, 100, 100, 0.5);
+    --vt-c-divider-dark-2: var(--border-color-strong);
+
+    --vt-c-text-light-1: var(--text-color-primary);
+    --vt-c-text-light-2: var(--text-color-secondary);
+    --vt-c-text-dark-1: var(--text-color-primary); /* Map to new dark theme text */
+    --vt-c-text-dark-2: var(--text-color-secondary); /* Map to new dark theme text */
+
+    /* Semantic colors for dark mode */
+    --color-background: var(--bg-color-page);
+    --color-background-soft: var(--bg-color-card);
+    --color-background-mute: #2a2a2a;
+
+    --color-border: var(--border-color-light);
+    --color-border-hover: var(--border-color-strong);
+
+    --color-heading: var(--text-color-heading);
+    --color-text: var(--text-color-primary);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  /* Removed font-weight: normal; to allow natural heading weights */
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  font-weight: var(--font-weight-normal);
+  transition:
+    color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base Link Styling */
+a {
+  color: var(--text-color-link);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: var(--text-color-link-hover);
+  text-decoration: underline;
+}
+
+/* Basic Heading Styles */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.3;
+}
+
+h1 { font-size: 2.25rem; /* 36px */ } /* Example: Adjusted for better hierarchy */
+h2 { font-size: 1.75rem; /* 28px */ }
+h3 { font-size: 1.5rem;  /* 24px */ }
+h4 { font-size: 1.25rem; /* 20px */ }
+h5 { font-size: 1.125rem;/* 18px */ }
+h6 { font-size: 1rem;    /* 16px */ }
+
+p {
+  margin-bottom: var(--spacing-md);
+}

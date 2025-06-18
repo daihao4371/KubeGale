@@ -1,0 +1,181 @@
+/* Main Container */
+.operation-record-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* Assuming parent .content provides page padding */
+}
+
+/* Main Card (.box-card is an el-card instance) */
+/* Global el-card styles from main.css apply */
+
+/* Card Header (content wrapper in el-card__header slot) */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* Ensure it takes full width of el-card__header */
+}
+.card-header .header-left {
+  display: flex;
+  flex-direction: column;
+}
+.card-header .header-title {
+  font-size: 1.25rem; /* 20px */
+  font-weight: var(--font-weight-bold);
+  color: var(--color-heading);
+}
+.card-header .header-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+/* Search Form */
+.search-form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background-color: var(--bg-color-page);
+  border-radius: var(--border-radius-md);
+}
+
+.search-form .el-form-item {
+  margin-bottom: 0 !important;
+  margin-right: 0 !important; /* Ensure no extra right margin if not needed by ElForm layout */
+}
+/* el-input, el-select within search-form will inherit global styles from main.css */
+
+
+/* Operation Buttons (e.g., Batch Delete) */
+.operation-buttons {
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  gap: var(--spacing-md);
+}
+/* Buttons will inherit global el-button styles from main.css */
+
+
+/* Table Container */
+.el-table {
+  flex: 1;
+  width: 100%;
+  /* Global el-table styles from main.css apply */
+}
+
+/* Ensure el-card__body allows table to grow */
+:deep(.box-card > .el-card__body) {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden; /* Let children manage their scroll */
+  width: 100%;
+}
+
+/* Table Wrapper - if needed for specific scroll/layout control */
+.table-wrapper { /* Add this class around el-table in template if needed */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto; /* Scroll for table content */
+  min-height: 0; /* For nested flex */
+}
+
+
+/* Pagination Container */
+.pagination-container {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--spacing-md) 0;
+}
+/* el-pagination styles are global from main.css */
+
+/* Custom styling for tags if needed */
+.method-tag.el-tag,
+.status-tag.el-tag {
+  min-width: 60px;
+  text-align: center;
+  /* Colors should be handled by el-tag types (primary, success, warning, danger, info) from main.css */
+}
+
+/* Text content within table cells or detail views */
+.operation-detail {
+  max-width: 300px;
+  word-break: break-all;
+  color: var(--text-color-primary);
+}
+
+pre { /* Styling for preformatted text (e.g., JSON display) */
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
+  overflow-x: auto;
+  background-color: var(--bg-color-page);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  color: var(--text-color-primary);
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--border-color-light);
+}
+
+/* System User specific style */
+.system-user {
+  color: var(--text-color-secondary);
+  font-style: italic;
+}
+
+/* User Info in table cell */
+.user-info {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1.3;
+  min-width: 120px;
+}
+
+.user-name {
+  font-weight: var(--font-weight-bold);
+  color: var(--text-color-primary);
+}
+
+.user-real-name {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-secondary);
+}
+
+/* Detail Dialog Styling */
+.operation-detail-dialog .el-descriptions {
+  /* Global el-descriptions styles from main.css apply */
+}
+.operation-detail-dialog .el-descriptions__label {
+  font-weight: var(--font-weight-bold);
+  color: var(--text-color-primary); /* Or var(--text-color-secondary) if preferred for labels */
+}
+.operation-detail-dialog .el-descriptions__content {
+  color: var(--text-color-secondary); /* Or var(--text-color-primary) */
+}
+
+/* Overriding pre style specifically within operation-detail-dialog */
+.operation-detail-dialog pre.json-content {
+  max-height: 300px;
+  overflow-y: auto;
+  /* Other pre styles inherited from general pre styling */
+}
+
+/* Icon Spacing in Buttons (common utility, keep if not made global) */
+.el-button .el-icon + span,
+.el-button span + .el-icon {
+  margin-left: var(--spacing-xs);
+}
+.el-button > .el-icon:first-child:not(:last-child) {
+  margin-right: var(--spacing-xs);
+}
+.el-button > .el-icon:last-child:not(:first-child) {
+  margin-left: var(--spacing-xs);
+}

@@ -1,0 +1,74 @@
+/* Main Container */
+.project-container {
+  padding: var(--spacing-lg);
+  background: var(--bg-color-card);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow-md);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Search Bar */
+.search-bar {
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background: var(--bg-color-page);
+  border-radius: var(--border-radius-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+.search-bar .el-form-item {
+  margin-bottom: 0 !important; /* Remove el-form-item default margin for inline forms */
+}
+/* el-input, el-button will inherit global styles from main.css */
+
+/* Action Bar */
+.action-bar {
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action-right {
+  display: flex;
+  gap: var(--spacing-md);
+}
+/* Buttons will inherit global styles from main.css */
+
+/* Table - el-table styling is global from main.css */
+.el-table {
+  flex-grow: 1; /* Allow table to take available space */
+  width: 100%;
+  /* Global el-table styles from main.css apply for radius, shadow, borders, etc. */
+}
+
+/* Pagination */
+.pagination {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--spacing-md) 0;
+}
+/* el-pagination will inherit global styles from main.css */
+
+/* Dialogs - el-dialog styling is global from main.css */
+.dialog-footer { /* This class is used in the template for the footer slot */
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md); /* Consistent gap for dialog footer buttons */
+}
+
+/* Icon Spacing in Buttons (common utility, keep if not made global) */
+.el-button .el-icon + span,
+.el-button span + .el-icon {
+  margin-left: var(--spacing-xs);
+}
+.el-button > .el-icon:first-child:not(:last-child) {
+  margin-right: var(--spacing-xs);
+}
+.el-button > .el-icon:last-child:not(:first-child) {
+  margin-left: var(--spacing-xs);
+}

@@ -1,0 +1,133 @@
+/* Outermost container for the view */
+.rds-manager-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  /* Assuming parent .content provides necessary page padding */
+}
+
+/* Main layout: sidebar tree + content area */
+.rds-layout {
+  display: flex;
+  height: 100%;
+  gap: var(--spacing-lg);
+  flex-grow: 1;
+  min-height: 0; /* Ensure flex children can shrink properly */
+}
+
+/* Sidebar for CloudPlatformTree */
+.platform-tree {
+  flex: 0 0 300px;
+  background-color: var(--bg-color-card);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow-sm);
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* Content Area for the main card (table, search, etc.) */
+.content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* el-card within content-area */
+.content-area .box-card { /* Assuming el-card has class="box-card" */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  /* Global el-card styles from main.css apply for background, radius, shadow */
+}
+/* :deep(.content-area .box-card > .el-card__header) can be used for specific adjustments if needed */
+:deep(.content-area .box-card > .el-card__body) {
+  padding: var(--spacing-lg);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Let children manage their scroll, e.g. table wrapper */
+  width: 100%; /* Ensure full width */
+  min-height: 0;
+}
+
+
+/* Card Header (content wrapper in el-card__header slot) */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.card-header span { /* Title */
+  font-size: 1.25rem; /* 20px */
+  font-weight: var(--font-weight-bold);
+  color: var(--color-heading);
+}
+
+.header-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  /* Buttons will inherit global styles from main.css */
+}
+
+/* Search Form */
+.search-form {
+  margin-bottom: var(--spacing-lg);
+  /* Padding is handled by el-card__body */
+  background-color: transparent; /* Search form is part of card body */
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+.search-form .el-form-item {
+  margin-bottom: 0 !important; /* For inline forms */
+}
+/* el-input, el-select will inherit global styles from main.css */
+
+
+/* Table Container - 修改这里，添加正确的类名 */
+.table-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto; /* Scroll for table content */
+  min-height: 0; /* For nested flex */
+  margin-bottom: var(--spacing-md); /* 确保表格和分页器之间有间距 */
+}
+
+.el-table { /* el-table styling is global from main.css */
+  flex-grow: 1;
+  width: 100%;
+  /* Global styles from main.css apply */
+}
+
+/* Pagination Container */
+.pagination-container {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md) 0;
+  display: flex;
+  justify-content: flex-end;
+  /* el-pagination will inherit global styles from main.css */
+}
+
+/* Dialogs - el-dialog, el-descriptions will inherit global styles from main.css */
+
+/* Icon Spacing in Buttons (common utility, keep if not made global) */
+.el-button .el-icon + span,
+.el-button span + .el-icon {
+  margin-left: var(--spacing-xs);
+}
+.el-button > .el-icon:first-child:not(:last-child) {
+  margin-right: var(--spacing-xs);
+}
+.el-button > .el-icon:last-child:not(:first-child) {
+  margin-left: var(--spacing-xs);
+}
+/* No margin for icon-only buttons is default for el-button */

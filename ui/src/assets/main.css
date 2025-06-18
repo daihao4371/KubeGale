@@ -1,0 +1,333 @@
+@import './base.css';
+
+#app {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--spacing-lg); /* Use spacing variable */
+  font-weight: var(--font-weight-normal); /* Use font variable */
+}
+
+
+@media (min-width: 1024px) {
+  body {
+    /* display: flex; // Keep or remove based on overall layout needs */
+    /* place-items: center; // Keep or remove based on overall layout needs */
+  }
+
+  #app {
+    padding: 0 var(--spacing-xl); /* Use spacing variable, adjust as needed */
+  }
+}
+
+/* Element Plus Global Overrides - Refactored with new CSS Variables */
+
+/* Inputs & Textareas */
+.el-input__wrapper,
+.el-textarea__inner {
+  background-color: var(--bg-color-input) !important;
+  box-shadow: 0 0 0 1px var(--border-color-light) inset !important;
+  color: var(--text-color-primary) !important; /* Ensure text color is primary */
+  border-radius: var(--border-radius-md) !important; /* Consistent border radius */
+  transition: box-shadow 0.2s ease-in-out; /* Smooth transition for focus */
+}
+.el-input__wrapper.is-focus,
+.el-textarea__inner:focus {
+  box-shadow: 0 0 0 1px var(--color-primary) inset !important;
+}
+.el-input__inner { /* Placeholder and actual text color */
+  color: var(--text-color-primary) !important;
+}
+.el-input .el-input__icon,
+.el-textarea .el-input__icon { /* Assuming similar icon class for textarea if exists */
+  color: var(--text-color-secondary);
+}
+/* Remove placeholder specific color if covered by .el-input__inner, or define explicitly */
+.el-input__inner::placeholder {
+  color: var(--text-color-secondary);
+  opacity: 0.7;
+}
+.el-textarea__inner::placeholder {
+  color: var(--text-color-secondary);
+  opacity: 0.7;
+}
+
+
+/* Buttons */
+.el-button {
+  border-radius: var(--border-radius-md) !important;
+  font-weight: var(--font-weight-normal);
+  /* padding: var(--spacing-sm) var(--spacing-md); Example padding */
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  height: 32px;
+  padding: 0 var(--spacing-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm); /* Explicitly 14px */
+}
+
+.el-button--primary {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--text-color-on-primary) !important;
+}
+.el-button--primary:hover,
+.el-button--primary:focus {
+  background-color: var(--color-primary-dark) !important;
+  border-color: var(--color-primary-dark) !important;
+}
+
+.el-button--default { /* Ghost button style */
+  color: var(--color-primary);
+  background-color: transparent !important;
+  border-color: var(--color-primary);
+}
+.el-button--default:hover,
+.el-button--default:focus {
+  color: var(--color-primary-dark);
+  background-color: var(--color-primary-ultralight-transparent) !important;
+  border-color: var(--color-primary-dark);
+}
+
+.el-button--success {
+  background-color: var(--success-color) !important;
+  border-color: var(--success-color) !important;
+  color: var(--text-color-on-primary) !important;
+}
+.el-button--success:hover,
+.el-button--success:focus {
+  background-color: var(--success-color-dark) !important;
+  border-color: var(--success-color-dark) !important;
+}
+
+.el-button--warning {
+  color: var(--warning-text-color-on-button) !important;
+  background-color: var(--warning-color) !important;
+  border-color: var(--warning-color) !important;
+}
+.el-button--warning:hover,
+.el-button--warning:focus {
+  color: var(--warning-text-color-on-button) !important;
+  background-color: var(--warning-color-dark) !important;
+  border-color: var(--warning-color-dark) !important;
+}
+
+.el-button--danger { /* Ghost button style for danger */
+  color: var(--error-color) !important;
+  background-color: transparent !important;
+  border-color: var(--error-color) !important;
+}
+.el-button--danger:hover,
+.el-button--danger:focus {
+  color: var(--error-color-dark) !important;
+  background-color: var(--error-color-ultralight-transparent) !important;
+  border-color: var(--error-color-dark) !important;
+}
+
+
+/* Select Dropdowns */
+.el-select .el-input__wrapper { /* Select trigger uses input styles */
+  /* Already covered by general .el-input__wrapper, but can be fine-tuned if needed */
+}
+.el-select-dropdown {
+  background-color: var(--bg-color-card) !important;
+  border: 1px solid var(--border-color-light) !important;
+  border-radius: var(--border-radius-md) !important;
+  box-shadow: var(--box-shadow-md); /* Add subtle shadow */
+}
+.el-select-dropdown__item {
+  color: var(--text-color-primary);
+  padding: var(--spacing-sm) var(--spacing-md); /* Consistent padding */
+}
+.el-select-dropdown__item.hover,
+.el-select-dropdown__item:hover {
+  background-color: var(--color-primary-light) !important;
+  color: var(--text-color-on-primary) !important; /* Or a contrasting color if primary-light is too light */
+}
+.el-select-dropdown__item.selected {
+  background-color: var(--color-primary) !important;
+  color: var(--text-color-on-primary) !important;
+  font-weight: var(--font-weight-bold);
+}
+
+
+/* Cards */
+.el-card {
+  background-color: var(--bg-color-card) !important;
+  border: 1px solid var(--border-color-light) !important;
+  border-radius: var(--border-radius-lg) !important; /* Larger radius for cards */
+  box-shadow: var(--box-shadow-sm); /* Subtle shadow */
+}
+.el-card__header {
+  background-color: transparent !important; /* Cleaner look */
+  color: var(--color-heading);
+  border-bottom: 1px solid var(--border-color-light) !important;
+  padding: var(--spacing-md) var(--spacing-lg); /* Adjust padding */
+}
+.el-card__body {
+  color: var(--text-color-primary);
+  padding: var(--spacing-lg); /* Consistent padding */
+}
+
+
+/* Tables */
+.el-table {
+  background-color: var(--bg-color-card); /* Table itself can have card background */
+  border-radius: var(--border-radius-md); /* Rounded corners for the table */
+  overflow: hidden; /* To make border-radius work on inner elements */
+  margin-bottom: var(--spacing-lg); /* Space for pagination or content below */
+}
+.el-table th.el-table__cell {
+  background-color: var(--bg-color-page) !important; /* Header distinct from rows */
+  color: var(--color-heading) !important;
+  font-weight: var(--font-weight-bold);
+  border-bottom: 1px solid var(--border-color-strong); /* Stronger border under header */
+  font-size: var(--font-size-xs);
+  height: 48px;
+  vertical-align: middle;
+}
+.el-table td.el-table__cell,
+.el-table th.el-table__cell.is-leaf {
+  border-bottom: 1px solid var(--border-color-light);
+  color: var(--text-color-primary);
+  font-size: var(--font-size-xs);
+  height: 48px;
+  vertical-align: middle;
+}
+.el-table tr {
+  background-color: var(--bg-color-card) !important;
+  color: var(--text-color-primary);
+  transition: background-color 0.2s ease-in-out;
+}
+.el-table--enable-row-hover .el-table__body tr:hover > td.el-table__cell {
+  background-color: var(--bg-color-page) !important; /* Subtle hover for rows */
+}
+.el-table--border .el-table__inner-wrapper,
+.el-table--border td,
+.el-table--border th,
+.el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
+  border-color: var(--border-color-light) !important;
+}
+
+/* Pagination */
+.el-pagination {
+  margin-top: var(--spacing-lg); /* Add some space above pagination */
+}
+.el-pagination .el-pager li,
+.el-pagination .btn-prev,
+.el-pagination .btn-next {
+  background-color: var(--bg-color-card);
+  color: var(--text-color-primary);
+  border-radius: var(--border-radius-sm) !important;
+  border: 1px solid var(--border-color-light);
+  margin: 0 var(--spacing-xs); /* Spacing between buttons */
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.el-pagination .el-pager li:hover,
+.el-pagination .btn-prev:hover,
+.el-pagination .btn-next:hover {
+  background-color: var(--bg-color-page);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.el-pagination .el-pager li.is-active {
+  background-color: var(--color-primary) !important;
+  color: var(--text-color-on-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+.el-pagination.is-background .el-pager li.is-active { /* Style for background variant if used */
+  background-color: var(--color-primary) !important;
+  color: var(--text-color-on-primary) !important;
+}
+
+/* Tags */
+.el-tag {
+  border-radius: var(--border-radius-sm) !important;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: none !important; /* Remove default border if any, rely on background */
+  font-weight: var(--font-weight-normal);
+}
+.el-tag--primary { /* This might not be a default type, example */
+  background-color: var(--color-primary-light) !important;
+  color: var(--color-primary-dark) !important; /* Or --text-color-on-primary if light enough */
+}
+.el-tag--success {
+  background-color: var(--success-color) !important;
+  color: var(--text-color-on-primary) !important;
+}
+.el-tag--warning {
+  background-color: var(--warning-color) !important;
+  color: var(--warning-text-color) !important;
+}
+.el-tag--danger { /* Element Plus uses 'danger' for error type tags */
+  background-color: var(--error-color) !important;
+  color: var(--text-color-on-primary) !important;
+}
+.el-tag--info { /* Styled as gray for "disabled" or general info state */
+  background-color: var(--text-color-secondary) !important; /* Medium Gray */
+  color: var(--text-color-on-primary) !important; /* White text */
+}
+
+
+/* Modals / Dialogs */
+.el-dialog {
+  background-color: var(--bg-color-card) !important;
+  border-radius: var(--border-radius-lg) !important;
+  box-shadow: var(--box-shadow-lg); /* More prominent shadow for dialogs */
+}
+.el-dialog__header {
+  color: var(--color-heading);
+  font-weight: var(--font-weight-bold);
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md); /* Adjust padding */
+  border-bottom: 1px solid var(--border-color-light);
+}
+.el-dialog__body {
+  color: var(--text-color-primary);
+  padding: var(--spacing-lg);
+}
+.el-dialog__footer {
+  padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg);
+  border-top: 1px solid var(--border-color-light);
+}
+
+
+/* Message Box (Confirm Dialogs, etc.) */
+.el-message-box {
+  background-color: var(--bg-color-card) !important;
+  border-radius: var(--border-radius-md) !important;
+  box-shadow: var(--box-shadow-lg);
+  border: 1px solid var(--border-color-light); /* Subtle border */
+}
+.el-message-box__header {
+  color: var(--color-heading);
+  font-weight: var(--font-weight-bold);
+}
+.el-message-box__content {
+  color: var(--text-color-primary);
+}
+
+
+/* Popovers */
+.el-popover {
+  background-color: var(--bg-color-card) !important;
+  border-radius: var(--border-radius-md) !important;
+  border: 1px solid var(--border-color-light) !important;
+  box-shadow: var(--box-shadow-md);
+  color: var(--text-color-primary);
+}
+.el-popover__title {
+  color: var(--color-heading);
+  font-weight: var(--font-weight-bold);
+  border-bottom: 1px solid var(--border-color-light);
+  margin-bottom: var(--spacing-sm);
+}
+
+
+
+/* Ensure overflow hidden for components where content might break border-radius */
+.el-input__wrapper,
+.el-card,
+.el-table,
+.el-dialog {
+  overflow: hidden;
+}

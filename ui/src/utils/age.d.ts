@@ -1,0 +1,1 @@
+export function AgeFormat(value: string): string; 

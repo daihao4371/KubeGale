@@ -1,0 +1,470 @@
+body {
+  background: url('@/assets/images/login.png') no-repeat center center;
+  background-size: cover;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+.login-container {
+  display: flex;
+  justify-content: flex-start; /* 从左侧开始排列 */
+  align-items: center;
+  height: 100vh;
+}
+.login-content {
+  display: flex;
+  width: 900px;
+  height: 520px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Softened box-shadow */
+  background: rgba(255,255,255,0.95); /* Assuming light mode focus for this page */
+  margin-left: 27vw; /* 增加左侧外边距，让对话框整体向右 */
+  position: relative; /* 添加相对定位，用于分隔线定位 */
+}
+
+/* 添加分隔线样式 */
+.login-content::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  height: 80%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(52, 94, 255, 0.2), transparent); /* Updated separator color */
+}
+.login-left {
+  flex: 1;
+  background: linear-gradient(135deg, var(--vt-c-indigo) 0%, #1dbde6 100%); /* Updated gradient */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 40px 24px;
+}
+.login-illustration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+.login-illustration img {
+  width: 180px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.login-illustration h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.login-illustration p {
+  font-size: 14px;
+  opacity: 0.85;
+}
+.login-right {
+  flex: 1;
+  background: #fff;
+  padding: 48px 24px; /* 修改：从36px缩减至24px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-form-container {
+  width: 100%;
+  max-width: 320px;
+}
+.login-form-container h2 {
+  font-size: 32px; /* 增大字号 */
+  margin-bottom: 10px;
+  color: var(--vt-c-indigo); /* Use CSS variable */
+  font-weight: 700;
+  margin-top: 10px; /* 添加顶部边距，使标题向下移动 */
+  text-align: center; /* 添加居中对齐 */
+}
+
+.login-illustration h3 {
+  font-size: 24px; /* 增大字号 */
+  margin-bottom: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.login-subtitle {
+  color: var(--vt-c-text-light-2); /* Use CSS variable */
+  margin-bottom: 24px; /* 从28px减小到24px */
+  margin-top: 5px; /* 添加顶部边距 */
+  font-size: 15px;
+  text-align: center; /* 添加居中对齐 */
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* 修改：从12px减小到8px，进一步减少间距 */
+}
+
+/* 调整表单项间距 */
+.el-form-item {
+  margin-bottom: 16px !important;  /* Increased spacing */
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px; /* 从12px减小到8px */
+  width: 100%;
+}
+
+.form-item label {
+  font-size: 14px;
+  color: var(--color-text); /* Use CSS variable */
+  margin-bottom: 6px; /* 增加标签与输入框的间距 */
+  display: block; /* 确保标签独占一行 */
+}
+
+/* 调整验证码输入框样式 */
+.form-item.captcha-row, .captcha-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  margin-bottom: 8px; /* 从12px减小到8px */
+}
+
+.form-item.captcha-row label {
+  margin-bottom: 4px; /* 从6px减小到4px */
+  font-size: 14px;
+  color: var(--color-text); /* Use CSS variable */
+  display: block; /* 确保标签独占一行 */
+  white-space: normal; /* 允许文本换行 */
+}
+
+.captcha-container {
+  position: relative;
+  width: 100%;
+  margin-top: 4px; /* 从6px减小到4px */
+}
+
+.captcha-input {
+  width: 100%;
+  height: 36px; /* 从38px减小到36px */
+}
+
+.captcha-img {
+  height: 34px; /* 从38px减小到34px，使验证码显示变小 */
+  margin-top: 6px; /* 从8px减小到6px */
+  cursor: pointer;
+  border-radius: 6px; /* Updated to 6px */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  background: #fff;
+  border: 1px solid var(--color-border); /* Use CSS variable */
+  width: 100%;
+  object-fit: contain;
+}
+
+/* 输入框图标样式 */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.form-item input {
+  height: 38px;
+  border: 1px solid var(--color-border); /* Use CSS variable */
+  border-radius: 6px;
+  padding: 0 12px;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.2s;
+}
+.form-item input:focus {
+  border-color: var(--vt-c-indigo); /* Use CSS variable */
+}
+.login-button {
+  width: 100%;
+  height: 38px; /* 从40px减小到38px */
+  font-size: 16px;
+  background: linear-gradient(90deg, var(--vt-c-indigo) 0%, #1dbde6 100%); /* Updated gradient */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 16px; /* 从10px增加到16px，让按钮与上方表单有更明显的间隔 */
+  margin-bottom: 10px; /* 添加底部间距，避免按钮挤在最底部 */
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-button:hover {
+  background: linear-gradient(90deg, #2A4BC8 0%, #1AA9CF 100%); /* Darkened gradient */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 94, 255, 0.2); /* Updated shadow color */
+}
+
+.login-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(52, 94, 255, 0.15); /* Adjusted active shadow */
+}
+
+/* 添加按钮点击波纹效果 */
+.login-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.login-button:active::after {
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(20, 20);
+    opacity: 0;
+  }
+}
+.password-eye {
+  cursor: pointer;
+  color: #909399;
+}
+.password-eye:hover {
+  color: #409EFF;
+}
+.form-item.captcha-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: row;
+}
+.form-item.captcha-row label {
+  margin-bottom: 0;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+.captcha-input {
+  flex: 1;
+  min-width: 0;
+  height: 38px;
+}
+.captcha-img {
+  height: 38px;
+  margin-left: 0;
+  cursor: pointer;
+  border-radius: 6px; /* Updated to 6px */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  background: #fff;
+  border: 1px solid var(--color-border); /* Use CSS variable */
+  width: auto;
+  min-width: 90px;
+  object-fit: contain;
+}
+
+/* 调整表单项间距 - This duplicates an earlier rule, ensure consistency or remove one. Keeping 16px from earlier. */
+.el-form-item {
+  margin-bottom: 16px !important;  /* Consistent spacing */
+}
+
+/* 输入框图标样式 */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--vt-c-text-light-2); /* Use CSS variable */
+  font-size: 16px;
+  z-index: 2;
+}
+
+.input-with-icon .el-input__inner {
+  padding-left: 35px !important;
+}
+
+/* 密码可见性图标样式 */
+.password-eye {
+  cursor: pointer;
+  color: #909399;
+  font-size: 16px;
+  margin-right: 5px;
+}
+
+.password-eye:hover {
+  color: #409EFF;
+}
+
+/* Element Plus 样式覆盖 */
+:deep(.el-input__inner) {
+  height: 38px;
+  border: 1px solid var(--color-border); /* Use CSS variable */
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border 0.2s;
+}
+
+:deep(.el-input__inner:focus) {
+  border-color: var(--vt-c-indigo); /* Use CSS variable */
+  box-shadow: 0 0 0 2px rgba(52, 255, 248, 0.1); /* Updated focus shadow */
+}
+
+/* 调整验证码输入框样式 */
+.form-item.captcha-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: row;
+}
+
+.form-item.captcha-row label {
+  margin-bottom: 0;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.captcha-input {
+  flex: 1;
+  min-width: 0;
+  height: 38px;
+}
+
+.captcha-img {
+  height: 38px;
+  margin-left: 0;
+  cursor: pointer;
+  border-radius: 6px; /* Updated to 6px */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  background: #fff;
+  border: 1px solid var(--color-border); /* Use CSS variable */
+  width: auto;
+  min-width: 90px;
+  object-fit: contain;
+}
+/* 覆盖之前的验证码样式，确保与用户名密码一致 */
+.captcha-block {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  margin-bottom: 8px; /* 添加底部间距 */
+}
+
+.captcha-block .el-input {
+  margin-bottom: 4px; /* 从6px减小到4px */
+}
+
+.captcha-block img {
+  height: 38px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border); /* Use CSS variable */
+  width: 100%;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.captcha-refresh {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.3s;
+}
+
+.captcha-refresh:hover {
+  transform: rotate(180deg);
+  background: rgba(52, 94, 255, 0.1); /* Updated hover background */
+}
+
+.captcha-container {
+  position: relative;
+  width: 100%;
+}
+/* 响应式设计 */
+@media screen and (max-width: 1200px) {
+  .login-content {
+    width: 800px;
+    margin-left: 20vw;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .login-content {
+    width: 90%;
+    max-width: 700px;
+    margin-left: 5vw;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .login-content {
+    flex-direction: column;
+    height: auto;
+    width: 90%;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+
+  .login-left, .login-right {
+    width: 100%;
+    padding: 30px 20px;
+  }
+
+  .login-illustration img {
+    width: 120px;
+  }
+
+  .login-content::after {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .login-form-container {
+    padding: 0;
+  }
+
+  .login-left {
+    padding: 20px 15px;
+  }
+
+  .login-right {
+    padding: 30px 16px; /* 修改：小屏时内边距缩减至16px */
+  }
+}
+
+/* 调整登录表单容器，增加底部空间 */
+.login-form-container {
+  width: 100%;
+  max-width: 320px;
+  padding-bottom: 15px; /* 保持底部内边距 */
+  padding-top: 10px; /* 添加顶部内边距，让整体内容下移 */
+}

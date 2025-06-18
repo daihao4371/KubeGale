@@ -1,0 +1,122 @@
+/* Main Layout */
+.loadbalancer-layout {
+  display: flex;
+  height: 100%; /* Fit within parent content area */
+  gap: var(--spacing-lg);
+  min-width: 0; /* Prevent flexbox overflow issues */
+}
+
+/* Sidebar (contains CloudPlatformTree) */
+.sidebar {
+  width: 280px;
+  flex: 0 0 280px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sidebar .el-card { /* Targeting the el-card within the sidebar */
+  flex: 1; /* Allow card to fill sidebar height */
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+:deep(.sidebar .el-card__body) { /* Ensure card body can contain tree properly */
+  padding: var(--spacing-md);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Tree itself should scroll */
+}
+:deep(.sidebar .el-card__header) { /* Standardized padding for consistency */
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.sidebar-title {
+  border-bottom: 1px solid var(--border-color-light);
+  padding-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  color: var(--color-heading);
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1; /* Takes remaining space */
+  min-width: 0; /* Prevent flexbox overflow issues */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.main-card.el-card { /* Targeting the el-card in main-content */
+  flex: 1; /* Allow card to fill main-content height */
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+/* :deep(.main-card.el-card > .el-card__header) can be used for specific adjustments if needed */
+:deep(.main-card.el-card > .el-card__body) {
+  padding: var(--spacing-lg);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Let child elements like table-wrapper handle their own scroll */
+}
+
+
+/* Search Form */
+.search-form {
+  background: var(--bg-color-page); /* Consistent with other search forms */
+  border-radius: var(--border-radius-md); /* Consistent radius */
+  padding: var(--spacing-lg); /* Consistent padding */
+  margin-bottom: var(--spacing-lg); /* Space below form */
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping */
+  gap: var(--spacing-md); /* Consistent gap */
+}
+.search-form .el-form-item {
+  margin-bottom: 0 !important; /* Remove default el-form-item margin for inline forms */
+}
+
+/* Table Wrapper */
+.table-wrapper {
+  flex: 1; /* Allow table wrapper to take available space */
+  overflow: auto; /* Primary scroll for table content if table itself doesn't handle it well */
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-container.el-table { /* Targeting el-table instance */
+  width: 100% !important; /* Override inline style from template if necessary */
+  flex-grow: 1; /* Allow table to grow in .table-wrapper */
+  min-width: 0;
+  /* Global styles from main.css for el-table will apply for background, radius, borders, etc. */
+}
+
+/* Pagination Container */
+.pagination-container {
+  margin-top: var(--spacing-lg); /* Space above pagination */
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--spacing-md) 0; /* Padding top/bottom */
+  /* Global el-pagination styles from main.css will apply */
+}
+
+/* Icon Spacing in Buttons (specific to this view if needed, or can be global) */
+.el-button .el-icon + span,
+.el-button span + .el-icon {
+  margin-left: var(--spacing-xs);
+}
+/* Styles for icon-only buttons or buttons with icon at start/end */
+.el-button > .el-icon:first-child:not(:last-child) { /* Icon at start followed by text */
+  margin-right: var(--spacing-xs);
+}
+.el-button > .el-icon:last-child:not(:first-child) { /* Icon at end preceded by text */
+  margin-left: var(--spacing-xs);
+}
+/* .el-button > .el-icon:first-child:last-child ensures no margin for icon-only buttons, handled by Element Plus */

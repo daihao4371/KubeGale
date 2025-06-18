@@ -1,0 +1,111 @@
+/* Main Container */
+.role-manager-container {
+  background-color: transparent;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.5s ease-out;
+  /* Assuming parent .content provides page padding */
+}
+
+/* Main Card - .box-card is an el-card instance */
+.box-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* Global el-card styles from main.css apply for background, radius, shadow, border */
+}
+
+/* Card Header (content wrapper in el-card__header slot) */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* Ensure it takes full width of el-card__header */
+  /* el-card__header global styles provide padding and border */
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.header-title {
+  font-size: 1.25rem; /* 20px */
+  font-weight: var(--font-weight-bold);
+  color: var(--color-heading);
+  letter-spacing: 0.5px;
+}
+
+.header-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-secondary);
+}
+
+/* Operation Buttons in Card Header */
+.operation-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  /* Styling for el-button within .operation-buttons will be inherited from main.css */
+}
+
+/* Table Styles */
+/* Global el-table styles from main.css apply */
+.el-table {
+  flex-grow: 1; /* Allow table to take available space */
+  width: 100%;
+}
+
+/* Dialog Styles */
+/* Global el-dialog, el-form-item, el-input styles from main.css apply */
+
+/* Ensure el-card__body allows table to grow */
+:deep(.box-card > .el-card__body) {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden; /* Let children (e.g., table wrapper) manage their scroll */
+  width: 100%;
+}
+
+/* Table Wrapper - if needed for specific scroll/layout control */
+.table-wrapper { /* Add this class around el-table in template if needed */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto; /* Scroll for table content */
+  min-height: 0; /* For nested flex */
+}
+
+/* Pagination Container */
+.pagination-container {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--spacing-md) 0;
+}
+/* Global el-pagination styles from main.css apply */
+
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(var(--spacing-sm));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+  .operation-buttons {
+    flex-wrap: wrap;
+    /* Buttons inside will wrap and use their default bottom margin or rely on gap */
+  }
+}
