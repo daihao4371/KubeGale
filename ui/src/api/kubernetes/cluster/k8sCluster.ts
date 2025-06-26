@@ -1,193 +1,298 @@
 import service from '@/utils/request'
+import type { K8sCluster, K8sClusterUser, K8sClusterRoleDefinition, K8sApiGroup, K8sClusterCredential } from '@/types/kubernetes';
 
-export interface ClusterParams {
-  page?: number;
-  pageSize?: number;
-  startCreatedAt?: Date;
-  endCreatedAt?: Date;
-  name?: string;
-  [key: string]: unknown;
-}
-
-export interface ClusterData {
-  id?: string;
-  name: string;
-  createdAt?: string;
-  kube_type: number;
-  kube_config: string;
-  api_address: string;
-  prometheus_url?: string;
-  prometheus_auth_type: number;
-  prometheus_user?: string;
-  prometheus_pwd?: string;
-  [key: string]: unknown;
-}
-
-export interface IdParams {
-  id: string;
-}
-
-export interface IdsParams {
-  IDs: string[];
-}
-
+// Generic API Response structure - assuming this is standard across the app
 export interface ApiResponse<T> {
   code: number;
   data: T;
   message?: string;
 }
 
+// === Cluster Management ===
+
+export interface ClusterListParams {
+  page?: number;
+  pageSize?: number;
+  name?: string;
+  // TODO: Add other filter params like startCreatedAt, endCreatedAt if supported by backend
+  [key: string]: unknown; // Allow other potential query params
+}
+
 export interface ClusterListResponse {
-  list: ClusterData[];
+  list: K8sCluster[];
   total: number;
   page: number;
   pageSize: number;
 }
 
-export interface ClusterResponse {
-  cluster: ClusterData;
+export interface ClusterDetailResponse {
+  cluster: K8sCluster;
 }
 
-export const getClustersList = (params: ClusterParams): Promise<ApiResponse<ClusterListResponse>> => {
+export const getClustersList = (params: ClusterListParams): Promise<ApiResponse<ClusterListResponse>> => {
   return service({
-    url: '/kubernetes/clusterList',
+    url: '/kubernetes/clusterList', // Backend endpoint for listing clusters
     method: 'get',
     params
   })
 }
 
-export const getClustersById = (data: IdParams): Promise<ApiResponse<ClusterResponse>> => {
+export const getClusterById = (clusterId: string): Promise<ApiResponse<ClusterDetailResponse>> => {
   return service({
-    url: '/kubernetes/clusterById',
-    method: 'post',
-    data
+    url: '/kubernetes/clusterById', // Backend endpoint for fetching a cluster by ID
+    method: 'post', // Assuming POST as per original, though GET with /kubernetes/cluster/{id} is common
+    data: { id: clusterId }
   })
 }
 
-export const CreateCluster = (data: ClusterData): Promise<ApiResponse<null>> => {
+// For CreateCluster, the payload is K8sCluster but without 'id' and potentially 'createdAt', 'updatedAt'
+export type CreateClusterPayload = Omit<K8sCluster, 'id' | 'createdAt' | 'updatedAt' | 'version' | 'status' | 'provider' >;
+
+export const createCluster = (payload: CreateClusterPayload): Promise<ApiResponse<K8sCluster>> => { // Assuming backend returns the created cluster object
   return service({
-    url: '/kubernetes/cluster',
+    url: '/kubernetes/cluster', // Backend endpoint for creating a cluster
     method: 'post',
-    data
+    data: payload
   })
 }
 
-export const UpdateCluster = (data: ClusterData): Promise<ApiResponse<null>> => {
+// For UpdateCluster, 'id' is required.
+export type UpdateClusterPayload = Partial<Omit<K8sCluster, 'id' | 'createdAt' | 'updatedAt'>> & Pick<K8sCluster, 'id'>;
+
+
+export const updateCluster = (payload: UpdateClusterPayload): Promise<ApiResponse<K8sCluster>> => { // Assuming backend returns the updated cluster
   return service({
-    url: '/kubernetes/cluster',
+    url: '/kubernetes/cluster', // Backend endpoint for updating a cluster
     method: 'put',
-    data
+    data: payload
   })
 }
 
-export const DeleteCluster = (data: IdParams): Promise<ApiResponse<null>> => {
+export const deleteCluster = (clusterId: string): Promise<ApiResponse<null>> => {
   return service({
-    url: '/kubernetes/cluster',
+    url: '/kubernetes/cluster', // Backend endpoint for deleting a cluster
     method: 'delete',
-    data
+    data: { id: clusterId } // Assuming ID is passed in the body for DELETE
   })
 }
 
-export const DeleteClusterByIds = (data: IdsParams): Promise<ApiResponse<null>> => {
+export const deleteClusterByIds = (ids: string[]): Promise<ApiResponse<null>> => {
   return service({
-    url: '/kubernetes/clusterByIds',
+    url: '/kubernetes/clusterByIds', // Backend endpoint for batch deleting clusters
     method: 'delete',
-    data
+    data: { IDs: ids }
   })
 }
 
-export const CreateCredential = (data: ClusterData) => {
+// === Cluster User Management ===
+// These are application-level users associated with a cluster, not necessarily direct k8s users/serviceaccounts
+
+export interface ClusterUserListParams {
+  clusterId: string;
+  page?: number;
+  pageSize?: number;
+  username?: string;
+}
+
+export interface ClusterUserListResponse {
+  list: K8sClusterUser[];
+  total: number;
+}
+
+export const getClusterUsers = (params: ClusterUserListParams): Promise<ApiResponse<ClusterUserListResponse>> => {
   return service({
-    url: '/kubernetes/credential',
+    // TODO: Define actual backend endpoint for listing users of a cluster
+    url: `/kubernetes/cluster/${params.clusterId}/users`,
+    method: 'get',
+    params: { page: params.page, pageSize: params.pageSize, username: params.username }
+  })
+}
+
+export type CreateClusterUserPayload = Omit<K8sClusterUser, 'id' | 'joinedAt'>;
+
+export const createClusterUser = (payload: CreateClusterUserPayload): Promise<ApiResponse<K8sClusterUser>> => {
+  return service({
+    // TODO: Define actual backend endpoint
+    url: `/kubernetes/cluster/${payload.clusterId}/users`,
     method: 'post',
-    data
+    data: payload
   })
 }
 
-export const getUserById = (data: IdParams) => {
-  return service({
-    url: '/kubernetes/getUserById',
-    method: 'post',
-    data
-  })
-}
+export type UpdateClusterUserPayload = Partial<Omit<K8sClusterUser, 'clusterId' | 'userId' | 'username' | 'joinedAt'>> & Pick<K8sClusterUser, 'id' | 'clusterId'>;
 
-export const getClusterRoles = (data: IdParams) => {
+export const updateClusterUser = (payload: UpdateClusterUserPayload): Promise<ApiResponse<K8sClusterUser>> => {
   return service({
-    url: '/kubernetes/getClusterRoles',
-    method: 'post',
-    data
-  })
-}
-
-export const getClusterApiGroups = (data: IdParams) => {
-  return service({
-    url: '/kubernetes/getClusterApiGroups',
-    method: 'post',
-    data
-  })
-}
-
-export const createClusterRole = (data: ClusterData) => {
-  return service({
-    url: '/kubernetes/createClusterRole',
-    method: 'post',
-    data
-  })
-}
-
-export const updateClusterRole = (data: ClusterData) => {
-  return service({
-    url: '/kubernetes/updateClusterRole',
+    // TODO: Define actual backend endpoint
+    url: `/kubernetes/cluster/${payload.clusterId}/users/${payload.id}`,
     method: 'put',
-    data
+    data: payload
   })
 }
 
-export const deleteClusterRole = (data: IdParams) => {
+export const deleteClusterUser = (clusterId: string, userId: string): Promise<ApiResponse<null>> => {
   return service({
-    url: '/kubernetes/deleteClusterRole',
+    // TODO: Define actual backend endpoint
+    url: `/kubernetes/cluster/${clusterId}/users/${userId}`,
     method: 'delete',
-    data
   })
 }
 
-export const createClusterUser = (data: ClusterData) => {
+
+// === Cluster Role Management ===
+// These are roles defined within the scope of a cluster, potentially mapping to K8s Roles/ClusterRoles
+
+export interface ClusterRoleListParams {
+  clusterId: string;
+  page?: number;
+  pageSize?: number;
+  name?: string;
+}
+
+export interface ClusterRoleListResponse {
+  list: K8sClusterRoleDefinition[];
+  total: number;
+}
+
+export const getClusterRoles = (params: ClusterRoleListParams): Promise<ApiResponse<ClusterRoleListResponse>> => {
   return service({
-    url: '/kubernetes/createClusterUser',
+    // Original: /kubernetes/getClusterRoles (POST with IdParams)
+    // TODO: Confirm if this is to list roles FOR a cluster or GET a specific role by ID. Assuming list for now.
+    // url: '/kubernetes/getClusterRoles',
+    // method: 'post',
+    // data: { id: params.clusterId } // This seems more like getRoleById if id is roleId
+    url: `/kubernetes/cluster/${params.clusterId}/roles`, // RESTful approach
+    method: 'get',
+    params: { page: params.page, pageSize: params.pageSize, name: params.name }
+  })
+}
+
+export type CreateClusterRolePayload = Omit<K8sClusterRoleDefinition, 'id' | 'createdAt' | 'updatedAt'>;
+
+export const createClusterRole = (payload: CreateClusterRolePayload): Promise<ApiResponse<K8sClusterRoleDefinition>> => {
+  return service({
+    // Original: /kubernetes/createClusterRole (POST with ClusterData) -> Needs dedicated payload
+    url: `/kubernetes/cluster/${payload.clusterId}/roles`,
     method: 'post',
-    data
+    data: payload
   })
 }
 
-export const updateClusterUser = (data: ClusterData) => {
+export type UpdateClusterRolePayload = Partial<Omit<K8sClusterRoleDefinition, 'clusterId' | 'createdAt' | 'updatedAt'>> & Pick<K8sClusterRoleDefinition, 'id' | 'clusterId'>;
+
+export const updateClusterRole = (payload: UpdateClusterRolePayload): Promise<ApiResponse<K8sClusterRoleDefinition>> => {
   return service({
-    url: '/kubernetes/updateClusterUser',
+    // Original: /kubernetes/updateClusterRole (PUT with ClusterData) -> Needs dedicated payload
+    url: `/kubernetes/cluster/${payload.clusterId}/roles/${payload.id}`,
     method: 'put',
-    data
+    data: payload
   })
 }
 
-export const deleteClusterUser = (data: IdParams) => {
+export const deleteClusterRole = (clusterId: string, roleId: string): Promise<ApiResponse<null>> => {
   return service({
-    url: '/kubernetes/deleteClusterUser',
-    method: 'delete',
-    data
+    // Original: /kubernetes/deleteClusterRole (DELETE with IdParams for roleId)
+    url: `/kubernetes/cluster/${clusterId}/roles/${roleId}`,
+    method: 'delete'
   })
 }
 
-export const getClusterUserNamespace = (data: IdParams) => {
+// === Cluster API Group Management ===
+
+export interface ClusterApiGroupListParams {
+  clusterId: string;
+}
+
+export interface ClusterApiGroupListResponse {
+  apiGroups: K8sApiGroup[];
+}
+
+export const getClusterApiGroups = (params: ClusterApiGroupListParams): Promise<ApiResponse<ClusterApiGroupListResponse>> => {
   return service({
-    url: '/kubernetes/getClusterUserNamespace',
+    // Original: /kubernetes/getClusterApiGroups (POST with IdParams for clusterId)
+    // url: '/kubernetes/getClusterApiGroups',
+    // method: 'post',
+    // data: { id: params.clusterId }
+    url: `/kubernetes/cluster/${params.clusterId}/apigroups`, // RESTful approach
+    method: 'get',
+  })
+}
+
+// === Cluster Credential Management ===
+// The document implies managing credentials beyond the initial KubeConfig.
+// The existing `CreateCredential` takes `ClusterData`, which is not suitable.
+// This section needs more clarity on what kind of credentials (e.g., service account tokens for specific tasks).
+// Placeholder for now.
+
+export interface CreateCredentialPayload { // This needs proper definition based on backend
+    clusterId: string;
+    type: K8sClusterCredential['type'];
+    value: string; // Example: token string
+    description?: string;
+}
+
+export const createClusterCredential = (payload: CreateCredentialPayload): Promise<ApiResponse<K8sClusterCredential>> => {
+  return service({
+    url: `/kubernetes/cluster/${payload.clusterId}/credentials`, // Example RESTful endpoint
     method: 'post',
-    data
+    data: payload
   })
 }
 
-export const getClusterListNamespace = (data: IdParams) => {
+// Get User by ID (Original: getUserById) - Unclear if this is a general system user or cluster-specific. Assuming general for now.
+// This might belong to a more general user API module if not strictly for k8s cluster context.
+// For now, keeping it as per original file structure, but flagged for review.
+export interface UserDetailResponse { // Define a proper User type if not already available globally
+    id: string;
+    username: string;
+    email?: string; // etc.
+}
+export const getUserById = (userId: string): Promise<ApiResponse<UserDetailResponse>> => {
   return service({
-    url: `/kubernetes/getClusterListNamespace`,
-    method: 'post',
-    data
+    url: '/kubernetes/getUserById', // This endpoint seems kubernetes-specific by its path
+    method: 'post', // Assuming POST as per original
+    data: { id: userId }
   })
+}
+
+
+// getClusterUserNamespace & getClusterListNamespace - These seem specific to a user's access within a cluster.
+// Their purpose needs to be clarified:
+// - getClusterUserNamespace: Namespaces a specific user (from your system) has access to in a cluster?
+// - getClusterListNamespace: All namespaces in a cluster? (This is usually `GET /api/v1/namespaces` to k8s API)
+
+export interface NamespaceListResponse {
+    // Assuming a simple list of namespace names for now
+    // This should be `V1NamespaceList` or similar if directly from Kubernetes
+    items: Array<{ name: string; [key: string]: any }>; // Replace with proper Namespace type
+    total?: number;
+}
+
+// Assuming this gets namespaces accessible by the *currently authenticated user* for that cluster,
+// or for a specific system user if `userId` is provided.
+export const getAccessibleNamespaces = (clusterId: string, userId?: string): Promise<ApiResponse<NamespaceListResponse>> => {
+    let url = `/kubernetes/cluster/${clusterId}/namespaces`;
+    const params: any = {};
+    if (userId) {
+        params.userId = userId; // Or however the backend identifies the user
+    }
+    return service({
+        // url: '/kubernetes/getClusterUserNamespace', // Original endpoint
+        // method: 'post',
+        // data: { id: userId, cluster_id: clusterId } // Original payload was just 'id'
+        url: url,
+        method: 'get', // More RESTful for fetching a list
+        params: params
+    });
+}
+
+// Assuming this gets all namespaces in a cluster, typically an admin/privileged operation.
+export const getAllClusterNamespaces = (clusterId: string): Promise<ApiResponse<NamespaceListResponse>> => {
+    return service({
+        // url: `/kubernetes/getClusterListNamespace`, // Original endpoint
+        // method: 'post',
+        // data: { id: clusterId } // Original payload was just 'id'
+        url: `/kubernetes/cluster/${clusterId}/all-namespaces`, // Example RESTful
+        method: 'get'
+    });
 }

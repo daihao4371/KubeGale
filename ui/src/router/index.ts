@@ -201,14 +201,89 @@ const router = createRouter({
               redirect: '/homepage/kubernetes/cluster'
             },
             {
-              path: 'cluster',
-              name: 'kubernetes-cluster',
-              component: () => import('../views/kubernetes/k8sCluster/k8sCluster.vue'),
+              path: 'cluster', // This will be the base for cluster related views
+              name: 'ClusterList', // Changed name for clarity
+              component: () => import('../views/kubernetes/cluster/cluster-list.vue'),
               meta: {
                 requiresAuth: true,
-                title: '集群管理'
+                title: '集群列表' // Updated title
               }
-            }
+            },
+            {
+              path: 'cluster/:id/detail', // Route for cluster details
+              name: 'ClusterDetail',
+              component: () => import('../views/kubernetes/cluster/cluster-detail.vue'),
+              props: true, // Pass route params as props to the component
+              meta: {
+                requiresAuth: true,
+                title: '集群详情'
+              }
+            },
+            {
+              path: 'cluster/:clusterId/users', // Route for cluster user management
+              name: 'ClusterUsers',
+              component: () => import('../views/kubernetes/cluster/cluster-users.vue'),
+              props: true,
+              meta: {
+                requiresAuth: true,
+                title: '集群用户管理'
+              }
+            },
+            {
+              path: 'cluster/:clusterId/roles', // Route for cluster role management
+              name: 'ClusterRoles',
+              component: () => import('../views/kubernetes/cluster/cluster-roles.vue'),
+              props: true,
+              meta: {
+                requiresAuth: true,
+                title: '集群角色管理'
+              }
+            },
+            // Deployment Management Routes
+            {
+              path: 'deployments', // Base path for deployments
+              name: 'DeploymentList',
+              component: () => import('../views/kubernetes/workload/deployment/deployment-list.vue'),
+              meta: {
+                requiresAuth: true,
+                title: 'Deployments'
+              },
+              // It might be better to have cluster/namespace selection within the list page itself,
+              // rather than as part of the URL for the list.
+              // If cluster/namespace are part of URL for list: path: 'cluster/:clusterId/namespace/:namespace/deployments'
+            },
+            {
+              // Path for viewing details of a specific deployment
+              // Assumes clusterId and namespace are selected contextually or passed via query/store
+              // Or more explicitly: 'cluster/:clusterId/namespace/:namespace/deployments/:name/detail'
+              path: 'deployments/:name/detail', // Simplified for now, assuming context
+              name: 'DeploymentDetail',
+              component: () => import('../views/kubernetes/workload/deployment/deployment-detail.vue'),
+              props: (route) => ({ // Pass clusterId, namespace, and name as props
+                clusterId: route.query.clusterId, // Expect these as query params for detail view
+                namespace: route.query.namespace,
+                name: route.params.name
+              }),
+              meta: {
+                requiresAuth: true,
+                title: 'Deployment详情'
+              }
+            },
+            // TODO: Add routes for Node Management here later as per plan (e.g., under /homepage/kubernetes/nodes)
+            // Example for nodes, assuming it's a top-level section within kubernetes module:
+            // {
+            //   path: 'nodes',
+            //   name: 'NodeList',
+            //   component: () => import('../views/kubernetes/nodes/index.vue'),
+            //   meta: { requiresAuth: true, title: '节点管理' }
+            // },
+            // {
+            //   path: 'nodes/:name/detail', // Or by ID if nodes have system IDs
+            //   name: 'NodeDetail',
+            //   component: () => import('../views/kubernetes/nodes/detail.vue'),
+            //   props: true,
+            //   meta: { requiresAuth: true, title: '节点详情' }
+            // }
           ]
         },
         {
