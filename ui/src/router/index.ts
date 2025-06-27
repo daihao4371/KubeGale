@@ -269,21 +269,41 @@ const router = createRouter({
                 title: 'Deployment详情'
               }
             },
-            // TODO: Add routes for Node Management here later as per plan (e.g., under /homepage/kubernetes/nodes)
-            // Example for nodes, assuming it's a top-level section within kubernetes module:
-            // {
-            //   path: 'nodes',
-            //   name: 'NodeList',
-            //   component: () => import('../views/kubernetes/nodes/index.vue'),
-            //   meta: { requiresAuth: true, title: '节点管理' }
-            // },
-            // {
-            //   path: 'nodes/:name/detail', // Or by ID if nodes have system IDs
-            //   name: 'NodeDetail',
-            //   component: () => import('../views/kubernetes/nodes/detail.vue'),
-            //   props: true,
-            //   meta: { requiresAuth: true, title: '节点详情' }
-            // }
+            // Node Management Routes
+            {
+              path: 'nodes',
+              name: 'NodeList',
+              component: () => import('../views/kubernetes/nodes/index.vue'),
+              meta: { requiresAuth: true, title: '节点管理' }
+            },
+            {
+              path: 'nodes/:name/detail',
+              name: 'NodeDetail',
+              component: () => import('../views/kubernetes/nodes/detail.vue'),
+              props: true,
+              meta: { requiresAuth: true, title: '节点详情' }
+            },
+            // Workload Routes
+            {
+              path: 'workload',
+              component: () => import('../views/kubernetes/workload/index.vue'),
+              children: [
+                {
+                  path: 'pods',
+                  name: 'PodList',
+                  component: () => import('../views/kubernetes/workload/pod/pod-list.vue'),
+                  meta: { requiresAuth: true, title: 'Pod管理' }
+                },
+                // Other workload types can be added here
+              ]
+            },
+            // Namespace Routes
+            {
+              path: 'namespace',
+              name: 'NamespaceList',
+              component: () => import('../views/kubernetes/namespace/namespace-list.vue'),
+              meta: { requiresAuth: true, title: '命名空间管理' }
+            }
           ]
         },
         {

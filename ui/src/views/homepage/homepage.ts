@@ -103,7 +103,16 @@ export default function useHomepage() {
       icon: 'Ship', 
       path: '/homepage/kubernetes',
       children: [
-        { id: 'kubernetes-cluster', title: '集群管理', icon: 'Box', path: '/homepage/kubernetes/cluster' }
+        { id: 'kubernetes-cluster', title: '集群管理', icon: 'Box', path: '/homepage/kubernetes/cluster' },
+        { id: 'kubernetes-workload', title: '工作负载', icon: 'Grid', path: '/homepage/kubernetes/workload' },
+        { id: 'kubernetes-nodes', title: '节点管理', icon: 'Monitor', path: '/homepage/kubernetes/nodes' },
+        { id: 'kubernetes-namespace', title: '命名空间', icon: 'Folder', path: '/homepage/kubernetes/namespace' },
+        { id: 'kubernetes-network', title: '网络管理', icon: 'Connection', path: '/homepage/kubernetes/network' },
+        { id: 'kubernetes-storage', title: '存储管理', icon: 'Files', path: '/homepage/kubernetes/storage' },
+        { id: 'kubernetes-config', title: '配置管理', icon: 'SetUp', path: '/homepage/kubernetes/config' },
+        { id: 'kubernetes-rbac', title: '角色管理', icon: 'UserFilled', path: '/homepage/kubernetes/rbac' },
+        { id: 'kubernetes-monitoring', title: '监控', icon: 'DataAnalysis', path: '/homepage/kubernetes/monitoring' },
+        { id: 'kubernetes-terminal', title: '终端', icon: 'Terminal', path: '/homepage/kubernetes/terminal' }
       ]
     },
     { id: 'prometheus', title: 'Prometheus监控管理', icon: 'Histogram', path: '/homepage/prometheus' },
