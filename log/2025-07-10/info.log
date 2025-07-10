@@ -1,0 +1,19 @@
+[KUBEGALE]2025-07-10 11:06:05.276	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_biz.go:52	register  tables success
+[KUBEGALE]2025-07-10 11:06:05.276	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:40	register table success
+[KUBEGALE]2025-07-10 11:06:05.282	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-07-10 11:06:05.282	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-07-10 11:06:05.283	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:56	initialize local cache
+[KUBEGALE]2025-07-10 11:06:05.284	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:54	register swagger handler
+[KUBEGALE]2025-07-10 11:06:05.302	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:92	router register success
+[KUBEGALE]2025-07-10 11:06:05.302	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:67	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-07-10 11:22:25.352	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm_biz.go:52	register  tables success
+[KUBEGALE]2025-07-10 11:22:25.353	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/gorm.go:40	register table success
+[KUBEGALE]2025-07-10 11:22:25.357	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "", "pong": "PONG"}
+[KUBEGALE]2025-07-10 11:22:25.358	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/redis.go:33	redis connect ping response:	{"name": "cache", "pong": "PONG"}
+[KUBEGALE]2025-07-10 11:22:25.358	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:55	initialize local cache
+[KUBEGALE]2025-07-10 11:22:25.359	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:54	register swagger handler
+[KUBEGALE]2025-07-10 11:22:25.367	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/initialize/router.go:92	router register success
+[KUBEGALE]2025-07-10 11:22:25.367	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:66	server run success on 	{"address": ":8080"}
+[KUBEGALE]2025-07-10 13:04:48.880	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-07-10 13:04:52.191	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}
+[KUBEGALE]2025-07-10 14:15:14.273	[34minfo[0m	/Users/daihao/Downloads/gocode/KubeGale/service/cloudCmdb/cloud_region.go:298	获取区域树形结构完成	{"platformCount": 3}

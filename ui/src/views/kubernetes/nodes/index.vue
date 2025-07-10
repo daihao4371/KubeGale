@@ -205,7 +205,7 @@ import {
 
    PodsDelete, GetPodsList, PodsEviction,
 } from '@/api/kubernetes/pods'
-import { cpuUnitConvert, memoryUnitConvert } from '../../utils/unitConvert'
+import { cpuUnitConvert, memoryUnitConvert } from '@/utils/unitConvert'
 import FormBlock from './form.vue'
 import TableBlock from './table.vue'
 import DetailBlock from './detail.vue'
@@ -216,7 +216,7 @@ import NodeTTYBlock from '@/components/kubernetes/nodetty/index.vue'
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'
-import { dispatchClusterIDEventStrage } from '../../utils/watchLocalStorage'
+import { dispatchClusterIDEventStrage } from '@/utils/watchLocalStorage'
 import { useUserStore } from '@/pinia/modules/user'
 
 const form = ref({

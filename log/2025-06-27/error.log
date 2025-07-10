@@ -1,0 +1,2 @@
+[KUBEGALE]2025-06-27 10:40:47.269	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/utils/claims.go:49	重新写入cookie token失败,未能成功解析token,请检查请求头是否存在x-token且claims是否为规定结构
+[KUBEGALE]2025-06-27 11:27:08.604	[31merror[0m	/Users/daihao/Downloads/gocode/KubeGale/core/server.go:68	accept tcp [::]:8080: use of closed network connection

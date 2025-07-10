@@ -1,15 +1,24 @@
 <template>
-  <router-view></router-view>
+  <div class="kubernetes-container">
+    <router-view v-if="$route.path !== '/homepage/kubernetes'" />
+    <KubernetesOverview v-else />
+  </div>
 </template>
 
 <script setup lang="ts">
+import { useRoute } from 'vue-router'
+import KubernetesOverview from './overview/index.vue'
+
 defineOptions({
   name: 'KubernetesView'
 })
+
+const $route = useRoute()
 </script>
 
 <style scoped>
 .kubernetes-container {
-  padding: var(--spacing-lg); /* Use theme variable */
+  width: 100%;
+  height: 100%;
 }
 </style>

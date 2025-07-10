@@ -103,7 +103,72 @@ export default function useHomepage() {
       icon: 'Ship', 
       path: '/homepage/kubernetes',
       children: [
-        { id: 'kubernetes-cluster', title: '集群管理', icon: 'Box', path: '/homepage/kubernetes/cluster' }
+        { id: 'kubernetes-cluster', title: '集群管理', icon: 'Box', path: '/homepage/kubernetes/cluster' },
+        { 
+          id: 'kubernetes-workload', 
+          title: '工作负载', 
+          icon: 'Grid', 
+          path: '/homepage/kubernetes/workload',
+          children: [
+            { id: 'kubernetes-pod', title: 'Pod管理', icon: 'Document', path: '/homepage/kubernetes/workload/pod' },
+            { id: 'kubernetes-deployment', title: 'Deployment', icon: 'Document', path: '/homepage/kubernetes/workload/deployment' },
+            { id: 'kubernetes-statefulset', title: 'StatefulSet', icon: 'Document', path: '/homepage/kubernetes/workload/statefulset' },
+            { id: 'kubernetes-daemonset', title: 'DaemonSet', icon: 'Document', path: '/homepage/kubernetes/workload/daemonset' },
+            { id: 'kubernetes-job', title: 'Job', icon: 'Document', path: '/homepage/kubernetes/workload/job' },
+            { id: 'kubernetes-cronjob', title: 'CronJob', icon: 'Document', path: '/homepage/kubernetes/workload/cronjob' }
+          ]
+        },
+        { 
+          id: 'kubernetes-network', 
+          title: '网络管理', 
+          icon: 'Connection', 
+          path: '/homepage/kubernetes/network',
+          children: [
+            { id: 'kubernetes-service', title: 'Service', icon: 'Document', path: '/homepage/kubernetes/network/service' },
+            { id: 'kubernetes-ingress', title: 'Ingress', icon: 'Document', path: '/homepage/kubernetes/network/ingress' },
+            { id: 'kubernetes-endpoint', title: 'Endpoint', icon: 'Document', path: '/homepage/kubernetes/network/endpoint' },
+            { id: 'kubernetes-networkpolicy', title: 'NetworkPolicy', icon: 'Document', path: '/homepage/kubernetes/network/networkpolicy' }
+          ]
+        },
+        { 
+          id: 'kubernetes-storage', 
+          title: '存储管理', 
+          icon: 'Folder', 
+          path: '/homepage/kubernetes/storage',
+          children: [
+            { id: 'kubernetes-pv', title: 'PersistentVolume', icon: 'Document', path: '/homepage/kubernetes/storage/pv' },
+            { id: 'kubernetes-pvc', title: 'PersistentVolumeClaim', icon: 'Document', path: '/homepage/kubernetes/storage/pvc' },
+            { id: 'kubernetes-storageclass', title: 'StorageClass', icon: 'Document', path: '/homepage/kubernetes/storage/storageclass' }
+          ]
+        },
+        { 
+          id: 'kubernetes-config', 
+          title: '配置管理', 
+          icon: 'Setting', 
+          path: '/homepage/kubernetes/config',
+          children: [
+            { id: 'kubernetes-configmap', title: 'ConfigMap', icon: 'Document', path: '/homepage/kubernetes/config/configmap' },
+            { id: 'kubernetes-secret', title: 'Secret', icon: 'Document', path: '/homepage/kubernetes/config/secret' },
+            { id: 'kubernetes-resourcequota', title: 'ResourceQuota', icon: 'Document', path: '/homepage/kubernetes/config/resourcequota' },
+            { id: 'kubernetes-hpa', title: 'HPA', icon: 'Document', path: '/homepage/kubernetes/config/hpa' }
+          ]
+        },
+        { 
+          id: 'kubernetes-rbac', 
+          title: 'RBAC权限', 
+          icon: 'User', 
+          path: '/homepage/kubernetes/rbac',
+          children: [
+            { id: 'kubernetes-role', title: 'Role', icon: 'Document', path: '/homepage/kubernetes/rbac/role' },
+            { id: 'kubernetes-clusterrole', title: 'ClusterRole', icon: 'Document', path: '/homepage/kubernetes/rbac/clusterrole' },
+            { id: 'kubernetes-rolebinding', title: 'RoleBinding', icon: 'Document', path: '/homepage/kubernetes/rbac/rolebinding' },
+            { id: 'kubernetes-serviceaccount', title: 'ServiceAccount', icon: 'Document', path: '/homepage/kubernetes/rbac/serviceaccount' }
+          ]
+        },
+        { id: 'kubernetes-nodes', title: '节点管理', icon: 'Monitor', path: '/homepage/kubernetes/nodes' },
+        { id: 'kubernetes-namespace', title: '命名空间', icon: 'Files', path: '/homepage/kubernetes/namespace' },
+        { id: 'kubernetes-monitoring', title: '监控管理', icon: 'DataAnalysis', path: '/homepage/kubernetes/monitoring' },
+        { id: 'kubernetes-terminal', title: 'Web终端', icon: 'Document', path: '/homepage/kubernetes/terminal' }
       ]
     },
     { id: 'prometheus', title: 'Prometheus监控管理', icon: 'Histogram', path: '/homepage/prometheus' },

@@ -50,7 +50,7 @@ import MonitorCPU from '@/components/kubernetes/monitor/nodes/cpu.vue'
 import MonitorMemory from '@/components/kubernetes/monitor/nodes/memory.vue'
 import MonitorDisk from '@/components/kubernetes/monitor/nodes/disk.vue'
 import MonitorPods from '@/components/kubernetes/monitor/nodes/pods.vue'
-import { GetMetrics } from '@/api/kubernetes/metrics'
+import { NodeMetricsList } from '@/api/kubernetes/metrics'
 import { mapValues } from 'lodash'
 import { normalizeMetrics } from '@/utils/metrics'
 const props = defineProps({
@@ -82,18 +82,7 @@ const getMetrics = async() => {
     start: selectTimeStart.value,
     end: selectTimeEnd.value,
   }
-  const resp = await GetMetrics({
-    MemoryRequests: opts,
-    MemoryUsage: opts,
-    MemoryCapacity: opts,
-    CpuUsage: opts,
-    CpuRequests: opts,
-    CpuCapacity: opts,
-    FsSize: opts,
-    FsUsage: opts,
-    PodUsage: opts,
-    PodCapacity: opts,
-  })
+  const resp = await NodeMetricsList(opts)
   if (resp.code === 0) {
     MetricData.value = mapValues(
         resp.data.metrics,
